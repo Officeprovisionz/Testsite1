@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 type Props = {
   heading?: string;
@@ -17,14 +18,14 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const img = href('device-mock.svg');
 ---
 
-<section class="section section-creative" aria-label="What makes us different">
+<section class="section section-creative pb-0" aria-label="What makes us different">
   <div class="container-page">
     <div class="text-center">
       <p class="eyebrow">Makes us different</p>
       <h2 class="heading-2 mt-3">{heading}</h2>
     </div>
 
-    <div class="glass-card mt-10 overflow-hidden">
+    <div class="glass-card mt-10 overflow-hidden lg:-translate-y-6">
       <div class="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
         <div>
           <p class="text-muted text-sm">{siteConfig.brand.name}</p>
@@ -86,5 +87,9 @@ const img = href('device-mock.svg');
         <span>Ask for the current checklist during your quote.</span>
       </div>
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-10">
+    <WaveDivider tone="surface" class="absolute bottom-0 left-0 right-0" />
   </div>
 </section>

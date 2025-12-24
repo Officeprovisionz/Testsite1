@@ -350,7 +350,7 @@
     background:
       radial-gradient(900px 420px at 18% 18%, rgb(var(--color-brand-500) / 0.18), transparent 60%),
       radial-gradient(900px 420px at 82% 12%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
-      url('/hero-bg.svg') center / cover no-repeat,
+      var(--asset-hero-bg, none) center / cover no-repeat,
       rgb(var(--color-bg));
   }
 
@@ -359,7 +359,7 @@
     background:
       radial-gradient(900px 420px at 18% 18%, rgb(var(--color-brand-500) / 0.2), transparent 60%),
       radial-gradient(900px 420px at 82% 12%, rgb(var(--color-brand-400) / 0.16), transparent 60%),
-      url('/hero-bg.svg') center / cover no-repeat,
+      var(--asset-hero-bg, none) center / cover no-repeat,
       rgb(var(--color-bg));
   }
 
@@ -372,7 +372,7 @@
           rgb(var(--color-brand-400) / 0.16),
           transparent 60%
         ),
-        url('/hero-bg.svg') center / cover no-repeat,
+        var(--asset-hero-bg, none) center / cover no-repeat,
         rgb(var(--color-bg));
     }
   }
@@ -587,8 +587,15 @@
   }
 
   .app-bar {
-    background-color: rgb(var(--color-surface) / 0.9);
+    /* Glass overlay at top of page (pairs with backdrop-blur-md on the header). */
+    background-color: rgb(var(--color-surface) / 0.22);
+    border-color: transparent;
+  }
+
+  header[data-site-header].is-scrolled.app-bar {
+    background-color: rgb(var(--color-surface) / 0.92);
     border-color: rgb(var(--color-border));
+    box-shadow: 0 12px 30px rgb(2 6 23 / 0.08);
   }
 
   .menu-link {

@@ -6,6 +6,10 @@
   :root {
     color-scheme: light;
 
+    /* Sticky UI sizing (used for anchor offsets). */
+    --header-sticky: 5rem;
+    --section-nav-sticky: 3.25rem;
+
     /* Professional Navy & Gold Theme */
     --color-brand-50: 240 249 255; /* Lightest Blue */
     --color-brand-100: 224 242 254;
@@ -102,7 +106,21 @@
 
   html {
     scroll-behavior: smooth;
-    scroll-padding-top: 5rem;
+    /* Mobile: header + section nav stack. */
+    scroll-padding-top: calc(var(--header-sticky, 5rem) + var(--section-nav-sticky, 3.25rem));
+  }
+
+  @media (min-width: 768px) {
+    html {
+      /* Desktop: header only. */
+      scroll-padding-top: var(--header-sticky, 5rem);
+    }
+  }
+
+  html[data-scroll-lock='true'],
+  html[data-scroll-lock='true'] body {
+    overflow: hidden;
+    height: 100%;
   }
 
   * {
@@ -182,6 +200,33 @@
     @apply hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-900/5;
   }
 
+  .hero-panel {
+    background:
+      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand-300) / 0.22), transparent 55%),
+      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand-200) / 0.22), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-brand-50) / 0.65), rgb(var(--color-surface)) 55%);
+  }
+
+  :root[data-mode='dark'] .hero-panel {
+    background:
+      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand-500) / 0.18), transparent 55%),
+      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-surface)) 65%);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light']) .hero-panel {
+      background:
+        radial-gradient(
+          800px 380px at 15% 10%,
+          rgb(var(--color-brand-500) / 0.18),
+          transparent 55%
+        ),
+        radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
+        linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-surface)) 65%);
+    }
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .card-hover {
       @apply hover:-translate-y-1 hover:border-brand-100 hover:shadow-lg hover:shadow-brand-900/5;
@@ -253,7 +298,8 @@
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     color: rgb(var(--color-text));
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+    --tw-ring-offset-color: rgb(var(--color-surface));
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
   }
 
   .input::placeholder,
@@ -286,11 +332,12 @@
   }
 
   .mobile-menu-panel {
-    @apply fixed right-3 top-[4.75rem] w-[min(20rem,calc(100vw-1.5rem))] overflow-hidden border;
+    @apply fixed right-3 w-[min(20rem,calc(100vw-1.5rem))] overflow-hidden border;
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-soft);
+    top: calc(var(--header-sticky, 5rem) - 0.25rem);
     transform: translateX(0.75rem);
     opacity: 0;
     pointer-events: none;
@@ -307,6 +354,27 @@
 
   details[data-mobile-menu]:not([open]) .mobile-menu-overlay {
     display: none;
+  }
+
+  header[data-site-header] .header-inner {
+    height: 5rem;
+    transition:
+      height 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  header[data-site-header].is-scrolled .header-inner {
+    height: 4.25rem;
+  }
+
+  header[data-site-header] .brand-mark {
+    height: 2.5rem;
+    width: 2.5rem;
+    transition: transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  header[data-site-header].is-scrolled .brand-mark {
+    transform: scale(0.92);
   }
 
   .text-strong {
@@ -389,6 +457,15 @@
 }
 
 @layer utilities {
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
   :root[data-mode='dark'] .text-slate-900 {
     color: rgb(var(--color-text)) !important;
   }

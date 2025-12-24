@@ -6,7 +6,11 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
-const normalizeTrailingSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+const stripHashAndQuery = (path: string) => path.split('#')[0]?.split('?')[0] ?? path;
+const normalizeTrailingSlash = (path: string) => {
+  const cleaned = stripHashAndQuery(path);
+  return cleaned.endsWith('/') ? cleaned : `${cleaned}/`;
+};
 const currentPath = normalizeTrailingSlash(Astro.url.pathname);
 const isActive = (targetHref: string) => {
   const target = normalizeTrailingSlash(targetHref);
@@ -36,11 +40,14 @@ const initials = (() => {
 })();
 ---
 
-<header class="app-bar sticky top-0 z-40 border-b backdrop-blur-md transition-all duration-300">
-  <div class="container-page flex h-20 items-center justify-between">
+<header
+  class="app-bar sticky top-0 z-40 border-b backdrop-blur-md transition-all duration-300"
+  data-site-header
+>
+  <div class="header-inner container-page flex items-center justify-between">
     <a href={href('')} class="flex items-center gap-3 font-serif text-xl font-bold tracking-tight">
       <span
-        class="grid h-10 w-10 place-items-center rounded-lg bg-brand-900 text-white shadow-md shadow-brand-900/20"
+        class="brand-mark grid place-items-center rounded-lg bg-brand-900 text-white shadow-md shadow-brand-900/20"
       >
         {initials}
       </span>
@@ -67,12 +74,18 @@ const initials = (() => {
     </nav>
 
     <details class="relative md:hidden" data-mobile-menu>
-      <summary class="btn-secondary cursor-pointer list-none px-3 py-2" aria-label="Open menu">
+      <summary
+        class="btn-secondary cursor-pointer list-none px-3 py-2"
+        aria-label="Open menu"
+        aria-controls="mobile-menu-panel"
+        aria-expanded="false"
+        data-menu-summary
+      >
         <span class="text-sm font-semibold">Menu</span>
       </summary>
       <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
       ></button>
-      <div class="mobile-menu-panel">
+      <div class="mobile-menu-panel" id="mobile-menu-panel" role="dialog" aria-label="Menu">
         <nav class="grid" aria-label="Mobile">
           {
             navItems.map((item) => (
@@ -137,20 +150,145 @@ const initials = (() => {
     const menu = document.querySelector('details[data-mobile-menu]') as HTMLDetailsElement | null;
     if (!menu) return;
 
+    const summary = menu.querySelector('[data-menu-summary]') as HTMLElement | null;
+    const panel = menu.querySelector('#mobile-menu-panel') as HTMLElement | null;
+    const overlayBtn = menu.querySelector('[data-menu-close]') as HTMLButtonElement | null;
+
+    let lastFocused: HTMLElement | null = null;
+    let locked = false;
+    let scrollY = 0;
+    const prevBodyStyle = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      width: document.body.style.width,
+    };
+
+    const setExpanded = (open: boolean) => {
+      summary?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+
+    const lockScroll = () => {
+      if (locked) return;
+      locked = true;
+      scrollY = window.scrollY || 0;
+      document.documentElement.dataset.scrollLock = 'true';
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+    };
+
+    const unlockScroll = () => {
+      if (!locked) return;
+      locked = false;
+      document.documentElement.dataset.scrollLock = '';
+      if (document.documentElement.dataset.scrollLock === '') {
+        delete document.documentElement.dataset.scrollLock;
+      }
+      document.body.style.position = prevBodyStyle.position;
+      document.body.style.top = prevBodyStyle.top;
+      document.body.style.width = prevBodyStyle.width;
+      window.scrollTo(0, scrollY);
+    };
+
+    const getFocusables = () => {
+      if (!panel) return [] as HTMLElement[];
+      const nodes = Array.from(
+        panel.querySelectorAll<HTMLElement>(
+          'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+        )
+      );
+      return nodes.filter((el) => el.offsetParent !== null || el.getClientRects().length > 0);
+    };
+
     const close = () => {
       menu.open = false;
     };
-
-    const overlayBtn = menu.querySelector('[data-menu-close]') as HTMLButtonElement | null;
     overlayBtn?.addEventListener('click', close);
 
     const links = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a[href]'));
     links.forEach((a) => a.addEventListener('click', close));
 
+    menu.addEventListener('toggle', () => {
+      setExpanded(menu.open);
+
+      if (menu.open) {
+        lastFocused = (document.activeElement as HTMLElement | null) ?? summary;
+        lockScroll();
+        const focusables = getFocusables();
+        (focusables[0] ?? overlayBtn ?? summary)?.focus();
+      } else {
+        unlockScroll();
+        // Restore focus to the control that opened the menu.
+        (lastFocused ?? summary)?.focus?.();
+        lastFocused = null;
+      }
+    });
+
     document.addEventListener('keydown', (e) => {
       if (!menu.open) return;
       if (e.key === 'Escape') close();
+
+      if (e.key === 'Tab') {
+        const focusables = getFocusables();
+        if (!focusables.length) return;
+
+        const first = focusables[0]!;
+        const last = focusables[focusables.length - 1]!;
+        const active = document.activeElement as HTMLElement | null;
+
+        if (e.shiftKey) {
+          if (!active || active === first) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (active === last) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
     });
+
+    const mq = window.matchMedia('(min-width: 768px)');
+    const handleMQ = () => {
+      if (mq.matches && menu.open) close();
+    };
+    if ('addEventListener' in mq) {
+      mq.addEventListener('change', handleMQ);
+    } else {
+      // Safari < 14 legacy API
+      (mq as unknown as { addListener: (cb: () => void) => void }).addListener(handleMQ);
+    }
+
+    // Initialize state.
+    setExpanded(menu.open);
+  })();
+</script>
+
+<script>
+  (() => {
+    const header = document.querySelector('header[data-site-header]') as HTMLElement | null;
+    if (!header) return;
+
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      header.classList.toggle('is-scrolled', (window.scrollY || 0) > 8);
+
+      // Keep anchor offsets in sync with the *actual* rendered header height.
+      const h = Math.ceil(header.getBoundingClientRect().height);
+      document.documentElement.style.setProperty('--header-sticky', `${h}px`);
+    };
+
+    const onUpdateRequest = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener('scroll', onUpdateRequest, { passive: true });
+    window.addEventListener('resize', onUpdateRequest);
   })();
 </script>
 

@@ -18,33 +18,30 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 const mailtoTo = siteConfig.contact.email;
 ---
 
-<section id={id} class="section scroll-mt-20 bg-slate-50">
+<section id={id} class="section section-muted scroll-mt-20">
   <div class="container-page grid gap-10 lg:grid-cols-2">
     <div>
       <h2 class="heading-2">{heading}</h2>
       <p class="lede">{description}</p>
 
-      <div class="mt-6 space-y-3 text-sm text-slate-700">
+      <div class="text-muted mt-6 space-y-3 text-sm">
         <p>
-          <span class="font-semibold text-slate-900">Call/Text:</span>
-          <a
-            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
-            href={telHref}
-          >
+          <span class="text-strong font-semibold">Call/Text:</span>
+          <a class="underline decoration-brand-300/50 underline-offset-4" href={telHref}>
             {siteConfig.contact.phoneDisplay}
           </a>
         </p>
         <p>
-          <span class="font-semibold text-slate-900">Email:</span>
+          <span class="text-strong font-semibold">Email:</span>
           <a
-            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
+            class="underline decoration-brand-300/50 underline-offset-4"
             href={`mailto:${siteConfig.contact.email}`}
           >
             {siteConfig.contact.email}
           </a>
         </p>
         <div>
-          <p class="font-semibold text-slate-900">Hours</p>
+          <p class="text-strong font-semibold">Hours</p>
           <ul class="mt-1 grid gap-1">
             {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
           </ul>
@@ -52,8 +49,8 @@ const mailtoTo = siteConfig.contact.email;
       </div>
 
       <div class="card mt-8 p-5">
-        <p class="text-sm font-semibold text-slate-900">Privacy & spam protection</p>
-        <p class="mt-1 text-sm text-slate-700">
+        <p class="text-strong text-sm font-semibold">Privacy & spam protection</p>
+        <p class="text-muted mt-1 text-sm">
           This form includes a hidden anti-spam field. We only use your details to respond to your
           request.
         </p>
@@ -84,14 +81,15 @@ const mailtoTo = siteConfig.contact.email;
         data-mailto-to={mailtoTo}
         aria-describedby="contact-help"
       >
-        <p id="contact-help" class="text-sm text-slate-700">
+        <p id="contact-help" class="text-muted text-sm">
           Fields marked with <span class="font-semibold">*</span> are required.
         </p>
 
-        <p class="hidden text-sm text-slate-700" data-contact-status></p>
+        <p class="text-muted hidden text-sm" data-contact-status role="status" aria-live="polite">
+        </p>
 
         <label class="grid gap-1 text-sm">
-          <span class="font-semibold text-slate-900">Name *</span>
+          <span class="text-strong font-semibold">Name *</span>
           <input
             class="input"
             type="text"
@@ -103,7 +101,7 @@ const mailtoTo = siteConfig.contact.email;
         </label>
 
         <label class="grid gap-1 text-sm">
-          <span class="font-semibold text-slate-900">Email *</span>
+          <span class="text-strong font-semibold">Email *</span>
           <input
             class="input"
             type="email"
@@ -115,12 +113,12 @@ const mailtoTo = siteConfig.contact.email;
         </label>
 
         <label class="grid gap-1 text-sm">
-          <span class="font-semibold text-slate-900">Phone</span>
+          <span class="text-strong font-semibold">Phone</span>
           <input class="input" type="tel" name="phone" autocomplete="tel" inputmode="tel" />
         </label>
 
         <label class="grid gap-1 text-sm">
-          <span class="font-semibold text-slate-900">Service type</span>
+          <span class="text-strong font-semibold">Service type</span>
           <select class="select" name="service">
             <option value="Office Cleaning">Office Cleaning</option>
             <option value="Recurring Janitorial">Recurring Janitorial</option>
@@ -137,7 +135,7 @@ const mailtoTo = siteConfig.contact.email;
         </label>
 
         <label class="grid gap-1 text-sm">
-          <span class="font-semibold text-slate-900">Message *</span>
+          <span class="text-strong font-semibold">Message *</span>
           <textarea
             class="textarea min-h-28"
             name="message"
@@ -154,9 +152,9 @@ const mailtoTo = siteConfig.contact.email;
           </label>
         </div>
 
-        <button class="btn-primary" type="submit">Send request</button>
+        <button class="btn-primary" type="submit" data-contact-submit>Send request</button>
 
-        <p class="text-xs text-slate-600">
+        <p class="text-subtle text-xs">
           By submitting, you agree to be contacted about your request. No spam—ever.
         </p>
       </form>
@@ -170,13 +168,29 @@ const mailtoTo = siteConfig.contact.email;
     if (!form) return;
 
     const endpoint = form.dataset.formEndpoint || '';
-    if (endpoint) return; // normal POST submission
 
     const status = form.querySelector('[data-contact-status]') as HTMLElement | null;
+    const submitBtn = form.querySelector('[data-contact-submit]') as HTMLButtonElement | null;
+
     const setStatus = (message: string) => {
       if (!status) return;
       status.textContent = message;
       status.classList.remove('hidden');
+    };
+
+    const setBusy = (busy: boolean) => {
+      form.setAttribute('aria-busy', busy ? 'true' : 'false');
+      if (submitBtn) {
+        submitBtn.disabled = busy;
+        submitBtn.classList.toggle('opacity-70', busy);
+        submitBtn.classList.toggle('cursor-not-allowed', busy);
+        submitBtn.textContent = busy ? 'Sending…' : 'Send request';
+      }
+    };
+
+    const focusFirstInvalid = () => {
+      const el = form.querySelector<HTMLElement>(':invalid');
+      el?.focus?.();
     };
 
     form.addEventListener('submit', (e) => {
@@ -204,6 +218,60 @@ const mailtoTo = siteConfig.contact.email;
 
       if (!name || !email || !message) {
         setStatus('Please fill in the required fields (name, email, message).');
+        focusFirstInvalid();
+        return;
+      }
+
+      // If endpoint exists, try an async submission (better UX on mobile).
+      if (endpoint && typeof fetch === 'function') {
+        setBusy(true);
+        setStatus('Sending…');
+
+        fetch(endpoint, {
+          method: 'POST',
+          body: fd,
+          headers: {
+            Accept: 'application/json',
+          },
+        })
+          .then(async (res) => {
+            if (res.ok) return;
+
+            // Try to parse a helpful error payload.
+            let msg = 'Could not send your request. Please try again or call/text.';
+            try {
+              const data = (await res.json()) as unknown;
+              if (
+                data &&
+                typeof data === 'object' &&
+                'error' in data &&
+                typeof (data as { error?: unknown }).error === 'string'
+              ) {
+                msg = (data as { error: string }).error;
+              }
+            } catch {
+              // ignore
+            }
+            throw new Error(msg);
+          })
+          .then(() => {
+            setStatus('Request sent — we’ll reply soon.');
+            form.reset();
+          })
+          .catch((err: unknown) => {
+            const msg = err instanceof Error ? err.message : 'Something went wrong.';
+            setStatus(msg);
+            // Fallback: attempt a normal submit (if endpoint supports it).
+            try {
+              form.submit();
+            } catch {
+              // ignore
+            }
+          })
+          .finally(() => {
+            setBusy(false);
+          });
+
         return;
       }
 

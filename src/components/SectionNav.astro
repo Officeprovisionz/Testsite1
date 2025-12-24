@@ -1,0 +1,128 @@
+---
+type Item = {
+  id: string;
+  label: string;
+};
+
+type Props = {
+  items: Item[];
+  ariaLabel?: string;
+};
+
+const { items, ariaLabel = 'Page sections' } = Astro.props;
+---
+
+{
+  items?.length ? (
+    <nav
+      class="app-bar border-app sticky z-30 border-b backdrop-blur-md md:hidden"
+      style="top: var(--header-sticky, 5rem)"
+      aria-label={ariaLabel}
+      data-section-nav
+    >
+      <div class="container-page py-2">
+        <div class="no-scrollbar flex gap-2 overflow-x-auto">
+          {items.map((it, idx) => (
+            <a
+              href={`#${it.id}`}
+              class:list={[
+                'btn-secondary shrink-0 px-3 py-2 text-xs',
+                idx === 0 ? 'surface-muted text-strong' : '',
+              ]}
+              data-section-nav-link
+              data-target={it.id}
+              aria-current={idx === 0 ? 'location' : undefined}
+            >
+              {it.label}
+            </a>
+          ))}
+        </div>
+      </div>
+    </nav>
+  ) : null
+}
+
+<script>
+  (() => {
+    const nav = document.querySelector('[data-section-nav]');
+    if (!nav) return;
+
+    const links = Array.from(nav.querySelectorAll('a[data-section-nav-link][data-target]'));
+    if (!links.length) return;
+
+    const byId = new Map();
+    links.forEach((a) => {
+      const id = a.dataset.target || '';
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) byId.set(id, el);
+    });
+
+    const setActive = (id) => {
+      links.forEach((a) => {
+        const isActive = (a.dataset.target || '') === id;
+        if (isActive) a.setAttribute('aria-current', 'location');
+        else a.removeAttribute('aria-current');
+        a.classList.toggle('surface-muted', isActive);
+        a.classList.toggle('text-strong', isActive);
+      });
+
+      const activeLink = links.find((a) => (a.dataset.target || '') === id);
+      activeLink?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    };
+
+    // Initialize based on hash (if any)
+    const hash = (window.location.hash || '').replace('#', '');
+    if (hash && byId.has(hash)) setActive(hash);
+
+    let bestId = '';
+    let bestRatio = 0;
+
+    // Optimistic UI: highlight immediately on click (before scrolling finishes)
+    links.forEach((a) => {
+      a.addEventListener('click', () => {
+        const id = a.dataset.target || '';
+        if (!id) return;
+        setActive(id);
+        bestId = id;
+        bestRatio = 1;
+      });
+    });
+
+    if (!('IntersectionObserver' in window)) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          const id = entry.target && entry.target.id;
+          if (!id) continue;
+          if (entry.isIntersecting && entry.intersectionRatio >= bestRatio) {
+            bestRatio = entry.intersectionRatio;
+            bestId = id;
+          }
+        }
+
+        if (bestId) setActive(bestId);
+      },
+      {
+        // Account for sticky header + this bar.
+        root: null,
+        rootMargin: '-35% 0px -55% 0px',
+        threshold: [0.15, 0.3, 0.5, 0.7],
+      }
+    );
+
+    byId.forEach((el) => obs.observe(el));
+
+    // Reset bestRatio periodically to avoid "sticking" on a previous large section.
+    let raf = 0;
+    const onScroll = () => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        bestRatio = 0;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
+</script>

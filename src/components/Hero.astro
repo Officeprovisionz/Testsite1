@@ -22,13 +22,13 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
         <span class="pill">Flexible scheduling</span>
       </div>
       <h1
-        class="mt-5 text-balance font-serif text-5xl font-bold tracking-tight text-slate-900 sm:text-6xl"
+        class="text-strong mt-5 text-balance font-serif text-5xl font-bold tracking-tight sm:text-6xl"
       >
         A cleaner office—
         <span class="text-brand-600">with supplies and facilities support</span>.
       </h1>
-      <p class="mt-6 max-w-prose text-pretty text-lg leading-relaxed text-slate-600">
-        {siteConfig.brand.tagline} Serving <span class="font-semibold text-slate-900"
+      <p class="text-muted mt-6 max-w-prose text-pretty text-lg leading-relaxed">
+        {siteConfig.brand.tagline} Serving <span class="text-strong font-semibold"
           >{siteConfig.brand.city}</span
         >.
       </p>
@@ -39,9 +39,9 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
         <a class="btn-secondary" href={smsHref}>Text</a>
       </div>
 
-      <div class="mt-8 rounded-2xl border border-slate-200 bg-slate-50 p-5">
-        <p class="text-sm font-semibold text-slate-900">Standard visit includes</p>
-        <ul class="mt-3 grid gap-2 text-sm text-slate-700 sm:grid-cols-2">
+      <div class="border-app surface-muted mt-8 rounded-2xl border p-5">
+        <p class="text-strong text-sm font-semibold">Standard visit includes</p>
+        <ul class="text-muted mt-3 grid gap-2 text-sm sm:grid-cols-2">
           {
             siteConfig.whatIncluded.map((item) => (
               <li class="flex gap-2">
@@ -55,28 +55,28 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
     </div>
 
     <div class="card card-hover overflow-hidden">
-      <div class="bg-gradient-to-br from-brand-50 to-white p-7 sm:p-9">
+      <div class="hero-panel p-7 sm:p-9">
         <p class="text-sm font-semibold text-brand-800">Trusted service</p>
         <div class="mt-2 flex items-center gap-2" aria-label="Five-star care">
           <span class="text-amber-500" aria-hidden="true">★★★★★</span>
-          <span class="text-sm text-slate-700">
+          <span class="text-muted text-sm">
             Clear communication, consistent checklists, and results you can count on.
           </span>
         </div>
-        <p class="mt-4 text-sm text-slate-600">
+        <p class="text-muted mt-4 text-sm">
           Ask for our current checklist and recent references during your quote.
         </p>
 
         <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          <div class="rounded-xl border border-slate-200 bg-white p-4">
-            <p class="text-sm font-semibold text-slate-900">Fast quotes</p>
-            <p class="mt-1 text-sm text-slate-700">
+          <div class="border-app surface rounded-xl border p-4">
+            <p class="text-strong text-sm font-semibold">Fast quotes</p>
+            <p class="text-muted mt-1 text-sm">
               Tell us your space and schedule. We’ll respond quickly.
             </p>
           </div>
-          <div class="rounded-xl border border-slate-200 bg-white p-4">
-            <p class="text-sm font-semibold text-slate-900">No surprises</p>
-            <p class="mt-1 text-sm text-slate-700">
+          <div class="border-app surface rounded-xl border p-4">
+            <p class="text-strong text-sm font-semibold">No surprises</p>
+            <p class="text-muted mt-1 text-sm">
               We confirm scope and a clear quote before the job.
             </p>
           </div>

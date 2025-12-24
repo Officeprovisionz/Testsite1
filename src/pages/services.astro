@@ -8,6 +8,7 @@ import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
+import SectionNav from '@/components/SectionNav.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Services | ${siteConfig.brand.name}`;
@@ -24,6 +25,16 @@ const description =
   />
 
   <TrustBar />
+
+  <SectionNav
+    items={[
+      { id: 'services', label: 'Core' },
+      { id: 'specialty', label: 'Add-ons' },
+      { id: 'areas', label: 'Areas' },
+      { id: 'faq', label: 'FAQ' },
+    ]}
+    ariaLabel="Services sections"
+  />
 
   <ServicesSection
     id="services"

@@ -52,7 +52,12 @@ const jsonLd = (() => {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-    <meta name="theme-color" content={siteConfig.seo.themeColor} />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content={siteConfig.seo.themeColor}
+    />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617" />
 
     <script is:inline>
       (() => {

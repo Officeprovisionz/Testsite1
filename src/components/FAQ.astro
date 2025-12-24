@@ -19,7 +19,7 @@ const items = siteConfig.faqs;
               <h3>
                 <button
                   id={buttonId}
-                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-slate-900 focus-visible:outline-none"
+                  class="text-strong flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold focus-visible:outline-none"
                   type="button"
                   aria-expanded="false"
                   aria-controls={panelId}
@@ -35,7 +35,7 @@ const items = siteConfig.faqs;
                 role="region"
                 aria-labelledby={buttonId}
                 hidden
-                class="px-6 pb-6 text-sm text-slate-700"
+                class="text-muted px-6 pb-6 text-sm"
               >
                 <p>{it.answer}</p>
               </div>

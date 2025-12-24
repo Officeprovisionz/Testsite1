@@ -22,7 +22,6 @@ export function IndustriesPro() {
         </ul>
       </div>
     ),
-    header: <Skeleton i={i} />,
     className: i === 0 || i === 3 ? 'md:col-span-2' : '',
   }));
 
@@ -43,7 +42,6 @@ export function IndustriesPro() {
               key={i}
               title={item.title}
               description={item.description}
-              header={item.header}
               className={cn(item.className, 'border border-slate-200 dark:border-slate-800')}
             />
           ))}
@@ -52,21 +50,3 @@ export function IndustriesPro() {
     </section>
   );
 }
-
-const Skeleton = ({ i }: { i: number }) => {
-  const variants = [
-    'bg-gradient-to-br from-brand-100 to-brand-50 dark:from-brand-900 dark:to-slate-900',
-    'bg-gradient-to-br from-slate-100 to-slate-50 dark:from-slate-800 dark:to-slate-900',
-    'bg-gradient-to-br from-blue-100 to-blue-50 dark:from-blue-900 dark:to-slate-900',
-    'bg-gradient-to-br from-indigo-100 to-indigo-50 dark:from-indigo-900 dark:to-slate-900',
-  ];
-
-  return (
-    <div
-      className={cn(
-        'flex h-full min-h-[6rem] w-full flex-1 rounded-xl',
-        variants[i % variants.length]
-      )}
-    ></div>
-  );
-};

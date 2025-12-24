@@ -5,11 +5,10 @@ import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import Gallery from '@/components/Gallery.astro';
-import ContactSection from '@/components/Contact.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
 import Testimonials from '@/components/Testimonials.astro';
-import StartOptions from '@/components/StartOptions.astro';
+import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Results | ${siteConfig.brand.name}`;
@@ -49,12 +48,7 @@ const contactHref = `${base}contact/`;
 
   <Testimonials id="testimonials" />
 
-  <StartOptions
-    heading="Want results like these?"
-    description="Request a walkthrough, preview the checklist, or call/text us—whatever is easiest."
-  />
-
-  <ContactSection id="quote" heading="Request a walkthrough" />
+  <ConversionStrip id="quote" tone="muted" eyebrow="Next step" heading="Want results like these?" />
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

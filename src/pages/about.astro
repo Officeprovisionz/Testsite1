@@ -7,16 +7,17 @@ import { PageHeroPro } from '@/components/PageHeroPro';
 import { ProcessStepsPro } from '@/components/ProcessStepsPro';
 import TrustBar from '@/components/TrustBar.astro';
 import AreasServed from '@/components/AreasServed.astro';
-import Gallery from '@/components/Gallery.astro';
-import SectionNav from '@/components/SectionNav.astro';
-import ContactSection from '@/components/Contact.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
+import ProofShowcase from '@/components/ProofShowcase.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `About | ${siteConfig.brand.name}`;
 const description =
   'Commercial-grade cleaning focused on clear communication, consistent checklists, and respectful service.';
+
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,19 +27,24 @@ const description =
     client:load
     title="A cleaner workspace, a simpler workday"
     description="We’re built for reliability: clear communication, consistent checklists, and a team that respects your space."
-  />
+  >
+    <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+      <a class="btn-invert" href={href('checklist/')}>Preview checklist</a>
+      <a class="btn-invert" href={href('results/')}>View results</a>
+    </div>
+    <p class="mt-4 text-sm text-neutral-300">
+      Prefer to call or text?{' '}
+      <a
+        class="underline decoration-white/30 underline-offset-4 hover:decoration-white/60"
+        href={`tel:${siteConfig.contact.phoneE164}`}
+      >
+        {siteConfig.contact.phoneDisplay}
+      </a>
+    </p>
+  </PageHeroPro>
 
   <TrustBar />
-
-  <SectionNav
-    items={[
-      { id: 'how-we-work', label: 'How' },
-      { id: 'expect', label: 'Expect' },
-      { id: 'gallery', label: 'Results' },
-      { id: 'quote', label: 'Contact' },
-    ]}
-    ariaLabel="About sections"
-  />
 
   <section class="section pb-0" id="how-we-work">
     <div class="container-page">
@@ -63,30 +69,21 @@ const description =
             We don't just clean; we communicate. From the first walkthrough to the daily checklist,
             everything is designed to be clear and consistent.
           </p>
-          <ul class="mt-8 space-y-4">
-            <li class="flex items-start gap-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
-                >✓</span
-              >
+          <ul class="check-list">
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
               <span class="text-slate-700 dark:text-slate-300"
                 >Consistent crews who know your space</span
               >
             </li>
-            <li class="flex items-start gap-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
-                >✓</span
-              >
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
               <span class="text-slate-700 dark:text-slate-300"
                 >Real-time reporting and issue flagging</span
               >
             </li>
-            <li class="flex items-start gap-3">
-              <span
-                class="flex h-6 w-6 items-center justify-center rounded-full bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
-                >✓</span
-              >
+            <li>
+              <span class="check-icon" aria-hidden="true">✓</span>
               <span class="text-slate-700 dark:text-slate-300"
                 >Flexible scheduling to fit your operations</span
               >
@@ -139,81 +136,19 @@ const description =
 
   <AreasServed />
 
-  <Gallery
-    id="gallery"
-    heading="Work gallery"
-    description="Examples of the spaces we support—from restrooms and breakrooms to conference rooms and supply areas."
-    showTip={false}
-    ctaHref={`${import.meta.env.BASE_URL}results/`}
-    ctaLabel="View all results"
+  <ProofShowcase
+    id="proof"
+    heading="Proof you can see (without the hype)"
+    description="A few snapshots of the spaces we support—clean, consistent, and checklist-driven."
   />
 
   <ConversionStrip
+    id="quote"
     tone="muted"
     eyebrow="Get started"
     heading="Want a walkthrough this week?"
     description="Request a walkthrough, call/text, or preview our checklist. We’ll confirm scope and send a clear written quote."
   />
-
-  <section id="quote" class="section section-muted section-creative scroll-mt-24">
-    <div class="container-page relative">
-      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
-        <div class="mx-auto h-72 w-[min(74rem,96vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
-      </div>
-
-      <div class="grid gap-10 lg:grid-cols-[1.1fr,0.9fr] lg:items-start">
-        <div class="glass-panel relative overflow-hidden p-6 sm:p-8">
-          <div
-            aria-hidden="true"
-            class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-          >
-          </div>
-          <div class="relative">
-            <p class="eyebrow">Walkthrough + scope</p>
-            <h2 class="heading-2 mt-2">Ready to request a walkthrough?</h2>
-            <p class="lede">
-              Share your square footage, schedule, and access window. We’ll confirm scope and reply
-              within 1 business day.
-            </p>
-
-            <ul class="text-muted mt-6 grid gap-3 text-sm">
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300"
-                >
-                  ✓
-                </span>
-                <span>Written checklist + clear add-ons</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300"
-                >
-                  ✓
-                </span>
-                <span>Flexible schedules (after-hours / weekends)</span>
-              </li>
-              <li class="flex items-start gap-3">
-                <span
-                  class="mt-0.5 inline-flex h-6 w-6 flex-none items-center justify-center rounded-full bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300"
-                >
-                  ✓
-                </span>
-                <span>Communication-first service</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <ContactSection
-          variant="embed"
-          showSidebar={false}
-          heading="Request a walkthrough"
-          description="Tell us your space and schedule. We’ll confirm details and reply within 1 business day."
-        />
-      </div>
-    </div>
-  </section>
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

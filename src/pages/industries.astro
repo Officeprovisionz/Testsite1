@@ -6,8 +6,6 @@ import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
-import ContactSection from '@/components/Contact.astro';
-import SectionNav from '@/components/SectionNav.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
@@ -28,29 +26,15 @@ const description =
 
   <TrustBar />
 
-  <SectionNav
-    items={[
-      { id: 'industries', label: 'Industries' },
-      { id: 'process', label: 'Process' },
-      { id: 'quote', label: 'Walkthrough' },
-    ]}
-    ariaLabel="Industries sections"
-  />
-
   <IndustriesPro client:visible />
 
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 
   <ConversionStrip
+    id="quote"
     tone="muted"
     heading="Pick the easiest next step"
     description="Request a walkthrough, call/text, or preview the checklist. We’ll confirm scope and send a clear written quote."
-  />
-
-  <ContactSection
-    id="quote"
-    heading="Request a walkthrough"
-    description="Share your space, access window, and priorities. We’ll confirm scope and send a clear written quote."
   />
 
   <Footer slot="footer" />

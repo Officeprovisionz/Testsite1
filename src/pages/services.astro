@@ -9,8 +9,6 @@ import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
-import SectionNav from '@/components/SectionNav.astro';
-import QualityPromise from '@/components/QualityPromise.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
@@ -30,23 +28,7 @@ const description =
 
   <TrustBar />
 
-  <SectionNav
-    items={[
-      { id: 'services', label: 'Core' },
-      { id: 'specialty', label: 'Add-ons' },
-      { id: 'areas', label: 'Areas' },
-      { id: 'faq', label: 'FAQ' },
-    ]}
-    ariaLabel="Services sections"
-  />
-
   <ServicesPro client:visible />
-
-  <QualityPromise
-    id="quality"
-    heading="Quality you can count on"
-    description="Clear scope + checklist delivery + fast follow-up. Built for busy teams that need consistency."
-  />
 
   <ServicesSection
     id="specialty"

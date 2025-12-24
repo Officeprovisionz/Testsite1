@@ -3,26 +3,24 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
-import PageHeader from '@/components/PageHeader.astro';
-import TrustBar from '@/components/TrustBar.astro';
-import IndustriesSection from '@/components/Industries.astro';
+import { PageHeroPro } from '@/components/PageHeroPro';
+import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import ContactSection from '@/components/Contact.astro';
 import SectionNav from '@/components/SectionNav.astro';
-import WaveDivider from '@/components/WaveDivider.astro';
+import TrustBar from '@/components/TrustBar.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Industries | ${siteConfig.brand.name}`;
 const description =
   'Commercial cleaning for offices, property management, and customer spaces—scoped clearly with checklist-based delivery.';
-
-const base = import.meta.env.BASE_URL;
 ---
 
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeader
+  <PageHeroPro
+    client:load
     title="Industries we serve"
     description="Built for real workplaces. Clear scope, consistent checklists, and fast communication—so cleaning stays off your plate."
   />
@@ -38,95 +36,7 @@ const base = import.meta.env.BASE_URL;
     ariaLabel="Industries sections"
   />
 
-  <section class="section section-creative pb-0">
-    <div class="container-page relative">
-      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
-        <div class="mx-auto h-72 w-[min(74rem,96vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
-      </div>
-
-      <div class="grid gap-6 lg:grid-cols-12 lg:items-stretch">
-        <div class="glass-card relative overflow-hidden p-7 sm:p-9 lg:col-span-7">
-          <div
-            aria-hidden="true"
-            class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-          >
-          </div>
-          <div class="relative">
-            <p class="eyebrow">Built for operations teams</p>
-            <h2 class="heading-2 mt-2">Cleaning that fits how real workplaces run</h2>
-            <p class="lede">
-              Whether you manage an office, a retail space, or a multi-tenant building, we keep
-              scope clear and delivery consistent—so you can delegate cleaning confidently.
-            </p>
-
-            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a class="btn-primary" href="#industries">Explore industries</a>
-              <a class="btn-secondary" href="#quote">Request a walkthrough</a>
-              <a class="btn-secondary" href={`${base}services/`}>Browse services</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="grid gap-6 lg:col-span-5">
-          <div class="glass-panel relative overflow-hidden p-6">
-            <div
-              aria-hidden="true"
-              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
-            >
-            </div>
-            <div class="relative">
-              <p class="text-strong text-sm font-semibold">Common goals</p>
-              <ul class="text-muted mt-3 grid gap-2 text-sm">
-                <li class="flex items-start gap-2">
-                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                  ></span>
-                  <span>Consistent restrooms + high-touch disinfecting</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                  ></span>
-                  <span>Predictable schedules (after-hours, weekends)</span>
-                </li>
-                <li class="flex items-start gap-2">
-                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                  ></span>
-                  <span>Fast communication + clean scope documentation</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="glass-panel relative overflow-hidden p-6">
-            <div
-              aria-hidden="true"
-              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
-            >
-            </div>
-            <div class="relative">
-              <p class="text-strong text-sm font-semibold">Need multi-site support?</p>
-              <p class="text-muted mt-2 text-sm">
-                Tell us locations and access windows. We’ll tailor the checklist and keep reporting
-                simple.
-              </p>
-              <div class="mt-4">
-                <a class="link text-sm" href="#quote">Start with a walkthrough →</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="relative -mb-px mt-12">
-      <WaveDivider tone="bg" class="absolute bottom-0 left-0 right-0" />
-    </div>
-  </section>
-
-  <IndustriesSection
-    id="industries"
-    heading="Who we serve"
-    description="A few common industries where clear scope and consistent delivery matter most."
-  />
+  <IndustriesPro client:visible />
 
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 

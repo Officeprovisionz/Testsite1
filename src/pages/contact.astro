@@ -3,10 +3,9 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
-import PageHeader from '@/components/PageHeader.astro';
+import { PageHeroPro } from '@/components/PageHeroPro';
 import ContactSection from '@/components/Contact.astro';
 import TrustBar from '@/components/TrustBar.astro';
-import WaveDivider from '@/components/WaveDivider.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Contact | ${siteConfig.brand.name}`;
@@ -17,121 +16,99 @@ const description =
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeader
+  <PageHeroPro
+    client:load
     title="Contact"
     description="Request a quote or ask a question. We’ll confirm scope, timing, and a clear quote before service."
   />
 
   <TrustBar />
 
-  <section class="section section-creative pb-0">
-    <div class="container-page relative">
-      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
-        <div class="mx-auto h-72 w-[min(74rem,96vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
-      </div>
+  <section class="section pb-0">
+    <div class="container-page">
+      <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+        <div>
+          <h2 class="heading-2">Tell us your space. We’ll handle the rest.</h2>
+          <p class="text-muted mt-4 text-lg">
+            We confirm scope, access, and schedule—then send a clear, written quote before any
+            service begins.
+          </p>
 
-      <div class="grid gap-6 lg:grid-cols-12 lg:items-stretch">
-        <div class="glass-card relative overflow-hidden p-7 sm:p-9 lg:col-span-7">
-          <div
-            aria-hidden="true"
-            class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-          >
-          </div>
-          <div class="relative">
-            <p class="eyebrow">Fast quote • Clear scope</p>
-            <h2 class="heading-2 mt-2">Tell us your space. We’ll handle the rest.</h2>
-            <p class="lede">
-              We confirm scope, access, and schedule—then send a clear, written quote before any
-              service begins.
-            </p>
-
-            <ul class="text-muted mt-6 grid gap-2 text-sm sm:grid-cols-2">
-              <li class="flex items-start gap-2">
-                <span
-                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                  aria-hidden="true">✓</span
-                >
-                <span>Checklist-based cleaning for consistent results</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span
-                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                  aria-hidden="true">✓</span
-                >
-                <span>Flexible access windows (after-hours, weekends)</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span
-                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                  aria-hidden="true">✓</span
-                >
-                <span>Simple add-ons: restocking, floor care, windows</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span
-                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                  aria-hidden="true">✓</span
-                >
-                <span>Responsive communication during business hours</span>
-              </li>
-            </ul>
-
-            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
-              <a class="btn-primary" href="#quote">Start your request</a>
-              <a class="btn-secondary" href={`${import.meta.env.BASE_URL}services/`}
-                >Browse services</a
+          <div class="mt-8 space-y-6">
+            <div class="flex items-start gap-4">
+              <div
+                class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
               >
-            </div>
-          </div>
-        </div>
-
-        <div class="grid gap-6 lg:col-span-5">
-          <div class="glass-panel relative overflow-hidden p-6">
-            <div
-              aria-hidden="true"
-              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
-            >
-            </div>
-            <div class="relative">
-              <p class="text-strong text-sm font-semibold">Best info to include</p>
-              <p class="text-muted mt-2 text-sm">
-                Square footage (or estimate), frequency, access window, and any high-priority areas
-                like restrooms or breakrooms.
-              </p>
-            </div>
-          </div>
-
-          <div class="glass-panel relative overflow-hidden p-6">
-            <div
-              aria-hidden="true"
-              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
-            >
-            </div>
-            <div class="relative">
-              <p class="text-strong text-sm font-semibold">Prefer phone or email?</p>
-              <p class="text-muted mt-2 text-sm">
-                We’re happy to talk it through—whatever is easiest for your team.
-              </p>
-              <div class="mt-4 flex flex-col gap-2">
-                <a class="link text-sm" href={`tel:${siteConfig.contact.phoneE164}`}
-                  >Call/Text: {siteConfig.contact.phoneDisplay}</a
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-6 w-6"
                 >
-                <a class="link text-sm" href={`mailto:${siteConfig.contact.email}`}
-                  >Email: {siteConfig.contact.email}</a
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Phone</h3>
+                <p class="mt-1 text-slate-600 dark:text-slate-400">
+                  <a
+                    href={`tel:${siteConfig.contact.phoneE164}`}
+                    class="hover:text-brand-600 dark:hover:text-brand-400"
+                  >
+                    {siteConfig.contact.phoneDisplay}
+                  </a>
+                </p>
+              </div>
+            </div>
+
+            <div class="flex items-start gap-4">
+              <div
+                class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="h-6 w-6"
                 >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                  ></path>
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Email</h3>
+                <p class="mt-1 text-slate-600 dark:text-slate-400">
+                  <a
+                    href={`mailto:${siteConfig.contact.email}`}
+                    class="hover:text-brand-600 dark:hover:text-brand-400"
+                  >
+                    {siteConfig.contact.email}
+                  </a>
+                </p>
               </div>
             </div>
           </div>
         </div>
+
+        <div
+          class="rounded-2xl border border-slate-200 bg-slate-50 p-8 dark:border-slate-800 dark:bg-slate-900"
+        >
+          <ContactSection id="quote" heading="Send a message" />
+        </div>
       </div>
     </div>
-
-    <div class="relative -mb-px mt-12">
-      <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
-    </div>
   </section>
-
-  <ContactSection id="quote" heading="Request a quote" />
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

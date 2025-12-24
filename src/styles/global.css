@@ -9,10 +9,20 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 
   body {
-    @apply bg-white text-slate-900 antialiased;
+    @apply min-h-screen bg-white text-slate-900 antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: rgb(14 165 233 / 0.18);
   }
 
   :focus-visible {
@@ -36,16 +46,27 @@
     html {
       scroll-behavior: auto;
     }
+
+    *,
+    *::before,
+    *::after {
+      scroll-behavior: auto;
+      transition-duration: 0.001ms !important;
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+    }
   }
 }
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl px-4;
+    @apply mx-auto w-full max-w-6xl;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   .section {
-    @apply py-14 sm:py-16;
+    padding-block: clamp(3rem, 6vw, 5rem);
   }
 
   .card {
@@ -53,22 +74,68 @@
   }
 
   .card-hover {
-    @apply transition duration-200 hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-soft;
+    @apply transition duration-200;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-hover {
+      @apply hover:-translate-y-0.5 hover:border-slate-300 hover:shadow-soft;
+    }
+
+    .gallery-hover-zoom {
+      transition: transform 300ms ease;
+    }
+
+    .group:hover .gallery-hover-zoom {
+      transform: scale(1.02);
+    }
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition;
+    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition;
   }
 
   .btn-primary {
-    @apply btn bg-brand-600 text-white hover:bg-brand-700;
+    @apply btn bg-brand-600 text-white hover:bg-brand-700 active:bg-brand-700;
   }
 
   .btn-secondary {
-    @apply btn border border-slate-300 bg-white text-slate-900 hover:bg-slate-50;
+    @apply btn border border-slate-300 bg-white text-slate-900 hover:bg-slate-50 active:bg-slate-100;
+  }
+
+  .input,
+  .select,
+  .textarea {
+    @apply w-full rounded-xl border border-slate-300 bg-white px-3 text-slate-900 placeholder:text-slate-400;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white;
+  }
+
+  .input,
+  .select {
+    @apply h-11;
+  }
+
+  .textarea {
+    @apply py-2;
+  }
+
+  .safe-bottom-pad {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom));
   }
 
   .pill {
     @apply inline-flex items-center rounded-full border border-slate-200 bg-white px-3 py-1 text-xs font-medium text-slate-700;
+  }
+
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-slate-900/20;
+  }
+
+  .mobile-menu-panel {
+    @apply absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft;
+  }
+
+  details[data-mobile-menu]:not([open]) .mobile-menu-overlay {
+    display: none;
   }
 }

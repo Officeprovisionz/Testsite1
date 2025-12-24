@@ -15,11 +15,11 @@ const items = siteConfig.faqs;
           const buttonId = `faq-button-${idx}`;
           const panelId = `faq-panel-${idx}`;
           return (
-            <div class="card overflow-hidden">
+            <div class="card card-hover overflow-hidden">
               <h3>
                 <button
                   id={buttonId}
-                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-slate-900"
+                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-slate-900 focus-visible:outline-none"
                   type="button"
                   aria-expanded="false"
                   aria-controls={panelId}

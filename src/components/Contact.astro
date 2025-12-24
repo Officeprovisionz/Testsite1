@@ -93,10 +93,11 @@ const mailtoTo = siteConfig.contact.email;
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Name *</span>
           <input
-            class="h-11 rounded-xl border border-slate-300 px-3"
+            class="input"
             type="text"
             name="name"
             autocomplete="name"
+            autocapitalize="words"
             required
           />
         </label>
@@ -104,27 +105,23 @@ const mailtoTo = siteConfig.contact.email;
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Email *</span>
           <input
-            class="h-11 rounded-xl border border-slate-300 px-3"
+            class="input"
             type="email"
             name="email"
             autocomplete="email"
+            inputmode="email"
             required
           />
         </label>
 
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Phone</span>
-          <input
-            class="h-11 rounded-xl border border-slate-300 px-3"
-            type="tel"
-            name="phone"
-            autocomplete="tel"
-          />
+          <input class="input" type="tel" name="phone" autocomplete="tel" inputmode="tel" />
         </label>
 
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Service type</span>
-          <select class="h-11 rounded-xl border border-slate-300 px-3" name="service">
+          <select class="select" name="service">
             <option value="Office Cleaning">Office Cleaning</option>
             <option value="Recurring Janitorial">Recurring Janitorial</option>
             <option value="Deep / Detail Cleaning">Deep / Detail Cleaning</option>
@@ -142,7 +139,7 @@ const mailtoTo = siteConfig.contact.email;
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Message *</span>
           <textarea
-            class="min-h-28 rounded-xl border border-slate-300 px-3 py-2"
+            class="textarea min-h-28"
             name="message"
             required
             placeholder="Example: ~2,500 sq ft office in SoMa, weekly cleaning after 6pm; need restroom restocking + monthly deep clean."
@@ -157,7 +154,7 @@ const mailtoTo = siteConfig.contact.email;
           </label>
         </div>
 
-        <button class="btn-primary h-11" type="submit"> Send request </button>
+        <button class="btn-primary" type="submit">Send request</button>
 
         <p class="text-xs text-slate-600">
           By submitting, you agree to be contacted about your request. No spam—ever.

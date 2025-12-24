@@ -54,8 +54,10 @@ const initials = (() => {
           <a
             href={item.href}
             class:list={[
-              'rounded-lg px-2 py-1 hover:text-slate-900 focus-visible:outline-none',
-              isActive(item.href) ? 'text-slate-900' : 'text-slate-700',
+              'relative rounded-lg px-2 py-1 hover:text-slate-900 focus-visible:outline-none',
+              isActive(item.href)
+                ? 'text-slate-900 after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
+                : 'text-slate-700',
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}
           >
@@ -65,21 +67,21 @@ const initials = (() => {
       }
     </nav>
 
-    <details class="relative md:hidden">
-      <summary class="btn-secondary cursor-pointer list-none px-3 py-2">
+    <details class="relative md:hidden" data-mobile-menu>
+      <summary class="btn-secondary cursor-pointer list-none px-3 py-2" aria-label="Open menu">
         <span class="text-sm font-semibold">Menu</span>
       </summary>
-      <div
-        class="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"
-      >
+      <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
+      ></button>
+      <div class="mobile-menu-panel">
         <nav class="grid" aria-label="Mobile">
           {
             navItems.map((item) => (
               <a
                 href={item.href}
                 class:list={[
-                  'px-4 py-3 text-sm font-medium hover:bg-slate-50',
-                  isActive(item.href) ? 'text-slate-900' : 'text-slate-700',
+                  'px-4 py-3.5 text-sm font-medium hover:bg-slate-50',
+                  isActive(item.href) ? 'bg-slate-50 text-slate-900' : 'text-slate-700',
                 ]}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
@@ -97,3 +99,25 @@ const initials = (() => {
     </div>
   </div>
 </header>
+
+<script>
+  (() => {
+    const menu = document.querySelector('details[data-mobile-menu]') as HTMLDetailsElement | null;
+    if (!menu) return;
+
+    const close = () => {
+      menu.open = false;
+    };
+
+    const overlayBtn = menu.querySelector('[data-menu-close]') as HTMLButtonElement | null;
+    overlayBtn?.addEventListener('click', close);
+
+    const links = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a[href]'));
+    links.forEach((a) => a.addEventListener('click', close));
+
+    document.addEventListener('keydown', (e) => {
+      if (!menu.open) return;
+      if (e.key === 'Escape') close();
+    });
+  })();
+</script>

@@ -1,0 +1,148 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+const telHref = `tel:${siteConfig.contact.phoneE164}`;
+---
+
+<section id="contact" class="section scroll-mt-20 bg-slate-50">
+  <div class="container-page grid gap-10 lg:grid-cols-2">
+    <div>
+      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">Get a fast quote</h2>
+      <p class="mt-2 max-w-prose text-slate-700">
+        Tell us the basics. We’ll confirm scope, timing, and a final quote before service.
+      </p>
+
+      <div class="mt-6 space-y-3 text-sm text-slate-700">
+        <p>
+          <span class="font-semibold text-slate-900">Call/Text:</span>
+          <a
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
+            href={telHref}
+          >
+            {siteConfig.contact.phoneDisplay}
+          </a>
+        </p>
+        <p>
+          <span class="font-semibold text-slate-900">Email:</span>
+          <a
+            class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
+            href={`mailto:${siteConfig.contact.email}`}
+          >
+            {siteConfig.contact.email}
+          </a>
+        </p>
+        <div>
+          <p class="font-semibold text-slate-900">Hours</p>
+          <ul class="mt-1 grid gap-1">
+            {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
+        <p class="text-sm font-semibold text-slate-900">Spam protection</p>
+        <p class="mt-1 text-sm text-slate-700">
+          This form includes a hidden honeypot field. For stronger protection, consider using a
+          provider that supports rate limiting and/or add a serverless endpoint (Azure Functions)
+          later.
+        </p>
+      </div>
+    </div>
+
+    <div class="card p-6">
+      {
+        !formEndpoint && (
+          <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            <p class="font-semibold">Form endpoint not configured</p>
+            <p class="mt-1">
+              Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in{' '}
+              <code class="rounded bg-white px-1.5 py-0.5">.env</code>
+              (see <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
+              submissions.
+            </p>
+          </div>
+        )
+      }
+
+      <form
+        action={formEndpoint ?? '#'}
+        method="POST"
+        class="grid gap-4"
+        aria-describedby="contact-help"
+      >
+        <p id="contact-help" class="text-sm text-slate-700">
+          Fields marked with <span class="font-semibold">*</span> are required.
+        </p>
+
+        <label class="grid gap-1 text-sm">
+          <span class="font-semibold text-slate-900">Name *</span>
+          <input
+            class="h-11 rounded-xl border border-slate-300 px-3"
+            type="text"
+            name="name"
+            autocomplete="name"
+            required
+          />
+        </label>
+
+        <label class="grid gap-1 text-sm">
+          <span class="font-semibold text-slate-900">Email *</span>
+          <input
+            class="h-11 rounded-xl border border-slate-300 px-3"
+            type="email"
+            name="email"
+            autocomplete="email"
+            required
+          />
+        </label>
+
+        <label class="grid gap-1 text-sm">
+          <span class="font-semibold text-slate-900">Phone</span>
+          <input
+            class="h-11 rounded-xl border border-slate-300 px-3"
+            type="tel"
+            name="phone"
+            autocomplete="tel"
+          />
+        </label>
+
+        <label class="grid gap-1 text-sm">
+          <span class="font-semibold text-slate-900">Service type</span>
+          <select class="h-11 rounded-xl border border-slate-300 px-3" name="service">
+            <option value="Standard">Standard</option>
+            <option value="Deep Clean">Deep Clean</option>
+            <option value="Move In/Out">Move In/Out</option>
+            <option value="Office">Office</option>
+          </select>
+        </label>
+
+        <label class="grid gap-1 text-sm">
+          <span class="font-semibold text-slate-900">Message *</span>
+          <textarea
+            class="min-h-28 rounded-xl border border-slate-300 px-3 py-2"
+            name="message"
+            required
+            placeholder="Example: 2 bed / 1 bath apartment, prefer Fridays, have a small dog."
+          ></textarea>
+        </label>
+
+        {/* Honeypot (bots will often fill this). Keep it visually hidden. */}
+        <div class="hidden" aria-hidden="true">
+          <label>
+            Company
+            <input type="text" name="company" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+
+        <button class="btn-primary h-11" type="submit" disabled={!formEndpoint}>
+          Send request
+        </button>
+
+        <p class="text-xs text-slate-600">
+          By submitting, you agree to be contacted about your request. No spam—ever.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>

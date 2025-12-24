@@ -1,0 +1,33 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+const telHref = `tel:${siteConfig.contact.phoneE164}`;
+---
+
+<header class="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur">
+  <div class="container-page flex h-16 items-center justify-between">
+    <a
+      href={import.meta.env.BASE_URL}
+      class="flex items-center gap-2 font-extrabold tracking-tight"
+    >
+      <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-600 text-white">SC</span>
+      <span class="text-slate-900">{siteConfig.brand.name}</span>
+    </a>
+
+    <nav
+      class="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex"
+      aria-label="Primary"
+    >
+      <a class="hover:text-slate-900" href="#services">Services</a>
+      <a class="hover:text-slate-900" href="#pricing">Pricing</a>
+      <a class="hover:text-slate-900" href="#areas">Areas</a>
+      <a class="hover:text-slate-900" href="#faq">FAQ</a>
+      <a class="hover:text-slate-900" href="#contact">Contact</a>
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <a class="btn-secondary hidden sm:inline-flex" href={telHref}>Call/Text</a>
+      <a class="btn-primary" href="#contact">Get a Quote</a>
+    </div>
+  </div>
+</header>

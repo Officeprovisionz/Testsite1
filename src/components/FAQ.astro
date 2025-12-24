@@ -1,0 +1,79 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+const items = siteConfig.faqs;
+---
+
+<section id="faq" class="section scroll-mt-20">
+  <div class="container-page">
+    <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">FAQ</h2>
+    <p class="mt-2 max-w-prose text-slate-700">Quick answers to common questions.</p>
+
+    <div class="mt-8 grid gap-3" data-faq>
+      {
+        items.map((it, idx) => {
+          const buttonId = `faq-button-${idx}`;
+          const panelId = `faq-panel-${idx}`;
+          return (
+            <div class="card overflow-hidden">
+              <h3>
+                <button
+                  id={buttonId}
+                  class="flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold text-slate-900"
+                  type="button"
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                >
+                  <span>{it.question}</span>
+                  <span class="text-brand-700" aria-hidden="true">
+                    +
+                  </span>
+                </button>
+              </h3>
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={buttonId}
+                hidden
+                class="px-6 pb-6 text-sm text-slate-700"
+              >
+                <p>{it.answer}</p>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const root = document.querySelector('[data-faq]');
+      if (!root) return;
+
+      const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('button[aria-controls]'));
+
+      const setExpanded = (btn: HTMLButtonElement, expanded: boolean) => {
+        const panelId = btn.getAttribute('aria-controls');
+        if (!panelId) return;
+        const panel = document.getElementById(panelId);
+        if (!panel) return;
+        btn.setAttribute('aria-expanded', String(expanded));
+        const icon = btn.querySelector('[aria-hidden="true"]');
+        if (icon) icon.textContent = expanded ? '–' : '+';
+        panel.hidden = !expanded;
+      };
+
+      buttons.forEach((btn) => {
+        setExpanded(btn, false);
+        btn.addEventListener('click', () => {
+          const isOpen = btn.getAttribute('aria-expanded') === 'true';
+          // close others
+          buttons.forEach((b) => setExpanded(b, false));
+          // toggle clicked
+          setExpanded(btn, !isOpen);
+        });
+      });
+    })();
+  </script>
+</section>

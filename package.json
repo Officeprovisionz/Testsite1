@@ -1,0 +1,52 @@
+{
+  "name": "cleaning-landing",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "typecheck": "astro check",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier . --check",
+    "format:write": "prettier . --write",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.6",
+    "@astrojs/sitemap": "latest",
+    "@astrojs/tailwind": "latest",
+    "astro": "latest"
+  },
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@types/node": "latest",
+    "autoprefixer": "latest",
+    "eslint": "latest",
+    "eslint-config-prettier": "latest",
+    "eslint-plugin-astro": "latest",
+    "globals": "latest",
+    "husky": "latest",
+    "lint-staged": "latest",
+    "postcss": "latest",
+    "prettier": "latest",
+    "prettier-plugin-astro": "latest",
+    "prettier-plugin-tailwindcss": "latest",
+    "tailwindcss": "^3.4.17",
+    "typescript": "latest",
+    "typescript-eslint": "latest"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,astro,json,md,mdx,yml,yaml,css}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx,astro}": [
+      "eslint --fix"
+    ]
+  }
+}

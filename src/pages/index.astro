@@ -1,0 +1,28 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Hero from '@/components/Hero.astro';
+import TrustBar from '@/components/TrustBar.astro';
+import Services from '@/components/Services.astro';
+import Pricing from '@/components/Pricing.astro';
+import AreasServed from '@/components/AreasServed.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import FAQ from '@/components/FAQ.astro';
+import Contact from '@/components/Contact.astro';
+import StickyCTA from '@/components/StickyCTA.astro';
+import Footer from '@/components/Footer.astro';
+---
+
+<BaseLayout>
+  <Header slot="header" />
+  <Hero />
+  <TrustBar />
+  <Services />
+  <Pricing />
+  <AreasServed />
+  <Testimonials />
+  <FAQ />
+  <Contact />
+  <Footer slot="footer" />
+  <StickyCTA slot="sticky" />
+</BaseLayout>

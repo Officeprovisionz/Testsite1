@@ -1,0 +1,14 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+const telHref = `tel:${siteConfig.contact.phoneE164}`;
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 backdrop-blur md:hidden"
+>
+  <div class="container-page flex items-center gap-3 py-3">
+    <a class="btn-secondary flex-1" href={telHref}>Call/Text</a>
+    <a class="btn-primary flex-1" href="#contact">Get a Quote</a>
+  </div>
+</div>

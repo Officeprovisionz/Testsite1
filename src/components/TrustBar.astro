@@ -1,0 +1,24 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+---
+
+<section class="border-y border-slate-200 bg-white">
+  <div class="container-page grid gap-4 py-8 sm:grid-cols-3">
+    {
+      siteConfig.trustBadges.map((b) => (
+        <div class="flex items-start gap-3">
+          <span
+            class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-brand-600 text-white"
+            aria-hidden="true"
+          >
+            ✓
+          </span>
+          <div>
+            <p class="text-sm font-semibold text-slate-900">{b.title}</p>
+            <p class="text-sm text-slate-700">{b.description}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>

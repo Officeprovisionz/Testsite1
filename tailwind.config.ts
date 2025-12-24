@@ -4,22 +4,27 @@ export default {
   content: ['./src/**/*.{astro,html,js,jsx,ts,tsx,md,mdx}'],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'sans-serif'],
+        serif: ['Playfair Display', 'serif'],
+      },
       colors: {
         brand: {
-          50: 'hsl(190 92% 95%)',
-          100: 'hsl(190 92% 90%)',
-          200: 'hsl(190 90% 80%)',
-          300: 'hsl(190 85% 70%)',
-          400: 'hsl(190 78% 55%)',
-          500: 'hsl(190 80% 45%)',
-          600: 'hsl(190 85% 38%)',
-          700: 'hsl(190 85% 30%)',
-          800: 'hsl(190 80% 22%)',
-          900: 'hsl(190 75% 16%)',
+          50: 'rgb(var(--color-brand-50) / <alpha-value>)',
+          100: 'rgb(var(--color-brand-100) / <alpha-value>)',
+          200: 'rgb(var(--color-brand-200) / <alpha-value>)',
+          300: 'rgb(var(--color-brand-300) / <alpha-value>)',
+          400: 'rgb(var(--color-brand-400) / <alpha-value>)',
+          500: 'rgb(var(--color-brand-500) / <alpha-value>)',
+          600: 'rgb(var(--color-brand-600) / <alpha-value>)',
+          700: 'rgb(var(--color-brand-700) / <alpha-value>)',
+          800: 'rgb(var(--color-brand-800) / <alpha-value>)',
+          900: 'rgb(var(--color-brand-900) / <alpha-value>)',
+          950: 'rgb(var(--color-brand-950) / <alpha-value>)',
         },
       },
       boxShadow: {
-        soft: '0 10px 30px rgba(2, 6, 23, 0.10)',
+        soft: '0 10px 40px -10px rgba(0,0,0,0.08)',
       },
     },
   },

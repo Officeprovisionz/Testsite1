@@ -21,6 +21,8 @@
     "@astrojs/check": "^0.9.6",
     "@astrojs/sitemap": "latest",
     "@astrojs/tailwind": "latest",
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
     "astro": "latest"
   },
   "devDependencies": {

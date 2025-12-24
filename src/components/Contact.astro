@@ -10,12 +10,13 @@ type Props = {
 const {
   id,
   heading = 'Get a fast quote',
-  description = 'Tell us the basics. We’ll confirm scope, timing, and a final quote before service.',
+  description = 'Share a few details about your space and schedule. We’ll confirm scope, timing, and next steps—then send a clear quote.',
 } = Astro.props;
 
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
 const mailtoTo = siteConfig.contact.email;
+const sourcePath = Astro.url.pathname;
 ---
 
 <section id={id} class="section section-muted scroll-mt-20">
@@ -49,8 +50,17 @@ const mailtoTo = siteConfig.contact.email;
       </div>
 
       <div class="card mt-8 p-5">
-        <p class="text-strong text-sm font-semibold">Privacy & spam protection</p>
-        <p class="text-muted mt-1 text-sm">
+        <p class="text-strong text-sm font-semibold">What happens next</p>
+        <ol class="text-muted mt-2 grid gap-2 text-sm">
+          <li><span class="text-strong font-semibold">1.</span> We reply within 1 business day.</li>
+          <li>
+            <span class="text-strong font-semibold">2.</span> We confirm scope, access, and any special
+            requirements.
+          </li>
+          <li><span class="text-strong font-semibold">3.</span> You get a clear, written quote.</li>
+        </ol>
+
+        <p class="text-subtle mt-3 text-xs">
           This form includes a hidden anti-spam field. We only use your details to respond to your
           request.
         </p>
@@ -81,6 +91,8 @@ const mailtoTo = siteConfig.contact.email;
         data-mailto-to={mailtoTo}
         aria-describedby="contact-help"
       >
+        <input type="hidden" name="source" value={sourcePath} />
+
         <p id="contact-help" class="text-muted text-sm">
           Fields marked with <span class="font-semibold">*</span> are required.
         </p>
@@ -88,34 +100,71 @@ const mailtoTo = siteConfig.contact.email;
         <p class="text-muted hidden text-sm" data-contact-status role="status" aria-live="polite">
         </p>
 
-        <label class="grid gap-1 text-sm">
-          <span class="text-strong font-semibold">Name *</span>
-          <input
-            class="input"
-            type="text"
-            name="name"
-            autocomplete="name"
-            autocapitalize="words"
-            required
-          />
-        </label>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Company / Organization *</span>
+            <input
+              class="input"
+              type="text"
+              name="companyName"
+              autocomplete="organization"
+              autocapitalize="words"
+              required
+            />
+          </label>
 
-        <label class="grid gap-1 text-sm">
-          <span class="text-strong font-semibold">Email *</span>
-          <input
-            class="input"
-            type="email"
-            name="email"
-            autocomplete="email"
-            inputmode="email"
-            required
-          />
-        </label>
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Contact name *</span>
+            <input
+              class="input"
+              type="text"
+              name="name"
+              autocomplete="name"
+              autocapitalize="words"
+              required
+            />
+          </label>
 
-        <label class="grid gap-1 text-sm">
-          <span class="text-strong font-semibold">Phone</span>
-          <input class="input" type="tel" name="phone" autocomplete="tel" inputmode="tel" />
-        </label>
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Email *</span>
+            <input
+              class="input"
+              type="email"
+              name="email"
+              autocomplete="email"
+              inputmode="email"
+              required
+            />
+          </label>
+
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Phone</span>
+            <input class="input" type="tel" name="phone" autocomplete="tel" inputmode="tel" />
+          </label>
+        </div>
+
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Preferred contact</span>
+            <select class="select" name="contactMethod">
+              <option value="Email">Email</option>
+              <option value="Phone">Phone</option>
+              <option value="Text">Text</option>
+            </select>
+          </label>
+
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Location (City + ZIP) *</span>
+            <input
+              class="input"
+              type="text"
+              name="location"
+              autocomplete="postal-code"
+              required
+              placeholder="Example: San Francisco, 94103"
+            />
+          </label>
+        </div>
 
         <label class="grid gap-1 text-sm">
           <span class="text-strong font-semibold">Service type</span>
@@ -134,21 +183,102 @@ const mailtoTo = siteConfig.contact.email;
           </select>
         </label>
 
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Approx. square footage</span>
+            <select class="select" name="sqft">
+              <option value="Not sure">Not sure</option>
+              <option value="Under 2,000">Under 2,000</option>
+              <option value="2,000–5,000">2,000–5,000</option>
+              <option value="5,000–10,000">5,000–10,000</option>
+              <option value="10,000–25,000">10,000–25,000</option>
+              <option value="25,000+">25,000+</option>
+            </select>
+          </label>
+
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Cleaning frequency</span>
+            <select class="select" name="frequency">
+              <option value="Not sure">Not sure</option>
+              <option value="One-time">One-time</option>
+              <option value="Weekly">Weekly</option>
+              <option value="2–3x / week">2–3x / week</option>
+              <option value="Daily">Daily</option>
+              <option value="Day porter">Day porter</option>
+              <option value="Custom">Custom</option>
+            </select>
+          </label>
+
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Building type</span>
+            <select class="select" name="buildingType">
+              <option value="Office">Office</option>
+              <option value="Medical">Medical / Clinic</option>
+              <option value="Retail">Retail</option>
+              <option value="Warehouse">Warehouse / Industrial</option>
+              <option value="Education">Education</option>
+              <option value="Other">Other</option>
+            </select>
+          </label>
+
+          <label class="grid gap-1 text-sm">
+            <span class="text-strong font-semibold">Access window</span>
+            <select class="select" name="accessWindow">
+              <option value="Business hours">Business hours</option>
+              <option value="After-hours">After-hours</option>
+              <option value="Weekends">Weekends</option>
+              <option value="Flexible">Flexible</option>
+            </select>
+          </label>
+
+          <label class="grid gap-1 text-sm sm:col-span-2">
+            <span class="text-strong font-semibold">Timing</span>
+            <select class="select" name="startTiming">
+              <option value="ASAP">ASAP</option>
+              <option value="Within 2 weeks">Within 2 weeks</option>
+              <option value="Within a month">Within a month</option>
+              <option value="Just researching">Just researching</option>
+            </select>
+          </label>
+        </div>
+
+        <fieldset class="grid gap-2 text-sm">
+          <legend class="text-strong font-semibold">Add-ons (optional)</legend>
+          <div class="grid gap-2 sm:grid-cols-2">
+            <label class="flex items-start gap-2">
+              <input class="mt-1" type="checkbox" name="extras" value="Restocking" />
+              <span class="text-muted">Supplies / restocking</span>
+            </label>
+            <label class="flex items-start gap-2">
+              <input class="mt-1" type="checkbox" name="extras" value="Disinfecting" />
+              <span class="text-muted">Disinfecting & high-touch focus</span>
+            </label>
+            <label class="flex items-start gap-2">
+              <input class="mt-1" type="checkbox" name="extras" value="Floor care" />
+              <span class="text-muted">Floor care (strip/wax, scrubbing)</span>
+            </label>
+            <label class="flex items-start gap-2">
+              <input class="mt-1" type="checkbox" name="extras" value="Windows" />
+              <span class="text-muted">Interior windows / glass</span>
+            </label>
+          </div>
+        </fieldset>
+
         <label class="grid gap-1 text-sm">
-          <span class="text-strong font-semibold">Message *</span>
+          <span class="text-strong font-semibold">Notes / scope details *</span>
           <textarea
             class="textarea min-h-28"
             name="message"
             required
-            placeholder="Example: ~2,500 sq ft office in SoMa, weekly cleaning after 6pm; need restroom restocking + monthly deep clean."
+            placeholder="Example: ~2,500 sq ft office; weekly after 6pm; focus on restrooms + kitchen; monthly deep clean."
           ></textarea>
         </label>
 
         {/* Honeypot (bots will often fill this). Keep it visually hidden. */}
         <div class="hidden" aria-hidden="true">
           <label>
-            Company
-            <input type="text" name="company" tabindex="-1" autocomplete="off" />
+            Website
+            <input type="text" name="website" tabindex="-1" autocomplete="off" />
           </label>
         </div>
 
@@ -203,12 +333,25 @@ const mailtoTo = siteConfig.contact.email;
       }
 
       const fd = new FormData(form);
+      const source = String(fd.get('source') ?? '').trim();
+      const companyName = String(fd.get('companyName') ?? '').trim();
       const name = String(fd.get('name') ?? '').trim();
       const email = String(fd.get('email') ?? '').trim();
       const phone = String(fd.get('phone') ?? '').trim();
+      const contactMethod = String(fd.get('contactMethod') ?? '').trim();
+      const location = String(fd.get('location') ?? '').trim();
       const service = String(fd.get('service') ?? '').trim();
+      const sqft = String(fd.get('sqft') ?? '').trim();
+      const frequency = String(fd.get('frequency') ?? '').trim();
+      const buildingType = String(fd.get('buildingType') ?? '').trim();
+      const accessWindow = String(fd.get('accessWindow') ?? '').trim();
+      const startTiming = String(fd.get('startTiming') ?? '').trim();
+      const extras = fd
+        .getAll('extras')
+        .map((v) => String(v).trim())
+        .filter(Boolean);
       const message = String(fd.get('message') ?? '').trim();
-      const honeypot = String(fd.get('company') ?? '').trim();
+      const honeypot = String(fd.get('website') ?? '').trim();
 
       // Simple bot check: if honeypot is filled, do nothing.
       if (honeypot) {
@@ -216,8 +359,10 @@ const mailtoTo = siteConfig.contact.email;
         return;
       }
 
-      if (!name || !email || !message) {
-        setStatus('Please fill in the required fields (name, email, message).');
+      if (!companyName || !name || !email || !location || !message) {
+        setStatus(
+          'Please fill in the required fields (company, contact name, email, location, and notes).'
+        );
         focusFirstInvalid();
         return;
       }
@@ -255,7 +400,7 @@ const mailtoTo = siteConfig.contact.email;
             throw new Error(msg);
           })
           .then(() => {
-            setStatus('Request sent — we’ll reply soon.');
+            setStatus('Request received — we’ll reply within 1 business day.');
             form.reset();
           })
           .catch((err: unknown) => {
@@ -275,12 +420,22 @@ const mailtoTo = siteConfig.contact.email;
         return;
       }
 
-      const subject = `Quote request — ${service || 'Office services'}`;
+      const subject = `Quote request — ${companyName || name}`;
       const body = [
+        source ? `Page: ${source}` : undefined,
+        companyName ? `Company: ${companyName}` : undefined,
         `Name: ${name}`,
         `Email: ${email}`,
         phone ? `Phone: ${phone}` : undefined,
+        contactMethod ? `Preferred contact: ${contactMethod}` : undefined,
+        location ? `Location: ${location}` : undefined,
         service ? `Service: ${service}` : undefined,
+        buildingType ? `Building type: ${buildingType}` : undefined,
+        sqft ? `Sq ft: ${sqft}` : undefined,
+        frequency ? `Frequency: ${frequency}` : undefined,
+        accessWindow ? `Access: ${accessWindow}` : undefined,
+        startTiming ? `Timing: ${startTiming}` : undefined,
+        extras.length ? `Add-ons: ${extras.join(', ')}` : undefined,
         '',
         message,
       ]

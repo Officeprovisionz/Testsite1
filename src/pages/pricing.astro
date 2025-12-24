@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import StickyCTA from '@/components/StickyCTA.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import PricingSection from '@/components/Pricing.astro';
+import FAQ from '@/components/FAQ.astro';
+import ContactSection from '@/components/Contact.astro';
+import { siteConfig } from '@/data/siteConfig';
+
+const title = `Pricing | ${siteConfig.brand.name}`;
+const description =
+  'How commercial cleaning pricing works: frequency, square footage, access, and add-ons. Get a clear scope and quote before service.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <PageHeader
+    title="Pricing"
+    description="We price based on scope—not surprises. Share your space and schedule and we’ll send a clear quote before service."
+  />
+
+  <PricingSection heading="Typical plans" />
+
+  <FAQ />
+
+  <ContactSection heading="Get a quote" />
+
+  <Footer slot="footer" />
+  <StickyCTA slot="sticky" />
+</BaseLayout>

@@ -22,7 +22,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const cta = ctaHref ?? href('contact/');
 ---
 
-<section id={id} class="section scroll-mt-20 bg-slate-50">
+<section id={id} class="section section-muted section-creative scroll-mt-20">
   <div class="container-page">
     <h2 class="heading-2">{heading}</h2>
     <p class="lede">{description}</p>
@@ -30,13 +30,15 @@ const cta = ctaHref ?? href('contact/');
     <div class="mt-8 grid gap-5 lg:grid-cols-3">
       {
         siteConfig.pricing.tiers.map((t) => (
-          <div class="card p-6">
+          <div class="panel panel-muted border-app overflow-hidden border p-6">
             <div class="flex items-baseline justify-between gap-4">
-              <h3 class="text-lg font-bold text-slate-900">{t.name}</h3>
-              <p class="text-sm font-semibold text-brand-700">Starting at {t.startingAt}</p>
+              <h3 class="text-strong text-lg font-bold">{t.name}</h3>
+              <p class="text-sm font-semibold" style="color: rgb(var(--color-brand-700))">
+                Starting at {t.startingAt}
+              </p>
             </div>
-            <p class="mt-2 text-sm text-slate-700">Best for: {t.bestFor}</p>
-            <ul class="mt-4 grid gap-2 text-sm text-slate-700">
+            <p class="text-muted mt-2 text-sm">Best for: {t.bestFor}</p>
+            <ul class="text-muted mt-4 grid gap-2 text-sm">
               {t.includes.map((i) => (
                 <li class="flex gap-2">
                   <span
@@ -47,7 +49,7 @@ const cta = ctaHref ?? href('contact/');
                 </li>
               ))}
             </ul>
-            {t.disclaimer && <p class="mt-4 text-xs text-slate-600">{t.disclaimer}</p>}
+            {t.disclaimer && <p class="text-subtle mt-4 text-xs">{t.disclaimer}</p>}
             <div class="mt-6">
               <a class="btn-primary w-full" href={cta}>
                 {ctaLabel}

@@ -3,7 +3,12 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import TrustBar from '@/components/TrustBar.astro';
+import Industries from '@/components/Industries.astro';
+import HowItWorks from '@/components/HowItWorks.astro';
 import Services from '@/components/Services.astro';
+import Pricing from '@/components/Pricing.astro';
+import Gallery from '@/components/Gallery.astro';
+import FAQ from '@/components/FAQ.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import Footer from '@/components/Footer.astro';
 import { siteConfig } from '@/data/siteConfig';
@@ -17,6 +22,11 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
   <Header slot="header" />
   <Hero />
   <TrustBar />
+
+  <Industries />
+
+  <HowItWorks />
+
   <Services
     heading="Popular services"
     description="Office cleaning, supplies/restocking, and facilities support—built for busy teams."
@@ -25,15 +35,33 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     ctaLabel="View all services"
   />
 
-  <section class="section section-muted section-creative">
+  <Gallery
+    id="results"
+    heading="Results preview"
+    description="A preview of recent work across offices and commercial spaces—focused on consistency and clear scope."
+    showTip={false}
+    ctaHref={href('results/')}
+    ctaLabel="View all results"
+  />
+
+  <Pricing
+    id="pricing"
+    heading="Pricing (how it works)"
+    ctaHref={href('contact/')}
+    ctaLabel="Get a quote"
+  />
+
+  <FAQ />
+
+  <section class="section section-muted section-creative" id="quote">
     <div class="container-page">
       <div class="panel panel-muted border-app overflow-hidden border p-7 sm:p-8">
         <div class="grid gap-8 md:grid-cols-2 md:items-center">
           <div>
-            <p class="eyebrow">Quick, clear, professional</p>
-            <h2 class="heading-2 mt-2">Get a quote today</h2>
+            <p class="eyebrow">Request a walkthrough</p>
+            <h2 class="heading-2 mt-2">Get a quote for your office</h2>
             <p class="lede">
-              Tell us what you need and when. We’ll confirm scope and send a clear quote.
+              Tell us your space, frequency, and access. We’ll confirm scope and send a clear quote.
             </p>
             <ul class="text-subtle mt-5 grid gap-2 text-sm sm:grid-cols-2">
               <li class="flex items-start gap-2">
@@ -49,12 +77,12 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
               <li class="flex items-start gap-2">
                 <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
                 ></span>
-                <span>Flexible scheduling</span>
+                <span>After-hours available</span>
               </li>
               <li class="flex items-start gap-2">
                 <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
                 ></span>
-                <span>Supplies/restocking available</span>
+                <span>References available on request</span>
               </li>
             </ul>
           </div>

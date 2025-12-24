@@ -1,0 +1,33 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import StickyCTA from '@/components/StickyCTA.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import IndustriesSection from '@/components/Industries.astro';
+import HowItWorks from '@/components/HowItWorks.astro';
+import ContactSection from '@/components/Contact.astro';
+import { siteConfig } from '@/data/siteConfig';
+
+const title = `Industries | ${siteConfig.brand.name}`;
+const description =
+  'Commercial cleaning for offices, property management, and customer spaces—scoped clearly with checklist-based delivery.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <PageHeader
+    title="Industries we serve"
+    description="Built for real workplaces. Clear scope, consistent checklists, and fast communication—so cleaning stays off your plate."
+  />
+
+  <IndustriesSection />
+
+  <HowItWorks heading="A process built for operations" />
+
+  <ContactSection heading="Request a walkthrough" />
+
+  <Footer slot="footer" />
+  <StickyCTA slot="sticky" />
+</BaseLayout>

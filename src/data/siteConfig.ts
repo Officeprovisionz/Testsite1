@@ -23,6 +23,17 @@ export type Testimonial = {
   quote: string;
 };
 
+export type Industry = {
+  title: string;
+  description: string;
+  bullets: string[];
+};
+
+export type ProcessStep = {
+  title: string;
+  description: string;
+};
+
 export const siteConfig = {
   brand: {
     name: 'Office Provisionz',
@@ -53,6 +64,55 @@ export const siteConfig = {
       description: 'Quick replies during business hours.',
     },
   ],
+
+  industries: [
+    {
+      title: 'Offices & suites',
+      description: 'Reliable recurring cleaning for focused workspaces and client-facing areas.',
+      bullets: ['After-hours available', 'Checklist-driven scope', 'Fast issue follow-up'],
+    },
+    {
+      title: 'Medical / dental (non-sterile areas)',
+      description:
+        'Discreet, detail-oriented cleaning for reception, restrooms, breakrooms, and offices.',
+      bullets: ['High-touch focus', 'Clear protocols', 'Minimal disruption'],
+    },
+    {
+      title: 'Property management',
+      description:
+        'Common-area upkeep and turnover support with consistent communication and documentation.',
+      bullets: ['Suite turnovers', 'Vendor coordination', 'Walkthrough notes'],
+    },
+    {
+      title: 'Retail & customer spaces',
+      description:
+        'Keep entrances, floors, and restrooms presentable—especially in high-traffic periods.',
+      bullets: ['Entryways + floors', 'Restroom servicing', 'Flexible scheduling'],
+    },
+  ] satisfies Industry[],
+
+  processSteps: [
+    {
+      title: 'Request a quote',
+      description:
+        'Share basics (space, frequency, access). We respond quickly during business hours.',
+    },
+    {
+      title: 'Scope + checklist',
+      description:
+        'We confirm what’s included, what’s optional, and any building requirements—then lock the scope.',
+    },
+    {
+      title: 'Service delivery',
+      description:
+        'Your visits follow a consistent checklist for repeatable results across teams and shifts.',
+    },
+    {
+      title: 'Quality follow-up',
+      description:
+        'Walkthrough notes and fast fixes if anything needs attention. One point of contact.',
+    },
+  ] satisfies ProcessStep[],
   whatIncluded: [
     'Restrooms cleaned and sanitized',
     'Breakroom wipe-down',

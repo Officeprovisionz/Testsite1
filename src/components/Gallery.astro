@@ -5,12 +5,18 @@ type Props = {
   id?: string;
   heading?: string;
   description?: string;
+  showTip?: boolean;
+  ctaHref?: string;
+  ctaLabel?: string;
 };
 
 const {
   id,
   heading = 'Gallery',
   description = 'A quick look at the spaces we support. Replace these placeholders with your own photos.',
+  showTip = true,
+  ctaHref,
+  ctaLabel,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -31,12 +37,26 @@ const toPublicUrl = (src: string) => {
         <h2 class="heading-2">{heading}</h2>
         <p class="lede">{description}</p>
       </div>
-      <p class="text-subtle text-sm">
-        Tip: add images to
-        <code class="border-app surface-muted mx-1 rounded border px-1.5 py-0.5"
-          >public/gallery</code
-        >.
-      </p>
+      {
+        (showTip || (ctaHref && ctaLabel)) && (
+          <div class="flex flex-col gap-2 sm:items-end">
+            {ctaHref && ctaLabel && (
+              <a class="btn-secondary px-4 py-2" href={ctaHref}>
+                {ctaLabel}
+              </a>
+            )}
+            {showTip && (
+              <p class="text-subtle text-sm">
+                Tip: add images to
+                <code class="border-app surface-muted mx-1 rounded border px-1.5 py-0.5">
+                  public/gallery
+                </code>
+                .
+              </p>
+            )}
+          </div>
+        )
+      }
     </div>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-gallery>

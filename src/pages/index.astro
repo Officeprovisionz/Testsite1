@@ -4,7 +4,6 @@ import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import Services from '@/components/Services.astro';
-import Testimonials from '@/components/Testimonials.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import Footer from '@/components/Footer.astro';
 import { siteConfig } from '@/data/siteConfig';
@@ -25,8 +24,6 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     ctaHref={href('services/')}
     ctaLabel="View all services"
   />
-
-  <Testimonials />
 
   <section class="section section-muted section-creative">
     <div class="container-page">

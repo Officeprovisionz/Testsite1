@@ -44,13 +44,15 @@ const { items, ariaLabel = 'Page sections' } = Astro.props;
 
 <script>
   (() => {
-    const nav = document.querySelector('[data-section-nav]');
+    const nav = document.querySelector('[data-section-nav]') as HTMLElement | null;
     if (!nav) return;
 
-    const links = Array.from(nav.querySelectorAll('a[data-section-nav-link][data-target]'));
+    const links = Array.from(
+      nav.querySelectorAll<HTMLAnchorElement>('a[data-section-nav-link][data-target]')
+    );
     if (!links.length) return;
 
-    const byId = new Map();
+    const byId = new Map<string, HTMLElement>();
     links.forEach((a) => {
       const id = a.dataset.target || '';
       if (!id) return;
@@ -58,7 +60,7 @@ const { items, ariaLabel = 'Page sections' } = Astro.props;
       if (el) byId.set(id, el);
     });
 
-    const setActive = (id) => {
+    const setActive = (id: string) => {
       links.forEach((a) => {
         const isActive = (a.dataset.target || '') === id;
         if (isActive) a.setAttribute('aria-current', 'location');
@@ -94,7 +96,7 @@ const { items, ariaLabel = 'Page sections' } = Astro.props;
     const obs = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
-          const id = entry.target && entry.target.id;
+          const id = (entry.target as HTMLElement | null)?.id;
           if (!id) continue;
           if (entry.isIntersecting && entry.intersectionRatio >= bestRatio) {
             bestRatio = entry.intersectionRatio;

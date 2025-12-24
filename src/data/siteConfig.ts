@@ -25,15 +25,15 @@ export type Testimonial = {
 
 export const siteConfig = {
   brand: {
-    name: 'SparkleClean Co.',
-    tagline: 'Reliable, detail-first cleaning—done the right way.',
+    name: 'Office Provisionz',
+    tagline: 'Commercial-grade cleaning with clear communication and consistent checklists.',
     city: 'Chicago, IL',
   },
   contact: {
     phoneDisplay: '(312) 555-0123',
     phoneE164: '+13125550123',
-    email: 'hello@sparklecleanco.example',
-    smsBody: 'Hi SparkleClean Co! I’d like a cleaning quote.',
+    email: 'hello@officeprovisionz.example',
+    smsBody: 'Hi Office Provisionz — I’d like a cleaning quote.',
   },
   hours: {
     lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
@@ -53,70 +53,70 @@ export const siteConfig = {
     },
   ],
   whatIncluded: [
-    'Kitchens & bathrooms cleaned and sanitized',
+    'Restrooms cleaned and sanitized',
     'Floors vacuumed and mopped',
-    'Dusting on reachable surfaces',
-    'Trash removed (upon request)',
+    'High-touch surfaces disinfected',
+    'Trash replaced and removed (as requested)',
   ],
   services: [
     {
-      title: 'Standard Home Cleaning',
-      description: 'A dependable reset for busy weeks—clean, calm, and comfortable.',
+      title: 'Standard Office Cleaning',
+      description: 'Reliable upkeep to keep your workspace clean, professional, and work-ready.',
       bullets: [
-        'Bedrooms & living areas',
-        'Kitchen wipe-down',
-        'Bathroom refresh',
+        'Common areas & workstations (reachable surfaces)',
+        'Breakroom wipe-down',
+        'Restrooms serviced',
         'Floors throughout',
       ],
     },
     {
       title: 'Deep Cleaning',
       description:
-        'For the “let’s really get it done” clean—great for first visits or seasonal resets.',
+        'A detailed reset for first visits, quarterly maintenance, or high-traffic spaces.',
       bullets: [
-        'Detail dusting',
+        'Detail dusting and edges',
         'Baseboards (accessible)',
-        'Extra kitchen attention',
-        'Soap scum & grout focus',
+        'Breakroom and restroom detail work',
+        'Build-up removal focus',
       ],
     },
     {
       title: 'Move In / Move Out',
-      description: 'Help make transitions easier with a thorough, checklist-driven clean.',
+      description: 'A thorough turnover clean for suites, offices, and commercial spaces.',
       bullets: [
-        'Empty home cleaning',
+        'Empty-space cleaning',
         'Inside cabinets (optional)',
-        'Inside fridge/oven (optional)',
-        'Final walk-through notes',
+        'Inside fridge/microwave (optional)',
+        'Checklist + walk-through notes',
       ],
     },
     {
       title: 'Office & Small Business',
-      description: 'Keep your space welcoming for clients and comfortable for your team.',
+      description: 'Flexible scheduling to keep client-facing spaces consistently presentable.',
       bullets: ['Reception & common areas', 'Restrooms', 'Trash & floors', 'After-hours options'],
     },
   ] satisfies Service[],
   pricing: {
-    note: 'Pricing depends on home size, condition, pets, add-ons, and frequency. We’ll confirm a fixed quote before service.',
+    note: 'Pricing depends on square footage, condition, add-ons, and frequency. We’ll confirm a fixed quote before service.',
     tiers: [
       {
         name: 'Standard',
         startingAt: '$149',
-        bestFor: 'Upkeep cleans & recurring visits',
+        bestFor: 'Ongoing maintenance & recurring visits',
         includes: ['Core rooms', 'Floors', 'Surfaces', 'Bathroom refresh'],
         disclaimer: 'Starting price for smaller spaces. Final quote after details.',
       },
       {
         name: 'Deep Clean',
         startingAt: '$249',
-        bestFor: 'First-time cleans & seasonal resets',
+        bestFor: 'First-time cleans & quarterly resets',
         includes: ['Extra detail work', 'More time per room', 'Build-up attention'],
         disclaimer: 'Recommended for first appointment for best results.',
       },
       {
         name: 'Move In/Out',
         startingAt: '$299',
-        bestFor: 'Empty homes & turnovers',
+        bestFor: 'Turnovers & empty spaces',
         includes: [
           'Thorough empty-home clean',
           'Optional appliance/cabinet add-ons',
@@ -142,18 +142,18 @@ export const siteConfig = {
     {
       name: 'Jordan P.',
       location: 'Lakeview',
-      quote: 'Showed up on time, communicated clearly, and the place felt brand new.',
+      quote:
+        'On time, professional, and the office looked client-ready. Communication was excellent.',
     },
     {
       name: 'Samira K.',
       location: 'Wicker Park',
-      quote:
-        'Loved the attention to details. Bathrooms were spotless and the floors looked amazing.',
+      quote: 'Great attention to detail—restrooms were spotless and the floors looked incredible.',
     },
     {
       name: 'Chris M.',
       location: 'West Loop',
-      quote: 'Easy booking and professional team. Great for keeping up with a busy schedule.',
+      quote: 'Easy scheduling and consistent results. Perfect for a busy team and shared spaces.',
     },
   ] satisfies Testimonial[],
   faqs: [
@@ -184,9 +184,9 @@ export const siteConfig = {
     },
   ] satisfies FAQItem[],
   seo: {
-    title: 'SparkleClean Co. | Cleaning services in Chicago, IL',
+    title: 'Office Provisionz | Cleaning services in Chicago, IL',
     description:
-      'Mobile-first landing page starter for a cleaning company: services, pricing, FAQs, and a static contact form that works on GitHub Pages.',
+      'Professional cleaning services with clear pricing, checklists, and fast quotes. Mobile-friendly site built for GitHub Pages.',
     themeColor: '#0891b2',
   },
   analytics: {

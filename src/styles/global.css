@@ -188,12 +188,62 @@
     padding-block: clamp(3rem, 6vw, 5rem);
   }
 
+  /* Decorative section wrapper that stays compatible with tokens + themes.
+     Usage: <section class="section section-creative [section-muted]"> ... */
+  .section-creative {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .section-creative::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background-image: radial-gradient(rgb(var(--color-border) / 0.5) 1px, transparent 1px);
+    background-size: 18px 18px;
+    background-position: -2px -2px;
+    -webkit-mask-image: radial-gradient(70% 60% at 50% 0%, #000 0%, transparent 75%);
+    mask-image: radial-gradient(70% 60% at 50% 0%, #000 0%, transparent 75%);
+  }
+
+  .section-creative::after {
+    content: '';
+    position: absolute;
+    inset: -30% -20% auto;
+    height: 22rem;
+    pointer-events: none;
+    background:
+      radial-gradient(60% 65% at 35% 40%, rgb(var(--color-brand-400) / 0.16), transparent 62%),
+      radial-gradient(55% 60% at 75% 20%, rgb(var(--color-brand-300) / 0.14), transparent 60%);
+    transform: rotate(-6deg);
+  }
+
+  .section-creative > * {
+    position: relative;
+    z-index: 1;
+  }
+
   .card {
     @apply border transition-all duration-300;
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-soft);
+  }
+
+  .panel {
+    @apply border;
+    border-color: rgb(var(--color-border));
+    background-color: rgb(var(--color-surface));
+    border-radius: var(--radius-card);
+    box-shadow: none;
+  }
+
+  .panel-muted {
+    background-color: rgb(var(--color-surface-muted));
   }
 
   .card-hover {
@@ -291,7 +341,18 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-800;
+    @apply text-xs font-semibold uppercase tracking-[0.18em];
+    color: rgb(var(--color-brand-700));
+  }
+
+  :root[data-mode='dark'] .eyebrow {
+    color: rgb(var(--color-brand-300));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light']) .eyebrow {
+      color: rgb(var(--color-brand-300));
+    }
   }
 
   .heading-1 {

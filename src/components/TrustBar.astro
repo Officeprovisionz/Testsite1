@@ -7,7 +7,7 @@ import { siteConfig } from '@/data/siteConfig';
     <div class="grid gap-4 sm:grid-cols-3">
       {
         siteConfig.trustBadges.map((b) => (
-          <div class="card p-5">
+          <div class="panel panel-muted border-app p-5">
             <div class="flex items-start gap-4">
               <span
                 class="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
@@ -16,8 +16,8 @@ import { siteConfig } from '@/data/siteConfig';
                 ✓
               </span>
               <div class="min-w-0">
-                <p class="text-sm font-semibold text-slate-900">{b.title}</p>
-                <p class="mt-1 text-sm leading-relaxed text-slate-700">{b.description}</p>
+                <p class="text-strong text-sm font-semibold">{b.title}</p>
+                <p class="text-muted mt-1 text-sm leading-relaxed">{b.description}</p>
               </div>
             </div>
           </div>

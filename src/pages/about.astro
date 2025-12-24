@@ -35,7 +35,7 @@ const description =
     ariaLabel="About sections"
   />
 
-  <section class="section">
+  <section class="section section-creative">
     <div class="container-page">
       <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
         <div id="how-we-work" class="scroll-mt-24">
@@ -45,25 +45,49 @@ const description =
             loop—so you always know what to expect.
           </p>
 
-          <ol class="mt-6 grid gap-4">
-            <li class="card p-5">
-              <p class="text-strong text-sm font-semibold">1) Quote + scope</p>
-              <p class="text-muted mt-1 text-sm">
-                Tell us your space and goals. We confirm details and provide a clear quote before
-                service.
-              </p>
+          <ol class="border-app mt-6 grid gap-4 border-l pl-6">
+            <li class="relative">
+              <div
+                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
+                aria-hidden="true"
+              >
+                1
+              </div>
+              <div class="panel border-app overflow-hidden border p-5">
+                <p class="text-strong text-sm font-semibold">Quote + scope</p>
+                <p class="text-muted mt-1 text-sm">
+                  Tell us your space and goals. We confirm details and provide a clear quote before
+                  service.
+                </p>
+              </div>
             </li>
-            <li class="card p-5">
-              <p class="text-strong text-sm font-semibold">2) Checklist cleaning</p>
-              <p class="text-muted mt-1 text-sm">
-                We use a consistent checklist so the important details don’t get missed.
-              </p>
+            <li class="relative">
+              <div
+                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
+                aria-hidden="true"
+              >
+                2
+              </div>
+              <div class="panel border-app overflow-hidden border p-5">
+                <p class="text-strong text-sm font-semibold">Checklist cleaning</p>
+                <p class="text-muted mt-1 text-sm">
+                  We use a consistent checklist so the important details don’t get missed.
+                </p>
+              </div>
             </li>
-            <li class="card p-5">
-              <p class="text-strong text-sm font-semibold">3) Follow-up</p>
-              <p class="text-muted mt-1 text-sm">
-                If anything needs attention, let us know within 24 hours and we’ll make it right.
-              </p>
+            <li class="relative">
+              <div
+                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
+                aria-hidden="true"
+              >
+                3
+              </div>
+              <div class="panel border-app overflow-hidden border p-5">
+                <p class="text-strong text-sm font-semibold">Follow-up</p>
+                <p class="text-muted mt-1 text-sm">
+                  If anything needs attention, let us know within 24 hours and we’ll make it right.
+                </p>
+              </div>
             </li>
           </ol>
         </div>
@@ -75,19 +99,19 @@ const description =
           </p>
 
           <div class="mt-6 grid gap-5">
-            <div class="card p-6">
+            <div class="panel panel-muted border-app overflow-hidden border p-6">
               <p class="text-strong text-sm font-semibold">Respect for your space</p>
               <p class="text-muted mt-1 text-sm">
                 Careful handling, tidy workflow, and a team that treats your space like it’s ours.
               </p>
             </div>
-            <div class="card p-6">
+            <div class="panel panel-muted border-app overflow-hidden border p-6">
               <p class="text-strong text-sm font-semibold">Clear communication</p>
               <p class="text-muted mt-1 text-sm">
                 Upfront quotes, confirmed scope, and a simple way to request add-ons.
               </p>
             </div>
-            <div class="card p-6">
+            <div class="panel panel-muted border-app overflow-hidden border p-6">
               <p class="text-strong text-sm font-semibold">Consistency</p>
               <p class="text-muted mt-1 text-sm">
                 A checklist-driven approach for repeatable results—especially for recurring visits.
@@ -107,9 +131,9 @@ const description =
     description="Examples of the spaces we support—from restrooms and breakrooms to conference rooms and supply areas."
   />
 
-  <section id="quote" class="section section-muted scroll-mt-24">
+  <section id="quote" class="section section-muted section-creative scroll-mt-24">
     <div class="container-page">
-      <div class="card p-7 sm:p-8">
+      <div class="panel panel-muted border-app overflow-hidden border p-7 sm:p-8">
         <h2 class="heading-2">Ready to get a quote?</h2>
         <p class="lede">
           Send a quick message and we’ll respond with availability and a clear price.

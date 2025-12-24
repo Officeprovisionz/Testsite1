@@ -175,13 +175,20 @@ const description =
 
   <section id="quote" class="section section-muted section-creative scroll-mt-24">
     <div class="container-page">
-      <div class="glass-card overflow-hidden p-7 sm:p-9">
-        <h2 class="heading-2">Ready to get a quote?</h2>
-        <p class="lede">
-          Send a quick message and we’ll respond with availability and a clear price.
-        </p>
-        <div class="mt-6">
-          <a class="btn-primary" href={`${import.meta.env.BASE_URL}contact/`}>Contact us</a>
+      <div class="glass-card relative overflow-hidden p-7 sm:p-9">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+        <div class="relative">
+          <h2 class="heading-2">Ready to get a quote?</h2>
+          <p class="lede">
+            Send a quick message and we’ll respond with availability and a clear price.
+          </p>
+          <div class="mt-6">
+            <a class="btn-primary" href={`${import.meta.env.BASE_URL}contact/`}>Contact us</a>
+          </div>
         </div>
       </div>
     </div>

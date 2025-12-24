@@ -6,6 +6,7 @@ import StickyCTA from '@/components/StickyCTA.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import ContactSection from '@/components/Contact.astro';
 import TrustBar from '@/components/TrustBar.astro';
+import WaveDivider from '@/components/WaveDivider.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Contact | ${siteConfig.brand.name}`;
@@ -23,7 +24,114 @@ const description =
 
   <TrustBar />
 
-  <ContactSection heading="Request a quote" />
+  <section class="section section-creative pb-0">
+    <div class="container-page relative">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
+        <div class="mx-auto h-72 w-[min(74rem,96vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
+      </div>
+
+      <div class="grid gap-6 lg:grid-cols-12 lg:items-stretch">
+        <div class="glass-card relative overflow-hidden p-7 sm:p-9 lg:col-span-7">
+          <div
+            aria-hidden="true"
+            class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+          >
+          </div>
+          <div class="relative">
+            <p class="eyebrow">Fast quote • Clear scope</p>
+            <h2 class="heading-2 mt-2">Tell us your space. We’ll handle the rest.</h2>
+            <p class="lede">
+              We confirm scope, access, and schedule—then send a clear, written quote before any
+              service begins.
+            </p>
+
+            <ul class="text-muted mt-6 grid gap-2 text-sm sm:grid-cols-2">
+              <li class="flex items-start gap-2">
+                <span
+                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
+                  aria-hidden="true">✓</span
+                >
+                <span>Checklist-based cleaning for consistent results</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
+                  aria-hidden="true">✓</span
+                >
+                <span>Flexible access windows (after-hours, weekends)</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
+                  aria-hidden="true">✓</span
+                >
+                <span>Simple add-ons: restocking, floor care, windows</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span
+                  class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
+                  aria-hidden="true">✓</span
+                >
+                <span>Responsive communication during business hours</span>
+              </li>
+            </ul>
+
+            <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+              <a class="btn-primary" href="#quote">Start your request</a>
+              <a class="btn-secondary" href={`${import.meta.env.BASE_URL}services/`}
+                >Browse services</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="grid gap-6 lg:col-span-5">
+          <div class="glass-panel relative overflow-hidden p-6">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+            >
+            </div>
+            <div class="relative">
+              <p class="text-strong text-sm font-semibold">Best info to include</p>
+              <p class="text-muted mt-2 text-sm">
+                Square footage (or estimate), frequency, access window, and any high-priority areas
+                like restrooms or breakrooms.
+              </p>
+            </div>
+          </div>
+
+          <div class="glass-panel relative overflow-hidden p-6">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+            >
+            </div>
+            <div class="relative">
+              <p class="text-strong text-sm font-semibold">Prefer phone or email?</p>
+              <p class="text-muted mt-2 text-sm">
+                We’re happy to talk it through—whatever is easiest for your team.
+              </p>
+              <div class="mt-4 flex flex-col gap-2">
+                <a class="link text-sm" href={`tel:${siteConfig.contact.phoneE164}`}
+                  >Call/Text: {siteConfig.contact.phoneDisplay}</a
+                >
+                <a class="link text-sm" href={`mailto:${siteConfig.contact.email}`}
+                  >Email: {siteConfig.contact.email}</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="relative -mb-px mt-12">
+      <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
+    </div>
+  </section>
+
+  <ContactSection id="quote" heading="Request a quote" />
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

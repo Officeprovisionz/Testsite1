@@ -23,6 +23,8 @@ export const HoverEffect = ({
           className="group relative block h-full w-full p-2"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
+          onFocus={() => setHoveredIndex(idx)}
+          onBlur={() => setHoveredIndex(null)}
         >
           <AnimatePresence>
             {hoveredIndex === idx && (
@@ -41,10 +43,24 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card>
-            <CardTitle>{item.title}</CardTitle>
-            <CardDescription>{item.description}</CardDescription>
-          </Card>
+
+          {item.link ? (
+            <a
+              href={item.link}
+              className="relative z-20 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
+              aria-label={`${item.title} — request a walkthrough`}
+            >
+              <Card className="group-hover:border-slate-700">
+                <CardTitle>{item.title}</CardTitle>
+                <CardDescription>{item.description}</CardDescription>
+              </Card>
+            </a>
+          ) : (
+            <Card>
+              <CardTitle>{item.title}</CardTitle>
+              <CardDescription>{item.description}</CardDescription>
+            </Card>
+          )}
         </div>
       ))}
     </div>

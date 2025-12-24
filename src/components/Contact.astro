@@ -613,219 +613,251 @@ const sourcePath = Astro.url.pathname;
 
 <script>
   (() => {
-    const formEl = document.querySelector<HTMLFormElement>('form[data-contact-form]');
-    if (!formEl) return;
+    const forms = Array.from(document.querySelectorAll<HTMLFormElement>('form[data-contact-form]'));
+    if (!forms.length) return;
 
-    const form = formEl;
-    const endpoint = form.dataset.formEndpoint || '';
+    const params = new URLSearchParams(window.location.search);
 
-    const status = form.querySelector<HTMLElement>('[data-contact-status]');
-    const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
+    const initForm = (form: HTMLFormElement) => {
+      const endpoint = form.dataset.formEndpoint || '';
 
-    type StatusKind = 'info' | 'success' | 'error';
+      const status = form.querySelector<HTMLElement>('[data-contact-status]');
+      const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
 
-    const escapeName = (value: string) => {
-      try {
-        if (window.CSS && typeof CSS.escape === 'function') return CSS.escape(String(value));
-      } catch {
-        // ignore
-      }
-      return String(value).replace(/["\\]/g, '\\$&');
-    };
+      type StatusKind = 'info' | 'success' | 'error';
 
-    const setStatus = (message: string, kind: StatusKind = 'info') => {
-      if (!status) return;
-      status.textContent = String(message);
-      status.dataset.contactStatusKind = kind;
-      status.classList.remove('hidden');
+      const escapeName = (value: string) => {
+        try {
+          if (window.CSS && typeof CSS.escape === 'function') return CSS.escape(String(value));
+        } catch {
+          // ignore
+        }
+        return String(value).replace(/["\\]/g, '\\$&');
+      };
 
-      // Visual styles via classes (kept simple and theme-safe).
-      status.classList.remove(
-        'text-muted',
-        'border-app',
-        'surface',
-        'bg-emerald-50',
-        'border-emerald-200',
-        'text-emerald-900',
-        'bg-rose-50',
-        'border-rose-200',
-        'text-rose-900'
-      );
+      const setStatus = (message: string, kind: StatusKind = 'info') => {
+        if (!status) return;
+        status.textContent = String(message);
+        status.dataset.contactStatusKind = kind;
+        status.classList.remove('hidden');
 
-      if (kind === 'success') {
-        status.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
-      } else if (kind === 'error') {
-        status.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
-      } else {
-        status.classList.add('surface', 'border-app', 'text-muted');
-      }
-    };
+        // Visual styles via classes (kept simple and theme-safe).
+        status.classList.remove(
+          'text-muted',
+          'border-app',
+          'surface',
+          'bg-emerald-50',
+          'border-emerald-200',
+          'text-emerald-900',
+          'bg-rose-50',
+          'border-rose-200',
+          'text-rose-900'
+        );
 
-    const setBusy = (busy: boolean) => {
-      form.setAttribute('aria-busy', busy ? 'true' : 'false');
-      if (submitBtn) {
-        submitBtn.disabled = busy;
-        submitBtn.classList.toggle('opacity-70', busy);
-        submitBtn.classList.toggle('cursor-not-allowed', busy);
-        submitBtn.textContent = busy ? 'Sending…' : 'Send request';
-      }
-    };
+        if (kind === 'success') {
+          status.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+        } else if (kind === 'error') {
+          status.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+        } else {
+          status.classList.add('surface', 'border-app', 'text-muted');
+        }
+      };
 
-    const focusFirstInvalid = () => {
-      const el = form.querySelector<HTMLElement>(':invalid');
-      el?.focus?.();
-    };
+      const setBusy = (busy: boolean) => {
+        form.setAttribute('aria-busy', busy ? 'true' : 'false');
+        if (submitBtn) {
+          submitBtn.disabled = busy;
+          submitBtn.classList.toggle('opacity-70', busy);
+          submitBtn.classList.toggle('cursor-not-allowed', busy);
+          submitBtn.textContent = busy ? 'Sending…' : 'Send request';
+        }
+      };
 
-    const setFieldInvalid = (name: string, invalid: boolean) => {
-      const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
-        `[name="${escapeName(name)}"]`
-      );
-      if (!el) return;
-      if (invalid) el.setAttribute('aria-invalid', 'true');
-      else el.removeAttribute('aria-invalid');
-    };
+      const focusFirstInvalid = () => {
+        const el = form.querySelector<HTMLElement>(':invalid');
+        el?.focus?.();
+      };
 
-    const clearInvalidOnInput = () => {
-      const watched = ['companyName', 'name', 'email', 'location', 'message'];
-      watched.forEach((n) => {
-        const el = form.querySelector(`[name="${escapeName(n)}"]`);
+      const setFieldInvalid = (name: string, invalid: boolean) => {
+        const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+          `[name="${escapeName(name)}"]`
+        );
         if (!el) return;
-        el.addEventListener('input', () => setFieldInvalid(n, false));
-        el.addEventListener('change', () => setFieldInvalid(n, false));
+        if (invalid) el.setAttribute('aria-invalid', 'true');
+        else el.removeAttribute('aria-invalid');
+      };
+
+      const clearInvalidOnInput = () => {
+        const watched = ['companyName', 'name', 'email', 'location', 'message'];
+        watched.forEach((n) => {
+          const el = form.querySelector(`[name="${escapeName(n)}"]`);
+          if (!el) return;
+          el.addEventListener('input', () => setFieldInvalid(n, false));
+          el.addEventListener('change', () => setFieldInvalid(n, false));
+        });
+      };
+
+      const prefillFromQuery = () => {
+        const service = params.get('service');
+        if (service) {
+          const sel = form.querySelector<HTMLSelectElement>('select[name="service"]');
+          if (sel && Array.from(sel.options).some((o) => o.value === service)) {
+            sel.value = service;
+            sel.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        }
+
+        // Optional: extras=Restocking,Windows
+        const extras = params.get('extras');
+        if (extras) {
+          extras
+            .split(',')
+            .map((v) => v.trim())
+            .filter(Boolean)
+            .forEach((value) => {
+              const box = form.querySelector<HTMLInputElement>(
+                `input[type="checkbox"][name="extras"][value="${escapeName(value)}"]`
+              );
+              if (box) box.checked = true;
+            });
+        }
+      };
+
+      prefillFromQuery();
+      clearInvalidOnInput();
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const to = form.dataset.mailtoTo || '';
+        if (!to) {
+          setStatus('Email address not configured. Please call/text instead.');
+          return;
+        }
+
+        const fd = new FormData(form);
+        const source = String(fd.get('source') ?? '').trim();
+        const companyName = String(fd.get('companyName') ?? '').trim();
+        const name = String(fd.get('name') ?? '').trim();
+        const email = String(fd.get('email') ?? '').trim();
+        const phone = String(fd.get('phone') ?? '').trim();
+        const contactMethod = String(fd.get('contactMethod') ?? '').trim();
+        const location = String(fd.get('location') ?? '').trim();
+        const service = String(fd.get('service') ?? '').trim();
+        const sqft = String(fd.get('sqft') ?? '').trim();
+        const frequency = String(fd.get('frequency') ?? '').trim();
+        const buildingType = String(fd.get('buildingType') ?? '').trim();
+        const accessWindow = String(fd.get('accessWindow') ?? '').trim();
+        const startTiming = String(fd.get('startTiming') ?? '').trim();
+        const extras = fd
+          .getAll('extras')
+          .map((v) => String(v).trim())
+          .filter(Boolean);
+        const message = String(fd.get('message') ?? '').trim();
+        const honeypot = String(fd.get('website') ?? '').trim();
+
+        // Simple bot check: if honeypot is filled, do nothing.
+        if (honeypot) {
+          setStatus('Thanks!', 'success');
+          return;
+        }
+
+        if (!companyName || !name || !email || !location || !message) {
+          setFieldInvalid('companyName', !companyName);
+          setFieldInvalid('name', !name);
+          setFieldInvalid('email', !email);
+          setFieldInvalid('location', !location);
+          setFieldInvalid('message', !message);
+
+          setStatus(
+            'Please fill in the required fields (company, contact name, email, location, and notes).',
+            'error'
+          );
+          focusFirstInvalid();
+          return;
+        }
+
+        // If endpoint exists, try an async submission (better UX on mobile).
+        if (endpoint && typeof fetch === 'function') {
+          setBusy(true);
+          setStatus('Sending…', 'info');
+
+          fetch(endpoint, {
+            method: 'POST',
+            body: fd,
+            headers: {
+              Accept: 'application/json',
+            },
+          })
+            .then(async (res) => {
+              if (res.ok) return;
+
+              // Try to parse a helpful error payload.
+              let msg = 'Could not send your request. Please try again or call/text.';
+              try {
+                const data = await res.json();
+                if (
+                  data &&
+                  typeof data === 'object' &&
+                  'error' in data &&
+                  typeof data.error === 'string'
+                ) {
+                  msg = data.error;
+                }
+              } catch {
+                // ignore
+              }
+              throw new Error(msg);
+            })
+            .then(() => {
+              setStatus('Request received — we’ll reply within 1 business day.', 'success');
+              form.reset();
+            })
+            .catch((err) => {
+              const msg = err instanceof Error ? err.message : 'Something went wrong.';
+              setStatus(msg, 'error');
+              // Fallback: attempt a normal submit (if endpoint supports it).
+              try {
+                form.submit();
+              } catch {
+                // ignore
+              }
+            })
+            .finally(() => {
+              setBusy(false);
+            });
+
+          return;
+        }
+
+        const subject = `Quote request — ${companyName || name}`;
+        const body = [
+          source ? `Page: ${source}` : undefined,
+          companyName ? `Company: ${companyName}` : undefined,
+          `Name: ${name}`,
+          `Email: ${email}`,
+          phone ? `Phone: ${phone}` : undefined,
+          contactMethod ? `Preferred contact: ${contactMethod}` : undefined,
+          location ? `Location: ${location}` : undefined,
+          service ? `Service: ${service}` : undefined,
+          buildingType ? `Building type: ${buildingType}` : undefined,
+          sqft ? `Sq ft: ${sqft}` : undefined,
+          frequency ? `Frequency: ${frequency}` : undefined,
+          accessWindow ? `Access: ${accessWindow}` : undefined,
+          startTiming ? `Timing: ${startTiming}` : undefined,
+          extras.length ? `Add-ons: ${extras.join(', ')}` : undefined,
+          '',
+          message,
+        ]
+          .filter(Boolean)
+          .join('\n');
+
+        setStatus('Opening your email app…', 'success');
+        const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        window.location.href = href;
       });
     };
 
-    clearInvalidOnInput();
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const to = form.dataset.mailtoTo || '';
-      if (!to) {
-        setStatus('Email address not configured. Please call/text instead.');
-        return;
-      }
-
-      const fd = new FormData(form);
-      const source = String(fd.get('source') ?? '').trim();
-      const companyName = String(fd.get('companyName') ?? '').trim();
-      const name = String(fd.get('name') ?? '').trim();
-      const email = String(fd.get('email') ?? '').trim();
-      const phone = String(fd.get('phone') ?? '').trim();
-      const contactMethod = String(fd.get('contactMethod') ?? '').trim();
-      const location = String(fd.get('location') ?? '').trim();
-      const service = String(fd.get('service') ?? '').trim();
-      const sqft = String(fd.get('sqft') ?? '').trim();
-      const frequency = String(fd.get('frequency') ?? '').trim();
-      const buildingType = String(fd.get('buildingType') ?? '').trim();
-      const accessWindow = String(fd.get('accessWindow') ?? '').trim();
-      const startTiming = String(fd.get('startTiming') ?? '').trim();
-      const extras = fd
-        .getAll('extras')
-        .map((v) => String(v).trim())
-        .filter(Boolean);
-      const message = String(fd.get('message') ?? '').trim();
-      const honeypot = String(fd.get('website') ?? '').trim();
-
-      // Simple bot check: if honeypot is filled, do nothing.
-      if (honeypot) {
-        setStatus('Thanks!', 'success');
-        return;
-      }
-
-      if (!companyName || !name || !email || !location || !message) {
-        setFieldInvalid('companyName', !companyName);
-        setFieldInvalid('name', !name);
-        setFieldInvalid('email', !email);
-        setFieldInvalid('location', !location);
-        setFieldInvalid('message', !message);
-
-        setStatus(
-          'Please fill in the required fields (company, contact name, email, location, and notes).',
-          'error'
-        );
-        focusFirstInvalid();
-        return;
-      }
-
-      // If endpoint exists, try an async submission (better UX on mobile).
-      if (endpoint && typeof fetch === 'function') {
-        setBusy(true);
-        setStatus('Sending…', 'info');
-
-        fetch(endpoint, {
-          method: 'POST',
-          body: fd,
-          headers: {
-            Accept: 'application/json',
-          },
-        })
-          .then(async (res) => {
-            if (res.ok) return;
-
-            // Try to parse a helpful error payload.
-            let msg = 'Could not send your request. Please try again or call/text.';
-            try {
-              const data = await res.json();
-              if (
-                data &&
-                typeof data === 'object' &&
-                'error' in data &&
-                typeof data.error === 'string'
-              ) {
-                msg = data.error;
-              }
-            } catch {
-              // ignore
-            }
-            throw new Error(msg);
-          })
-          .then(() => {
-            setStatus('Request received — we’ll reply within 1 business day.', 'success');
-            form.reset();
-          })
-          .catch((err) => {
-            const msg = err instanceof Error ? err.message : 'Something went wrong.';
-            setStatus(msg, 'error');
-            // Fallback: attempt a normal submit (if endpoint supports it).
-            try {
-              form.submit();
-            } catch {
-              // ignore
-            }
-          })
-          .finally(() => {
-            setBusy(false);
-          });
-
-        return;
-      }
-
-      const subject = `Quote request — ${companyName || name}`;
-      const body = [
-        source ? `Page: ${source}` : undefined,
-        companyName ? `Company: ${companyName}` : undefined,
-        `Name: ${name}`,
-        `Email: ${email}`,
-        phone ? `Phone: ${phone}` : undefined,
-        contactMethod ? `Preferred contact: ${contactMethod}` : undefined,
-        location ? `Location: ${location}` : undefined,
-        service ? `Service: ${service}` : undefined,
-        buildingType ? `Building type: ${buildingType}` : undefined,
-        sqft ? `Sq ft: ${sqft}` : undefined,
-        frequency ? `Frequency: ${frequency}` : undefined,
-        accessWindow ? `Access: ${accessWindow}` : undefined,
-        startTiming ? `Timing: ${startTiming}` : undefined,
-        extras.length ? `Add-ons: ${extras.join(', ')}` : undefined,
-        '',
-        message,
-      ]
-        .filter(Boolean)
-        .join('\n');
-
-      setStatus('Opening your email app…', 'success');
-      const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      window.location.href = href;
-    });
+    forms.forEach(initForm);
   })();
 </script>

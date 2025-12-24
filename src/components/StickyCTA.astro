@@ -10,8 +10,16 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
   class="surface border-app fixed inset-x-0 bottom-0 z-50 border-t shadow-soft backdrop-blur-md md:hidden"
   aria-label="Quick actions"
 >
-  <div class="container-page safe-bottom-pad flex items-center gap-3 pt-3">
-    <a class="btn-secondary flex-1" href={telHref}>Call/Text</a>
-    <a class="btn-primary flex-1" href={href('contact/')}>Get a Quote</a>
+  <div class="container-page safe-bottom-pad grid gap-2 pt-3">
+    <div class="flex items-center gap-3">
+      <a class="btn-secondary flex-1" href={telHref}>Call/Text</a>
+      <a class="btn-primary flex-1" href={href('contact/')}>Request walkthrough</a>
+    </div>
+    <a
+      class="text-muted mx-auto inline-flex w-fit items-center gap-2 text-center text-xs underline decoration-brand-300/50 underline-offset-4"
+      href={href('checklist/')}
+    >
+      Preview the checklist
+    </a>
   </div>
 </div>

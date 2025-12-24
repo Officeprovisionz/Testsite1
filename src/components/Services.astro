@@ -28,9 +28,18 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const source = itemsOverride ?? siteConfig.services;
 const items = typeof limit === 'number' ? source.slice(0, limit) : source;
 const cta = ctaHref ?? href('contact/');
+
+const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'default' => {
+  const t = title.toLowerCase();
+  if (t.includes('clean')) return 'sparkle';
+  if (t.includes('supply') || t.includes('restock')) return 'supplies';
+  if (t.includes('facility') || t.includes('maintenance') || t.includes('support'))
+    return 'facility';
+  return 'default';
+};
 ---
 
-<section id={id} class="section scroll-mt-20">
+<section id={id} class="section section-creative scroll-mt-20">
   <div class="container-page">
     <div class="section-head">
       <div>
@@ -42,27 +51,146 @@ const cta = ctaHref ?? href('contact/');
       </a>
     </div>
 
-    <div class="mt-8 grid gap-5 md:grid-cols-2">
+    <div
+      class:list={[
+        'mt-8 grid gap-5',
+        items.length >= 3 ? 'md:auto-rows-fr md:grid-cols-3' : 'md:grid-cols-2',
+      ]}
+    >
       {
-        items.map((s) => (
-          <article class="card card-hover p-6">
-            <h3 class="text-strong text-lg font-bold">{s.title}</h3>
-            <p class="text-muted mt-2 text-sm">{s.description}</p>
-            <ul class="text-muted mt-4 grid gap-2 text-sm">
-              {s.bullets.map((b) => (
-                <li class="flex gap-2">
+        items.map((s, index) => {
+          const iconType = iconTypeFor(s.title);
+          const isFeatured = items.length >= 3 && index === 0;
+
+          return (
+            <article
+              class:list={[
+                'card card-hover relative overflow-hidden p-6',
+                isFeatured ? 'md:col-span-2 md:p-7' : '',
+              ]}
+            >
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-200/25 via-transparent to-brand-300/20"
+              />
+              <div class="relative">
+                <div class="flex items-start gap-4">
                   <span
-                    class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-brand-600 text-[10px] font-bold text-white"
+                    class="inline-flex h-11 w-11 flex-none items-center justify-center rounded-2xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
                     aria-hidden="true"
                   >
-                    ✓
+                    {iconType === 'sparkle' && (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2l1.2 5.1L18 9l-4.8 1.9L12 16l-1.2-5.1L6 9l4.8-1.9L12 2z"
+                          fill="currentColor"
+                          opacity="0.95"
+                        />
+                        <path
+                          d="M19 13l.8 3.2L23 17l-3.2.8L19 21l-.8-3.2L15 17l3.2-.8L19 13z"
+                          fill="currentColor"
+                          opacity="0.85"
+                        />
+                      </svg>
+                    )}
+                    {iconType === 'supplies' && (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M7 7h10v3H7V7z" fill="currentColor" opacity="0.9" />
+                        <path
+                          d="M6 10h12v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V10z"
+                          fill="currentColor"
+                          opacity="0.95"
+                        />
+                        <path d="M9 6a3 3 0 0 1 6 0v1H9V6z" fill="currentColor" opacity="0.75" />
+                      </svg>
+                    )}
+                    {iconType === 'facility' && (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path d="M4 20V9l8-5 8 5v11H4z" fill="currentColor" opacity="0.95" />
+                        <path d="M10 20v-6h4v6h-4z" fill="currentColor" opacity="0.75" />
+                      </svg>
+                    )}
+                    {iconType === 'default' && (
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M12 2a7 7 0 0 0-7 7v3a7 7 0 0 0 14 0V9a7 7 0 0 0-7-7z"
+                          fill="currentColor"
+                          opacity="0.95"
+                        />
+                        <path
+                          d="M9 21h6"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          opacity="0.8"
+                        />
+                      </svg>
+                    )}
                   </span>
-                  <span>{b}</span>
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))
+
+                  <div class="min-w-0">
+                    <h3 class="text-strong text-lg font-bold">{s.title}</h3>
+                    <p class="text-muted mt-2 text-sm">{s.description}</p>
+                  </div>
+                </div>
+
+                <ul
+                  class:list={[
+                    'text-muted mt-5 grid gap-2 text-sm',
+                    isFeatured ? 'sm:grid-cols-2' : '',
+                  ]}
+                >
+                  {s.bullets.map((b) => (
+                    <li class="flex gap-2">
+                      <span
+                        class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-brand-600 text-[10px] font-bold text-white"
+                        aria-hidden="true"
+                      >
+                        ✓
+                      </span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+
+                {isFeatured && (
+                  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                    <a class="btn-primary" href={cta}>
+                      Get pricing
+                    </a>
+                    <a class="btn-secondary" href={href('services/')}>
+                      See all services
+                    </a>
+                  </div>
+                )}
+              </div>
+            </article>
+          );
+        })
       }
     </div>
 

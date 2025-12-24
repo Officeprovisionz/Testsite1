@@ -2,20 +2,24 @@
 import { siteConfig } from '@/data/siteConfig';
 ---
 
-<section class="surface border-app border-y">
+<section class="section-creative surface border-app border-y">
   <div class="container-page py-8">
     <div class="grid gap-4 sm:grid-cols-3">
       {
         siteConfig.trustBadges.map((b) => (
-          <div class="panel panel-muted border-app p-5">
+          <div class="panel panel-muted border-app relative overflow-hidden p-5">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+            />
             <div class="flex items-start gap-4">
               <span
-                class="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
+                class="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-brand-900 text-white shadow-md shadow-brand-900/15 ring-1 ring-white/10"
                 aria-hidden="true"
               >
                 ✓
               </span>
-              <div class="min-w-0">
+              <div class="relative min-w-0">
                 <p class="text-strong text-sm font-semibold">{b.title}</p>
                 <p class="text-muted mt-1 text-sm leading-relaxed">{b.description}</p>
               </div>

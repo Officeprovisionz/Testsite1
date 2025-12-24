@@ -16,8 +16,19 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const isCenter = align === 'center';
 ---
 
-<section class="border-b border-slate-200 bg-gradient-to-b from-brand-50/60 to-white">
-  <div class:list={['container-page section', isCenter ? 'text-center' : '']}>
+<section
+  class="relative overflow-hidden border-b border-slate-200 bg-gradient-to-b from-brand-50/70 to-white"
+>
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
+    <div class="absolute -left-24 -top-28 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl"></div>
+    <div class="absolute -right-24 -top-16 h-72 w-72 rounded-full bg-brand-300/30 blur-3xl"></div>
+    <div
+      class="absolute -bottom-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-slate-200/40 blur-3xl"
+    >
+    </div>
+  </div>
+
+  <div class:list={['container-page section relative', isCenter ? 'text-center' : '']}>
     <p class="text-sm font-semibold text-brand-800">{siteConfig.brand.name}</p>
     <h1 class="mt-3 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
       {title}

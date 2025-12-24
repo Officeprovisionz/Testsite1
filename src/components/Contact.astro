@@ -15,6 +15,7 @@ const {
 
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const mailtoTo = siteConfig.contact.email;
 ---
 
 <section id={id} class="section scroll-mt-20 bg-slate-50">
@@ -68,7 +69,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
               Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in{' '}
               <code class="rounded bg-white px-1.5 py-0.5">.env</code>
               (see <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
-              submissions.
+              submissions. For now, this form will open your email app with the details filled in.
             </p>
           </div>
         )
@@ -78,11 +79,16 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
         action={formEndpoint ?? '#'}
         method="POST"
         class="grid gap-4"
+        data-contact-form
+        data-form-endpoint={formEndpoint ?? ''}
+        data-mailto-to={mailtoTo}
         aria-describedby="contact-help"
       >
         <p id="contact-help" class="text-sm text-slate-700">
           Fields marked with <span class="font-semibold">*</span> are required.
         </p>
+
+        <p class="hidden text-sm text-slate-700" data-contact-status></p>
 
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Name *</span>
@@ -145,9 +151,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
           </label>
         </div>
 
-        <button class="btn-primary h-11" type="submit" disabled={!formEndpoint}>
-          Send request
-        </button>
+        <button class="btn-primary h-11" type="submit"> Send request </button>
 
         <p class="text-xs text-slate-600">
           By submitting, you agree to be contacted about your request. No spam—ever.
@@ -156,3 +160,65 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     </div>
   </div>
 </section>
+
+<script>
+  (() => {
+    const form = document.querySelector('form[data-contact-form]') as HTMLFormElement | null;
+    if (!form) return;
+
+    const endpoint = form.dataset.formEndpoint || '';
+    if (endpoint) return; // normal POST submission
+
+    const status = form.querySelector('[data-contact-status]') as HTMLElement | null;
+    const setStatus = (message: string) => {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.remove('hidden');
+    };
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const to = form.dataset.mailtoTo || '';
+      if (!to) {
+        setStatus('Email address not configured. Please call/text instead.');
+        return;
+      }
+
+      const fd = new FormData(form);
+      const name = String(fd.get('name') ?? '').trim();
+      const email = String(fd.get('email') ?? '').trim();
+      const phone = String(fd.get('phone') ?? '').trim();
+      const service = String(fd.get('service') ?? '').trim();
+      const message = String(fd.get('message') ?? '').trim();
+      const honeypot = String(fd.get('company') ?? '').trim();
+
+      // Simple bot check: if honeypot is filled, do nothing.
+      if (honeypot) {
+        setStatus('Thanks!');
+        return;
+      }
+
+      if (!name || !email || !message) {
+        setStatus('Please fill in the required fields (name, email, message).');
+        return;
+      }
+
+      const subject = `Quote request — ${service || 'Office services'}`;
+      const body = [
+        `Name: ${name}`,
+        `Email: ${email}`,
+        phone ? `Phone: ${phone}` : undefined,
+        service ? `Service: ${service}` : undefined,
+        '',
+        message,
+      ]
+        .filter(Boolean)
+        .join('\n');
+
+      setStatus('Opening your email app…');
+      const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+      window.location.href = href;
+    });
+  })();
+</script>

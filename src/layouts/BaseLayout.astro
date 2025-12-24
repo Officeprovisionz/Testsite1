@@ -13,6 +13,33 @@ const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
 const ogPath = `${import.meta.env.BASE_URL}og-image.svg`;
 const ogUrl = Astro.site ? new URL(ogPath, Astro.site).toString() : ogPath;
 const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`;
+
+const jsonLd = (() => {
+  const [localityRaw, regionRaw] = siteConfig.brand.city.split(',').map((s) => s.trim());
+  const addressLocality = localityRaw || undefined;
+  const addressRegion = regionRaw || undefined;
+  const url = Astro.site ? new URL(import.meta.env.BASE_URL, Astro.site).toString() : undefined;
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: siteConfig.brand.name,
+    description: siteConfig.seo.description,
+    url,
+    telephone: siteConfig.contact.phoneE164,
+    email: siteConfig.contact.email,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality,
+      addressRegion,
+      addressCountry: 'US',
+    },
+    areaServed: siteConfig.areasServed.items,
+  };
+
+  // Prevent accidental "</script>" injection via safe escaping.
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+})();
 ---
 
 <!doctype html>
@@ -38,6 +65,8 @@ const faviconHref = `${import.meta.env.BASE_URL}favicon.svg`;
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogUrl} />
+
+    <script type="application/ld+json" is:inline set:html={jsonLd} />
 
     {/* Analytics placeholder (vendor-neutral): add your script here if desired. */}
   </head>

@@ -1,6 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
-import WaveDivider from '@/components/WaveDivider.astro';
+import Scope from '@/components/Scope.astro';
 
 type Props = {
   id?: string;
@@ -12,66 +11,17 @@ type Props = {
 
 const {
   id,
-  heading = 'Pricing',
-  description = siteConfig.pricing.note,
+  heading = 'Scope & service levels',
+  description,
   ctaHref,
-  ctaLabel = 'Get a quote',
+  ctaLabel = 'Request a walkthrough',
 } = Astro.props;
-
-const base = import.meta.env.BASE_URL;
-const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
-const cta = ctaHref ?? href('contact/');
-
-const tiers = siteConfig.pricing.tiers;
-const featuredIndex = tiers.length >= 3 ? 1 : 0;
 ---
 
-<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
-  <div class="container-page">
-    <h2 class="heading-2">{heading}</h2>
-    <p class="lede">{description}</p>
-
-    <div class="mt-8 grid gap-5 lg:grid-cols-3">
-      {
-        tiers.map((t, idx) => (
-          <div
-            class:list={[
-              idx === featuredIndex
-                ? 'glass-card overflow-hidden p-7 lg:-translate-y-2'
-                : 'glass-panel overflow-hidden p-6',
-            ]}
-          >
-            <div class="flex items-baseline justify-between gap-4">
-              <h3 class="text-strong text-lg font-bold">{t.name}</h3>
-              <p class="text-sm font-semibold" style="color: rgb(var(--color-brand-700))">
-                Starting at {t.startingAt}
-              </p>
-            </div>
-            <p class="text-muted mt-2 text-sm">Best for: {t.bestFor}</p>
-            <ul class="text-muted mt-4 grid gap-2 text-sm">
-              {t.includes.map((i) => (
-                <li class="flex gap-2">
-                  <span
-                    class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"
-                    aria-hidden="true"
-                  />
-                  <span>{i}</span>
-                </li>
-              ))}
-            </ul>
-            {t.disclaimer && <p class="text-subtle mt-4 text-xs">{t.disclaimer}</p>}
-            <div class="mt-6">
-              <a class="btn-primary w-full" href={cta}>
-                {ctaLabel}
-              </a>
-            </div>
-          </div>
-        ))
-      }
-    </div>
-  </div>
-
-  <div class="relative -mb-px mt-12">
-    <WaveDivider tone="bg" class="absolute bottom-0 left-0 right-0" />
-  </div>
-</section>
+<Scope
+  {...id ? { id } : {}}
+  heading={heading}
+  description={description}
+  ctaHref={ctaHref}
+  ctaLabel={ctaLabel}
+/>

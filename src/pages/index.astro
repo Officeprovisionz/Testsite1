@@ -8,7 +8,7 @@ import { FeatureBannerPro } from '@/components/FeatureBannerPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
-import Pricing from '@/components/Pricing.astro';
+import Scope from '@/components/Scope.astro';
 import Gallery from '@/components/Gallery.astro';
 import FAQ from '@/components/FAQ.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
@@ -47,11 +47,11 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     ctaLabel="View all results"
   />
 
-  <Pricing
-    id="pricing"
-    heading="Pricing (how it works)"
+  <Scope
+    id="scope"
+    heading="Scope (how it works)"
     ctaHref={href('contact/')}
-    ctaLabel="Get a quote"
+    ctaLabel="Request a walkthrough"
   />
 
   <FAQ />
@@ -82,7 +82,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
                 <li class="flex items-start gap-2">
                   <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
                   ></span>
-                  <span>Upfront pricing</span>
+                  <span>Clear written scope</span>
                 </li>
                 <li class="flex items-start gap-2">
                   <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"

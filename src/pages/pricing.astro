@@ -5,14 +5,14 @@ import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { PricingPro } from '@/components/PricingPro';
-import PricingSection from '@/components/Pricing.astro';
+import ScopeSection from '@/components/Scope.astro';
 import FAQ from '@/components/FAQ.astro';
 import ContactSection from '@/components/Contact.astro';
 import { siteConfig } from '@/data/siteConfig';
 
-const title = `Pricing | ${siteConfig.brand.name}`;
+const title = `Scope & process | ${siteConfig.brand.name}`;
 const description =
-  'How commercial cleaning pricing works: frequency, square footage, access, and add-ons. Get a clear scope and quote before service.';
+  'How service scope works: walkthrough, checklist, access, frequency, and add-ons. Get a clear scope and a written quote before service.';
 ---
 
 <BaseLayout title={title} description={description}>
@@ -20,17 +20,17 @@ const description =
 
   <PageHeroPro
     client:load
-    title="Pricing"
-    description="We price based on scope—not surprises. Share your space and schedule and we’ll send a clear quote before service."
+    title="Scope & process"
+    description="We confirm what’s included before service. Share your space and schedule and we’ll send a clear written quote."
   />
 
   <section class="section pb-0">
     <div class="container-page">
       <div class="mb-12 text-center">
-        <h2 class="heading-2">How pricing works</h2>
+        <h2 class="heading-2">How scope works</h2>
         <p class="text-muted mx-auto mt-4 max-w-2xl text-lg">
-          Pricing depends on your space and service frequency. We confirm scope first—then send a
-          clear, written quote.
+          Scope depends on your space and service frequency. We confirm what’s included first—then
+          send a clear, written quote.
         </p>
       </div>
 
@@ -38,11 +38,11 @@ const description =
     </div>
   </section>
 
-  <PricingSection id="plans" heading="Typical plans" />
+  <ScopeSection id="scope" heading="Service levels" ctaLabel="Request a walkthrough" />
 
   <FAQ />
 
-  <ContactSection id="quote" heading="Get a quote" />
+  <ContactSection id="quote" heading="Request a walkthrough" />
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

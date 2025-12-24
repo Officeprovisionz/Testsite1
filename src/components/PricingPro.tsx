@@ -4,7 +4,7 @@ import { Check } from 'lucide-react';
 
 const plans = [
   {
-    title: 'What affects the price',
+    title: 'What affects the scope',
     features: [
       'Square footage + layout complexity',
       'Frequency (one-time vs recurring)',

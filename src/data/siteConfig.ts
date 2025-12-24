@@ -4,12 +4,11 @@ export type Service = {
   bullets: string[];
 };
 
-export type PricingTier = {
+export type ServiceLevel = {
   name: string;
-  startingAt: string;
   bestFor: string;
   includes: string[];
-  disclaimer?: string;
+  note?: string;
 };
 
 export type FAQItem = {
@@ -248,36 +247,33 @@ export const siteConfig = {
       ],
     },
   ] satisfies Service[],
-  pricing: {
-    note: 'Pricing depends on square footage, condition, access, frequency, and add-ons. We confirm scope and a fixed quote before service.',
-    tiers: [
+  scope: {
+    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm what’s included before service and provide a clear written quote.',
+    levels: [
       {
         name: 'Essential',
-        startingAt: '$199',
-        bestFor: 'Small offices & weekly upkeep',
+        bestFor: 'Small offices & steady upkeep',
         includes: ['Work areas', 'Restrooms', 'Breakroom', 'Floors + trash'],
-        disclaimer: 'Starting price. Final quote after a quick scope check.',
+        note: 'A clean baseline with clear checklist scope.',
       },
       {
         name: 'Standard',
-        startingAt: '$349',
         bestFor: 'Larger spaces & multi-room suites',
         includes: ['More time per visit', 'Detail work', 'High-touch focus'],
-        disclaimer: 'Great for client-facing spaces and shared breakrooms.',
+        note: 'Great for client-facing spaces and shared breakrooms.',
       },
       {
         name: 'Managed',
-        startingAt: '$599',
         bestFor: 'Cleaning + restocking + facilities support',
         includes: [
           'Cleaning plan',
           'Restocking checklist',
-          'Monthly walkthrough',
+          'Walkthrough cadence',
           'Priority support',
         ],
-        disclaimer: 'Best for teams that want one reliable point of contact.',
+        note: 'Best for teams that want one reliable point of contact.',
       },
-    ] satisfies PricingTier[],
+    ] satisfies ServiceLevel[],
   },
   areasServed: {
     title: 'Areas served around San Francisco',

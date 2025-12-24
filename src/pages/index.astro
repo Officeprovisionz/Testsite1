@@ -5,16 +5,11 @@ import { HeroPro } from '@/components/HeroPro';
 import { FeatureTilesPro } from '@/components/FeatureTilesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
-import Gallery from '@/components/Gallery.astro';
 import Testimonials from '@/components/Testimonials.astro';
 import FAQ from '@/components/FAQ.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import Footer from '@/components/Footer.astro';
-import { makeHref } from '@/lib/nav';
-
-const base = import.meta.env.BASE_URL;
-const href = makeHref(base);
 ---
 
 <BaseLayout>
@@ -26,15 +21,6 @@ const href = makeHref(base);
   <HowItWorksPro client:visible />
 
   <ServicesPro client:visible />
-
-  <Gallery
-    id="results"
-    heading="Results preview"
-    description="A preview of recent work across offices and commercial spaces—focused on consistency and clear scope."
-    showTip={false}
-    ctaHref={href('results/')}
-    ctaLabel="View all results"
-  />
 
   <Testimonials id="testimonials" />
 

@@ -1,11 +1,13 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import type { Service } from '@/data/siteConfig';
 
 type Props = {
   id?: string;
   heading?: string;
   description?: string;
   limit?: number;
+  items?: Service[];
   ctaHref?: string;
   ctaLabel?: string;
 };
@@ -15,6 +17,7 @@ const {
   heading = 'Services',
   description = 'Pick a service. We’ll confirm scope and provide a clear quote.',
   limit,
+  items: itemsOverride,
   ctaHref,
   ctaLabel = 'Request a quote',
 } = Astro.props;
@@ -22,7 +25,8 @@ const {
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
-const items = typeof limit === 'number' ? siteConfig.services.slice(0, limit) : siteConfig.services;
+const source = itemsOverride ?? siteConfig.services;
+const items = typeof limit === 'number' ? source.slice(0, limit) : source;
 const cta = ctaHref ?? href('contact/');
 ---
 

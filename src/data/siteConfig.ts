@@ -73,6 +73,28 @@ export const siteConfig = {
       ],
     },
     {
+      title: 'Recurring Janitorial (Nightly/Weekly)',
+      description:
+        'Scheduled service for consistent upkeep—ideal for busy offices and shared spaces.',
+      bullets: [
+        'High-touch sanitizing (handles, switches, shared points)',
+        'Trash + recycling, liners as needed',
+        'Kitchen/breakroom reset',
+        'Restroom servicing + checklist verification',
+      ],
+    },
+    {
+      title: 'Deep / Detail Cleaning',
+      description:
+        'A thorough reset for first visits, quarterly maintenance, or high-traffic periods.',
+      bullets: [
+        'Detail dusting (edges, corners, reachable ledges)',
+        'Build-up removal in restrooms and breakrooms',
+        'Spot treatment and extra time per room',
+        'Optional add-ons coordinated during scoping',
+      ],
+    },
+    {
       title: 'Supplies & Restocking',
       description: 'We keep essentials stocked so your team doesn’t have to chase supplies.',
       bullets: [
@@ -90,6 +112,79 @@ export const siteConfig = {
         'Assembly and setup support',
         'Vendor coordination',
         'On-site checks and walkthrough notes',
+      ],
+    },
+  ] satisfies Service[],
+
+  specialtyServices: [
+    {
+      title: 'Move-In / Move-Out (Office Turnovers)',
+      description: 'Turnover cleaning for suites, offices, and commercial spaces between tenants.',
+      bullets: [
+        'Empty-space reset and detail pass',
+        'Kitchenette and restroom deep clean',
+        'Inside cabinets/appliances (optional)',
+        'Walkthrough notes + checklist closeout',
+      ],
+    },
+    {
+      title: 'Post-Construction Cleanup',
+      description: 'Dust control and final detailing after construction or renovations.',
+      bullets: [
+        'Fine dust removal (reachable surfaces)',
+        'Sticker/adhesive residue (scope-dependent)',
+        'Floor detailing + vacuum/HEPA as applicable',
+        'Final polish for move-in readiness',
+      ],
+    },
+    {
+      title: 'Interior Glass & Window Cleaning',
+      description: 'Interior glass detailing for offices, conference rooms, and entry areas.',
+      bullets: [
+        'Interior glass and partition cleaning',
+        'Conference room and entry touch-ups',
+        'Smudge removal and spot detailing',
+        'Coordinated around privacy/schedule needs',
+      ],
+    },
+    {
+      title: 'Floor Care (Hard Floors)',
+      description: 'Periodic floor refresh to keep high-traffic areas looking sharp.',
+      bullets: [
+        'Scrub and refresh (surface dependent)',
+        'Edge/detail focus in traffic lanes',
+        'Entry mat and threshold attention',
+        'Recommendations for frequency and finish',
+      ],
+    },
+    {
+      title: 'Carpet & Upholstery Care (Coordination)',
+      description: 'We can coordinate periodic carpet/upholstery refresh for a complete clean.',
+      bullets: [
+        'Spot treatment planning',
+        'Vendor coordination when needed',
+        'Scheduling around office hours',
+        'Pre/post walkthrough notes',
+      ],
+    },
+    {
+      title: 'Day Porter / Daytime Upkeep',
+      description: 'Light daytime maintenance for busy offices and high-traffic common areas.',
+      bullets: [
+        'Restroom touch-ups and restocking checks',
+        'Kitchen/breakroom resets',
+        'Trash/recycling monitoring',
+        'On-site requests and quick response',
+      ],
+    },
+    {
+      title: 'Disinfection Add-On (Targeted)',
+      description: 'Targeted disinfecting of high-touch points during outbreaks or peak seasons.',
+      bullets: [
+        'High-touch focus areas identified during scoping',
+        'Compatible product plan (as requested)',
+        'Checklist confirmation of treated areas',
+        'Scheduling for minimal disruption',
       ],
     },
   ] satisfies Service[],

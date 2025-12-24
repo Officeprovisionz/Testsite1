@@ -99,7 +99,7 @@ All business content lives in:
 
 - `src/data/siteConfig.ts`
 
-Update phone, hours, service areas, pricing, FAQs, testimonials, etc. there.
+Update phone, hours, service areas, quotes, FAQs, testimonials, etc. there.
 
 ## Scripts
 

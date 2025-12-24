@@ -5,7 +5,6 @@ import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import ServicesSection from '@/components/Services.astro';
-import Pricing from '@/components/Pricing.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
@@ -13,22 +12,33 @@ import { siteConfig } from '@/data/siteConfig';
 
 const title = `Services | ${siteConfig.brand.name}`;
 const description =
-  'Office cleaning, supplies/restocking, and facilities support—delivered with clear pricing and consistent checklists.';
+  'Office cleaning, janitorial services, supplies/restocking, and facilities support—built for busy teams in San Francisco.';
 ---
 
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
   <PageHeader
-    title="Services & pricing"
-    description="Cleaning, supplies, and facilities support—scoped clearly and delivered consistently. We confirm scope before the job—no surprises."
+    title="Services"
+    description="From recurring janitorial to restocking and facilities support—scoped clearly and delivered consistently. We confirm scope before the job."
   />
 
   <TrustBar />
 
-  <ServicesSection id="services" ctaLabel="Request a quote" />
+  <ServicesSection
+    id="services"
+    heading="Core services"
+    description="The most common ways teams use us for ongoing support."
+    ctaLabel="Request a quote"
+  />
 
-  <Pricing id="pricing" ctaLabel="Request a quote" />
+  <ServicesSection
+    id="specialty"
+    heading="Specialty + add-on services"
+    description="Popular add-ons we can scope and schedule based on your space and building requirements."
+    items={siteConfig.specialtyServices}
+    ctaLabel="Request a quote"
+  />
 
   <AreasServed />
 

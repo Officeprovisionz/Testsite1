@@ -6,9 +6,7 @@ const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 ---
 
-<div
-  class="bg-white/92 fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 shadow-soft backdrop-blur-md md:hidden"
->
+<div class="app-bar fixed inset-x-0 bottom-0 z-50 border-t shadow-soft backdrop-blur-md md:hidden">
   <div class="container-page safe-bottom-pad flex items-center gap-3 pt-3">
     <a class="btn-secondary flex-1" href={telHref}>Call/Text</a>
     <a class="btn-primary flex-1" href={href('contact/')}>Get a Quote</a>

@@ -36,9 +36,7 @@ const initials = (() => {
 })();
 ---
 
-<header
-  class="sticky top-0 z-40 border-b border-slate-200 bg-white/90 backdrop-blur-md transition-all duration-300"
->
+<header class="app-bar sticky top-0 z-40 border-b backdrop-blur-md transition-all duration-300">
   <div class="container-page flex h-20 items-center justify-between">
     <a href={href('')} class="flex items-center gap-3 font-serif text-xl font-bold tracking-tight">
       <span
@@ -46,22 +44,19 @@ const initials = (() => {
       >
         {initials}
       </span>
-      <span class="text-slate-900">{siteConfig.brand.name}</span>
+      <span class="text-strong">{siteConfig.brand.name}</span>
     </a>
 
-    <nav
-      class="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex"
-      aria-label="Primary"
-    >
+    <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="Primary">
       {
         navItems.map((item) => (
           <a
             href={item.href}
             class:list={[
-              'relative rounded-lg px-2 py-1 hover:text-slate-900 focus-visible:outline-none',
+              'text-muted relative rounded-lg px-2 py-1 focus-visible:outline-none',
               isActive(item.href)
-                ? 'text-slate-900 after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
-                : 'text-slate-700',
+                ? 'text-strong after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
+                : '',
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}
           >
@@ -83,10 +78,7 @@ const initials = (() => {
             navItems.map((item) => (
               <a
                 href={item.href}
-                class:list={[
-                  'px-4 py-3.5 text-sm font-medium hover:bg-slate-50',
-                  isActive(item.href) ? 'bg-slate-50 text-slate-900' : 'text-slate-700',
-                ]}
+                class:list={['menu-link', isActive(item.href) ? 'surface-muted text-strong' : '']}
                 aria-current={isActive(item.href) ? 'page' : undefined}
               >
                 {item.label}
@@ -94,14 +86,22 @@ const initials = (() => {
             ))
           }
         </nav>
-        <div class="border-t border-slate-200 p-2">
+        <div class="border-app border-t p-2">
           <button
             type="button"
-            class="w-full rounded-xl px-4 py-3 text-left text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="menu-link w-full text-left"
             data-theme-toggle
             aria-label="Change theme"
           >
             Theme
+          </button>
+          <button
+            type="button"
+            class="menu-link w-full text-left"
+            data-mode-toggle
+            aria-label="Change color mode"
+          >
+            Mode
           </button>
         </div>
       </div>
@@ -116,6 +116,15 @@ const initials = (() => {
         title="Change theme"
       >
         Theme
+      </button>
+      <button
+        type="button"
+        class="icon-btn hidden sm:inline-flex"
+        aria-label="Change color mode"
+        data-mode-toggle
+        title="Change color mode"
+      >
+        Mode
       </button>
       <a class="btn-secondary hidden sm:inline-flex" href={telHref}>Call/Text</a>
       <a class="btn-primary" href={href('contact/')}>Get a Quote</a>
@@ -142,6 +151,42 @@ const initials = (() => {
       if (!menu.open) return;
       if (e.key === 'Escape') close();
     });
+  })();
+</script>
+
+<script>
+  (() => {
+    const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode-toggle]'));
+    if (!btns.length) return;
+
+    const modes = ['auto', 'light', 'dark'] as const;
+    type Mode = (typeof modes)[number];
+
+    const getCurrent = (): Mode => {
+      const current = document.documentElement.dataset.mode as Mode | undefined;
+      return current && modes.includes(current) ? current : 'auto';
+    };
+
+    const setMode = (m: Mode) => {
+      document.documentElement.dataset.mode = m;
+      try {
+        localStorage.setItem('mode', m);
+      } catch {
+        // ignore
+      }
+      const label = m === 'auto' ? 'Mode: Auto' : `Mode: ${m}`;
+      btns.forEach((b) => (b.textContent = label));
+    };
+
+    const cycle = () => {
+      const current = getCurrent();
+      const nextIndex = (modes.indexOf(current) + 1) % modes.length;
+      const next = modes[nextIndex] ?? 'auto';
+      setMode(next);
+    };
+
+    setMode(getCurrent());
+    btns.forEach((b) => b.addEventListener('click', cycle));
   })();
 </script>
 

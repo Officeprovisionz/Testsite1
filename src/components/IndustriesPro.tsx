@@ -27,26 +27,28 @@ export function IndustriesPro() {
   }));
 
   return (
-    <section className="bg-slate-50 py-20 dark:bg-slate-950" id="industries">
-      <div className="container-page mb-12 text-center">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-          Who we serve
-        </h2>
-        <p className="mt-4 text-lg text-slate-600 dark:text-slate-300">
-          Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.
-        </p>
+    <section className="section section-muted" id="industries">
+      <div className="container-page">
+        <div className="mb-12 text-center">
+          <p className="eyebrow">Industries</p>
+          <h2 className="heading-2 mt-2">Who we serve</h2>
+          <p className="lede mx-auto">
+            Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.
+          </p>
+        </div>
+
+        <BentoGrid className="mx-auto max-w-4xl px-0">
+          {items.map((item, i) => (
+            <BentoGridItem
+              key={i}
+              title={item.title}
+              description={item.description}
+              header={item.header}
+              className={cn(item.className, 'border border-slate-200 dark:border-slate-800')}
+            />
+          ))}
+        </BentoGrid>
       </div>
-      <BentoGrid className="mx-auto max-w-4xl px-4">
-        {items.map((item, i) => (
-          <BentoGridItem
-            key={i}
-            title={item.title}
-            description={item.description}
-            header={item.header}
-            className={cn(item.className, 'border border-slate-200 dark:border-slate-800')}
-          />
-        ))}
-      </BentoGrid>
     </section>
   );
 }

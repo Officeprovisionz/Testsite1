@@ -497,6 +497,19 @@
     color: rgb(var(--color-text));
   }
 
+  /* For dark hero / media overlays (keeps text readable on dark backgrounds). */
+  .btn-invert {
+    @apply btn border;
+    border-color: rgb(255 255 255 / 0.18);
+    background-color: rgb(255 255 255 / 0.1);
+    color: white;
+  }
+
+  .btn-invert:hover {
+    background-color: rgb(255 255 255 / 0.16);
+    border-color: rgb(255 255 255 / 0.24);
+  }
+
   .icon-btn {
     @apply btn-secondary px-0;
     width: 2.75rem;

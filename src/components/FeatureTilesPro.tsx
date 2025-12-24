@@ -61,48 +61,54 @@ const Card = ({ tile, href }: { tile: Tile; href: (p: string) => string }) => {
     <motion.div
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative h-full overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:shadow-xl dark:border-slate-800 dark:bg-slate-900"
+      className="card card-hover group relative h-full overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      <div className="relative aspect-[4/3] overflow-hidden bg-slate-100 dark:bg-slate-800">
-        <img
-          src={href(tile.image)}
-          alt={tile.title}
-          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40" />
-      </div>
-
-      <div className="relative p-6">
-        <h3 className="text-xl font-bold text-slate-900 dark:text-white">{tile.title}</h3>
-        <p className="mt-2 text-sm leading-relaxed text-slate-600 dark:text-slate-300">
-          {tile.description}
-        </p>
-        <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400">
-          <a href={href(tile.href)} className="after:absolute after:inset-0">
-            {tile.cta}
-          </a>
-          <svg
-            className={cn(
-              'h-4 w-4 transition-transform duration-300',
-              isHovered ? 'translate-x-1' : ''
-            )}
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M17 8l4 4m0 0l-4 4m4-4H3"
-            />
-          </svg>
+      <a
+        href={href(tile.href)}
+        className="block h-full focus-visible:outline-none"
+        aria-label={`${tile.title} — ${tile.cta}`}
+      >
+        <div className="surface-muted relative aspect-[4/3] overflow-hidden">
+          <img
+            src={href(tile.image)}
+            alt={tile.title}
+            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div
+            aria-hidden="true"
+            className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"
+          />
         </div>
-      </div>
+
+        <div className="relative p-6">
+          <h3 className="heading-3">{tile.title}</h3>
+          <p className="text-muted mt-2 text-sm leading-relaxed">{tile.description}</p>
+          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400">
+            <span>{tile.cta}</span>
+            <svg
+              className={cn(
+                'h-4 w-4 transition-transform duration-300',
+                isHovered ? 'translate-x-1' : ''
+              )}
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M17 8l4 4m0 0l-4 4m4-4H3"
+              />
+            </svg>
+          </div>
+        </div>
+      </a>
     </motion.div>
   );
 };

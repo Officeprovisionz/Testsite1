@@ -102,14 +102,26 @@ const jsonLd = (() => {
     <script>
       import Lenis from 'lenis';
 
-      const lenis = new Lenis();
+      const prefersReducedMotion = (() => {
+        try {
+          return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch {
+          return false;
+        }
+      })();
 
-      function raf(time: number) {
-        lenis.raf(time);
+      if (prefersReducedMotion) {
+        // Respect OS/user preference: avoid forced smooth scrolling.
+      } else {
+        const lenis = new Lenis();
+
+        function raf(time: number) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+
         requestAnimationFrame(raf);
       }
-
-      requestAnimationFrame(raf);
     </script>
 
     {/* Analytics placeholder (vendor-neutral): add your script here if desired. */}

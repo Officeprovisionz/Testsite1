@@ -27,16 +27,10 @@ export const HeroPro = () => {
           </p>
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
-            <a
-              className="inline-flex items-center justify-center rounded-xl bg-brand-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-brand-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600"
-              href={href('contact/')}
-            >
-              Get Started
+            <a className="btn-primary" href={href('contact/')}>
+              Request a quote
             </a>
-            <a
-              className="inline-flex items-center justify-center rounded-xl bg-white/10 px-6 py-3 text-sm font-semibold text-white backdrop-blur-sm transition-colors hover:bg-white/20"
-              href={telHref}
-            >
+            <a className="btn-invert" href={telHref}>
               Call/Text {siteConfig.contact.phoneDisplay}
             </a>
           </div>

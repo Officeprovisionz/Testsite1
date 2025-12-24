@@ -4,18 +4,14 @@ import { siteConfig } from '@/data/siteConfig';
 
 export const FeatureBannerPro = () => {
   return (
-    <section className="relative pb-0 pt-20" aria-label="What makes us different">
+    <section className="section pb-0" aria-label="What makes us different">
       <div className="container-page">
         <div className="text-center">
-          <p className="text-sm font-semibold uppercase tracking-wide text-brand-600 dark:text-brand-400">
-            Makes us different
-          </p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl dark:text-white">
-            Makes operations easier
-          </h2>
+          <p className="eyebrow">Makes us different</p>
+          <h2 className="heading-2 mt-2">Makes operations easier</h2>
         </div>
 
-        <div className="relative mt-10 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl lg:-translate-y-6 dark:border-slate-800 dark:bg-slate-900">
+        <div className="relative mt-10 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl dark:border-slate-800 dark:bg-slate-900">
           <BorderBeam size={250} duration={12} delay={9} />
 
           <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">

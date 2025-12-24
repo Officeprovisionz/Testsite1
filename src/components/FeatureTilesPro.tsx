@@ -20,6 +20,14 @@ const tiles: Tile[] = [
     cta: 'Learn more',
   },
   {
+    title: 'Printable checklist',
+    description:
+      'Bring a practical checklist to your walkthrough to keep scope clear and comparable.',
+    href: 'checklist/',
+    image: 'gallery/03.svg',
+    cta: 'Preview',
+  },
+  {
     title: 'Industries we serve',
     description:
       'Offices, property management, clinics, and customer spaces—scoped clearly for operations teams.',
@@ -44,7 +52,7 @@ export const FeatureTilesPro = () => {
   return (
     <section className="relative z-20 -mt-20 pb-20">
       <div className="container-page">
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile, idx) => (
             <Card key={idx} tile={tile} href={href} />
           ))}

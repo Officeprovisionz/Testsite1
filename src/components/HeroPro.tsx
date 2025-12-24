@@ -28,7 +28,7 @@ export const HeroPro = () => {
 
           <div className="mt-7 flex flex-col gap-3 sm:flex-row">
             <a className="btn-primary" href={href('contact/')}>
-              Request a quote
+              Request a walkthrough
             </a>
             <a className="btn-invert" href={telHref}>
               Call/Text {siteConfig.contact.phoneDisplay}

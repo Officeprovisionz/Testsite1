@@ -92,7 +92,7 @@ export const siteConfig = {
 
   processSteps: [
     {
-      title: 'Request a quote',
+      title: 'Request a walkthrough',
       description:
         'Share basics (space, frequency, access). We respond quickly during business hours.',
     },

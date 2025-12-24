@@ -8,8 +8,10 @@ import { FeatureBannerPro } from '@/components/FeatureBannerPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
+import StartOptions from '@/components/StartOptions.astro';
 import Scope from '@/components/Scope.astro';
 import Gallery from '@/components/Gallery.astro';
+import Testimonials from '@/components/Testimonials.astro';
 import FAQ from '@/components/FAQ.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import Footer from '@/components/Footer.astro';
@@ -36,6 +38,12 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
   <HowItWorksPro client:visible />
 
+  <StartOptions
+    id="start"
+    heading="More ways to get started"
+    description="Request a walkthrough, use our checklist, or call/text us—whatever fits your timeline."
+  />
+
   <ServicesPro client:visible />
 
   <Gallery
@@ -46,6 +54,8 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     ctaHref={href('results/')}
     ctaLabel="View all results"
   />
+
+  <Testimonials id="testimonials" />
 
   <Scope
     id="scope"

@@ -10,6 +10,7 @@ import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import SectionNav from '@/components/SectionNav.astro';
+import QualityPromise from '@/components/QualityPromise.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Services | ${siteConfig.brand.name}`;
@@ -39,6 +40,12 @@ const description =
   />
 
   <ServicesPro client:visible />
+
+  <QualityPromise
+    id="quality"
+    heading="Quality you can count on"
+    description="Clear scope + checklist delivery + fast follow-up. Built for busy teams that need consistency."
+  />
 
   <ServicesSection
     id="specialty"

@@ -1,0 +1,120 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
+
+type Props = {
+  id?: string;
+  heading?: string;
+  description?: string;
+  showWave?: boolean;
+};
+
+const {
+  id,
+  heading = 'Our quality promise',
+  description = 'Checklist-driven service with fast follow-up. If something is missed, tell us within 24 hours and we’ll work with you to make it right.',
+  showWave = true,
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+const telHref = `tel:${siteConfig.contact.phoneE164}`;
+---
+
+<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
+  <div class="container-page">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Trust</p>
+        <h2 class="heading-2 mt-2">{heading}</h2>
+        <p class="lede">{description}</p>
+      </div>
+      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a class="btn-secondary" href={href('checklist/')}>Preview the checklist</a>
+        <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+      </div>
+    </div>
+
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <div class="glass-panel relative overflow-hidden p-6">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+        >
+        </div>
+        <div class="relative">
+          <p class="text-strong text-sm font-semibold">Checklist verification</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            Every visit follows a written scope and checklist so expectations stay consistent.
+          </p>
+          <ul class="text-muted mt-4 grid gap-2 text-sm">
+            <li class="flex gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Clear scope + add-ons</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Consistent delivery across crews</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="glass-card relative overflow-hidden p-6">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+        <div class="relative">
+          <p class="text-strong text-sm font-semibold">Fast fixes (24-hour window)</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            If something was missed, flag it within 24 hours. We’ll work with you to resolve it
+            promptly.
+          </p>
+          <div class="mt-5 flex items-center gap-3">
+            <a class="btn-secondary" href={telHref}>Call/Text</a>
+            <a class="btn-secondary" href={`mailto:${siteConfig.contact.email}`}>Email</a>
+          </div>
+          <p class="text-subtle mt-3 text-xs">One point of contact. No runaround.</p>
+        </div>
+      </div>
+
+      <div class="glass-panel relative overflow-hidden p-6">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+        >
+        </div>
+        <div class="relative">
+          <p class="text-strong text-sm font-semibold">Professional standards</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            Insured service, respectful crews, and clear communication during business hours.
+          </p>
+          <ul class="text-muted mt-4 grid gap-2 text-sm">
+            <li class="flex gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Insured (details available during scoping)</span>
+            </li>
+            <li class="flex gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Quick replies during business hours</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {
+    showWave ? (
+      <div class="relative -mb-px mt-12">
+        <WaveDivider tone="bg" class="absolute bottom-0 left-0 right-0" />
+      </div>
+    ) : null
+  }
+</section>

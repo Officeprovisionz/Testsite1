@@ -9,6 +9,7 @@ import { IndustriesPro } from '@/components/IndustriesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
 import StartOptions from '@/components/StartOptions.astro';
+import QualityPromise from '@/components/QualityPromise.astro';
 import Scope from '@/components/Scope.astro';
 import Gallery from '@/components/Gallery.astro';
 import Testimonials from '@/components/Testimonials.astro';
@@ -43,6 +44,8 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
     heading="More ways to get started"
     description="Request a walkthrough, use our checklist, or call/text us—whatever fits your timeline."
   />
+
+  <QualityPromise id="quality" />
 
   <ServicesPro client:visible />
 

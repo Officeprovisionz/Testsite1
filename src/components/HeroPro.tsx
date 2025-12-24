@@ -33,6 +33,9 @@ export const HeroPro = () => {
             <a className="btn-invert" href={telHref}>
               Call/Text {siteConfig.contact.phoneDisplay}
             </a>
+            <a className="btn-invert" href={href('checklist/')}>
+              Preview checklist
+            </a>
           </div>
 
           <div className="mt-8 rounded-2xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
@@ -67,7 +70,7 @@ export const HeroPro = () => {
 
             <p className="mt-3 text-sm text-slate-300">
               Want extra confidence? Ask for our current checklist and recent references during your
-              quote.
+              walkthrough.
             </p>
 
             <div className="mt-6 grid gap-5">

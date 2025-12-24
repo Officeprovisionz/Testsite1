@@ -10,6 +10,7 @@ import AreasServed from '@/components/AreasServed.astro';
 import Gallery from '@/components/Gallery.astro';
 import SectionNav from '@/components/SectionNav.astro';
 import ContactSection from '@/components/Contact.astro';
+import QualityPromise from '@/components/QualityPromise.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `About | ${siteConfig.brand.name}`;
@@ -128,6 +129,12 @@ const description =
       </div>
     </div>
   </section>
+
+  <QualityPromise
+    id="quality"
+    heading="Reliability is the product"
+    description="We show up, follow the checklist, and communicate clearly—so your space stays client-ready without extra management work."
+  />
 
   <AreasServed />
 

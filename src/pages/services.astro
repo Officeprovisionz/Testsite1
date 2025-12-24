@@ -11,6 +11,7 @@ import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import SectionNav from '@/components/SectionNav.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
+import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Services | ${siteConfig.brand.name}`;
@@ -58,6 +59,12 @@ const description =
   <AreasServed />
 
   <FAQ showWave={false} />
+
+  <ConversionStrip
+    tone="muted"
+    heading="Want a cleaner, easier operation?"
+    description="Request a walkthrough, call/text, or preview our checklist. We’ll confirm scope and send a clear written quote."
+  />
 
   <Footer slot="footer" />
   <StickyCTA slot="sticky" />

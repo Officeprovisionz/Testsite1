@@ -11,6 +11,7 @@ import Gallery from '@/components/Gallery.astro';
 import SectionNav from '@/components/SectionNav.astro';
 import ContactSection from '@/components/Contact.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
+import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `About | ${siteConfig.brand.name}`;
@@ -145,6 +146,13 @@ const description =
     showTip={false}
     ctaHref={`${import.meta.env.BASE_URL}results/`}
     ctaLabel="View all results"
+  />
+
+  <ConversionStrip
+    tone="muted"
+    eyebrow="Get started"
+    heading="Want a walkthrough this week?"
+    description="Request a walkthrough, call/text, or preview our checklist. We’ll confirm scope and send a clear written quote."
   />
 
   <section id="quote" class="section section-muted section-creative scroll-mt-24">

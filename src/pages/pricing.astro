@@ -8,6 +8,7 @@ import { PricingPro } from '@/components/PricingPro';
 import ScopeSection from '@/components/Scope.astro';
 import FAQ from '@/components/FAQ.astro';
 import ContactSection from '@/components/Contact.astro';
+import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Scope & process | ${siteConfig.brand.name}`;
@@ -41,6 +42,13 @@ const description =
   <ScopeSection id="scope" heading="Service levels" ctaLabel="Request a walkthrough" />
 
   <FAQ />
+
+  <ConversionStrip
+    tone="muted"
+    eyebrow="Options"
+    heading="Prefer a quick walkthrough?"
+    description="We’ll confirm scope, access, frequency, and add-ons—then send a clear written quote."
+  />
 
   <ContactSection id="quote" heading="Request a walkthrough" />
 

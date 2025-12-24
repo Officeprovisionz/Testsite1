@@ -2,6 +2,8 @@
 import { siteConfig } from '@/data/siteConfig';
 
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const smsHref = `sms:${siteConfig.contact.phoneE164}?&body=${encodeURIComponent(siteConfig.contact.smsBody)}`;
+const mailtoHref = `mailto:${siteConfig.contact.email}`;
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 ---
@@ -13,13 +15,14 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
   <div class="container-page safe-bottom-pad grid gap-2 pt-3">
     <div class="flex items-center gap-3">
       <a class="btn-secondary flex-1" href={telHref}>Call/Text</a>
-      <a class="btn-primary flex-1" href={href('contact/')}>Request walkthrough</a>
+      <a class="btn-primary flex-1" href={href('contact/')}>Request a walkthrough</a>
     </div>
-    <a
-      class="text-muted mx-auto inline-flex w-fit items-center gap-2 text-center text-xs underline decoration-brand-300/50 underline-offset-4"
-      href={href('checklist/')}
+    <div
+      class="text-subtle mx-auto flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs"
     >
-      Preview the checklist
-    </a>
+      <a class="link link-muted" href={href('checklist/')}>Preview checklist</a>
+      <a class="link link-muted" href={smsHref}>Text</a>
+      <a class="link link-muted" href={mailtoHref}>Email</a>
+    </div>
   </div>
 </div>

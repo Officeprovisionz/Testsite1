@@ -1,2 +1,2 @@
 #!/usr/bin/env sh
-pnpm lint-staged
+pnpm lint-staged --concurrent false --no-stash --no-hide-partially-staged

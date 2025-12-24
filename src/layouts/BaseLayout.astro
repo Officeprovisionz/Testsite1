@@ -48,11 +48,22 @@ const jsonLd = (() => {
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="navy">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="theme-color" content={siteConfig.seo.themeColor} />
+
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('theme');
+          if (saved) document.documentElement.dataset.theme = saved;
+        } catch {
+          // ignore
+        }
+      })();
+    </script>
 
     <title>{title}</title>
     <meta name="description" content={description} />

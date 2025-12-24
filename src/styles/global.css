@@ -18,6 +18,44 @@
     --color-brand-800: 7 89 133;
     --color-brand-900: 12 74 110; /* Deep Navy */
     --color-brand-950: 8 47 73;
+
+    /* Type + layout defaults */
+    --radius-card: 1.25rem;
+    --radius-control: 0.75rem;
+    --shadow-soft: 0 10px 40px -12px rgba(2, 6, 23, 0.12);
+  }
+
+  /* Theme variants (accent color only). */
+  :root[data-theme='navy'] {
+    /* same as default */
+  }
+
+  :root[data-theme='emerald'] {
+    --color-brand-50: 236 253 245;
+    --color-brand-100: 209 250 229;
+    --color-brand-200: 167 243 208;
+    --color-brand-300: 110 231 183;
+    --color-brand-400: 52 211 153;
+    --color-brand-500: 16 185 129;
+    --color-brand-600: 5 150 105;
+    --color-brand-700: 4 120 87;
+    --color-brand-800: 6 95 70;
+    --color-brand-900: 6 78 59;
+    --color-brand-950: 2 44 34;
+  }
+
+  :root[data-theme='slate'] {
+    --color-brand-50: 248 250 252;
+    --color-brand-100: 241 245 249;
+    --color-brand-200: 226 232 240;
+    --color-brand-300: 203 213 225;
+    --color-brand-400: 148 163 184;
+    --color-brand-500: 100 116 139;
+    --color-brand-600: 71 85 105;
+    --color-brand-700: 51 65 85;
+    --color-brand-800: 30 41 59;
+    --color-brand-900: 15 23 42;
+    --color-brand-950: 2 6 23;
   }
 
   html {
@@ -30,7 +68,9 @@
   }
 
   body {
-    @apply min-h-screen bg-white text-slate-900 antialiased;
+    @apply min-h-screen bg-white font-sans text-slate-900 antialiased;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
     text-rendering: optimizeLegibility;
   }
 
@@ -41,6 +81,10 @@
   :focus-visible {
     outline: 2px solid theme(colors.brand.500);
     outline-offset: 3px;
+  }
+
+  a {
+    text-underline-offset: 4px;
   }
 
   summary::-webkit-details-marker {
@@ -83,7 +127,9 @@
   }
 
   .card {
-    @apply rounded-2xl border border-slate-100 bg-white shadow-soft transition-all duration-300;
+    @apply border border-slate-100 bg-white transition-all duration-300;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
   }
 
   .card-hover {
@@ -105,7 +151,8 @@
   }
 
   .btn {
-    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 rounded-lg px-6 py-2.5 text-sm font-medium tracking-wide transition-all duration-200;
+    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium tracking-wide transition-all duration-200;
+    border-radius: var(--radius-control);
   }
 
   .btn-primary {
@@ -114,6 +161,31 @@
 
   .btn-secondary {
     @apply btn border border-slate-200 bg-white text-slate-700 shadow-sm hover:border-brand-200 hover:bg-slate-50 hover:text-brand-900 active:scale-95;
+  }
+
+  .icon-btn {
+    @apply btn-secondary px-0;
+    width: 2.75rem;
+  }
+
+  .section-head {
+    @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+  }
+
+  .eyebrow {
+    @apply text-xs font-semibold uppercase tracking-[0.18em] text-brand-800;
+  }
+
+  .heading-1 {
+    @apply font-serif text-4xl font-bold tracking-tight text-slate-900 sm:text-5xl;
+  }
+
+  .heading-2 {
+    @apply font-serif text-3xl font-bold tracking-tight text-slate-900;
+  }
+
+  .lede {
+    @apply mt-2 max-w-prose text-base leading-relaxed text-slate-700 sm:text-lg;
   }
 
   .input,
@@ -141,11 +213,25 @@
   }
 
   .mobile-menu-overlay {
-    @apply fixed inset-0 bg-slate-900/20;
+    @apply fixed inset-0 bg-slate-900/35;
   }
 
   .mobile-menu-panel {
-    @apply absolute right-0 mt-2 w-64 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft;
+    @apply fixed right-3 top-[4.75rem] w-[min(20rem,calc(100vw-1.5rem))] overflow-hidden border border-slate-200 bg-white;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-soft);
+    transform: translateX(0.75rem);
+    opacity: 0;
+    pointer-events: none;
+    transition:
+      transform 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      opacity 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  details[data-mobile-menu][open] .mobile-menu-panel {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   details[data-mobile-menu]:not([open]) .mobile-menu-overlay {

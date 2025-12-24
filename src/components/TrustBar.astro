@@ -3,22 +3,26 @@ import { siteConfig } from '@/data/siteConfig';
 ---
 
 <section class="border-y border-slate-200 bg-white">
-  <div class="container-page grid gap-4 py-8 sm:grid-cols-3">
-    {
-      siteConfig.trustBadges.map((b) => (
-        <div class="flex items-start gap-3">
-          <span
-            class="mt-1 inline-flex h-8 w-8 items-center justify-center rounded-xl bg-brand-600 text-white"
-            aria-hidden="true"
-          >
-            ✓
-          </span>
-          <div>
-            <p class="text-sm font-semibold text-slate-900">{b.title}</p>
-            <p class="text-sm text-slate-700">{b.description}</p>
+  <div class="container-page py-8">
+    <div class="grid gap-4 sm:grid-cols-3">
+      {
+        siteConfig.trustBadges.map((b) => (
+          <div class="card p-5">
+            <div class="flex items-start gap-4">
+              <span
+                class="mt-0.5 inline-flex h-10 w-10 items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
+                aria-hidden="true"
+              >
+                ✓
+              </span>
+              <div class="min-w-0">
+                <p class="text-sm font-semibold text-slate-900">{b.title}</p>
+                <p class="mt-1 text-sm leading-relaxed text-slate-700">{b.description}</p>
+              </div>
+            </div>
           </div>
-        </div>
-      ))
-    }
+        ))
+      }
+    </div>
   </div>
 </section>

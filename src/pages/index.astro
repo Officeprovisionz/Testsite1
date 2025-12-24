@@ -6,6 +6,7 @@ import FeatureTiles from '@/components/FeatureTiles.astro';
 import FeatureBanner from '@/components/FeatureBanner.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import Industries from '@/components/Industries.astro';
+import Testimonials from '@/components/Testimonials.astro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import Services from '@/components/Services.astro';
 import Pricing from '@/components/Pricing.astro';
@@ -31,6 +32,8 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
   <TrustBar />
 
   <Industries />
+
+  <Testimonials showWave={false} />
 
   <HowItWorks />
 
@@ -62,41 +65,50 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
   <section class="section section-muted section-creative" id="quote">
     <div class="container-page">
-      <div class="glass-card overflow-hidden p-7 sm:p-9">
-        <div class="grid gap-8 md:grid-cols-2 md:items-center">
-          <div>
-            <p class="eyebrow">Request a walkthrough</p>
-            <h2 class="heading-2 mt-2">Get a quote for your office</h2>
-            <p class="lede">
-              Tell us your space, frequency, and access. We’ll confirm scope and send a clear quote.
-            </p>
-            <ul class="text-subtle mt-5 grid gap-2 text-sm sm:grid-cols-2">
-              <li class="flex items-start gap-2">
-                <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                ></span>
-                <span>Checklist-based scope</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                ></span>
-                <span>Upfront pricing</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                ></span>
-                <span>After-hours available</span>
-              </li>
-              <li class="flex items-start gap-2">
-                <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
-                ></span>
-                <span>References available on request</span>
-              </li>
-            </ul>
-          </div>
+      <div class="glass-card relative overflow-hidden p-7 sm:p-9">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+        <div class="relative">
+          <div class="grid gap-8 md:grid-cols-2 md:items-center">
+            <div>
+              <p class="eyebrow">Request a walkthrough</p>
+              <h2 class="heading-2 mt-2">Get a quote for your office</h2>
+              <p class="lede">
+                Tell us your space, frequency, and access. We’ll confirm scope and send a clear
+                quote.
+              </p>
+              <ul class="text-subtle mt-5 grid gap-2 text-sm sm:grid-cols-2">
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+                  ></span>
+                  <span>Checklist-based scope</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+                  ></span>
+                  <span>Upfront pricing</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+                  ></span>
+                  <span>After-hours available</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+                  ></span>
+                  <span>References available on request</span>
+                </li>
+              </ul>
+            </div>
 
-          <div class="flex flex-col gap-3 sm:flex-row md:justify-end">
-            <a class="btn-primary" href={href('contact/')}>Request a quote</a>
-            <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
+            <div class="flex flex-col gap-3 sm:flex-row md:justify-end">
+              <a class="btn-primary" href={href('contact/')}>Request a quote</a>
+              <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a
+              >
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
-# cleaning-landing (SparkleClean Co.)
+# Office Provisionz site
 
-Production-grade, mobile-first business landing page starter built with **Astro + Tailwind + TypeScript**.
+Production-grade, mobile-first business site built with **Astro + Tailwind + TypeScript**.
 
 ## Quick start
 
@@ -25,6 +25,25 @@ Production-grade, mobile-first business landing page starter built with **Astro 
 - **Base-path aware** (works at `/` locally and `/<repo>/` on Pages)
 - **Editable content** in `src/data/siteConfig.ts`
 - **SEO + accessibility baseline** (sitemap, robots, skip link, focus styles, accessible FAQ)
+
+## Images + gallery
+
+This project is static-host friendly and supports a simple gallery with a built-in lightbox.
+
+- Gallery images live in: `public/gallery/`
+- Gallery data lives in: `src/data/gallery.ts`
+
+To replace the placeholder images:
+
+1. Add your real images to `public/gallery/` (recommended: `.webp`, also `.jpg`/`.png` work).
+2. Update the `src` fields in `src/data/gallery.ts` to match filenames.
+3. Keep filenames lowercase and avoid spaces (helps with URLs).
+
+Tips:
+
+- Use **WebP** for smaller file sizes.
+- Aim for ~1600px wide for portfolio photos.
+- If you change the folder name, update the paths in `src/data/gallery.ts`.
 
 ## Configuration (env)
 

@@ -27,6 +27,10 @@
   details > summary {
     list-style: none;
   }
+
+  dialog::backdrop {
+    background: rgb(15 23 42 / 0.65);
+  }
 }
 
 @layer components {

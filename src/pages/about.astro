@@ -6,6 +6,7 @@ import StickyCTA from '@/components/StickyCTA.astro';
 import PageHeader from '@/components/PageHeader.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import AreasServed from '@/components/AreasServed.astro';
+import Gallery from '@/components/Gallery.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `About | ${siteConfig.brand.name}`;
@@ -88,6 +89,12 @@ const description =
   </section>
 
   <AreasServed />
+
+  <Gallery
+    id="gallery"
+    heading="Work gallery"
+    description="Examples of the spaces we support—from restrooms and breakrooms to conference rooms and supply areas."
+  />
 
   <section class="section bg-slate-50">
     <div class="container-page">

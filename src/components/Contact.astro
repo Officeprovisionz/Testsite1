@@ -119,10 +119,11 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
         <label class="grid gap-1 text-sm">
           <span class="font-semibold text-slate-900">Service type</span>
           <select class="h-11 rounded-xl border border-slate-300 px-3" name="service">
-            <option value="Standard">Standard</option>
-            <option value="Deep Clean">Deep Clean</option>
-            <option value="Move In/Out">Move In/Out</option>
-            <option value="Office">Office</option>
+            <option value="Office Cleaning">Office Cleaning</option>
+            <option value="Deep Cleaning">Deep Cleaning</option>
+            <option value="Office Turnover">Office Turnover</option>
+            <option value="Supplies & Restocking">Supplies & Restocking</option>
+            <option value="Facilities Support">Facilities Support</option>
           </select>
         </label>
 
@@ -132,7 +133,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
             class="min-h-28 rounded-xl border border-slate-300 px-3 py-2"
             name="message"
             required
-            placeholder="Example: 2 bed / 1 bath apartment, prefer Fridays, have a small dog."
+            placeholder="Example: ~2,500 sq ft office in SoMa, weekly cleaning after 6pm; need restroom restocking + monthly deep clean."
           ></textarea>
         </label>
 

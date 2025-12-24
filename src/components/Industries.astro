@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 type Props = {
   id?: string;
@@ -12,10 +13,13 @@ const {
   heading = 'Who we serve',
   description = 'Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.',
 } = Astro.props;
+
+const featured = siteConfig.industries[0];
+const rest = siteConfig.industries.slice(1);
 ---
 
-<section id={id} class="section section-creative scroll-mt-20">
-  <div class="container-page">
+<section id={id} class="section section-creative scroll-mt-20 pb-0">
+  <div class="container-page relative">
     <div class="section-head">
       <div>
         <h2 class="heading-2">{heading}</h2>
@@ -23,19 +27,28 @@ const {
       </div>
     </div>
 
-    <div class="mt-8 grid gap-5 md:grid-cols-2">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-12 -z-10">
+      <div class="mx-auto h-72 w-[min(72rem,95vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
+    </div>
+
+    <div class="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
       {
-        siteConfig.industries.map((it) => (
-          <article class="panel border-app relative overflow-hidden border p-6">
+        featured && (
+          <article class="glass-card relative overflow-hidden lg:col-span-7">
             <div
               aria-hidden="true"
               class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
             />
-            <div class="relative">
-              <h3 class="text-strong text-lg font-bold">{it.title}</h3>
-              <p class="text-muted mt-2 text-sm leading-relaxed">{it.description}</p>
-              <ul class="text-muted mt-5 grid gap-2 text-sm sm:grid-cols-3">
-                {it.bullets.map((b) => (
+            <div class="relative grid gap-6 p-7 sm:p-9">
+              <div>
+                <p class="eyebrow">Common fit</p>
+                <h3 class="text-strong mt-2 text-2xl font-semibold tracking-tight">
+                  {featured.title}
+                </h3>
+                <p class="text-muted mt-3 max-w-prose leading-relaxed">{featured.description}</p>
+              </div>
+              <ul class="text-muted grid gap-2 text-sm sm:grid-cols-2">
+                {featured.bullets.map((b) => (
                   <li class="flex items-start gap-2">
                     <span
                       class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
@@ -49,13 +62,52 @@ const {
               </ul>
             </div>
           </article>
-        ))
+        )
       }
+
+      <div class="grid gap-6 lg:col-span-5">
+        {
+          rest.map((it, idx) => (
+            <article
+              class:list={[
+                'glass-panel relative overflow-hidden p-6',
+                idx === 0 ? 'lg:translate-y-6' : '',
+              ]}
+            >
+              <div
+                aria-hidden="true"
+                class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+              />
+              <div class="relative">
+                <h3 class="text-strong text-lg font-semibold tracking-tight">{it.title}</h3>
+                <p class="text-muted mt-2 text-sm leading-relaxed">{it.description}</p>
+                <ul class="text-muted mt-4 grid gap-2 text-sm sm:grid-cols-3">
+                  {it.bullets.map((b) => (
+                    <li class="flex items-start gap-2">
+                      <span
+                        class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
+                        aria-hidden="true"
+                      >
+                        ✓
+                      </span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
       <a class="btn-primary" href={`${import.meta.env.BASE_URL}contact/`}>Request a quote</a>
       <a class="btn-secondary" href={`${import.meta.env.BASE_URL}services/`}>Explore services</a>
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-12">
+    <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
   </div>
 </section>

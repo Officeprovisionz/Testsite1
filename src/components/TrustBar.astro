@@ -3,11 +3,15 @@ import { siteConfig } from '@/data/siteConfig';
 ---
 
 <section class="section-creative surface border-app border-b">
-  <div class="container-page py-8">
+  <div class="container-page relative py-10">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-12">
+      <div class="bg-brand-400/14 mx-auto h-56 w-[min(64rem,92vw)] rounded-full blur-3xl"></div>
+    </div>
+
     <div class="grid gap-4 sm:grid-cols-3">
       {
         siteConfig.trustBadges.map((b) => (
-          <div class="panel panel-muted border-app relative overflow-hidden p-5">
+          <div class="glass-panel relative overflow-hidden p-5">
             <div
               aria-hidden="true"
               class="from-brand-200/18 to-brand-300/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"

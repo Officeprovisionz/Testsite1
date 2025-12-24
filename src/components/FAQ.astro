@@ -1,13 +1,18 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 const items = siteConfig.faqs;
 ---
 
-<section id="faq" class="section scroll-mt-20">
-  <div class="container-page">
+<section id="faq" class="section section-creative scroll-mt-20 pb-0">
+  <div class="container-page relative">
     <h2 class="heading-2">FAQ</h2>
     <p class="lede">Quick answers to common questions.</p>
+
+    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 -z-10">
+      <div class="mx-auto h-64 w-[min(70rem,94vw)] rounded-full bg-brand-400/10 blur-3xl"></div>
+    </div>
 
     <div class="mt-8 grid gap-3" data-faq>
       {
@@ -15,7 +20,7 @@ const items = siteConfig.faqs;
           const buttonId = `faq-button-${idx}`;
           const panelId = `faq-panel-${idx}`;
           return (
-            <div class="card card-hover overflow-hidden">
+            <div class="glass-panel overflow-hidden">
               <h3>
                 <button
                   id={buttonId}
@@ -44,6 +49,10 @@ const items = siteConfig.faqs;
         })
       }
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-12">
+    <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
   </div>
 
   <script>

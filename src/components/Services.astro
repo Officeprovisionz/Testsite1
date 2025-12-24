@@ -65,13 +65,13 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
           return (
             <article
               class:list={[
-                'card card-hover relative overflow-hidden p-6',
+                'glass-panel relative overflow-hidden p-6 transition-transform',
                 isFeatured ? 'md:col-span-2 md:p-7' : '',
               ]}
             >
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-200/25 via-transparent to-brand-300/20"
+                class="to-brand-300/16 pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-200/20 via-transparent"
               />
               <div class="relative">
                 <div class="flex items-start gap-4">

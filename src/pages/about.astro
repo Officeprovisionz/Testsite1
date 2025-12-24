@@ -36,86 +36,125 @@ const description =
   />
 
   <section class="section section-creative">
-    <div class="container-page">
-      <div class="grid gap-8 lg:grid-cols-2 lg:items-start">
-        <div id="how-we-work" class="scroll-mt-24">
+    <div class="container-page relative">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
+        <div class="mx-auto h-80 w-[min(76rem,96vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
+      </div>
+
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-start">
+        <div id="how-we-work" class="scroll-mt-24 lg:col-span-7">
           <h2 class="heading-2">How we work</h2>
           <p class="text-muted mt-3 max-w-prose leading-relaxed sm:text-lg">
             Great cleaning is a process. We confirm scope, follow a checklist, and keep you in the
             loop—so you always know what to expect.
           </p>
 
-          <ol class="border-app mt-6 grid gap-4 border-l pl-6">
-            <li class="relative">
+          <ol class="mt-8 grid gap-5">
+            <li class="glass-panel relative overflow-hidden p-6">
               <div
-                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
                 aria-hidden="true"
+                class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
               >
-                1
               </div>
-              <div class="panel border-app overflow-hidden border p-5">
-                <p class="text-strong text-sm font-semibold">Quote + scope</p>
-                <p class="text-muted mt-1 text-sm">
-                  Tell us your space and goals. We confirm details and provide a clear quote before
-                  service.
-                </p>
+              <div class="relative flex items-start gap-4">
+                <span
+                  class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-2xl bg-brand-900 text-sm font-semibold text-white shadow-md shadow-brand-900/15"
+                  aria-hidden="true"
+                >
+                  1
+                </span>
+                <div>
+                  <p class="text-strong text-sm font-semibold">Quote + scope</p>
+                  <p class="text-muted mt-1 text-sm">
+                    Tell us your space and goals. We confirm details and provide a clear quote
+                    before service.
+                  </p>
+                </div>
               </div>
             </li>
-            <li class="relative">
+
+            <li class="glass-panel relative overflow-hidden p-6">
               <div
-                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
                 aria-hidden="true"
+                class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
               >
-                2
               </div>
-              <div class="panel border-app overflow-hidden border p-5">
-                <p class="text-strong text-sm font-semibold">Checklist cleaning</p>
-                <p class="text-muted mt-1 text-sm">
-                  We use a consistent checklist so the important details don’t get missed.
-                </p>
+              <div class="relative flex items-start gap-4">
+                <span
+                  class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-2xl bg-brand-900 text-sm font-semibold text-white shadow-md shadow-brand-900/15"
+                  aria-hidden="true"
+                >
+                  2
+                </span>
+                <div>
+                  <p class="text-strong text-sm font-semibold">Checklist cleaning</p>
+                  <p class="text-muted mt-1 text-sm">
+                    We use a consistent checklist so the important details don’t get missed.
+                  </p>
+                </div>
               </div>
             </li>
-            <li class="relative">
+
+            <li class="glass-panel relative overflow-hidden p-6">
               <div
-                class="absolute -left-3 top-4 flex h-7 w-7 items-center justify-center rounded-full bg-brand-600 text-xs font-semibold text-white"
                 aria-hidden="true"
+                class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
               >
-                3
               </div>
-              <div class="panel border-app overflow-hidden border p-5">
-                <p class="text-strong text-sm font-semibold">Follow-up</p>
-                <p class="text-muted mt-1 text-sm">
-                  If anything needs attention, let us know within 24 hours and we’ll make it right.
-                </p>
+              <div class="relative flex items-start gap-4">
+                <span
+                  class="mt-0.5 inline-flex h-9 w-9 flex-none items-center justify-center rounded-2xl bg-brand-900 text-sm font-semibold text-white shadow-md shadow-brand-900/15"
+                  aria-hidden="true"
+                >
+                  3
+                </span>
+                <div>
+                  <p class="text-strong text-sm font-semibold">Follow-up</p>
+                  <p class="text-muted mt-1 text-sm">
+                    If anything needs attention, let us know within 24 hours and we’ll make it
+                    right.
+                  </p>
+                </div>
               </div>
             </li>
           </ol>
         </div>
 
-        <div id="expect" class="scroll-mt-24">
-          <h2 class="heading-2">What you can expect</h2>
-          <p class="text-muted mt-3 max-w-prose leading-relaxed sm:text-lg">
-            Professional, predictable, and easy—from booking to completion.
-          </p>
+        <div id="expect" class="scroll-mt-24 lg:col-span-5">
+          <div class="glass-card relative overflow-hidden p-7 sm:p-8">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+            >
+            </div>
+            <div class="relative">
+              <h2 class="text-strong text-2xl font-semibold tracking-tight">What you can expect</h2>
+              <p class="text-muted mt-3 max-w-prose leading-relaxed">
+                Professional, predictable, and easy—from booking to completion.
+              </p>
 
-          <div class="mt-6 grid gap-5">
-            <div class="panel panel-muted border-app overflow-hidden border p-6">
-              <p class="text-strong text-sm font-semibold">Respect for your space</p>
-              <p class="text-muted mt-1 text-sm">
-                Careful handling, tidy workflow, and a team that treats your space like it’s ours.
-              </p>
-            </div>
-            <div class="panel panel-muted border-app overflow-hidden border p-6">
-              <p class="text-strong text-sm font-semibold">Clear communication</p>
-              <p class="text-muted mt-1 text-sm">
-                Upfront quotes, confirmed scope, and a simple way to request add-ons.
-              </p>
-            </div>
-            <div class="panel panel-muted border-app overflow-hidden border p-6">
-              <p class="text-strong text-sm font-semibold">Consistency</p>
-              <p class="text-muted mt-1 text-sm">
-                A checklist-driven approach for repeatable results—especially for recurring visits.
-              </p>
+              <div class="mt-6 grid gap-4">
+                <div class="glass rounded-2xl border p-5">
+                  <p class="text-strong text-sm font-semibold">Respect for your space</p>
+                  <p class="text-muted mt-1 text-sm">
+                    Careful handling, tidy workflow, and a team that treats your space like it’s
+                    ours.
+                  </p>
+                </div>
+                <div class="glass rounded-2xl border p-5">
+                  <p class="text-strong text-sm font-semibold">Clear communication</p>
+                  <p class="text-muted mt-1 text-sm">
+                    Upfront quotes, confirmed scope, and a simple way to request add-ons.
+                  </p>
+                </div>
+                <div class="glass rounded-2xl border p-5">
+                  <p class="text-strong text-sm font-semibold">Consistency</p>
+                  <p class="text-muted mt-1 text-sm">
+                    A checklist-driven approach for repeatable results—especially for recurring
+                    visits.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -136,7 +175,7 @@ const description =
 
   <section id="quote" class="section section-muted section-creative scroll-mt-24">
     <div class="container-page">
-      <div class="panel panel-muted border-app overflow-hidden border p-7 sm:p-8">
+      <div class="glass-card overflow-hidden p-7 sm:p-9">
         <h2 class="heading-2">Ready to get a quote?</h2>
         <p class="lede">
           Send a quick message and we’ll respond with availability and a clear price.

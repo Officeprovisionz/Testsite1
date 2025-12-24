@@ -1,5 +1,6 @@
 ---
 import { galleryItems } from '@/data/gallery';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 type Props = {
   id?: string;
@@ -30,8 +31,8 @@ const toPublicUrl = (src: string) => {
 };
 ---
 
-<section id={id} class="section scroll-mt-20">
-  <div class="container-page">
+<section id={id} class="section section-creative scroll-mt-20 pb-0">
+  <div class="container-page relative">
     <div class="section-head">
       <div>
         <h2 class="heading-2">{heading}</h2>
@@ -64,7 +65,7 @@ const toPublicUrl = (src: string) => {
         galleryItems.map((it, idx) => (
           <a
             href={toPublicUrl(it.src)}
-            class="card card-hover group overflow-hidden"
+            class="glass-panel group overflow-hidden"
             data-gallery-item
             data-gallery-index={String(idx)}
           >
@@ -86,7 +87,7 @@ const toPublicUrl = (src: string) => {
       }
     </div>
 
-    <dialog class="card w-full max-w-3xl rounded-2xl p-0" data-lightbox>
+    <dialog class="glass-card w-full max-w-3xl rounded-2xl p-0" data-lightbox>
       <div class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
         <div class="min-w-0">
           <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>Preview</p>
@@ -116,6 +117,10 @@ const toPublicUrl = (src: string) => {
         <figcaption class="text-muted text-sm" data-lightbox-caption></figcaption>
       </figure>
     </dialog>
+  </div>
+
+  <div class="relative -mb-px mt-12">
+    <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
   </div>
 
   <script>

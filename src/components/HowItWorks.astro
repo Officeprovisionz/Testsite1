@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 type Props = {
   id?: string;
@@ -14,8 +15,8 @@ const {
 } = Astro.props;
 ---
 
-<section id={id} class="section section-muted section-creative scroll-mt-20">
-  <div class="container-page">
+<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
+  <div class="container-page relative">
     <div class="section-head">
       <div>
         <h2 class="heading-2">{heading}</h2>
@@ -23,10 +24,10 @@ const {
       </div>
     </div>
 
-    <ol class="mt-8 grid gap-5 lg:grid-cols-4">
+    <ol class="mt-10 grid gap-6 lg:grid-cols-4">
       {
         siteConfig.processSteps.map((s, idx) => (
-          <li class="panel panel-muted border-app relative overflow-hidden border p-6">
+          <li class="glass-panel relative overflow-hidden p-6">
             <div
               aria-hidden="true"
               class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
@@ -48,7 +49,7 @@ const {
       }
     </ol>
 
-    <div class="panel border-app mt-8 overflow-hidden border p-6">
+    <div class="glass-card mt-10 overflow-hidden">
       <div class="grid gap-6 md:grid-cols-2 md:items-center">
         <div>
           <p class="eyebrow">Quality assurance</p>
@@ -77,5 +78,9 @@ const {
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-12">
+    <WaveDivider tone="bg" class="absolute bottom-0 left-0 right-0" />
   </div>
 </section>

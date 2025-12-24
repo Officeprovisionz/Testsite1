@@ -4,9 +4,9 @@ import { motion } from 'framer-motion';
 const steps = [
   {
     number: '1',
-    title: 'Quote + scope',
+    title: 'Walkthrough + scope',
     description:
-      'Tell us your space and goals. We confirm details and provide a clear quote before service.',
+      'Tell us your space and goals. We confirm details, lock the scope, and send a clear written quote.',
   },
   {
     number: '2',

@@ -16,8 +16,8 @@ type Props = {
 
 const {
   id,
-  heading = 'Get a fast quote',
-  description = 'Share a few details about your space and schedule. We’ll confirm scope, timing, and next steps—then send a clear quote.',
+  heading = 'Request a walkthrough',
+  description = 'Share a few details about your space and schedule. We’ll confirm scope, timing, and next steps—then send a clear written quote.',
   variant = 'section',
   showSidebar = true,
 } = Astro.props;
@@ -830,7 +830,7 @@ const sourcePath = Astro.url.pathname;
           return;
         }
 
-        const subject = `Quote request — ${companyName || name}`;
+        const subject = `Walkthrough request — ${companyName || name}`;
         const body = [
           source ? `Page: ${source}` : undefined,
           companyName ? `Company: ${companyName}` : undefined,

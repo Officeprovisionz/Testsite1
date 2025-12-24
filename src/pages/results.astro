@@ -6,6 +6,10 @@ import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import Gallery from '@/components/Gallery.astro';
 import ContactSection from '@/components/Contact.astro';
+import TrustBar from '@/components/TrustBar.astro';
+import QualityPromise from '@/components/QualityPromise.astro';
+import Testimonials from '@/components/Testimonials.astro';
+import StartOptions from '@/components/StartOptions.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Results | ${siteConfig.brand.name}`;
@@ -14,7 +18,6 @@ const description =
 
 const base = import.meta.env.BASE_URL;
 const contactHref = `${base}contact/`;
-const servicesHref = `${base}services/`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,6 +29,8 @@ const servicesHref = `${base}services/`;
     description="A closer look at recent work across offices and commercial spaces—focused on consistency, communication, and a checklist-based scope."
   />
 
+  <TrustBar />
+
   <Gallery
     id="gallery"
     heading="Recent results"
@@ -35,31 +40,19 @@ const servicesHref = `${base}services/`;
     ctaLabel="Request a walkthrough"
   />
 
-  <section class="section section-muted section-creative">
-    <div class="container-page">
-      <div class="glass-card relative overflow-hidden p-7 sm:p-10">
-        <div
-          aria-hidden="true"
-          class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-        >
-        </div>
-        <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
-          <div>
-            <p class="eyebrow">Next step</p>
-            <h2 class="heading-2 mt-2">Want results like these?</h2>
-            <p class="lede">
-              Tell us your space, access window, and frequency. We’ll confirm scope and send a clear
-              quote.
-            </p>
-          </div>
-          <div class="flex flex-col gap-3 sm:flex-row md:justify-end">
-            <a href={contactHref} class="btn-primary">Request a walkthrough</a>
-            <a href={servicesHref} class="btn-secondary">Browse services</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <QualityPromise
+    id="quality"
+    heading="Reliable results, not surprises"
+    description="Every visit follows a written scope and checklist—with fast follow-up if anything needs attention."
+    showWave={false}
+  />
+
+  <Testimonials id="testimonials" />
+
+  <StartOptions
+    heading="Want results like these?"
+    description="Request a walkthrough, preview the checklist, or call/text us—whatever is easiest."
+  />
 
   <ContactSection id="quote" heading="Request a walkthrough" />
 

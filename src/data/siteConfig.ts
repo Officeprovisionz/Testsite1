@@ -44,7 +44,8 @@ export const siteConfig = {
     phoneDisplay: '(415) 555-0123',
     phoneE164: '+14155550123',
     email: 'hello@officeprovisionz.example',
-    smsBody: 'Hi Office Provisionz — I’d like a quote for cleaning + supplies support.',
+    smsBody:
+      'Hi Office Provisionz — I’d like to request a walkthrough for cleaning + supplies support.',
   },
   hours: {
     lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
@@ -52,7 +53,7 @@ export const siteConfig = {
   trustBadges: [
     {
       title: 'Insured',
-      description: 'Coverage details available during quoting.',
+      description: 'Coverage details available during scoping.',
     },
     {
       title: 'Checklist-driven',

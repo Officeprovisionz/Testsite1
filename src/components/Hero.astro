@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
 const smsHref = `sms:${siteConfig.contact.phoneE164}?&body=${encodeURIComponent(siteConfig.contact.smsBody)}`;
@@ -11,11 +12,12 @@ const galleryPreviewA = href('gallery/02.svg');
 const galleryPreviewB = href('gallery/04.svg');
 ---
 
-<section class="section section-creative">
+<section class="hero-splash">
   <div class="container-page relative grid gap-10 lg:grid-cols-2 lg:items-center">
     <div>
+      <p class="eyebrow">{siteConfig.brand.name}</p>
       <h1
-        class="text-strong mt-5 text-balance font-serif text-5xl font-bold tracking-tight sm:text-6xl"
+        class="text-strong mt-4 text-balance font-serif text-5xl font-bold tracking-tight sm:text-6xl"
       >
         A cleaner office—
         <span class="text-brand-600">with supplies and facilities support</span>.
@@ -26,8 +28,8 @@ const galleryPreviewB = href('gallery/04.svg');
         >.
       </p>
 
-      <div class="mt-6 flex flex-col gap-3 sm:flex-row">
-        <a class="btn-primary" href={href('contact/')}>Get a Quote</a>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a class="btn-primary" href={href('contact/')}>Get Started</a>
         <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
         <a
           class="btn-secondary"
@@ -36,7 +38,7 @@ const galleryPreviewB = href('gallery/04.svg');
         >
       </div>
 
-      <div class="border-app surface-muted mt-8 rounded-2xl border p-5">
+      <div class="glass mt-8 rounded-2xl border p-5">
         <p class="text-strong text-sm font-semibold">Standard visit includes</p>
         <ul class="text-muted mt-3 grid gap-2 text-sm sm:grid-cols-2">
           {
@@ -51,8 +53,8 @@ const galleryPreviewB = href('gallery/04.svg');
       </div>
     </div>
 
-    <div class="card card-hover overflow-hidden">
-      <div class="hero-panel p-7 sm:p-9">
+    <div class="glass-card overflow-hidden">
+      <div class="p-7 sm:p-9">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <p class="eyebrow">Trusted service</p>
           <div class="flex items-center gap-2" aria-label="Five-star care">
@@ -79,7 +81,7 @@ const galleryPreviewB = href('gallery/04.svg');
               />
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/25 to-transparent"
               >
               </div>
             </div>
@@ -94,22 +96,22 @@ const galleryPreviewB = href('gallery/04.svg');
               />
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-900/10 to-transparent"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/25 to-transparent"
               >
               </div>
             </div>
           </div>
 
           <div class="grid gap-3 sm:grid-cols-3">
-            <div class="panel panel-muted border-app overflow-hidden border p-4">
+            <div class="glass rounded-2xl border p-4">
               <p class="text-strong text-sm font-semibold">Fast quotes</p>
               <p class="text-muted mt-1 text-sm">A quick walkthrough and a clear scope.</p>
             </div>
-            <div class="panel panel-muted border-app overflow-hidden border p-4">
+            <div class="glass rounded-2xl border p-4">
               <p class="text-strong text-sm font-semibold">Reliable visits</p>
               <p class="text-muted mt-1 text-sm">Consistent checklists and follow-through.</p>
             </div>
-            <div class="panel panel-muted border-app overflow-hidden border p-4">
+            <div class="glass rounded-2xl border p-4">
               <p class="text-strong text-sm font-semibold">Easy add-ons</p>
               <p class="text-muted mt-1 text-sm">Supplies/restocking when you need it.</p>
             </div>
@@ -132,5 +134,9 @@ const galleryPreviewB = href('gallery/04.svg');
         </div>
       </div>
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-10">
+    <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
   </div>
 </section>

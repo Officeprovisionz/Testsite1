@@ -16,6 +16,13 @@ const base = normalizeBase(process.env.PUBLIC_SITE_BASE);
 // Example (GitHub Pages): https://<owner>.github.io/<repo>/
 const site = process.env.SITE_URL;
 
+const integrations = [
+  tailwind({ applyBaseStyles: false }),
+  // Only generate sitemap when a canonical site URL is configured.
+  // This avoids build warnings and prevents producing a sitemap with an incorrect hostname.
+  ...(site ? [sitemap({})] : []),
+];
+
 export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
@@ -28,5 +35,5 @@ export default defineConfig({
       },
     },
   },
-  integrations: [tailwind({ applyBaseStyles: false }), sitemap({})],
+  integrations,
 });

@@ -275,6 +275,108 @@
       linear-gradient(180deg, rgb(var(--color-brand-50) / 0.65), rgb(var(--color-surface)) 55%);
   }
 
+  /* --- Reference-inspired (glass + waves) primitives --- */
+
+  .wave-divider {
+    line-height: 0;
+    width: 100%;
+    pointer-events: none;
+  }
+
+  .wave-divider__svg {
+    display: block;
+    width: 100%;
+    height: 3.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .wave-divider__svg {
+      height: 4.5rem;
+    }
+  }
+
+  .wave-divider--flip {
+    transform: scaleY(-1);
+  }
+
+  .glass {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface) / 0.66),
+      rgb(var(--color-surface) / 0.42)
+    );
+    border-color: rgb(var(--color-border) / 0.95);
+    -webkit-backdrop-filter: blur(14px);
+    backdrop-filter: blur(14px);
+  }
+
+  :root[data-mode='dark'] .glass {
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface) / 0.55),
+      rgb(var(--color-surface) / 0.35)
+    );
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light']) .glass {
+      background: linear-gradient(
+        180deg,
+        rgb(var(--color-surface) / 0.55),
+        rgb(var(--color-surface) / 0.35)
+      );
+    }
+  }
+
+  .glass-card {
+    @apply border;
+    border-color: rgb(var(--color-border) / 0.95);
+    border-radius: var(--radius-card);
+    box-shadow: 0 20px 60px rgb(0 0 0 / 0.16);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+    background:
+      radial-gradient(900px 320px at 20% 10%, rgb(var(--color-brand-500) / 0.18), transparent 55%),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.7), rgb(var(--color-surface) / 0.42));
+  }
+
+  .hero-splash {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    padding-top: clamp(3.5rem, 7vw, 6rem);
+    padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
+    border-bottom: 1px solid rgb(var(--color-border));
+    background:
+      radial-gradient(900px 420px at 18% 18%, rgb(var(--color-brand-500) / 0.18), transparent 60%),
+      radial-gradient(900px 420px at 82% 12%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
+      url('/hero-bg.svg') center / cover no-repeat,
+      rgb(var(--color-bg));
+  }
+
+  /* Slightly darker in dark mode for that “premium” hero feel */
+  :root[data-mode='dark'] .hero-splash {
+    background:
+      radial-gradient(900px 420px at 18% 18%, rgb(var(--color-brand-500) / 0.2), transparent 60%),
+      radial-gradient(900px 420px at 82% 12%, rgb(var(--color-brand-400) / 0.16), transparent 60%),
+      url('/hero-bg.svg') center / cover no-repeat,
+      rgb(var(--color-bg));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light']) .hero-splash {
+      background:
+        radial-gradient(900px 420px at 18% 18%, rgb(var(--color-brand-500) / 0.2), transparent 60%),
+        radial-gradient(
+          900px 420px at 82% 12%,
+          rgb(var(--color-brand-400) / 0.16),
+          transparent 60%
+        ),
+        url('/hero-bg.svg') center / cover no-repeat,
+        rgb(var(--color-bg));
+    }
+  }
+
   :root[data-mode='dark'] .hero-panel {
     background:
       radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand-500) / 0.18), transparent 55%),

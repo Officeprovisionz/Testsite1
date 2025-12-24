@@ -1,0 +1,44 @@
+<svg width="620" height="520" viewBox="0 0 620 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="620" y2="520" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0b1220"/>
+      <stop offset="1" stop-color="#0a1020"/>
+    </linearGradient>
+    <linearGradient id="shine" x1="120" y1="80" x2="520" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#ffffff" stop-opacity="0.20"/>
+      <stop offset="0.45" stop-color="#ffffff" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="shadow" x="-40" y="-40" width="700" height="620" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="22" flood-color="#000" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#shadow)">
+    <rect x="190" y="30" width="240" height="460" rx="34" fill="url(#bg)" stroke="#ffffff" stroke-opacity="0.12"/>
+    <rect x="208" y="60" width="204" height="392" rx="22" fill="#0f172a" stroke="#ffffff" stroke-opacity="0.08"/>
+
+    <!-- UI blocks -->
+    <rect x="222" y="84" width="176" height="42" rx="12" fill="#111c34"/>
+    <rect x="222" y="140" width="176" height="18" rx="9" fill="#0b1220"/>
+    <rect x="222" y="166" width="140" height="18" rx="9" fill="#0b1220"/>
+
+    <rect x="222" y="206" width="176" height="80" rx="16" fill="#111c34"/>
+    <rect x="236" y="222" width="110" height="14" rx="7" fill="#0b1220"/>
+    <rect x="236" y="244" width="150" height="14" rx="7" fill="#0b1220"/>
+    <rect x="236" y="266" width="92" height="14" rx="7" fill="#0b1220"/>
+
+    <rect x="222" y="304" width="176" height="80" rx="16" fill="#111c34"/>
+    <rect x="236" y="320" width="124" height="14" rx="7" fill="#0b1220"/>
+    <rect x="236" y="342" width="150" height="14" rx="7" fill="#0b1220"/>
+    <rect x="236" y="364" width="102" height="14" rx="7" fill="#0b1220"/>
+
+    <rect x="222" y="402" width="176" height="40" rx="14" fill="#0b1220"/>
+
+    <!-- notch -->
+    <rect x="270" y="44" width="80" height="10" rx="5" fill="#0b1220"/>
+
+    <!-- sheen -->
+    <path d="M210 66 C280 40 330 70 410 40 L410 472 C340 494 288 458 210 488 Z" fill="url(#shine)"/>
+  </g>
+</svg>

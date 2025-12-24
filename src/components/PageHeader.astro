@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import WaveDivider from '@/components/WaveDivider.astro';
 
 type Props = {
   title: string;
@@ -16,19 +17,10 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 const isCenter = align === 'center';
 ---
 
-<section class="page-header relative overflow-hidden border-b">
-  <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-    <div class="absolute -left-24 -top-28 h-72 w-72 rounded-full bg-brand-200/40 blur-3xl"></div>
-    <div class="absolute -right-24 -top-16 h-72 w-72 rounded-full bg-brand-300/30 blur-3xl"></div>
-    <div
-      class="absolute -bottom-24 left-1/2 h-64 w-64 -translate-x-1/2 rounded-full bg-brand-200/25 blur-3xl"
-    >
-    </div>
-  </div>
-
-  <div class:list={['container-page section relative', isCenter ? 'text-center' : '']}>
+<section class="hero-splash">
+  <div class:list={['container-page relative', isCenter ? 'text-center' : '']}>
     <p class="eyebrow">{siteConfig.brand.name}</p>
-    <h1 class="heading-1 mt-3 text-balance">{title}</h1>
+    <h1 class="heading-1 mt-4 text-balance">{title}</h1>
     {
       description && (
         <p class:list={['lede mt-4 text-pretty', isCenter ? 'mx-auto max-w-2xl' : 'max-w-2xl']}>
@@ -46,5 +38,9 @@ const isCenter = align === 'center';
       <a class="btn-primary" href={href('contact/')}>Request a quote</a>
       <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
     </div>
+  </div>
+
+  <div class="relative -mb-px mt-10">
+    <WaveDivider tone="surface" class="absolute bottom-0 left-0 right-0" />
   </div>
 </section>

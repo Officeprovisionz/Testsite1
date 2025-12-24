@@ -24,7 +24,7 @@ Production-grade, mobile-first business site built with **Astro + Tailwind + Typ
 - **Static output first** (deploy anywhere, including GitHub Pages)
 - **Base-path aware** (works at `/` locally and `/<repo>/` on Pages)
 - **Editable content** in `src/data/siteConfig.ts`
-- **SEO + accessibility baseline** (sitemap, robots, skip link, focus styles, accessible FAQ)
+- **SEO + accessibility baseline** (robots, skip link, focus styles, accessible FAQ + optional sitemap)
 
 ## Images + gallery
 
@@ -52,6 +52,13 @@ Copy `.env.example` to `.env` and adjust as needed.
 - `PUBLIC_SITE_BASE` (default `/`) — set to `/<repo>/` for GitHub Pages builds
 - `SITE_URL` (recommended) — full canonical URL including base, e.g. `https://<owner>.github.io/<repo>/`
 - `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.)
+
+### Sitemap notes
+
+This project includes `@astrojs/sitemap`, but it is **only enabled when `SITE_URL` is set**.
+
+- Prevents generating a sitemap with the wrong hostname during local builds.
+- The GitHub Pages workflow sets `SITE_URL` automatically.
 
 ## Deployment
 

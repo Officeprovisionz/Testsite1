@@ -1,0 +1,90 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+type Props = {
+  heading?: string;
+  description?: string;
+};
+
+const {
+  heading = 'Makes operations easier',
+  description = 'Clear scope, consistent checklists, and fast communication—so you can manage cleaning like a system, not a surprise.',
+} = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+
+const img = href('device-mock.svg');
+---
+
+<section class="section section-creative" aria-label="What makes us different">
+  <div class="container-page">
+    <div class="text-center">
+      <p class="eyebrow">Makes us different</p>
+      <h2 class="heading-2 mt-3">{heading}</h2>
+    </div>
+
+    <div class="glass-card mt-10 overflow-hidden">
+      <div class="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        <div>
+          <p class="text-muted text-sm">{siteConfig.brand.name}</p>
+          <p class="text-strong mt-2 text-2xl font-semibold tracking-tight">
+            Checklist-based delivery
+          </p>
+          <p class="text-muted mt-3 max-w-prose leading-relaxed">{description}</p>
+
+          <ul class="text-subtle mt-6 grid gap-2 text-sm sm:grid-cols-2">
+            <li class="flex items-start gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Defined scope + add-ons</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>After-hours friendly</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Quick response window</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true"
+              ></span>
+              <span>Insured + references</span>
+            </li>
+          </ul>
+
+          <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+            <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+            <a class="btn-secondary" href={href('pricing/')}>See how pricing works</a>
+          </div>
+        </div>
+
+        <div class="relative">
+          <div aria-hidden="true" class="pointer-events-none absolute -inset-10">
+            <div
+              class="absolute left-1/2 top-1/2 h-72 w-72 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-400/20 blur-3xl"
+            >
+            </div>
+          </div>
+          <img
+            src={img}
+            alt=""
+            class="mx-auto w-full max-w-[360px]"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+      </div>
+
+      <div
+        class="border-app text-subtle flex items-center justify-center gap-2 border-t px-6 py-4 text-xs"
+      >
+        <span class="inline-flex h-1.5 w-1.5 rounded-full bg-brand-600" aria-hidden="true"></span>
+        <span>Ask for the current checklist during your quote.</span>
+      </div>
+    </div>
+  </div>
+</section>

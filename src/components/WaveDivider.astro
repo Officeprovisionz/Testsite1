@@ -1,0 +1,32 @@
+---
+type Props = {
+  /** Flip vertically (useful for top dividers). */
+  flip?: boolean;
+  /** Fill tone from design tokens. */
+  tone?: 'surface' | 'surface-muted' | 'bg';
+  /** Optional extra classes for positioning (e.g. absolute bottom-0 left-0 right-0). */
+  class?: string;
+};
+
+const { flip = false, tone = 'surface-muted', class: className = '' } = Astro.props;
+
+const fill =
+  tone === 'surface'
+    ? 'rgb(var(--color-surface))'
+    : tone === 'bg'
+      ? 'rgb(var(--color-bg))'
+      : 'rgb(var(--color-surface-muted))';
+---
+
+<div
+  aria-hidden="true"
+  class:list={['wave-divider', flip ? 'wave-divider--flip' : '', className]}
+  style={`--wave-fill: ${fill}`}
+>
+  <svg viewBox="0 0 1200 80" preserveAspectRatio="none" class="wave-divider__svg" focusable="false">
+    <!-- A smooth “swoop” similar to the reference image. -->
+    <path
+      d="M0,40 C220,85 380,5 600,40 C820,75 980,5 1200,40 L1200,80 L0,80 Z"
+      fill="var(--wave-fill)"></path>
+  </svg>
+</div>

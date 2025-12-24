@@ -9,31 +9,19 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
   <div class="container-page py-10">
     <div class="grid gap-6 md:grid-cols-2 md:items-start">
       <div>
-        <p class="font-serif text-lg font-bold tracking-tight text-slate-900">
+        <p class="text-strong font-serif text-lg font-bold tracking-tight">
           {siteConfig.brand.name}
         </p>
-        <p class="mt-2 max-w-prose text-sm text-slate-700">{siteConfig.brand.tagline}</p>
+        <p class="text-muted mt-2 max-w-prose text-sm">{siteConfig.brand.tagline}</p>
       </div>
-      <div class="grid gap-2 text-sm text-slate-700 md:justify-items-end">
-        <a
-          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
-          href={href('services/')}>Services</a
-        >
-        <a
-          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
-          href={href('about/#gallery')}>Gallery</a
-        >
-        <a
-          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
-          href={href('services/#faq')}>FAQ</a
-        >
-        <a
-          class="underline decoration-slate-300 underline-offset-4 hover:text-slate-900"
-          href={href('contact/')}>Contact</a
-        >
+      <div class="grid gap-2 text-sm md:justify-items-end">
+        <a class="link link-muted" href={href('services/')}>Services</a>
+        <a class="link link-muted" href={href('about/#gallery')}>Gallery</a>
+        <a class="link link-muted" href={href('services/#faq')}>FAQ</a>
+        <a class="link link-muted" href={href('contact/')}>Contact</a>
       </div>
     </div>
-    <p class="mt-8 text-xs text-slate-500">
+    <p class="text-subtle mt-8 text-xs">
       © {new Date().getFullYear()}
       {siteConfig.brand.name}. All rights reserved.
     </p>

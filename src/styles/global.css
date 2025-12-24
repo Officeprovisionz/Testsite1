@@ -197,7 +197,25 @@
   }
 
   .card-hover {
-    @apply hover:-translate-y-1 hover:shadow-lg hover:shadow-brand-900/5;
+    /* Intentionally empty: hover motion is applied only on hover-capable devices below.
+       This prevents "sticky hover" behavior on touch screens. */
+  }
+
+  .link {
+    @apply underline underline-offset-4;
+    text-decoration-color: rgb(var(--color-brand-300) / 0.6);
+  }
+
+  .link:hover {
+    text-decoration-color: rgb(var(--color-brand-400) / 0.85);
+  }
+
+  .link-muted {
+    color: rgb(var(--color-text-muted));
+  }
+
+  .link-muted:hover {
+    color: rgb(var(--color-text));
   }
 
   .hero-panel {

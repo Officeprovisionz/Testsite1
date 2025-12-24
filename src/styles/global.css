@@ -152,8 +152,12 @@
     background-color: rgb(var(--color-bg));
     color: rgb(var(--color-text));
     letter-spacing: -0.01em;
-    line-height: 1.5;
+    line-height: 1.6;
     text-rendering: optimizeLegibility;
+    font-feature-settings:
+      'kern' 1,
+      'liga' 1,
+      'calt' 1;
   }
 
   ::selection {
@@ -204,8 +208,14 @@
     padding-right: max(1rem, env(safe-area-inset-right));
   }
 
+  .container-narrow {
+    @apply mx-auto w-full max-w-3xl;
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+  }
+
   .section {
-    padding-block: clamp(3rem, 6vw, 5rem);
+    padding-block: clamp(3.25rem, 6.5vw, 5.75rem);
   }
 
   /* Decorative section wrapper that stays compatible with tokens + themes.
@@ -464,7 +474,14 @@
   }
 
   .btn-primary {
-    @apply btn bg-brand-900 text-white shadow-md shadow-brand-900/10 hover:bg-brand-800 hover:shadow-lg hover:shadow-brand-900/20 active:scale-95;
+    @apply btn bg-brand-600 text-white shadow-md shadow-brand-900/10 hover:bg-brand-500 hover:shadow-lg hover:shadow-brand-900/15 active:scale-[0.98];
+  }
+
+  .btn-primary:disabled,
+  .btn-secondary:disabled {
+    @apply opacity-60;
+    cursor: not-allowed;
+    transform: none;
   }
 
   .btn-secondary {
@@ -505,12 +522,17 @@
   }
 
   .heading-1 {
-    @apply font-serif text-4xl font-bold tracking-tight sm:text-5xl;
+    @apply font-serif text-4xl font-bold tracking-tight sm:text-6xl;
     color: rgb(var(--color-text));
   }
 
   .heading-2 {
-    @apply font-serif text-3xl font-bold tracking-tight;
+    @apply font-serif text-3xl font-bold tracking-tight sm:text-4xl;
+    color: rgb(var(--color-text));
+  }
+
+  .heading-3 {
+    @apply text-xl font-semibold tracking-tight sm:text-2xl;
     color: rgb(var(--color-text));
   }
 
@@ -528,6 +550,19 @@
     color: rgb(var(--color-text));
     --tw-ring-offset-color: rgb(var(--color-surface));
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
+    @apply transition-colors;
+  }
+
+  .input:hover,
+  .select:hover,
+  .textarea:hover {
+    border-color: rgb(var(--color-border) / 0.75);
+  }
+
+  .input[aria-invalid='true'],
+  .select[aria-invalid='true'],
+  .textarea[aria-invalid='true'] {
+    border-color: rgb(239 68 68 / 0.65); /* red-500 */
   }
 
   .input::placeholder,
@@ -542,6 +577,18 @@
 
   .textarea {
     @apply py-2;
+  }
+
+  .checkbox {
+    @apply h-4 w-4 rounded border;
+    border-color: rgb(var(--color-border));
+    background-color: rgb(var(--color-surface));
+    accent-color: rgb(var(--color-brand-600));
+  }
+
+  .checkbox:focus-visible {
+    outline: 2px solid theme(colors.brand.500);
+    outline-offset: 3px;
   }
 
   .safe-bottom-pad {

@@ -37,6 +37,8 @@
   "devDependencies": {
     "@eslint/js": "latest",
     "@types/node": "latest",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
     "autoprefixer": "latest",
     "eslint": "latest",
     "eslint-config-prettier": "latest",

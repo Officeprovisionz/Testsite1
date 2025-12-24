@@ -7,35 +7,54 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 ---
 
 <footer class="surface border-app border-t">
-  <div class="container-page py-10">
-    <div class="grid gap-6 md:grid-cols-2 md:items-start">
+  <div class="container-page py-12">
+    <div class="grid gap-10 md:grid-cols-3">
       <div>
         <p class="text-strong font-serif text-lg font-bold tracking-tight">
           {siteConfig.brand.name}
         </p>
         <p class="text-muted mt-2 max-w-prose text-sm">{siteConfig.brand.tagline}</p>
+        <p class="text-subtle mt-3 text-sm">Serving {siteConfig.brand.city}</p>
 
-        <div class="mt-4 grid gap-1 text-sm">
-          <a class="link link-muted" href={telHref}>
-            Call/Text {siteConfig.contact.phoneDisplay}
-          </a>
-          <a class="link link-muted" href={`mailto:${siteConfig.contact.email}`}>
-            {siteConfig.contact.email}
-          </a>
+        <div class="mt-5 grid gap-1 text-sm">
+          <a class="link link-muted" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
+          <a class="link link-muted" href={`mailto:${siteConfig.contact.email}`}
+            >{siteConfig.contact.email}</a
+          >
         </div>
       </div>
-      <div class="grid gap-2 text-sm md:justify-items-end">
+
+      <nav class="grid gap-2 text-sm" aria-label="Footer">
         <a class="link link-muted" href={href('services/')}>Services</a>
         <a class="link link-muted" href={href('industries/')}>Industries</a>
         <a class="link link-muted" href={href('pricing/')}>Pricing</a>
         <a class="link link-muted" href={href('results/')}>Results</a>
         <a class="link link-muted" href={href('services/#faq')}>FAQ</a>
+        <a class="link link-muted" href={href('about/')}>About</a>
         <a class="link link-muted" href={href('contact/')}>Contact</a>
+      </nav>
+
+      <div class="text-sm md:justify-self-end">
+        <p class="text-strong font-semibold">Hours</p>
+        <ul class="text-muted mt-2 grid gap-1">
+          {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
+        </ul>
+
+        <div class="mt-6 flex flex-col gap-3">
+          <a class="btn-primary" href={href('contact/')}>Request a quote</a>
+          <a class="btn-secondary" href="#top">Back to top</a>
+        </div>
       </div>
     </div>
-    <p class="text-subtle mt-8 text-xs">
-      © {new Date().getFullYear()}
-      {siteConfig.brand.name}. All rights reserved.
-    </p>
+
+    <div
+      class="border-app mt-10 flex flex-col gap-2 border-t pt-6 sm:flex-row sm:items-center sm:justify-between"
+    >
+      <p class="text-subtle text-xs">
+        © {new Date().getFullYear()}
+        {siteConfig.brand.name}. All rights reserved.
+      </p>
+      <p class="text-subtle text-xs">Checklist-driven service. Clear scope. Consistent results.</p>
+    </div>
   </div>
 </footer>

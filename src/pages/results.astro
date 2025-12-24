@@ -35,29 +35,26 @@ const servicesHref = `${base}services/`;
     ctaLabel="Request a walkthrough"
   />
 
-  <section class="section section-muted">
+  <section class="section section-muted section-creative">
     <div class="container-page">
-      <div
-        class="relative overflow-hidden rounded-3xl bg-brand-900 px-6 py-16 shadow-2xl sm:px-16 md:pt-24 lg:flex lg:gap-x-20 lg:px-24 lg:pt-0"
-      >
-        <div class="mx-auto max-w-md text-center lg:mx-0 lg:flex-auto lg:py-32 lg:text-left">
-          <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl">
-            Want results like these?
-          </h2>
-          <p class="mt-6 text-lg leading-8 text-brand-100">
-            Tell us your space, access window, and frequency. We’ll confirm scope and send a clear
-            quote.
-          </p>
-          <div class="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
-            <a
-              href={contactHref}
-              class="rounded-md bg-white px-3.5 py-2.5 text-sm font-semibold text-brand-900 shadow-sm hover:bg-brand-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-            >
-              Request a quote
-            </a>
-            <a href={servicesHref} class="text-sm font-semibold leading-6 text-white">
-              Browse services <span aria-hidden="true">→</span>
-            </a>
+      <div class="glass-card relative overflow-hidden p-7 sm:p-10">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+        <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
+          <div>
+            <p class="eyebrow">Next step</p>
+            <h2 class="heading-2 mt-2">Want results like these?</h2>
+            <p class="lede">
+              Tell us your space, access window, and frequency. We’ll confirm scope and send a clear
+              quote.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 sm:flex-row md:justify-end">
+            <a href={contactHref} class="btn-primary">Request a quote</a>
+            <a href={servicesHref} class="btn-secondary">Browse services</a>
           </div>
         </div>
       </div>

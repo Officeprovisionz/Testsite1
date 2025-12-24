@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 import { fileURLToPath } from 'node:url';
 
 function normalizeBase(input: string | undefined): string {
@@ -18,6 +19,7 @@ const site = process.env.SITE_URL;
 
 const integrations = [
   tailwind({ applyBaseStyles: false }),
+  react(),
   // Only generate sitemap when a canonical site URL is configured.
   // This avoids build warnings and prevents producing a sitemap with an incorrect hostname.
   ...(site ? [sitemap({})] : []),

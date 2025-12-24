@@ -1,14 +1,13 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
-import Hero from '@/components/Hero.astro';
-import FeatureTiles from '@/components/FeatureTiles.astro';
-import FeatureBanner from '@/components/FeatureBanner.astro';
-import TrustBar from '@/components/TrustBar.astro';
-import Industries from '@/components/Industries.astro';
-import Testimonials from '@/components/Testimonials.astro';
-import HowItWorks from '@/components/HowItWorks.astro';
-import Services from '@/components/Services.astro';
+import { HeroPro } from '@/components/HeroPro';
+import { FeatureTilesPro } from '@/components/FeatureTilesPro';
+import { ClientLogos } from '@/components/ClientLogos';
+import { FeatureBannerPro } from '@/components/FeatureBannerPro';
+import { IndustriesPro } from '@/components/IndustriesPro';
+import { HowItWorksPro } from '@/components/HowItWorksPro';
+import { ServicesPro } from '@/components/ServicesPro';
 import Pricing from '@/components/Pricing.astro';
 import Gallery from '@/components/Gallery.astro';
 import FAQ from '@/components/FAQ.astro';
@@ -22,28 +21,22 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 ---
 
 <BaseLayout>
-  <Header slot="header" />
-  <Hero />
+  <Header slot="header" transparent={true} />
+  <HeroPro client:load />
 
-  <FeatureTiles />
+  <FeatureTilesPro client:visible />
 
-  <FeatureBanner />
+  <div class="bg-slate-50 py-12 dark:bg-slate-950">
+    <ClientLogos client:visible />
+  </div>
 
-  <TrustBar />
+  <FeatureBannerPro client:visible />
 
-  <Industries />
+  <IndustriesPro client:visible />
 
-  <Testimonials showWave={false} />
+  <HowItWorksPro client:visible />
 
-  <HowItWorks />
-
-  <Services
-    heading="Popular services"
-    description="Office cleaning, supplies/restocking, and facilities support—built for busy teams."
-    limit={3}
-    ctaHref={href('services/')}
-    ctaLabel="View all services"
-  />
+  <ServicesPro client:visible />
 
   <Gallery
     id="results"

@@ -1,17 +1,27 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 
+type Props = {
+  id?: string;
+  heading?: string;
+  description?: string;
+};
+
+const {
+  id,
+  heading = 'Get a fast quote',
+  description = 'Tell us the basics. We’ll confirm scope, timing, and a final quote before service.',
+} = Astro.props;
+
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
 ---
 
-<section id="contact" class="section scroll-mt-20 bg-slate-50">
+<section id={id} class="section scroll-mt-20 bg-slate-50">
   <div class="container-page grid gap-10 lg:grid-cols-2">
     <div>
-      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">Get a fast quote</h2>
-      <p class="mt-2 max-w-prose text-slate-700">
-        Tell us the basics. We’ll confirm scope, timing, and a final quote before service.
-      </p>
+      <h2 class="text-3xl font-extrabold tracking-tight text-slate-900">{heading}</h2>
+      <p class="mt-2 max-w-prose text-slate-700">{description}</p>
 
       <div class="mt-6 space-y-3 text-sm text-slate-700">
         <p>
@@ -41,11 +51,10 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
       </div>
 
       <div class="mt-8 rounded-2xl border border-slate-200 bg-white p-5">
-        <p class="text-sm font-semibold text-slate-900">Spam protection</p>
+        <p class="text-sm font-semibold text-slate-900">Privacy & spam protection</p>
         <p class="mt-1 text-sm text-slate-700">
-          This form includes a hidden honeypot field. For stronger protection, consider using a
-          provider that supports rate limiting and/or add a serverless endpoint (Azure Functions)
-          later.
+          This form includes a hidden anti-spam field. We only use your details to respond to your
+          request.
         </p>
       </div>
     </div>

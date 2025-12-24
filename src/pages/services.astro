@@ -1,0 +1,39 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import StickyCTA from '@/components/StickyCTA.astro';
+import PageHeader from '@/components/PageHeader.astro';
+import ServicesSection from '@/components/Services.astro';
+import Pricing from '@/components/Pricing.astro';
+import AreasServed from '@/components/AreasServed.astro';
+import FAQ from '@/components/FAQ.astro';
+import TrustBar from '@/components/TrustBar.astro';
+import { siteConfig } from '@/data/siteConfig';
+
+const title = `Services | ${siteConfig.brand.name}`;
+const description =
+  'Professional home and office cleaning with clear pricing, careful checklists, and flexible scheduling.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <PageHeader
+    title="Services & pricing"
+    description="Choose a service, review pricing, and request a quote in minutes. We confirm scope before we arrive—no surprises."
+  />
+
+  <TrustBar />
+
+  <ServicesSection id="services" ctaLabel="Request a quote" />
+
+  <Pricing id="pricing" ctaLabel="Request a quote" />
+
+  <AreasServed />
+
+  <FAQ />
+
+  <Footer slot="footer" />
+  <StickyCTA slot="sticky" />
+</BaseLayout>

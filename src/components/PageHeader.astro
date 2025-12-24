@@ -1,0 +1,48 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+type Props = {
+  title: string;
+  description?: string;
+  align?: 'left' | 'center';
+};
+
+const { title, description, align = 'left' } = Astro.props;
+
+const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+
+const isCenter = align === 'center';
+---
+
+<section class="border-b border-slate-200 bg-gradient-to-b from-brand-50/60 to-white">
+  <div class:list={['container-page section', isCenter ? 'text-center' : '']}>
+    <p class="text-sm font-semibold text-brand-800">{siteConfig.brand.name}</p>
+    <h1 class="mt-3 text-balance text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+      {title}
+    </h1>
+    {
+      description && (
+        <p
+          class:list={[
+            'mt-4 text-pretty text-lg text-slate-700',
+            isCenter ? 'mx-auto max-w-2xl' : 'max-w-2xl',
+          ]}
+        >
+          {description}
+        </p>
+      )
+    }
+
+    <div
+      class:list={[
+        'mt-7 flex flex-col gap-3',
+        isCenter ? 'sm:flex-row sm:justify-center' : 'sm:flex-row',
+      ]}
+    >
+      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
+      <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
+    </div>
+  </div>
+</section>

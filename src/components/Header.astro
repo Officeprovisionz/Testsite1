@@ -2,14 +2,31 @@
 import { siteConfig } from '@/data/siteConfig';
 
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
+
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+
+const normalizeTrailingSlash = (path: string) => (path.endsWith('/') ? path : `${path}/`);
+const currentPath = normalizeTrailingSlash(Astro.url.pathname);
+const isActive = (targetHref: string) => {
+  const target = normalizeTrailingSlash(targetHref);
+  // Home should match exactly; other pages can match by prefix for nested routes.
+  const home = normalizeTrailingSlash(base);
+  if (target === home) return currentPath === home;
+  return currentPath === target || currentPath.startsWith(target);
+};
+
+const navItems = [
+  { label: 'Home', href: href('') },
+  { label: 'Services', href: href('services/') },
+  { label: 'About', href: href('about/') },
+  { label: 'Contact', href: href('contact/') },
+];
 ---
 
 <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/80 backdrop-blur">
   <div class="container-page flex h-16 items-center justify-between">
-    <a
-      href={import.meta.env.BASE_URL}
-      class="flex items-center gap-2 font-extrabold tracking-tight"
-    >
+    <a href={href('')} class="flex items-center gap-2 font-extrabold tracking-tight">
       <span class="grid h-9 w-9 place-items-center rounded-xl bg-brand-600 text-white">SC</span>
       <span class="text-slate-900">{siteConfig.brand.name}</span>
     </a>
@@ -18,16 +35,51 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
       class="hidden items-center gap-6 text-sm font-medium text-slate-700 md:flex"
       aria-label="Primary"
     >
-      <a class="hover:text-slate-900" href="#services">Services</a>
-      <a class="hover:text-slate-900" href="#pricing">Pricing</a>
-      <a class="hover:text-slate-900" href="#areas">Areas</a>
-      <a class="hover:text-slate-900" href="#faq">FAQ</a>
-      <a class="hover:text-slate-900" href="#contact">Contact</a>
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class:list={[
+              'rounded-lg px-2 py-1 hover:text-slate-900 focus-visible:outline-none',
+              isActive(item.href) ? 'text-slate-900' : 'text-slate-700',
+            ]}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
+
+    <details class="relative md:hidden">
+      <summary class="btn-secondary cursor-pointer list-none px-3 py-2">
+        <span class="text-sm font-semibold">Menu</span>
+      </summary>
+      <div
+        class="absolute right-0 mt-2 w-56 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-soft"
+      >
+        <nav class="grid" aria-label="Mobile">
+          {
+            navItems.map((item) => (
+              <a
+                href={item.href}
+                class:list={[
+                  'px-4 py-3 text-sm font-medium hover:bg-slate-50',
+                  isActive(item.href) ? 'text-slate-900' : 'text-slate-700',
+                ]}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </details>
 
     <div class="flex items-center gap-2">
       <a class="btn-secondary hidden sm:inline-flex" href={telHref}>Call/Text</a>
-      <a class="btn-primary" href="#contact">Get a Quote</a>
+      <a class="btn-primary" href={href('contact/')}>Get a Quote</a>
     </div>
   </div>
 </header>

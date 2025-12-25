@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
+import { getCollection } from 'astro:content';
 import type { Service } from '@/data/siteConfig';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
@@ -26,7 +26,13 @@ const {
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
-const source = itemsOverride ?? siteConfig.services;
+// Fetch from content collection if no override provided
+const allServices = await getCollection('services');
+const standardServices = allServices
+  .filter((s) => s.data.category === 'standard')
+  .map((s) => s.data);
+
+const source = itemsOverride ?? standardServices;
 const items = typeof limit === 'number' ? source.slice(0, limit) : source;
 const cta = ctaHref ?? href('contact/');
 
@@ -151,13 +157,13 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
                   <div class="min-w-0">
                     <h3 class="text-strong text-lg font-bold">{s.title}</h3>
-                    <p class="text-muted mt-2 text-sm">{s.description}</p>
+                    <p class="mt-2 text-sm text-muted">{s.description}</p>
                   </div>
                 </div>
 
                 <ul
                   class:list={[
-                    'check-list check-list--compact text-muted text-sm',
+                    'check-list check-list--compact text-sm text-muted',
                     isFeatured ? 'sm:grid-cols-2' : '',
                   ]}
                 >

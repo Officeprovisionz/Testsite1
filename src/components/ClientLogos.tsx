@@ -65,7 +65,7 @@ const ReviewCard = ({
           <p className="text-subtle text-xs font-medium">{username}</p>
         </div>
       </div>
-      <blockquote className="text-muted mt-2 text-sm">{body}</blockquote>
+      <blockquote className="mt-2 text-sm text-muted">{body}</blockquote>
     </figure>
   );
 };

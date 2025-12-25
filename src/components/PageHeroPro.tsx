@@ -22,7 +22,7 @@ export const PageHeroPro = ({ title, description, className, children }: PageHer
         <h1 className="heading-1 text-balance bg-gradient-to-b from-[rgb(var(--color-text))] to-[rgb(var(--color-text-muted))] bg-clip-text text-transparent">
           {title}
         </h1>
-        <p className="text-muted mx-auto mt-4 max-w-2xl text-balance text-lg sm:text-xl">
+        <p className="mx-auto mt-4 max-w-2xl text-balance text-lg text-muted sm:text-xl">
           {description}
         </p>
         {children && <div className="mt-8">{children}</div>}

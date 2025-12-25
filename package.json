@@ -24,6 +24,7 @@
     "@astrojs/tailwind": "latest",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
+    "@radix-ui/react-slot": "^1.2.4",
     "astro": "latest",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
@@ -52,6 +53,7 @@
     "prettier-plugin-astro": "latest",
     "prettier-plugin-tailwindcss": "latest",
     "tailwindcss": "^3.4.17",
+    "tailwindcss-animate": "^1.0.7",
     "typescript": "latest",
     "typescript-eslint": "latest"
   },

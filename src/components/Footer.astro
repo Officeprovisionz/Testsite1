@@ -13,7 +13,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
         <p class="text-strong font-serif text-lg font-bold tracking-tight">
           {siteConfig.brand.name}
         </p>
-        <p class="text-muted mt-2 max-w-prose text-sm">{siteConfig.brand.tagline}</p>
+        <p class="mt-2 max-w-prose text-sm text-muted">{siteConfig.brand.tagline}</p>
         <p class="text-subtle mt-3 text-sm">Serving {siteConfig.brand.city}</p>
 
         <div class="mt-5 grid gap-1 text-sm">
@@ -43,7 +43,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
       <div class="text-sm md:justify-self-end">
         <p class="text-strong font-semibold">Hours</p>
-        <ul class="text-muted mt-2 grid gap-1">
+        <ul class="mt-2 grid gap-1 text-muted">
           {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
         </ul>
 

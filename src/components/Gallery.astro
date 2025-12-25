@@ -133,7 +133,7 @@ const toPublicUrl = (src: string) => {
             {variant === 'below' ? (
               <div class="p-5">
                 <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
-                <p class="text-muted mt-1 text-sm">{it.alt}</p>
+                <p class="mt-1 text-sm text-muted">{it.alt}</p>
               </div>
             ) : null}
           </a>
@@ -168,7 +168,7 @@ const toPublicUrl = (src: string) => {
           alt=""
           class="border-app surface-muted w-full rounded-xl border object-contain"
         />
-        <figcaption class="text-muted text-sm" data-lightbox-caption></figcaption>
+        <figcaption class="text-sm text-muted" data-lightbox-caption></figcaption>
       </figure>
     </dialog>
   </div>

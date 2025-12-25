@@ -107,5 +107,5 @@ export const CardDescription = ({
   className?: string;
   children: React.ReactNode;
 }) => {
-  return <p className={cn('text-muted mt-2 text-sm leading-relaxed', className)}>{children}</p>;
+  return <p className={cn('mt-2 text-sm leading-relaxed text-muted', className)}>{children}</p>;
 };

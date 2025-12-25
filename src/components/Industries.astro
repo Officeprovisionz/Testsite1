@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
+import { getCollection } from 'astro:content';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
@@ -18,8 +18,9 @@ const {
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
-const featured = siteConfig.industries[0];
-const rest = siteConfig.industries.slice(1);
+const allIndustries = await getCollection('industries');
+const featured = allIndustries[0]?.data;
+const rest = allIndustries.slice(1).map((i) => i.data);
 ---
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
@@ -48,9 +49,9 @@ const rest = siteConfig.industries.slice(1);
                 <h3 class="text-strong mt-2 text-2xl font-semibold tracking-tight">
                   {featured.title}
                 </h3>
-                <p class="text-muted mt-3 max-w-prose leading-relaxed">{featured.description}</p>
+                <p class="mt-3 max-w-prose leading-relaxed text-muted">{featured.description}</p>
               </div>
-              <ul class="check-list check-list--compact text-muted text-sm sm:grid-cols-2">
+              <ul class="check-list check-list--compact text-sm text-muted sm:grid-cols-2">
                 {featured.bullets.map((b) => (
                   <li>
                     <span class="check-icon check-icon--sm" aria-hidden="true">
@@ -80,8 +81,8 @@ const rest = siteConfig.industries.slice(1);
               />
               <div class="relative">
                 <h3 class="text-strong text-lg font-semibold tracking-tight">{it.title}</h3>
-                <p class="text-muted mt-2 text-sm leading-relaxed">{it.description}</p>
-                <ul class="check-list check-list--compact text-muted text-sm sm:grid-cols-3">
+                <p class="mt-2 text-sm leading-relaxed text-muted">{it.description}</p>
+                <ul class="check-list check-list--compact text-sm text-muted sm:grid-cols-3">
                   {it.bullets.map((b) => (
                     <li>
                       <span class="check-icon check-icon--sm" aria-hidden="true">

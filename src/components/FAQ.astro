@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
+import { getCollection } from 'astro:content';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
@@ -17,7 +17,8 @@ const {
   showWave = true,
 } = Astro.props;
 
-const items = siteConfig.faqs;
+const faqs = await getCollection('faqs');
+const items = faqs.map((f) => f.data);
 ---
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
@@ -42,7 +43,7 @@ const items = siteConfig.faqs;
                 +
               </span>
             </summary>
-            <div class="text-muted px-6 pb-6 text-sm leading-relaxed">
+            <div class="px-6 pb-6 text-sm leading-relaxed text-muted">
               <p>{it.answer}</p>
             </div>
           </details>

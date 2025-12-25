@@ -9,10 +9,16 @@ import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { getCollection } from 'astro:content';
 
 const title = `Services | ${siteConfig.brand.name}`;
 const description =
   'Office cleaning, janitorial services, supplies/restocking, and facilities support—built for busy teams in San Francisco.';
+
+const allServices = await getCollection('services');
+const specialtyServices = allServices
+  .filter((s) => s.data.category === 'specialty')
+  .map((s) => s.data);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -32,7 +38,7 @@ const description =
     id="specialty"
     heading="Specialty + add-on services"
     description="Popular add-ons we can scope and schedule based on your space and building requirements."
-    items={siteConfig.specialtyServices}
+    items={specialtyServices}
   />
 
   <AreasServed />

@@ -26,7 +26,7 @@ export function HowItWorksPro() {
                 </div>
 
                 <div className="ml-12">
-                  <p className="text-muted text-base leading-relaxed">{item.description}</p>
+                  <p className="text-base leading-relaxed text-muted">{item.description}</p>
                 </div>
               </div>
             ))}

@@ -34,7 +34,7 @@ export function ServicesPro() {
                 />
                 <div className="relative">
                   <h3 className="text-strong text-lg font-bold tracking-tight">{family.title}</h3>
-                  <p className="text-muted mt-2 text-sm leading-relaxed">{family.description}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{family.description}</p>
 
                   <ul className="check-list check-list--compact text-subtle mt-4 text-sm sm:grid-cols-3">
                     {family.bullets.map((b) => (
@@ -57,7 +57,7 @@ export function ServicesPro() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
               <div>
                 <p className="text-strong text-sm font-semibold">Most requested</p>
-                <p className="text-muted mt-1 text-sm">
+                <p className="mt-1 text-sm text-muted">
                   Common asks we can scope quickly during quoting.
                 </p>
               </div>

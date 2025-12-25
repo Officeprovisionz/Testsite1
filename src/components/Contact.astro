@@ -53,7 +53,7 @@ const serviceOptions = [
         />
         <div class="relative">
           <h2 class="heading-3">{heading}</h2>
-          {description ? <p class="text-muted mt-2 text-sm">{description}</p> : null}
+          {description ? <p class="mt-2 text-sm text-muted">{description}</p> : null}
 
           {!formEndpoint && (
             <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
@@ -90,7 +90,7 @@ const serviceOptions = [
           >
             <input type="hidden" name="source" value={sourcePath} />
 
-            <p id="contact-help" class="text-muted text-sm">
+            <p id="contact-help" class="text-sm text-muted">
               Fields marked with <span class="font-semibold">*</span> are required.
             </p>
 
@@ -272,7 +272,7 @@ const serviceOptions = [
                 <h2 class="heading-2">{heading}</h2>
                 <p class="lede">{description}</p>
 
-                <div class="text-muted mt-6 space-y-3 text-sm">
+                <div class="mt-6 space-y-3 text-sm text-muted">
                   <p>
                     <span class="text-strong font-semibold">Call/Text:</span>
                     <a class="underline decoration-brand-300/50 underline-offset-4" href={telHref}>
@@ -305,7 +305,7 @@ const serviceOptions = [
                   />
                   <div class="relative">
                     <p class="text-strong text-sm font-semibold">What happens next</p>
-                    <ol class="text-muted mt-2 grid gap-2 text-sm">
+                    <ol class="mt-2 grid gap-2 text-sm text-muted">
                       <li>
                         <span class="text-strong font-semibold">1.</span> We reply within 1 business
                         day.
@@ -373,7 +373,7 @@ const serviceOptions = [
                 >
                   <input type="hidden" name="source" value={sourcePath} />
 
-                  <p id="contact-help" class="text-muted text-sm">
+                  <p id="contact-help" class="text-sm text-muted">
                     Fields marked with <span class="font-semibold">*</span> are required.
                   </p>
 

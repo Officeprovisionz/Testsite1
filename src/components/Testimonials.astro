@@ -1,5 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
+import { getCollection } from 'astro:content';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
@@ -15,6 +15,8 @@ const safeWaveTone =
   waveTone === 'surface' || waveTone === 'surface-muted' || waveTone === 'bg'
     ? waveTone
     : 'surface';
+
+const testimonials = await getCollection('testimonials');
 ---
 
 <section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
@@ -32,7 +34,7 @@ const safeWaveTone =
 
     <div class="mt-10 grid gap-5 md:grid-cols-3">
       {
-        siteConfig.testimonials.map((t) => (
+        testimonials.map((t) => (
           <figure class="glass-panel relative overflow-hidden p-6">
             <div
               aria-hidden="true"
@@ -45,12 +47,12 @@ const safeWaveTone =
                 </span>
                 <span class="text-subtle text-xs">Verified</span>
               </div>
-              <blockquote class="text-muted mt-4 text-pretty text-sm leading-relaxed">
-                “{t.quote}”
+              <blockquote class="mt-4 text-pretty text-sm leading-relaxed text-muted">
+                “{t.data.quote}”
               </blockquote>
               <figcaption class="mt-5 text-sm">
-                <span class="text-strong font-semibold">{t.name}</span>
-                <span class="text-subtle"> · {t.location}</span>
+                <span class="text-strong font-semibold">{t.data.name}</span>
+                <span class="text-subtle"> · {t.data.location}</span>
               </figcaption>
             </div>
           </figure>

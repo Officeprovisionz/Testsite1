@@ -26,12 +26,12 @@ export const FeatureBannerPro = () => {
               <p className="text-strong mt-2 text-2xl font-semibold tracking-tight">
                 Checklist-based delivery
               </p>
-              <p className="text-muted mt-3 max-w-prose leading-relaxed">
+              <p className="mt-3 max-w-prose leading-relaxed text-muted">
                 Clear scope, consistent checklists, and fast communication—so you can manage
                 cleaning like a system, not a surprise.
               </p>
 
-              <ul className="text-muted mt-6 grid gap-2 text-sm sm:grid-cols-2">
+              <ul className="mt-6 grid gap-2 text-sm text-muted sm:grid-cols-2">
                 <li className="flex items-start gap-2">
                   <span
                     className="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"

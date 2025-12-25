@@ -41,7 +41,7 @@ export const ProcessStepsPro = () => {
               {step.number}
             </span>
             <h3 className="text-strong mt-4 text-xl font-bold">{step.title}</h3>
-            <p className="text-muted mt-2">{step.description}</p>
+            <p className="mt-2 text-muted">{step.description}</p>
           </div>
         </motion.div>
       ))}

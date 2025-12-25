@@ -54,7 +54,7 @@ export function IndustriesPro() {
                 />
                 <div className="relative">
                   <h3 className="text-strong text-lg font-bold tracking-tight">{item.title}</h3>
-                  <div className="text-muted mt-2 text-sm leading-relaxed">{item.description}</div>
+                  <div className="mt-2 text-sm leading-relaxed text-muted">{item.description}</div>
                 </div>
               </a>
             );

@@ -103,7 +103,7 @@ const Card = ({ tile, href }: { tile: Tile; href: (p: string) => string }) => {
 
         <div className="relative p-6">
           <h3 className="heading-3">{tile.title}</h3>
-          <p className="text-muted mt-2 text-sm leading-relaxed">{tile.description}</p>
+          <p className="mt-2 text-sm leading-relaxed text-muted">{tile.description}</p>
           <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-300">
             <span>{tile.cta}</span>
             <svg

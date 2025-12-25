@@ -20,7 +20,7 @@ export const HeroPro = () => {
             </span>
             .
           </h1>
-          <p className="text-muted mt-6 max-w-prose text-pretty text-lg leading-relaxed">
+          <p className="mt-6 max-w-prose text-pretty text-lg leading-relaxed text-muted">
             {siteConfig.brand.tagline} Serving{' '}
             <span className="text-strong font-semibold">{siteConfig.brand.city}</span>.
           </p>

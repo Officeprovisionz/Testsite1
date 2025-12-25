@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
-import { cn } from '@/lib/utils';
+import { siteConfig } from '@/data/siteConfig';
 
 type Tile = {
   title: string;
@@ -50,8 +50,21 @@ export const FeatureTilesPro = () => {
   const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
   return (
-    <section className="relative z-20 -mt-20 pb-20">
-      <div className="container-page">
+    <section className="section section-muted section-creative relative z-20 -mt-16 pt-20">
+      <div className="container-page relative">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 -top-10 -z-10">
+          <div className="mx-auto h-72 w-[min(72rem,95vw)] rounded-full bg-brand-500/10 blur-3xl" />
+        </div>
+
+        <div className="mb-10 text-center">
+          <p className="eyebrow">{siteConfig.brand.name}</p>
+          <h2 className="heading-2 mt-3">Everything your workplace needs.</h2>
+          <p className="lede mx-auto mt-4 max-w-2xl">
+            Commercial-grade cleaning with supplies and facilities support—built to fit your
+            schedule.
+          </p>
+        </div>
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {tiles.map((tile, idx) => (
             <Card key={idx} tile={tile} href={href} />
@@ -63,12 +76,8 @@ export const FeatureTilesPro = () => {
 };
 
 const Card = ({ tile, href }: { tile: Tile; href: (p: string) => string }) => {
-  const [isHovered, setIsHovered] = useState(false);
-
   return (
     <motion.div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       className="card card-hover group relative h-full overflow-hidden"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -88,20 +97,17 @@ const Card = ({ tile, href }: { tile: Tile; href: (p: string) => string }) => {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"
+            className="absolute inset-0 bg-gradient-to-t from-slate-950/50 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-40"
           />
         </div>
 
         <div className="relative p-6">
           <h3 className="heading-3">{tile.title}</h3>
           <p className="text-muted mt-2 text-sm leading-relaxed">{tile.description}</p>
-          <div className="mt-4 flex items-center gap-2 text-sm font-semibold text-brand-600 dark:text-brand-400">
+          <div className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-300">
             <span>{tile.cta}</span>
             <svg
-              className={cn(
-                'h-4 w-4 transition-transform duration-300',
-                isHovered ? 'translate-x-1' : ''
-              )}
+              className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"

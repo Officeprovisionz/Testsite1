@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 const {
   id,
@@ -18,17 +19,12 @@ const safeWaveTone =
 
 <section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
   <div class="container-page relative">
-    <div class="section-head">
-      <div>
-        <h2 class="heading-2">{heading}</h2>
-        <p class="lede">
-          {
-            description ??
-              'Real feedback is the best marketing. Swap these placeholders with your own testimonials.'
-          }
-        </p>
-      </div>
-    </div>
+    <SectionHeader
+      eyebrow="Testimonials"
+      heading={heading}
+      description={description ??
+        'Real feedback is the best marketing. Swap these placeholders with your own testimonials.'}
+    />
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-12 -z-10">
       <div class="mx-auto h-72 w-[min(72rem,95vw)] rounded-full bg-brand-500/10 blur-3xl"></div>

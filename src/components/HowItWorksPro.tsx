@@ -19,10 +19,10 @@ export function HowItWorksPro() {
             {siteConfig.processSteps.map((item, index) => (
               <div key={`content-${index}`} className="mb-10">
                 <div className="mb-4 flex items-center gap-4">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-brand-100 text-sm font-bold text-brand-600 ring-4 ring-white dark:bg-brand-900 dark:text-brand-300 dark:ring-slate-950">
+                  <span className="grid h-9 w-9 place-items-center rounded-2xl bg-brand-900 text-sm font-semibold text-white shadow-md shadow-brand-900/15 ring-1 ring-white/10">
                     {index + 1}
                   </span>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white">{item.title}</h3>
+                  <h3 className="text-strong text-xl font-bold tracking-tight">{item.title}</h3>
                 </div>
 
                 <div className="ml-12">

@@ -29,7 +29,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 block h-full w-full rounded-3xl bg-neutral-200 dark:bg-slate-800/[0.8]"
+                className="absolute inset-0 block h-full w-full rounded-3xl bg-brand-500/10"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -47,10 +47,10 @@ export const HoverEffect = ({
           {item.link ? (
             <a
               href={item.link}
-              className="relative z-20 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-black"
+              className="relative z-20 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
               aria-label={`${item.title} — request a walkthrough`}
             >
-              <Card className="group-hover:border-slate-700">
+              <Card>
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
               </Card>
@@ -77,7 +77,7 @@ export const Card = ({
   return (
     <div
       className={cn(
-        'relative z-20 h-full w-full overflow-hidden rounded-2xl border border-transparent bg-white p-4 group-hover:border-slate-700 dark:border-white/[0.2] dark:bg-black',
+        'glass-panel border-app relative z-20 h-full w-full overflow-hidden rounded-2xl border p-4',
         className
       )}
     >
@@ -95,7 +95,7 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn('mt-4 font-bold tracking-wide text-slate-900 dark:text-zinc-100', className)}>
+    <h4 className={cn('text-strong mt-2 text-base font-semibold tracking-tight', className)}>
       {children}
     </h4>
   );
@@ -107,9 +107,5 @@ export const CardDescription = ({
   className?: string;
   children: React.ReactNode;
 }) => {
-  return (
-    <p className={cn('mt-8 text-sm leading-relaxed tracking-wide text-zinc-500', className)}>
-      {children}
-    </p>
-  );
+  return <p className={cn('text-muted mt-2 text-sm leading-relaxed', className)}>{children}</p>;
 };

@@ -469,8 +469,9 @@
   }
 
   .btn {
-    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium tracking-wide transition-all duration-200;
+    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium transition-all duration-200;
     border-radius: var(--radius-control);
+    letter-spacing: 0.005em;
   }
 
   .btn:focus-visible {
@@ -539,17 +540,17 @@
   }
 
   .heading-1 {
-    @apply font-serif text-4xl font-bold tracking-tight sm:text-6xl;
+    @apply text-balance font-serif text-4xl font-bold leading-tight tracking-tight sm:text-6xl;
     color: rgb(var(--color-text));
   }
 
   .heading-2 {
-    @apply font-serif text-3xl font-bold tracking-tight sm:text-4xl;
+    @apply text-balance font-serif text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
     color: rgb(var(--color-text));
   }
 
   .heading-3 {
-    @apply text-xl font-semibold tracking-tight sm:text-2xl;
+    @apply text-xl font-semibold leading-snug tracking-tight sm:text-2xl;
     color: rgb(var(--color-text));
   }
 
@@ -750,7 +751,12 @@
   .app-bar {
     /* Glass overlay at top of page (pairs with backdrop-blur-md on the header). */
     background-color: rgb(var(--color-surface) / 0.14);
-    border-color: transparent;
+    border-color: rgb(var(--color-border) / 0.22);
+  }
+
+  header[data-site-header].header-transparent.app-bar {
+    background-color: rgb(var(--color-surface) / 0.08);
+    border-color: rgb(var(--color-border) / 0.12);
   }
 
   header[data-site-header].is-scrolled.app-bar {
@@ -776,6 +782,33 @@
       radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand-400) / 0.1), transparent 60%),
       linear-gradient(180deg, rgb(var(--color-brand-50) / 0.55), rgb(var(--color-bg) / 0) 70%),
       rgb(var(--color-bg));
+  }
+
+  .footer-surface {
+    background:
+      radial-gradient(900px 380px at 18% 0%, rgb(var(--color-brand-300) / 0.16), transparent 60%),
+      radial-gradient(900px 380px at 82% 10%, rgb(var(--color-brand-200) / 0.14), transparent 62%),
+      rgb(var(--color-surface-muted));
+  }
+
+  :root[data-mode='dark'] .footer-surface {
+    background:
+      radial-gradient(900px 380px at 18% 0%, rgb(var(--color-brand-500) / 0.14), transparent 60%),
+      radial-gradient(900px 380px at 82% 10%, rgb(var(--color-brand-400) / 0.12), transparent 62%),
+      rgb(var(--color-surface-muted));
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light']) .footer-surface {
+      background:
+        radial-gradient(900px 380px at 18% 0%, rgb(var(--color-brand-500) / 0.14), transparent 60%),
+        radial-gradient(
+          900px 380px at 82% 10%,
+          rgb(var(--color-brand-400) / 0.12),
+          transparent 62%
+        ),
+        rgb(var(--color-surface-muted));
+    }
   }
 
   :root[data-mode='dark'] .page-header {

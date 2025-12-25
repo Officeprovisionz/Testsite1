@@ -2,10 +2,11 @@
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref, makeIsActive } from '@/lib/nav';
 
-/** @type {{ transparent?: boolean }} */
-const props = Astro.props ?? {};
+type Props = {
+  transparent?: boolean;
+};
 
-const transparent = Boolean(props.transparent);
+const { transparent = false } = Astro.props as Props;
 
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
@@ -38,7 +39,7 @@ const initials = (() => {
 
 <header
   class:list={[
-    'app-bar sticky top-0 z-40 border-b backdrop-blur-md transition-all duration-300',
+    'app-bar sticky top-0 z-40 border-b backdrop-blur-md backdrop-saturate-150 transition-all duration-300',
     transparent ? 'header-transparent' : '',
   ]}
   data-site-header
@@ -63,9 +64,9 @@ const initials = (() => {
           <a
             href={item.href}
             class:list={[
-              'text-muted relative rounded-lg px-2 py-1 hover:text-[rgb(var(--color-text))] focus-visible:outline-none',
+              'text-muted relative rounded-lg px-2 py-1 transition-colors hover:bg-brand-500/10 hover:text-[rgb(var(--color-text))] focus-visible:outline-none',
               isActive(item.href)
-                ? 'text-strong after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
+                ? 'text-strong bg-brand-500/12 after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
                 : '',
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}

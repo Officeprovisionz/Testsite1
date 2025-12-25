@@ -19,7 +19,7 @@ export const PageHeroPro = ({ title, description, className, children }: PageHer
     >
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
       <div className="container-page relative z-10 text-center">
-        <h1 className="bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-bold tracking-tight text-transparent text-white sm:text-5xl md:text-6xl">
+        <h1 className="text-balance bg-gradient-to-b from-neutral-50 to-neutral-400 bg-clip-text text-4xl font-bold leading-tight tracking-tight text-transparent sm:text-5xl md:text-6xl">
           {title}
         </h1>
         <p className="mx-auto mt-4 max-w-2xl text-lg text-neutral-300 sm:text-xl">{description}</p>

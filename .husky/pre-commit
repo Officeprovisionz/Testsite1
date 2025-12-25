@@ -1,1 +1,27 @@
+#!/usr/bin/env sh
+
+# If you commit from an environment with an older Node (common in WSL), lint-staged can crash.
+# CI still enforces formatting/linting, so we skip locally rather than blocking commits.
+if ! command -v node >/dev/null 2>&1; then
+	echo "[pre-commit] node not found; skipping lint-staged"
+	exit 0
+fi
+
+node_major="$(node -p "process.versions.node.split('.')[0]" 2>/dev/null || echo "0")"
+case "$node_major" in
+	''|*[!0-9]*) node_major="0" ;;
+esac
+
+if [ "$node_major" -lt 20 ]; then
+	echo "[pre-commit] Node $node_major detected (<20). Skipping lint-staged to avoid hook failures."
+	echo "[pre-commit] Tip: use Node >=20 in this shell (or commit from Windows), or set HUSKY=0 to disable hooks."
+	exit 0
+fi
+
+if ! command -v pnpm >/dev/null 2>&1; then
+	echo "[pre-commit] pnpm not found; skipping lint-staged"
+	exit 0
+fi
+
 pnpm lint-staged --concurrent false
+

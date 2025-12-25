@@ -8,8 +8,12 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "dev:pages": "node scripts/run-pages.mjs dev",
     "build": "astro build",
+    "build:pages": "node scripts/run-pages.mjs build",
     "preview": "astro preview",
+    "preview:pages": "node scripts/run-pages.mjs preview",
+    "simulate:pages": "node scripts/simulate-pages.mjs",
     "typecheck": "astro check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

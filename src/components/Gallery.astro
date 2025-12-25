@@ -94,19 +94,19 @@ const toPublicUrl = (src: string) => {
       }
     </SectionHeader>
 
-    <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-gallery>
+    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-gallery>
       {
         resolvedItems.map((it, idx) => (
           <a
             href={toPublicUrl(it.src)}
             class:list={[
-              'glass-panel group overflow-hidden',
+              'group overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-brand-200 hover:shadow-lg dark:border-brand-800/30 dark:bg-slate-900/50',
               variant === 'overlay' ? 'relative' : '',
             ]}
             data-gallery-item
             data-gallery-index={String(idx)}
           >
-            <div class="surface-muted relative aspect-[4/3]">
+            <div class="relative aspect-[4/3] overflow-hidden">
               <img
                 src={toPublicUrl(it.src)}
                 alt={it.alt}
@@ -119,13 +119,13 @@ const toPublicUrl = (src: string) => {
                 <>
                   <div
                     aria-hidden="true"
-                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/20 to-transparent opacity-80"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"
                   />
-                  <div class="pointer-events-none absolute inset-x-0 bottom-0 p-4">
+                  <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5">
                     <p class="text-sm font-semibold tracking-tight text-white">
                       {it.caption ?? 'Project photo'}
                     </p>
-                    <p class="mt-1 line-clamp-2 text-xs text-white/80">{it.alt}</p>
+                    <p class="mt-1 line-clamp-2 text-xs text-white/75">{it.alt}</p>
                   </div>
                 </>
               ) : null}

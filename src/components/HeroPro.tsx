@@ -3,7 +3,7 @@ import { Spotlight } from './ui/Spotlight';
 import { GridBackground } from './ui/GridBackground';
 import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
-import { ArrowRight, Phone } from 'lucide-react';
+import { ArrowRight, Phone, Shield, CheckCircle, Clock } from 'lucide-react';
 
 export const HeroPro = () => {
   const base = import.meta.env.BASE_URL;
@@ -13,18 +13,19 @@ export const HeroPro = () => {
   return (
     <section className="hero-splash relative w-full overflow-hidden antialiased">
       <GridBackground />
-      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="rgba(14, 165, 233, 0.5)" />
+      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="rgba(14, 165, 233, 0.4)" />
 
-      <div className="container-page relative z-10 pb-20 pt-32 lg:pb-32 lg:pt-40">
+      <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mb-6 inline-flex items-center rounded-full border border-brand-200 bg-brand-50/50 px-3 py-1 text-sm font-medium text-brand-800 backdrop-blur-sm dark:border-brand-800 dark:bg-brand-950/50 dark:text-brand-200">
-            <span className="mr-2 flex h-2 w-2 animate-pulse rounded-full bg-brand-500"></span>
+          {/* Badge - removed pulse animation for cleaner look */}
+          <div className="mb-6 inline-flex items-center rounded-full border border-brand-200/60 bg-white/60 px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm backdrop-blur-sm dark:border-brand-700/40 dark:bg-brand-950/60 dark:text-brand-200">
+            <span className="mr-2 flex h-1.5 w-1.5 rounded-full bg-brand-500"></span>
             {siteConfig.brand.name}
           </div>
 
-          <h1 className="heading-1 text-balance text-5xl font-bold tracking-tight md:text-7xl">
+          <h1 className="heading-1 text-balance">
             A cleaner office—{' '}
-            <span className="bg-gradient-to-r from-brand-600 to-brand-400 bg-clip-text text-transparent dark:from-brand-400 dark:to-brand-200">
+            <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-400 bg-clip-text text-transparent dark:from-brand-300 dark:via-brand-400 dark:to-brand-500">
               simplified.
             </span>
           </h1>
@@ -34,41 +35,41 @@ export const HeroPro = () => {
             <span className="font-semibold text-foreground">{siteConfig.brand.city}</span>.
           </p>
 
+          {/* CTA buttons - primary accent for phone, secondary for checklist */}
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-            <Button
-              size="lg"
-              className="h-12 gap-2 px-8 text-base shadow-lg shadow-brand-500/20"
-              asChild
+            <a
+              href={telHref}
+              className="btn-accent inline-flex h-12 items-center gap-2 px-8 text-base"
             >
-              <a href={telHref}>
-                <Phone className="h-4 w-4" />
-                Call {siteConfig.contact.phoneDisplay}
-              </a>
-            </Button>
+              <Phone className="h-4 w-4" />
+              Call {siteConfig.contact.phoneDisplay}
+            </a>
             <Button
               variant="outline"
               size="lg"
-              className="h-12 gap-2 bg-white/50 px-8 text-base backdrop-blur-sm hover:bg-white/80 dark:bg-slate-950/50"
+              className="h-12 gap-2 border-brand-200/50 bg-white/70 px-8 text-base backdrop-blur-sm transition-all hover:border-brand-300 hover:bg-white/90 dark:border-brand-700/40 dark:bg-slate-900/50"
               asChild
             >
-              <a href={href('checklist/')}>
-                Preview checklist
+              <a href={href('contact/')}>
+                Request a quote
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
           </div>
 
-          <div className="mt-12 flex items-center justify-center gap-8 text-sm text-muted-foreground">
+          {/* Trust indicators - replaced empty avatars with real badges */}
+          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground md:gap-8">
             <div className="flex items-center gap-2">
-              <div className="flex -space-x-2">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="h-8 w-8 rounded-full border-2 border-white bg-brand-100 dark:border-slate-950 dark:bg-brand-900"
-                  />
-                ))}
-              </div>
-              <span>Trusted by local businesses</span>
+              <Shield className="h-4 w-4 text-brand-500" />
+              <span>Fully Insured</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-brand-500" />
+              <span>Checklist-Driven</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <Clock className="h-4 w-4 text-brand-500" />
+              <span>Fast Response</span>
             </div>
           </div>
         </div>

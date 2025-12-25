@@ -36,7 +36,7 @@ const initials = (() => {
 
 <header
   class:list={[
-    'app-bar sticky top-0 z-40 border-b backdrop-blur-md backdrop-saturate-150 transition-all duration-300',
+    'sticky top-0 z-40 border-b border-brand-100/30 bg-white/70 backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 dark:border-brand-800/30 dark:bg-slate-900/70',
     transparent ? 'header-transparent' : '',
   ]}
   data-site-header
@@ -44,26 +44,26 @@ const initials = (() => {
   <div class="header-inner container-page flex items-center justify-between">
     <a
       href={href('')}
-      class="flex items-center gap-3 font-serif text-xl font-bold tracking-tight"
+      class="flex items-center gap-3 text-xl font-bold tracking-tight"
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
       <span
-        class="brand-mark grid place-items-center rounded-lg bg-brand-900 text-white shadow-md shadow-brand-900/20"
+        class="brand-mark grid place-items-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white shadow-lg shadow-brand-900/20"
       >
         {initials}
       </span>
       <span class="text-strong">{siteConfig.brand.name}</span>
     </a>
 
-    <nav class="hidden items-center gap-6 text-sm font-medium md:flex" aria-label="Primary">
+    <nav class="hidden items-center gap-1 text-sm font-medium md:flex" aria-label="Primary">
       {
         navItems.map((item) => (
           <a
             href={item.href}
             class:list={[
-              'relative rounded-lg px-2 py-1 text-muted transition-colors hover:bg-brand-500/10 hover:text-[rgb(var(--color-text))] focus-visible:outline-none',
+              'relative rounded-lg px-3 py-2 text-muted transition-all hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none dark:hover:bg-brand-900/30 dark:hover:text-brand-300',
               isActive(item.href)
-                ? 'text-strong bg-brand-500/12 after:absolute after:inset-x-2 after:-bottom-1 after:h-0.5 after:rounded-full after:bg-brand-600'
+                ? 'bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300'
                 : '',
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}

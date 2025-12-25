@@ -10,6 +10,21 @@
       "problemMatcher": []
     },
     {
+      "label": "dev:pages",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["dev:pages"],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "build:pages",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["build:pages"],
+      "problemMatcher": []
+    },
+    {
       "label": "build",
       "type": "shell",
       "command": "pnpm",
@@ -22,6 +37,32 @@
       "command": "pnpm",
       "args": ["preview"],
       "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "preview:pages",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["preview:pages"],
+      "isBackground": true,
+      "options": {
+        "env": {
+          "PORT": "4322"
+        }
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "simulate:pages",
+      "type": "shell",
+      "command": "pnpm",
+      "args": ["simulate:pages"],
+      "isBackground": true,
+      "options": {
+        "env": {
+          "PORT": "4322"
+        }
+      },
       "problemMatcher": []
     },
     {

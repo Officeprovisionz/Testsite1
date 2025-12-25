@@ -47,13 +47,10 @@ const rest = siteConfig.industries.slice(1);
                 </h3>
                 <p class="text-muted mt-3 max-w-prose leading-relaxed">{featured.description}</p>
               </div>
-              <ul class="text-muted grid gap-2 text-sm sm:grid-cols-2">
+              <ul class="check-list check-list--compact text-muted text-sm sm:grid-cols-2">
                 {featured.bullets.map((b) => (
-                  <li class="flex items-start gap-2">
-                    <span
-                      class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                      aria-hidden="true"
-                    >
+                  <li>
+                    <span class="check-icon check-icon--sm" aria-hidden="true">
                       ✓
                     </span>
                     <span>{b}</span>
@@ -81,13 +78,10 @@ const rest = siteConfig.industries.slice(1);
               <div class="relative">
                 <h3 class="text-strong text-lg font-semibold tracking-tight">{it.title}</h3>
                 <p class="text-muted mt-2 text-sm leading-relaxed">{it.description}</p>
-                <ul class="text-muted mt-4 grid gap-2 text-sm sm:grid-cols-3">
+                <ul class="check-list check-list--compact text-muted text-sm sm:grid-cols-3">
                   {it.bullets.map((b) => (
-                    <li class="flex items-start gap-2">
-                      <span
-                        class="mt-1 inline-flex h-4 w-4 flex-none items-center justify-center rounded-md bg-brand-600 text-[10px] font-bold text-white"
-                        aria-hidden="true"
-                      >
+                    <li>
+                      <span class="check-icon check-icon--sm" aria-hidden="true">
                         ✓
                       </span>
                       <span>{b}</span>

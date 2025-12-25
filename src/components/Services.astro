@@ -160,16 +160,13 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
                 <ul
                   class:list={[
-                    'text-muted mt-5 grid gap-2 text-sm',
+                    'check-list check-list--compact text-muted text-sm',
                     isFeatured ? 'sm:grid-cols-2' : '',
                   ]}
                 >
                   {s.bullets.map((b) => (
-                    <li class="flex gap-2">
-                      <span
-                        class="mt-0.5 inline-flex h-5 w-5 flex-none items-center justify-center rounded-lg bg-brand-600 text-[10px] font-bold text-white"
-                        aria-hidden="true"
-                      >
+                    <li>
+                      <span class="check-icon check-icon--sm" aria-hidden="true">
                         ✓
                       </span>
                       <span>{b}</span>

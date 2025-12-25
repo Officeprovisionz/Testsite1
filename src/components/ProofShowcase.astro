@@ -98,13 +98,12 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
                 <h3 class="text-strong text-lg font-bold">{c.title}</h3>
                 <p class="text-muted mt-2 text-sm leading-relaxed">{c.description}</p>
 
-                <ul class="text-subtle mt-4 grid gap-2 text-sm">
+                <ul class="check-list check-list--compact text-subtle text-sm">
                   {c.bullets.map((b) => (
-                    <li class="flex items-start gap-2">
-                      <span
-                        class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"
-                        aria-hidden="true"
-                      />
+                    <li>
+                      <span class="check-icon check-icon--sm" aria-hidden="true">
+                        ✓
+                      </span>
                       <span>{b}</span>
                     </li>
                   ))}

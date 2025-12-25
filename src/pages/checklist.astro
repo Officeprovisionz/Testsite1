@@ -54,14 +54,13 @@ const addOns = [
         <div class="mt-8 grid gap-8">
           <div>
             <h3 class="heading-3">Core items (standard visit)</h3>
-            <ul class="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
               {
                 core.map((item) => (
-                  <li class="flex items-start gap-2">
-                    <span
-                      class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"
-                      aria-hidden="true"
-                    />
+                  <li>
+                    <span class="check-icon check-icon--sm" aria-hidden="true">
+                      ✓
+                    </span>
                     <span class="text-muted">{item}</span>
                   </li>
                 ))
@@ -71,14 +70,13 @@ const addOns = [
 
           <div>
             <h3 class="heading-3">Common add-ons (scope-dependent)</h3>
-            <ul class="mt-4 grid gap-2 text-sm sm:grid-cols-2">
+            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
               {
                 addOns.map((item) => (
-                  <li class="flex items-start gap-2">
-                    <span
-                      class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"
-                      aria-hidden="true"
-                    />
+                  <li>
+                    <span class="check-icon check-icon--sm" aria-hidden="true">
+                      ✓
+                    </span>
                     <span class="text-muted">{item}</span>
                   </li>
                 ))

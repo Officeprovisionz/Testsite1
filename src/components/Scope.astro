@@ -56,13 +56,12 @@ const featuredIndex = levels.length >= 3 ? 1 : 0;
               </span>
             </div>
 
-            <ul class="text-muted mt-4 grid gap-2 text-sm">
+            <ul class="check-list check-list--compact text-muted text-sm">
               {lvl.includes.map((i) => (
-                <li class="flex gap-2">
-                  <span
-                    class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600"
-                    aria-hidden="true"
-                  />
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
                   <span>{i}</span>
                 </li>
               ))}

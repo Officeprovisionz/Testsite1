@@ -4,6 +4,19 @@ Production-grade, mobile-first business site built with **Astro + Tailwind + Typ
 
 ## Quick start
 
+### Node + package manager (recommended)
+
+This repo is standardized on **Node 22 LTS**.
+
+- Windows: use **Volta** (supports multiple Node versions side-by-side)
+- WSL/Linux/macOS: use **nvm**
+
+The repo includes:
+
+- `.nvmrc` (Node version)
+- `package.json#volta` (Windows pin)
+- `.npmrc` with `engine-strict=true` (fail fast if Node is wrong)
+
 1. Install dependencies
 
 - Preferred: pnpm

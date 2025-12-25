@@ -4,7 +4,7 @@
   "type": "module",
   "packageManager": "pnpm@10.24.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "scripts": {
     "dev": "astro dev",
@@ -20,12 +20,12 @@
   "dependencies": {
     "@astrojs/check": "^0.9.6",
     "@astrojs/react": "^4.4.2",
-    "@astrojs/sitemap": "latest",
-    "@astrojs/tailwind": "latest",
+    "@astrojs/sitemap": "3.6.0",
+    "@astrojs/tailwind": "6.0.2",
     "@fontsource/inter": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "@radix-ui/react-slot": "^1.2.4",
-    "astro": "latest",
+    "astro": "5.16.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^12.23.26",
@@ -37,26 +37,26 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@eslint/js": "latest",
-    "@types/node": "latest",
+    "@eslint/js": "9.39.2",
+    "@types/node": "25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "astro-eslint-parser": "^1.2.2",
-    "autoprefixer": "latest",
-    "eslint": "latest",
-    "eslint-config-prettier": "latest",
-    "eslint-plugin-astro": "latest",
-    "globals": "latest",
-    "husky": "latest",
-    "lint-staged": "latest",
-    "postcss": "latest",
-    "prettier": "latest",
-    "prettier-plugin-astro": "latest",
-    "prettier-plugin-tailwindcss": "latest",
+    "autoprefixer": "10.4.23",
+    "eslint": "9.39.2",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-astro": "1.5.0",
+    "globals": "16.5.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.2.7",
+    "postcss": "8.5.6",
+    "prettier": "3.7.4",
+    "prettier-plugin-astro": "0.14.1",
+    "prettier-plugin-tailwindcss": "0.7.2",
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "latest",
-    "typescript-eslint": "latest"
+    "typescript": "5.9.3",
+    "typescript-eslint": "8.50.1"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,astro,json,md,mdx,yml,yaml,css}": [

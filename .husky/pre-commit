@@ -12,9 +12,9 @@ case "$node_major" in
 	''|*[!0-9]*) node_major="0" ;;
 esac
 
-if [ "$node_major" -lt 20 ]; then
-	echo "[pre-commit] Node $node_major detected (<20). Skipping lint-staged to avoid hook failures."
-	echo "[pre-commit] Tip: use Node >=20 in this shell (or commit from Windows), or set HUSKY=0 to disable hooks."
+if [ "$node_major" -lt 22 ]; then
+	echo "[pre-commit] Node $node_major detected (<22). Skipping lint-staged to avoid hook failures."
+	echo "[pre-commit] Tip: use Node 22+ (project baseline), or set HUSKY=0 to disable hooks."
 	exit 0
 fi
 

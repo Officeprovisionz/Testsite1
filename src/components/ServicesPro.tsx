@@ -1,84 +1,59 @@
 import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
+import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
+import { Sparkles, Box, ClipboardCheck, Wrench } from 'lucide-react';
 
 export function ServicesPro() {
-  const base = import.meta.env.BASE_URL;
-  const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+  const icons = {
+    'Janitorial & recurring cleaning': <Sparkles className="h-6 w-6 text-brand-500" />,
+    'Deep / detail cleaning': <ClipboardCheck className="h-6 w-6 text-brand-500" />,
+    'Supplies & restocking': <Box className="h-6 w-6 text-brand-500" />,
+    'Facilities support': <Wrench className="h-6 w-6 text-brand-500" />,
+  };
 
   return (
     <section className="section" id="services">
       <div className="container-page">
-        <div className="mb-10 text-center">
-          <p className="eyebrow">Services</p>
-          <h2 className="heading-2 mt-2">Service families</h2>
-          <p className="lede mx-auto max-w-2xl">
+        <div className="mb-12 text-center">
+          <div className="mb-4 inline-flex items-center rounded-full border border-brand-200 bg-brand-50 px-3 py-1 text-sm font-medium text-brand-800 dark:border-brand-800 dark:bg-brand-950 dark:text-brand-200">
+            Services
+          </div>
+          <h2 className="heading-2 text-4xl font-bold tracking-tight">Service families</h2>
+          <p className="lede mx-auto mt-4 max-w-2xl text-muted-foreground">
             Clear scope, consistent delivery, and one point of contact—built for busy workplaces.
           </p>
         </div>
 
-        <div className="mx-auto grid max-w-6xl gap-5 md:grid-cols-2">
-          {siteConfig.serviceFamilies.map((family) => {
-            const services = family.prefillServices.join(',');
-            const contactLink = href(`contact/?services=${encodeURIComponent(services)}`);
-
+        <BentoGrid className="mx-auto max-w-6xl">
+          {siteConfig.serviceFamilies.map((family, i) => {
             return (
-              <a
+              <BentoGridItem
                 key={family.title}
-                href={contactLink}
-                className="glass-panel border-app card-hover group relative overflow-hidden rounded-2xl border p-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
-                aria-label={`${family.title} — request a quote`}
-              >
-                <div
-                  aria-hidden="true"
-                  className="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10 opacity-70 transition-opacity duration-300 group-hover:opacity-100"
-                />
-                <div className="relative">
-                  <h3 className="text-strong text-lg font-bold tracking-tight">{family.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-muted">{family.description}</p>
-
-                  <ul className="check-list check-list--compact text-subtle mt-4 text-sm sm:grid-cols-3">
-                    {family.bullets.map((b) => (
-                      <li key={b}>
-                        <span className="check-icon check-icon--sm" aria-hidden="true">
-                          ✓
-                        </span>
-                        <span>{b}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </a>
+                title={family.title}
+                description={
+                  <div className="mt-2">
+                    <p className="mb-4 text-sm text-muted-foreground">{family.description}</p>
+                    <ul className="space-y-2">
+                      {family.bullets.map((b) => (
+                        <li key={b} className="flex items-center text-xs text-muted-foreground">
+                          <span className="mr-2 h-1.5 w-1.5 rounded-full bg-brand-500" />
+                          {b}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
+                header={
+                  <div className="flex h-full min-h-[6rem] w-full flex-1 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-brand-100 dark:from-brand-900/20 dark:to-brand-800/20">
+                    {icons[family.title as keyof typeof icons]}
+                  </div>
+                }
+                className={i === 0 || i === 3 ? 'md:col-span-2' : ''}
+                icon={icons[family.title as keyof typeof icons]}
+              />
             );
           })}
-        </div>
-
-        <div className="mx-auto mt-10 max-w-6xl">
-          <div className="glass-card border-app overflow-hidden rounded-2xl border p-6">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-              <div>
-                <p className="text-strong text-sm font-semibold">Most requested</p>
-                <p className="mt-1 text-sm text-muted">
-                  Common asks we can scope quickly during quoting.
-                </p>
-              </div>
-              <a
-                className="link link-muted text-sm font-semibold"
-                href={href('services/#specialty')}
-              >
-                View add-ons →
-              </a>
-            </div>
-
-            <ul className="mt-5 grid gap-2 text-sm sm:grid-cols-2">
-              {siteConfig.mostRequestedServices.map((item) => (
-                <li key={item} className="text-subtle flex items-start gap-2">
-                  <span className="mt-2 h-1.5 w-1.5 flex-none rounded-full bg-brand-500" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+        </BentoGrid>
       </div>
     </section>
   );

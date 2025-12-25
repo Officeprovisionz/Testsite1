@@ -930,6 +930,18 @@
 }
 
 @layer utilities {
+  .bg-grid-black\/\[0\.05\] {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  }
+  .bg-grid-white\/\[0\.05\] {
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  }
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;

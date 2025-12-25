@@ -39,7 +39,7 @@ const tiles: Tile[] = [
     title: 'Results & proof',
     description:
       'A look at recent work across commercial spaces, plus what a “standard visit” really includes.',
-    href: 'results/',
+    href: 'about/#proof',
     image: 'gallery/01.svg',
     cta: 'Learn more',
   },

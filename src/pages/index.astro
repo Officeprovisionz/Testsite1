@@ -5,10 +5,7 @@ import { HeroPro } from '@/components/HeroPro';
 import { FeatureTilesPro } from '@/components/FeatureTilesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
-import Testimonials from '@/components/Testimonials.astro';
 import FAQ from '@/components/FAQ.astro';
-import ConversionStrip from '@/components/ConversionStrip.astro';
-import StickyCTA from '@/components/StickyCTA.astro';
 import Footer from '@/components/Footer.astro';
 ---
 
@@ -22,17 +19,7 @@ import Footer from '@/components/Footer.astro';
 
   <ServicesPro client:visible />
 
-  <Testimonials id="testimonials" />
-
   <FAQ />
 
-  <ConversionStrip
-    id="quote"
-    tone="muted"
-    eyebrow="Next step"
-    heading="Ready to request a walkthrough?"
-  />
-
   <Footer slot="footer" />
-  <StickyCTA slot="sticky" />
 </BaseLayout>

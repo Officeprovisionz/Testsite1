@@ -12,7 +12,13 @@ export const FeatureBannerPro = () => {
         </div>
 
         <div className="glass-card border-app relative mt-10 overflow-hidden rounded-2xl border">
-          <BorderBeam size={250} duration={12} delay={9} />
+          <BorderBeam
+            size={250}
+            duration={12}
+            delay={9}
+            colorFrom="rgb(var(--color-brand-500))"
+            colorTo="rgb(var(--color-brand-700))"
+          />
 
           <div className="grid gap-8 p-7 sm:p-10 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
             <div>

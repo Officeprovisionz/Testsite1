@@ -20,7 +20,8 @@ const galleryPreviewB = href('gallery/04.svg');
         class="text-strong mt-4 text-balance font-serif text-5xl font-bold tracking-tight sm:text-6xl"
       >
         A cleaner office—
-        <span class="text-brand-600">with supplies and facilities support</span>.
+        <span class="text-brand-700 dark:text-brand-300">with supplies and facilities support</span
+        >.
       </h1>
       <p class="text-muted mt-6 max-w-prose text-pretty text-lg leading-relaxed">
         {siteConfig.brand.tagline} Serving <span class="text-strong font-semibold"
@@ -38,23 +39,37 @@ const galleryPreviewB = href('gallery/04.svg');
         >
       </div>
 
-      <div class="glass mt-8 rounded-2xl border p-5">
-        <p class="text-strong text-sm font-semibold">Standard visit includes</p>
-        <ul class="text-muted mt-3 grid gap-2 text-sm sm:grid-cols-2">
-          {
-            siteConfig.whatIncluded.map((item) => (
-              <li class="flex gap-2">
-                <span class="mt-1 h-2 w-2 flex-none rounded-full bg-brand-600" aria-hidden="true" />
-                <span>{item}</span>
-              </li>
-            ))
-          }
-        </ul>
+      <div class="glass-panel relative mt-8 overflow-hidden p-6">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10 opacity-70"
+        >
+        </div>
+        <div class="relative">
+          <p class="text-strong text-sm font-semibold">Standard visit includes</p>
+          <ul class="check-list check-list--compact text-muted mt-4 text-sm sm:grid-cols-2">
+            {
+              siteConfig.whatIncluded.map((item) => (
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
       </div>
     </div>
 
-    <div class="glass-panel overflow-hidden">
-      <div class="p-7 sm:p-9">
+    <div class="glass-card relative overflow-hidden p-7 sm:p-9">
+      <div
+        aria-hidden="true"
+        class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+      >
+      </div>
+      <div class="relative">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <p class="eyebrow">Trusted service</p>
           <div class="flex items-center gap-2" aria-label="Five-star care">
@@ -103,15 +118,15 @@ const galleryPreviewB = href('gallery/04.svg');
           </div>
 
           <div class="grid gap-3 sm:grid-cols-3">
-            <div class="glass rounded-2xl border p-4">
+            <div class="panel panel-muted p-4">
               <p class="text-strong text-sm font-semibold">Fast walkthroughs</p>
               <p class="text-muted mt-1 text-sm">A quick walkthrough and clear written scope.</p>
             </div>
-            <div class="glass rounded-2xl border p-4">
+            <div class="panel panel-muted p-4">
               <p class="text-strong text-sm font-semibold">Reliable visits</p>
               <p class="text-muted mt-1 text-sm">Consistent checklists and follow-through.</p>
             </div>
-            <div class="glass rounded-2xl border p-4">
+            <div class="panel panel-muted p-4">
               <p class="text-strong text-sm font-semibold">Easy add-ons</p>
               <p class="text-muted mt-1 text-sm">Supplies/restocking when you need it.</p>
             </div>

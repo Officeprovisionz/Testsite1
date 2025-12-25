@@ -2,14 +2,13 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { ProcessStepsPro } from '@/components/ProcessStepsPro';
 import TrustBar from '@/components/TrustBar.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
-import ProofShowcase from '@/components/ProofShowcase.astro';
+import Gallery from '@/components/Gallery.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 
@@ -154,10 +153,13 @@ const description =
 
   <AreasServed />
 
-  <ProofShowcase
+  <Gallery
     id="proof"
-    heading="Proof you can see (without the hype)"
-    description="A few snapshots of the spaces we support—clean, consistent, and checklist-driven."
+    heading="Recent results"
+    description="A quick look at the spaces we support. Real work, consistent checklists, and clean results."
+    showTip={false}
+    ctaHref={`${import.meta.env.BASE_URL}contact/`}
+    ctaLabel="Request a walkthrough"
   />
 
   <ConversionStrip
@@ -169,5 +171,4 @@ const description =
   />
 
   <Footer slot="footer" />
-  <StickyCTA slot="sticky" />
 </BaseLayout>

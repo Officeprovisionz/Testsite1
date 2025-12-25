@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Tile = {
   title: string;
@@ -34,7 +35,7 @@ const tiles: Tile[] = [
     title: 'Results & proof',
     description:
       'A look at recent work across commercial spaces, plus what a “standard visit” really includes.',
-    href: href('results/'),
+    href: href('about/#proof'),
     image: href('gallery/01.svg'),
     cta: 'Learn more',
   },
@@ -43,20 +44,22 @@ const tiles: Tile[] = [
 
 <section class="section section-muted section-creative -mt-14 pt-20" aria-label="Overview">
   <div class="container-page relative">
-    <div class="text-center">
-      <p class="eyebrow">{siteConfig.brand.name}</p>
-      <h2 class="heading-2 mt-3">Everything your workplace needs.</h2>
-      <p class="lede mx-auto mt-4 max-w-2xl">
-        Commercial-grade cleaning with supplies and facilities support—built to fit your schedule.
-      </p>
-    </div>
+    <SectionHeader
+      align="center"
+      eyebrow={siteConfig.brand.name}
+      heading="Everything your workplace needs."
+      description="Commercial-grade cleaning with supplies and facilities support—built to fit your schedule."
+    />
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 -z-10">
-      <div class="bg-brand-400/18 mx-auto h-72 w-[min(72rem,95vw)] rounded-full blur-3xl"></div>
+      <div class="mx-auto h-72 w-[min(72rem,95vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
     </div>
 
     <div class="mt-10 grid gap-6 lg:grid-cols-12 lg:items-stretch">
-      <a href={tiles[0]!.href} class="glass-card group relative overflow-hidden lg:col-span-7">
+      <a
+        href={tiles[0]!.href}
+        class="glass-card card-hover group relative overflow-hidden lg:col-span-7"
+      >
         <div class="grid gap-6 p-7 sm:p-9 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
           <div>
             <p class="eyebrow">Featured</p>
@@ -64,7 +67,9 @@ const tiles: Tile[] = [
               {tiles[0]!.title}
             </h3>
             <p class="text-muted mt-3 max-w-prose leading-relaxed">{tiles[0]!.description}</p>
-            <div class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-brand-700">
+            <div
+              class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-300"
+            >
               <span class="group-hover:underline">{tiles[0]!.cta}</span>
               <span aria-hidden="true">→</span>
             </div>
@@ -80,7 +85,7 @@ const tiles: Tile[] = [
             />
             <div
               aria-hidden="true"
-              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/45 via-slate-950/10 to-transparent"
+              class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/40 via-slate-950/10 to-transparent"
             >
             </div>
           </div>
@@ -93,7 +98,7 @@ const tiles: Tile[] = [
             <a
               href={t.href}
               class:list={[
-                'glass border-app group overflow-hidden rounded-[var(--radius-card)] border p-6 transition-transform',
+                'glass-panel card-hover border-app group overflow-hidden rounded-[var(--radius-card)] border p-6 transition-transform',
                 idx === 0 ? 'lg:translate-y-6' : '',
               ]}
             >
@@ -115,7 +120,7 @@ const tiles: Tile[] = [
                 </div>
               </div>
 
-              <div class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-brand-700">
+              <div class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-300">
                 <span class="group-hover:underline">{t.cta}</span>
                 <span aria-hidden="true">→</span>
               </div>

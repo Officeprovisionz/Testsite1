@@ -6,18 +6,19 @@ export const HeroPro = () => {
   const base = import.meta.env.BASE_URL;
   const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
   const telHref = `tel:${siteConfig.contact.phoneE164}`;
-  const galleryPreviewA = href('gallery/02.svg');
-  const galleryPreviewB = href('gallery/04.svg');
 
   return (
     <section className="hero-splash relative w-full overflow-hidden antialiased">
-      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
-      <div className="container-page relative z-10 grid gap-10 pb-20 pt-24 lg:grid-cols-2 lg:items-center lg:pb-32 lg:pt-32">
-        <div>
+      <Spotlight
+        className="-top-40 left-0 md:-top-20 md:left-60"
+        fill="rgb(var(--color-brand-200))"
+      />
+      <div className="container-page relative z-10 pb-20 pt-24 lg:pb-28 lg:pt-32">
+        <div className="mx-auto max-w-3xl">
           <p className="eyebrow">{siteConfig.brand.name}</p>
           <h1 className="heading-1 mt-4">
             A cleaner office—{' '}
-            <span className="text-[rgb(var(--color-brand-700))] dark:text-[rgb(var(--color-brand-300))]">
+            <span className="text-brand-700 dark:text-brand-300">
               with supplies and facilities support
             </span>
             .
@@ -56,57 +57,14 @@ export const HeroPro = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
-        </div>
 
-        <div className="glass-card relative overflow-hidden p-7 sm:p-9">
-          <div
-            aria-hidden="true"
-            className="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-          />
-          <div className="relative">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <p className="eyebrow">Trusted service</p>
-              <div className="flex items-center gap-2" aria-label="Five-star care">
-                <span className="text-amber-500" aria-hidden="true">
-                  ★★★★★
-                </span>
-                <span className="text-subtle text-sm">Checklist-driven results.</span>
-              </div>
-            </div>
-
-            <p className="text-muted mt-3 text-sm">
-              Want extra confidence? Ask for our current checklist and recent references during your
-              walkthrough.
-            </p>
-
-            <div className="mt-6 grid gap-5">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="border-app surface relative aspect-[4/3] overflow-hidden rounded-2xl border">
-                  <img
-                    src={galleryPreviewA}
-                    alt="Example of a supported space"
-                    loading="eager"
-                    className="h-full w-full object-cover opacity-95"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 to-transparent"
-                  ></div>
-                </div>
-                <div className="border-app surface relative aspect-[4/3] translate-y-4 rotate-[-1deg] overflow-hidden rounded-2xl border">
-                  <img
-                    src={galleryPreviewB}
-                    alt="Example of a recently cleaned area"
-                    loading="lazy"
-                    className="h-full w-full object-cover opacity-95"
-                  />
-                  <div
-                    aria-hidden="true"
-                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/35 to-transparent"
-                  ></div>
-                </div>
+              <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+                <p className="text-subtle text-xs">
+                  Want to see examples? Browse recent work photos.
+                </p>
+                <a className="link link-muted text-sm" href={href('about/#proof')}>
+                  View proof →
+                </a>
               </div>
             </div>
           </div>

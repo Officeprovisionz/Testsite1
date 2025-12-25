@@ -60,8 +60,8 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
 <section id={id} class="section section-creative scroll-mt-20" aria-label="Proof of work">
   <div class="container-page">
     <SectionHeader eyebrow="Proof" heading={heading} description={description}>
-      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('results/')}>
-        View results
+      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('about/#proof')}>
+        View proof
       </a>
       <a slot="actions" class="btn-primary hidden sm:inline-flex" href={href('contact/')}>
         Request a walkthrough
@@ -116,7 +116,7 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
 
     <div class="mt-8 flex flex-col gap-3 sm:hidden">
       <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
-      <a class="btn-secondary" href={href('results/')}>View results</a>
+      <a class="btn-secondary" href={href('about/#proof')}>View proof</a>
     </div>
   </div>
 </section>

@@ -11,7 +11,20 @@ function normalizeBase(input: string | undefined): string {
   return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
 }
 
-const base = normalizeBase(process.env.PUBLIC_SITE_BASE);
+function inferGithubPagesBase(): string {
+  // When building on GitHub Actions for a *project* Pages site, the site is typically served from
+  // `https://<owner>.github.io/<repo>/`.
+  // If PUBLIC_SITE_BASE isn't set (common when users deploy from branch settings or ad-hoc builds),
+  // infer the base from GITHUB_REPOSITORY to avoid broken /_astro/* asset URLs.
+  const repo = process.env.GITHUB_REPOSITORY?.split('/')?.[1];
+  if (!repo) return '/';
+  return `/${repo}/`;
+}
+
+const base = normalizeBase(
+  process.env.PUBLIC_SITE_BASE ??
+    (process.env.GITHUB_ACTIONS === 'true' ? inferGithubPagesBase() : undefined)
+);
 
 // Recommendation: set SITE_URL to your full canonical URL *including* the base.
 // Example (GitHub Pages): https://<owner>.github.io/<repo>/

@@ -141,7 +141,10 @@ const toPublicUrl = (src: string) => {
       }
     </div>
 
-    <dialog class="glass-card w-full max-w-3xl rounded-2xl p-0" data-lightbox>
+    <dialog
+      class="glass-card max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-hidden rounded-2xl p-0"
+      data-lightbox
+    >
       <div class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
         <div class="min-w-0">
           <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>Preview</p>
@@ -162,7 +165,7 @@ const toPublicUrl = (src: string) => {
           <button type="button" class="btn-secondary px-3 py-2" data-close>Close</button>
         </div>
       </div>
-      <figure class="grid gap-3 p-5">
+      <figure class="grid max-h-[calc(100dvh-9rem)] gap-3 overflow-auto p-5">
         <img
           data-lightbox-img
           alt=""

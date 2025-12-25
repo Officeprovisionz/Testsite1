@@ -3,11 +3,12 @@ import { GridBackground } from './ui/GridBackground';
 import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
 import { ArrowRight, Phone } from 'lucide-react';
 
 export const HeroPro = () => {
   const href = makeHref(import.meta.env.BASE_URL);
-  const telHref = `tel:${siteConfig.contact.phoneE164}`;
+  const telHref = makeTelHref(siteConfig.contact.phoneE164);
 
   return (
     <section className="hero-splash relative w-full overflow-hidden antialiased">
@@ -38,7 +39,7 @@ export const HeroPro = () => {
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <a
               href={telHref}
-              className="btn-accent inline-flex h-12 items-center gap-2 px-8 text-base"
+              className="btn-accent inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
             >
               <Phone className="h-4 w-4" />
               Call {siteConfig.contact.phoneDisplay}
@@ -46,7 +47,7 @@ export const HeroPro = () => {
             <Button
               variant="outline"
               size="lg"
-              className="h-12 gap-2 border-brand-200/50 bg-white/70 px-8 text-base backdrop-blur-sm transition-all hover:border-brand-300 hover:bg-white/90 dark:border-brand-700/40 dark:bg-slate-900/50"
+              className="h-12 w-full justify-center gap-2 border-brand-200/50 bg-white/70 px-6 text-base backdrop-blur-sm transition-all hover:border-brand-300 hover:bg-white/90 dark:border-brand-700/40 dark:bg-slate-900/50 sm:w-auto sm:px-8"
               asChild
             >
               <a href={href('contact/')}>

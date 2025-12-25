@@ -1,9 +1,11 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
 const href = makeHref(import.meta.env.BASE_URL);
-const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 ---
 
 <footer
@@ -41,7 +43,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
           </a>
           <a
             class="flex items-center gap-2 text-sm text-muted transition-colors hover:text-brand-600"
-            href={`mailto:${siteConfig.contact.email}`}
+            href={mailtoHref}
           >
             <svg
               class="h-4 w-4"

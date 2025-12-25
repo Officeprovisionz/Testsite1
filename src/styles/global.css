@@ -725,6 +725,7 @@
   .select,
   .textarea {
     @apply w-full rounded-xl border px-3;
+    @apply text-base;
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     color: rgb(var(--color-text));

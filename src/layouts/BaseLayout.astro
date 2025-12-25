@@ -110,7 +110,18 @@ const jsonLd = (() => {
         }
       })();
 
-      if (prefersReducedMotion) {
+      const isTouchLike = (() => {
+        try {
+          return (
+            window.matchMedia('(pointer: coarse)').matches ||
+            window.matchMedia('(hover: none)').matches
+          );
+        } catch {
+          return false;
+        }
+      })();
+
+      if (prefersReducedMotion || isTouchLike) {
         // Respect OS/user preference: avoid forced smooth scrolling.
       } else {
         const lenis = new Lenis();

@@ -1,5 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
 type Props = {
   id?: string;
@@ -24,8 +25,9 @@ const {
 
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
 const isDev = import.meta.env.DEV;
-const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoTo = siteConfig.contact.email;
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 const sourcePath = Astro.url.pathname;
 
 const industryOptions = [...siteConfig.industries.map((i) => i.title), 'Other / Not listed'];
@@ -283,7 +285,7 @@ const serviceOptions = [
                     <span class="text-strong font-semibold">Email:</span>
                     <a
                       class="underline decoration-brand-300/50 underline-offset-4"
-                      href={`mailto:${siteConfig.contact.email}`}
+                      href={mailtoHref}
                     >
                       {siteConfig.contact.email}
                     </a>

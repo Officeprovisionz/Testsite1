@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeMailtoHref, makeSmsHref, makeTelHref } from '@/lib/links';
 
 type Props = {
   id?: string;
@@ -28,9 +29,9 @@ const {
 
 const href = makeHref(import.meta.env.BASE_URL);
 
-const telHref = `tel:${siteConfig.contact.phoneE164}`;
-const smsHref = `sms:${siteConfig.contact.phoneE164}?&body=${encodeURIComponent(siteConfig.contact.smsBody)}`;
-const mailtoHref = `mailto:${siteConfig.contact.email}`;
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const smsHref = makeSmsHref(siteConfig.contact.phoneE164, siteConfig.contact.smsBody);
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 ---
 
 <section

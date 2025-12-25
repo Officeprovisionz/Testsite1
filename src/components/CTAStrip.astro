@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
 
 type Props = {
   heading?: string;
@@ -20,7 +21,7 @@ const {
   variant = 'default',
 } = Astro.props;
 
-const telHref = `tel:${siteConfig.contact.phoneE164}`;
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
 ---
 
 <section
@@ -56,7 +57,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
             <>
               <a
                 href={ctaHref}
-                class="inline-flex h-12 items-center gap-2 rounded-xl bg-white px-8 text-base font-medium text-brand-700 shadow-lg transition-all hover:bg-brand-50 hover:shadow-xl"
+                class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-white px-6 text-base font-medium text-brand-700 shadow-lg transition-all hover:bg-brand-50 hover:shadow-xl sm:w-auto sm:px-8"
               >
                 {ctaText}
                 <svg
@@ -75,7 +76,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
               </a>
               <a
                 href={telHref}
-                class="inline-flex h-12 items-center gap-2 rounded-xl border border-white/30 bg-white/10 px-8 text-base font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20"
+                class="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-white/30 bg-white/10 px-6 text-base font-medium text-white backdrop-blur-sm transition-all hover:bg-white/20 sm:w-auto sm:px-8"
               >
                 <svg
                   class="h-4 w-4"
@@ -97,7 +98,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
             <>
               <a
                 href={ctaHref}
-                class="btn-accent inline-flex h-12 items-center gap-2 px-8 text-base"
+                class="btn-accent inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
               >
                 {ctaText}
                 <svg
@@ -116,7 +117,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
               </a>
               <a
                 href={telHref}
-                class="btn-secondary inline-flex h-12 items-center gap-2 px-8 text-base"
+                class="btn-secondary inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
               >
                 <svg
                   class="h-4 w-4"

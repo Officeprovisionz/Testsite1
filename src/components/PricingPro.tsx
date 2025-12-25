@@ -31,7 +31,7 @@ export const PricingPro = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.2, duration: 0.5 }}
           viewport={{ once: true }}
-          className="card card-hover relative overflow-hidden p-8"
+          className="card card-hover relative overflow-hidden p-6 sm:p-8"
         >
           <h3 className="heading-3">{plan.title}</h3>
           <ul className="mt-6 space-y-4">

@@ -6,12 +6,15 @@ import { PageHeroPro } from '@/components/PageHeroPro';
 import ContactSection from '@/components/Contact.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
 const title = `Contact | ${siteConfig.brand.name}`;
 const description =
   'Request a quote for cleaning, supplies/restocking, or facilities support. We respond quickly during business hours.';
 
 const href = makeHref(import.meta.env.BASE_URL);
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -74,7 +77,7 @@ const href = makeHref(import.meta.env.BASE_URL);
               <div>
                 <h3 class="text-strong text-lg font-semibold">Phone</h3>
                 <p class="mt-1 text-muted">
-                  <a href={`tel:${siteConfig.contact.phoneE164}`} class="link link-muted">
+                  <a href={telHref} class="link link-muted">
                     {siteConfig.contact.phoneDisplay}
                   </a>
                 </p>
@@ -103,7 +106,7 @@ const href = makeHref(import.meta.env.BASE_URL);
               <div>
                 <h3 class="text-strong text-lg font-semibold">Email</h3>
                 <p class="mt-1 text-muted">
-                  <a href={`mailto:${siteConfig.contact.email}`} class="link link-muted">
+                  <a href={mailtoHref} class="link link-muted">
                     {siteConfig.contact.email}
                   </a>
                 </p>

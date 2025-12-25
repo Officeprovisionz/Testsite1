@@ -1,15 +1,15 @@
 import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
-import { makeHref } from '@/lib/nav';
+import { makeContactHref } from '@/lib/routes';
 import { HoverEffect } from './ui/HoverEffect';
 
 export function IndustriesPro() {
-  const href = makeHref(import.meta.env.BASE_URL);
+  const contactHref = makeContactHref(import.meta.env.BASE_URL);
 
   const items = siteConfig.industries.map((industry) => ({
     title: industry.title,
     description: industry.description,
-    link: href(`contact/?industry=${encodeURIComponent(industry.title)}`),
+    link: contactHref({ industry: industry.title }),
   }));
 
   return (

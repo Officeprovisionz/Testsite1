@@ -1,10 +1,10 @@
 import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
 import { HoverEffect } from './ui/HoverEffect';
 
 export function IndustriesPro() {
-  const base = import.meta.env.BASE_URL;
-  const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+  const href = makeHref(import.meta.env.BASE_URL);
 
   const items = siteConfig.industries.map((industry) => ({
     title: industry.title,

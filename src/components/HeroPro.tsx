@@ -2,11 +2,11 @@ import { Spotlight } from './ui/Spotlight';
 import { GridBackground } from './ui/GridBackground';
 import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
 import { ArrowRight, Phone } from 'lucide-react';
 
 export const HeroPro = () => {
-  const base = import.meta.env.BASE_URL;
-  const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+  const href = makeHref(import.meta.env.BASE_URL);
   const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
   return (

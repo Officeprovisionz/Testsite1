@@ -9,10 +9,7 @@ export const HeroPro = () => {
 
   return (
     <section className="hero-splash relative w-full overflow-hidden antialiased">
-      <Spotlight
-        className="-top-40 left-0 md:-top-20 md:left-60"
-        fill="rgb(var(--color-brand-200))"
-      />
+      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
       <div className="container-page relative z-10 pb-20 pt-24 lg:pb-28 lg:pt-32">
         <div className="mx-auto max-w-3xl">
           <p className="eyebrow">{siteConfig.brand.name}</p>
@@ -35,35 +32,6 @@ export const HeroPro = () => {
             <a className="btn-secondary" href={href('checklist/')}>
               Preview checklist
             </a>
-          </div>
-
-          <div className="glass-panel relative mt-8 overflow-hidden p-6">
-            <div
-              aria-hidden="true"
-              className="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10 opacity-70"
-            />
-            <div className="relative">
-              <p className="text-strong text-sm font-semibold">Standard visit includes</p>
-              <ul className="check-list check-list--compact text-muted mt-4 text-sm sm:grid-cols-2">
-                {siteConfig.whatIncluded.map((item) => (
-                  <li key={item}>
-                    <span className="check-icon check-icon--sm" aria-hidden="true">
-                      ✓
-                    </span>
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-subtle text-xs">
-                  Want to see examples? Browse recent work photos.
-                </p>
-                <a className="link link-muted text-sm" href={href('about/#proof')}>
-                  View proof →
-                </a>
-              </div>
-            </div>
           </div>
         </div>
       </div>

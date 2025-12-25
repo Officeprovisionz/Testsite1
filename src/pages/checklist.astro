@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import StickyCTA from '@/components/StickyCTA.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Office cleaning checklist | ${siteConfig.brand.name}`;
@@ -36,20 +37,14 @@ const addOns = [
   <section class="section">
     <div class="container-narrow">
       <div class="glass-panel p-7 sm:p-9">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Resource</p>
-            <h2 class="heading-2 mt-2">A checklist you can actually use</h2>
-            <p class="lede">
-              Print it, save it, or bring it to your next walkthrough. Adjust to your building rules
-              and what your team considers “done.”
-            </p>
-          </div>
-          <div class="flex flex-col gap-3 sm:flex-row">
-            <button type="button" class="btn-secondary" data-print> Print </button>
-            <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
-          </div>
-        </div>
+        <SectionHeader
+          eyebrow="Resource"
+          heading="A checklist you can actually use"
+          description="Print it, save it, or bring it to your next walkthrough. Adjust to your building rules and what your team considers “done.”"
+        >
+          <button slot="actions" type="button" class="btn-secondary" data-print>Print</button>
+          <a slot="actions" class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+        </SectionHeader>
 
         <div class="mt-8 grid gap-8">
           <div>

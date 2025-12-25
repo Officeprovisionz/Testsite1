@@ -11,10 +11,7 @@ export function IndustriesPro() {
         <p>{industry.description}</p>
         <ul className="mt-2 space-y-1">
           {industry.bullets.map((bullet, idx) => (
-            <li
-              key={idx}
-              className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400"
-            >
+            <li key={idx} className="text-subtle flex items-center gap-2 text-xs">
               <span className="h-1 w-1 rounded-full bg-brand-500" />
               {bullet}
             </li>
@@ -42,7 +39,7 @@ export function IndustriesPro() {
               key={i}
               title={item.title}
               description={item.description}
-              className={cn(item.className, 'border border-slate-200 dark:border-slate-800')}
+              className={cn(item.className, 'border-app border')}
             />
           ))}
         </BentoGrid>

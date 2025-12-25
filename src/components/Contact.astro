@@ -672,18 +672,20 @@ const sourcePath = Astro.url.pathname;
           'text-muted',
           'border-app',
           'surface',
-          'bg-emerald-50',
-          'border-emerald-200',
-          'text-emerald-900',
+          'bg-brand-500/10',
+          'border-brand-500/20',
+          'text-strong',
           'bg-rose-50',
           'border-rose-200',
-          'text-rose-900'
+          'text-rose-900',
+          'bg-rose-500/10',
+          'border-rose-500/20'
         );
 
         if (kind === 'success') {
-          status.classList.add('bg-emerald-50', 'border-emerald-200', 'text-emerald-900');
+          status.classList.add('bg-brand-500/10', 'border-brand-500/20', 'text-strong');
         } else if (kind === 'error') {
-          status.classList.add('bg-rose-50', 'border-rose-200', 'text-rose-900');
+          status.classList.add('bg-rose-500/10', 'border-rose-500/20', 'text-strong');
         } else {
           status.classList.add('surface', 'border-app', 'text-muted');
         }

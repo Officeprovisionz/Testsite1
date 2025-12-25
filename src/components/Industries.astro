@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Props = {
   id?: string;
@@ -23,12 +24,14 @@ const rest = siteConfig.industries.slice(1);
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
   <div class="container-page relative">
-    <div class="section-head">
-      <div>
-        <h2 class="heading-2">{heading}</h2>
-        <p class="lede">{description}</p>
-      </div>
-    </div>
+    <SectionHeader eyebrow="Industries" heading={heading} description={description}>
+      <a slot="actions" class="btn-primary hidden sm:inline-flex" href={href('contact/')}
+        >Request a walkthrough</a
+      >
+      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('services/')}
+        >Explore services</a
+      >
+    </SectionHeader>
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-12 -z-10">
       <div class="mx-auto h-72 w-[min(72rem,95vw)] rounded-full bg-brand-500/10 blur-3xl"></div>
@@ -98,7 +101,7 @@ const rest = siteConfig.industries.slice(1);
       </div>
     </div>
 
-    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+    <div class="mt-8 flex flex-col gap-3 sm:hidden">
       <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
       <a class="btn-secondary" href={href('services/')}>Explore services</a>
     </div>

@@ -55,32 +55,26 @@ const ReviewCard = ({
   return (
     <figure
       className={cn(
-        'relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4',
-        // light styles
-        'border-slate-200 bg-white hover:bg-slate-50',
-        // dark styles
-        'dark:border-slate-800 dark:bg-slate-900 dark:hover:bg-slate-800'
+        'glass-panel card-hover relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4'
       )}
     >
       <div className="flex flex-row items-center gap-2">
         <img className="rounded-full" width="32" height="32" alt="" src={img} />
         <div className="flex flex-col">
-          <figcaption className="text-sm font-medium dark:text-white">{name}</figcaption>
-          <p className="text-xs font-medium dark:text-white/40">{username}</p>
+          <figcaption className="text-strong text-sm font-semibold">{name}</figcaption>
+          <p className="text-subtle text-xs font-medium">{username}</p>
         </div>
       </div>
-      <blockquote className="mt-2 text-sm text-slate-600 dark:text-slate-300">{body}</blockquote>
+      <blockquote className="text-muted mt-2 text-sm">{body}</blockquote>
     </figure>
   );
 };
 
 export function ClientLogos() {
   return (
-    <div className="relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-lg bg-slate-50 md:shadow-xl dark:bg-slate-950">
+    <div className="border-app surface-muted relative flex h-[300px] w-full flex-col items-center justify-center overflow-hidden rounded-2xl border">
       <div className="mb-8 text-center">
-        <p className="text-sm font-semibold uppercase tracking-wider text-slate-500">
-          Trusted by industry leaders
-        </p>
+        <p className="eyebrow">Trusted by industry leaders</p>
       </div>
       <Marquee pauseOnHover className="[--duration:20s]">
         {reviews.map((review) => (
@@ -92,8 +86,8 @@ export function ClientLogos() {
           <ReviewCard key={review.username} {...review} />
         ))}
       </Marquee>
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-slate-50 dark:from-slate-950"></div>
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-slate-50 dark:from-slate-950"></div>
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-[rgb(var(--color-surface-muted))] to-transparent"></div>
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-1/3 bg-gradient-to-l from-[rgb(var(--color-surface-muted))] to-transparent"></div>
     </div>
   );
 }

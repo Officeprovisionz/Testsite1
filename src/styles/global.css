@@ -31,6 +31,7 @@
     /* Glass system tokens (tuned for "premium" transparency). */
     --glass-blur: 16px;
     --glass-border: rgb(var(--color-border) / 0.65);
+    --glass-border-hover: rgb(var(--color-border) / 0.85);
     --glass-bg-a: rgb(var(--color-surface) / 0.62);
     --glass-bg-b: rgb(var(--color-surface) / 0.36);
     --glass-shadow: 0 18px 55px -28px rgb(2 6 23 / 0.32);
@@ -64,6 +65,7 @@
     --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
     --glass-border: rgb(var(--color-border) / 0.55);
+    --glass-border-hover: rgb(var(--color-border) / 0.78);
     --glass-bg-a: rgb(var(--color-surface) / 0.52);
     --glass-bg-b: rgb(var(--color-surface) / 0.28);
     --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
@@ -84,6 +86,7 @@
       --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
       --glass-border: rgb(var(--color-border) / 0.55);
+      --glass-border-hover: rgb(var(--color-border) / 0.78);
       --glass-bg-a: rgb(var(--color-surface) / 0.52);
       --glass-bg-b: rgb(var(--color-surface) / 0.28);
       --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
@@ -368,6 +371,10 @@
     box-shadow: var(--glass-shadow-strong);
     -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 2px));
     backdrop-filter: blur(calc(var(--glass-blur) + 2px));
+    transition:
+      border-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
     background:
       radial-gradient(900px 320px at 20% 10%, rgb(var(--color-brand-500) / 0.18), transparent 55%),
       linear-gradient(180deg, var(--glass-bg-a), var(--glass-bg-b));
@@ -381,6 +388,10 @@
     box-shadow: var(--glass-shadow);
     -webkit-backdrop-filter: blur(var(--glass-blur));
     backdrop-filter: blur(var(--glass-blur));
+    transition:
+      border-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
     background:
       radial-gradient(800px 260px at 65% 10%, rgb(var(--color-brand-400) / 0.12), transparent 62%),
       linear-gradient(180deg, var(--glass-bg-a), var(--glass-bg-b));
@@ -460,6 +471,15 @@
   }
 
   @media (hover: hover) and (pointer: fine) {
+    .glass-card:hover,
+    .glass-panel:hover {
+      border-color: var(--glass-border-hover);
+    }
+
+    .glass-panel:hover {
+      box-shadow: var(--glass-shadow-strong);
+    }
+
     .card-hover {
       @apply hover:-translate-y-1 hover:border-brand-100 hover:shadow-lg hover:shadow-brand-900/5;
     }

@@ -14,6 +14,9 @@ const {
   description = 'Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.',
 } = Astro.props;
 
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+
 const featured = siteConfig.industries[0];
 const rest = siteConfig.industries.slice(1);
 ---
@@ -96,8 +99,8 @@ const rest = siteConfig.industries.slice(1);
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:flex-row">
-      <a class="btn-primary" href={`${import.meta.env.BASE_URL}contact/`}>Request a walkthrough</a>
-      <a class="btn-secondary" href={`${import.meta.env.BASE_URL}services/`}>Explore services</a>
+      <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+      <a class="btn-secondary" href={href('services/')}>Explore services</a>
     </div>
   </div>
 

@@ -23,6 +23,7 @@ const {
 } = Astro.props;
 
 const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT;
+const isDev = import.meta.env.DEV;
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
 const mailtoTo = siteConfig.contact.email;
 const sourcePath = Astro.url.pathname;
@@ -42,16 +43,28 @@ const sourcePath = Astro.url.pathname;
 
           {!formEndpoint && (
             <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-              <p class="font-semibold">Form endpoint not configured</p>
-              <p class="mt-1">
-                Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
-                <code class="rounded bg-white px-1.5 py-0.5">.env</code> (see
-                <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
-                submissions. For now, this form will open your email app with the details filled in.
-              </p>
+              {isDev ? (
+                <>
+                  <p class="font-semibold">Form endpoint not configured</p>
+                  <p class="mt-1">
+                    Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
+                    <code class="rounded bg-white px-1.5 py-0.5">.env</code> (see
+                    <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
+                    submissions. For now, this form will open your email app with the details filled
+                    in.
+                  </p>
+                </>
+              ) : (
+                <>
+                  <p class="font-semibold">We’ll reply fast</p>
+                  <p class="mt-1">
+                    When you submit, this form will open your email app with the message filled in.
+                    If you prefer, call/text us instead.
+                  </p>
+                </>
+              )}
             </div>
           )}
-
           <form
             action={formEndpoint ?? '#'}
             method="POST"
@@ -349,15 +362,28 @@ const sourcePath = Astro.url.pathname;
               <div class="relative">
                 {!formEndpoint && (
                   <div class="mb-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
-                    <p class="font-semibold">Form endpoint not configured</p>
-                    <p class="mt-1">
-                      Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code>{' '}
-                      in
-                      <code class="rounded bg-white px-1.5 py-0.5">.env</code> (see
-                      <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
-                      submissions. For now, this form will open your email app with the details
-                      filled in.
-                    </p>
+                    {isDev ? (
+                      <>
+                        <p class="font-semibold">Form endpoint not configured</p>
+                        <p class="mt-1">
+                          Set{' '}
+                          <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code>{' '}
+                          in
+                          <code class="rounded bg-white px-1.5 py-0.5">.env</code> (see
+                          <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to
+                          enable submissions. For now, this form will open your email app with the
+                          details filled in.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p class="font-semibold">We’ll reply fast</p>
+                        <p class="mt-1">
+                          When you submit, this form will open your email app with the message
+                          filled in. If you prefer, call/text us instead.
+                        </p>
+                      </>
+                    )}
                   </div>
                 )}
 

@@ -11,8 +11,6 @@ type Props = {
 const { title, description, align = 'left' } = Astro.props;
 
 const telHref = `tel:${siteConfig.contact.phoneE164}`;
-const base = import.meta.env.BASE_URL;
-const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
 const isCenter = align === 'center';
 ---
@@ -35,7 +33,6 @@ const isCenter = align === 'center';
         isCenter ? 'sm:flex-row sm:justify-center' : 'sm:flex-row',
       ]}
     >
-      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
       <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
     </div>
   </div>

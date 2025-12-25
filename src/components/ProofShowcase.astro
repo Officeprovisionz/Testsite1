@@ -63,9 +63,6 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
       <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('about/#proof')}>
         View proof
       </a>
-      <a slot="actions" class="btn-primary hidden sm:inline-flex" href={href('contact/')}>
-        Request a quote
-      </a>
     </SectionHeader>
 
     <div class="mt-10 grid gap-5 lg:grid-cols-3">
@@ -115,7 +112,6 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:hidden">
-      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
       <a class="btn-secondary" href={href('about/#proof')}>View proof</a>
     </div>
   </div>

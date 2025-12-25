@@ -55,24 +55,6 @@ export function IndustriesPro() {
                 <div className="relative">
                   <h3 className="text-strong text-lg font-bold tracking-tight">{item.title}</h3>
                   <div className="text-muted mt-2 text-sm leading-relaxed">{item.description}</div>
-
-                  <div className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-700 dark:text-brand-300">
-                    <span>Request a quote</span>
-                    <svg
-                      className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                      aria-hidden="true"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M17 8l4 4m0 0l-4 4m4-4H3"
-                      />
-                    </svg>
-                  </div>
                 </div>
               </a>
             );

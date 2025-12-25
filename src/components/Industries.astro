@@ -25,9 +25,6 @@ const rest = siteConfig.industries.slice(1);
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
   <div class="container-page relative">
     <SectionHeader eyebrow="Industries" heading={heading} description={description}>
-      <a slot="actions" class="btn-primary hidden sm:inline-flex" href={href('contact/')}
-        >Request a quote</a
-      >
       <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('services/')}
         >Explore services</a
       >
@@ -102,7 +99,6 @@ const rest = siteConfig.industries.slice(1);
     </div>
 
     <div class="mt-8 flex flex-col gap-3 sm:hidden">
-      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
       <a class="btn-secondary" href={href('services/')}>Explore services</a>
     </div>
   </div>

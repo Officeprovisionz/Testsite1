@@ -23,16 +23,7 @@ const navItems = [
   { label: 'Contact', href: href('contact/') },
 ];
 
-const initials = (() => {
-  const words = siteConfig.brand.name.trim().split(/\s+/).filter(Boolean);
-  const letters = words
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase())
-    .filter(Boolean);
-  if (letters.length >= 2) return letters.join('');
-  const fallback = siteConfig.brand.name.replace(/\s+/g, '').slice(0, 2).toUpperCase();
-  return fallback || 'OP';
-})();
+const logoMarkSrc = `${base}brand/logo-mark.svg`;
 ---
 
 <header
@@ -49,9 +40,17 @@ const initials = (() => {
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
       <span
-        class="brand-mark grid place-items-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white shadow-lg shadow-brand-900/20"
+        class="brand-mark grid place-items-center rounded-xl bg-white/80 shadow-lg shadow-brand-900/15 ring-1 ring-black/5 backdrop-blur-sm dark:bg-slate-900/50 dark:ring-white/10"
       >
-        {initials}
+        <img
+          src={logoMarkSrc}
+          alt=""
+          width="32"
+          height="32"
+          loading="eager"
+          decoding="async"
+          class="block h-8 w-8"
+        />
       </span>
       <span class="text-strong hidden sm:inline">{siteConfig.brand.name}</span>
     </a>

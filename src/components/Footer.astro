@@ -6,6 +6,9 @@ import { makeMailtoHref, makeTelHref } from '@/lib/links';
 const href = makeHref(import.meta.env.BASE_URL);
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
+
+const base = import.meta.env.BASE_URL;
+const logoMarkSrc = `${base}brand/logo-mark.svg`;
 ---
 
 <footer
@@ -15,9 +18,22 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
     <div class="grid gap-12 md:grid-cols-4">
       <!-- Brand Column -->
       <div class="md:col-span-1">
-        <p class="text-strong text-lg font-bold tracking-tight">
-          {siteConfig.brand.name}
-        </p>
+        <a
+          href={href('')}
+          class="inline-flex items-center gap-3"
+          aria-label={`${siteConfig.brand.name} home`}
+        >
+          <img
+            src={logoMarkSrc}
+            alt=""
+            width="28"
+            height="28"
+            loading="lazy"
+            decoding="async"
+            class="h-7 w-7"
+          />
+          <span class="text-strong text-lg font-bold tracking-tight">{siteConfig.brand.name}</span>
+        </a>
         <p class="mt-3 text-sm leading-relaxed text-muted">{siteConfig.brand.tagline}</p>
         <p class="text-subtle mt-4 text-sm">Serving {siteConfig.brand.city}</p>
 

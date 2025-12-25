@@ -21,6 +21,7 @@ const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toStri
 const ogPath = `${base}og-image.svg`;
 const ogUrl = Astro.site ? new URL(ogPath, Astro.site).toString() : ogPath;
 const faviconHref = `${base}favicon.svg`;
+const manifestHref = `${base}site.webmanifest`;
 
 const assetHeroBg = `${base}hero-bg.svg`;
 
@@ -84,7 +85,9 @@ const jsonLd = (() => {
     <meta name="description" content={description} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
-    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <link rel="icon" href={faviconHref} sizes="any" type="image/svg+xml" />
+    <link rel="mask-icon" href={faviconHref} color={siteConfig.seo.themeColor} />
+    <link rel="manifest" href={manifestHref} />
 
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />

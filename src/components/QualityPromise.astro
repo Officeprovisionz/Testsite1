@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Props = {
   id?: string;
@@ -23,17 +24,10 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
 
 <section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
   <div class="container-page">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Trust</p>
-        <h2 class="heading-2 mt-2">{heading}</h2>
-        <p class="lede">{description}</p>
-      </div>
-      <div class="flex flex-col gap-3 sm:flex-row sm:items-center">
-        <a class="btn-secondary" href={href('checklist/')}>Preview the checklist</a>
-        <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
-      </div>
-    </div>
+    <SectionHeader eyebrow="Trust" heading={heading} description={description}>
+      <a slot="actions" class="btn-secondary" href={href('checklist/')}>Preview the checklist</a>
+      <a slot="actions" class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+    </SectionHeader>
 
     <div class="mt-10 grid gap-5 md:grid-cols-3">
       <div class="glass-panel relative overflow-hidden p-6">

@@ -10,6 +10,7 @@ import AreasServed from '@/components/AreasServed.astro';
 import QualityPromise from '@/components/QualityPromise.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import ProofShowcase from '@/components/ProofShowcase.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `About | ${siteConfig.brand.name}`;
@@ -28,21 +29,22 @@ const description =
 
   <TrustBar />
 
-  <section class="section pb-0" id="how-we-work">
+  <section class="section section-creative scroll-mt-20 pb-0" id="how-we-work">
     <div class="container-page">
-      <div class="mb-12 text-center">
-        <h2 class="heading-2">How we work</h2>
-        <p class="text-muted mx-auto mt-4 max-w-2xl text-lg">
-          Great cleaning is a process. We confirm scope, follow a checklist, and keep you in the
-          loop—so you always know what to expect.
-        </p>
+      <div class="mb-12">
+        <SectionHeader
+          align="center"
+          eyebrow="Process"
+          heading="How we work"
+          description="Great cleaning is a process. We confirm scope, follow a checklist, and keep you in the loop—so you always know what to expect."
+        />
       </div>
 
       <ProcessStepsPro client:visible />
     </div>
   </section>
 
-  <section class="section" id="expect">
+  <section class="section section-muted section-creative scroll-mt-20" id="expect">
     <div class="container-page">
       <div class="grid gap-10 lg:grid-cols-2 lg:items-center">
         <div>
@@ -54,25 +56,19 @@ const description =
           <ul class="check-list">
             <li>
               <span class="check-icon" aria-hidden="true">✓</span>
-              <span class="text-slate-700 dark:text-slate-300"
-                >Consistent crews who know your space</span
-              >
+              <span class="text-strong">Consistent crews who know your space</span>
             </li>
             <li>
               <span class="check-icon" aria-hidden="true">✓</span>
-              <span class="text-slate-700 dark:text-slate-300"
-                >Real-time reporting and issue flagging</span
-              >
+              <span class="text-strong">Real-time reporting and issue flagging</span>
             </li>
             <li>
               <span class="check-icon" aria-hidden="true">✓</span>
-              <span class="text-slate-700 dark:text-slate-300"
-                >Flexible scheduling to fit your operations</span
-              >
+              <span class="text-strong">Flexible scheduling to fit your operations</span>
             </li>
           </ul>
         </div>
-        <div class="glass-panel relative overflow-hidden p-6 sm:p-8">
+        <div class="glass-panel card-hover relative overflow-hidden p-6 sm:p-8">
           <div
             aria-hidden="true"
             class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
@@ -87,15 +83,15 @@ const description =
             </p>
 
             <div class="mt-6 grid gap-4 sm:grid-cols-3">
-              <div class="glass rounded-2xl border p-4">
+              <div class="panel panel-muted p-4">
                 <p class="text-strong text-sm font-semibold">Clear scope</p>
                 <p class="text-muted mt-1 text-sm">Written checklist + agreed add-ons.</p>
               </div>
-              <div class="glass rounded-2xl border p-4">
+              <div class="panel panel-muted p-4">
                 <p class="text-strong text-sm font-semibold">Fast response</p>
                 <p class="text-muted mt-1 text-sm">Quick replies during business hours.</p>
               </div>
-              <div class="glass rounded-2xl border p-4">
+              <div class="panel panel-muted p-4">
                 <p class="text-strong text-sm font-semibold">Follow-through</p>
                 <p class="text-muted mt-1 text-sm">Issues flagged + resolved promptly.</p>
               </div>
@@ -105,6 +101,46 @@ const description =
               Want more detail? Ask for a sample checklist during your walkthrough.
             </p>
           </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creative scroll-mt-20" id="values">
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Values"
+        heading="Built for consistency (and a calmer workday)"
+        description="We keep the experience simple: clear scope, predictable service, and communication that doesn’t disappear after the first visit."
+      />
+
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="glass-panel card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Communication-first</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            You’ll know what’s happening—arrival, issues, and follow-ups—without chasing anyone
+            down.
+          </p>
+        </div>
+        <div class="glass-panel card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Checklist-driven</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            A written scope reduces surprises and keeps quality consistent across visits and crews.
+          </p>
+        </div>
+        <div class="glass-panel card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Respect for the space</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            We work around your operations and treat offices, medical suites, and shared areas with
+            care.
+          </p>
+        </div>
+        <div class="glass-panel card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Flexible scheduling</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            After-hours and weekend options where available—so cleaning fits your flow, not the
+            other way around.
+          </p>
         </div>
       </div>
     </div>

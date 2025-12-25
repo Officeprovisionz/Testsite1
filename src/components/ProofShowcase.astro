@@ -1,4 +1,6 @@
 ---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+
 type ProofItem = {
   title: string;
   label?: string;
@@ -57,17 +59,14 @@ const cards: ProofItem[] = Array.isArray(items) && items.length ? items : defaul
 
 <section id={id} class="section section-creative scroll-mt-20" aria-label="Proof of work">
   <div class="container-page">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">Proof</p>
-        <h2 class="heading-2 mt-2">{heading}</h2>
-        <p class="lede">{description}</p>
-      </div>
-      <div class="hidden sm:flex sm:items-center sm:gap-3">
-        <a class="btn-secondary" href={href('results/')}>View results</a>
-        <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
-      </div>
-    </div>
+    <SectionHeader eyebrow="Proof" heading={heading} description={description}>
+      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={href('results/')}>
+        View results
+      </a>
+      <a slot="actions" class="btn-primary hidden sm:inline-flex" href={href('contact/')}>
+        Request a walkthrough
+      </a>
+    </SectionHeader>
 
     <div class="mt-10 grid gap-5 lg:grid-cols-3">
       {

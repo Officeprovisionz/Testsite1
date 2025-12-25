@@ -1,0 +1,53 @@
+---
+export type Props = {
+  eyebrow?: string;
+  heading: string;
+  description?: string;
+  /**
+   * `left` matches the default "section-head" layout (title on left, actions on right).
+   * `center` stacks and centers content (useful for section intros).
+   */
+  align?: 'left' | 'center';
+  /** Heading tag to render. */
+  as?: 'h1' | 'h2' | 'h3';
+  /** Additional classes for the outer wrapper. */
+  class?: string;
+};
+
+const {
+  eyebrow,
+  heading,
+  description,
+  align = 'left',
+  as = 'h2',
+  class: className = '',
+} = Astro.props as Props;
+
+const HeadingTag = as;
+
+const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'heading-2';
+---
+
+<div
+  class:list={[
+    'section-head',
+    align === 'center' ? 'text-center sm:flex-col sm:items-center' : '',
+    className,
+  ]}
+>
+  <div class:list={[align === 'center' ? 'mx-auto' : '']}>
+    {eyebrow ? <p class="eyebrow">{eyebrow}</p> : null}
+    <HeadingTag class:list={[headingClass, eyebrow ? 'mt-2' : '']}>{heading}</HeadingTag>
+    {description ? <p class="lede">{description}</p> : null}
+  </div>
+
+  <div
+    class:list={[
+      'flex flex-col gap-3 sm:flex-row sm:items-center',
+      align === 'center' ? 'sm:justify-center' : 'sm:justify-end',
+      'empty:hidden',
+    ]}
+  >
+    <slot name="actions" />
+  </div>
+</div>

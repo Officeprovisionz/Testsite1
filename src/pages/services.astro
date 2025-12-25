@@ -8,7 +8,6 @@ import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import TrustBar from '@/components/TrustBar.astro';
-import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Services | ${siteConfig.brand.name}`;
@@ -34,18 +33,12 @@ const description =
     heading="Specialty + add-on services"
     description="Popular add-ons we can scope and schedule based on your space and building requirements."
     items={siteConfig.specialtyServices}
-    ctaLabel="Request a walkthrough"
+    ctaLabel="Request a quote"
   />
 
   <AreasServed />
 
   <FAQ showWave={false} />
-
-  <ConversionStrip
-    tone="muted"
-    heading="Want a cleaner, easier operation?"
-    description="Request a walkthrough, call/text, or preview our checklist. We’ll confirm scope and send a clear written quote."
-  />
 
   <Footer slot="footer" />
 </BaseLayout>

@@ -6,12 +6,13 @@ import { PageHeroPro } from '@/components/PageHeroPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import TrustBar from '@/components/TrustBar.astro';
-import ConversionStrip from '@/components/ConversionStrip.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Industries | ${siteConfig.brand.name}`;
 const description =
   'Commercial cleaning for offices, property management, and customer spaces—scoped clearly with checklist-based delivery.';
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -29,12 +30,35 @@ const description =
 
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 
-  <ConversionStrip
+  <section
     id="quote"
-    tone="muted"
-    heading="Pick the easiest next step"
-    description="Request a walkthrough, call/text, or preview the checklist. We’ll confirm scope and send a clear written quote."
-  />
+    class="section section-muted section-creative scroll-mt-20"
+    aria-label="Request a quote"
+  >
+    <div class="container-page">
+      <div class="glass-card relative overflow-hidden p-7 sm:p-10">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/18 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+        <div class="relative grid gap-6 md:grid-cols-2 md:items-center">
+          <div>
+            <p class="eyebrow">Next step</p>
+            <h2 class="heading-2 mt-2">Request a quote</h2>
+            <p class="lede">
+              Tell us your industry, services needed, and frequency. We’ll confirm scope and send a
+              clear written quote.
+            </p>
+          </div>
+          <div class="flex flex-col gap-3 md:justify-self-end">
+            <a class="btn-primary" href={href('contact/')}>Request a quote</a>
+            <a class="btn-secondary" href={href('checklist/')}>Preview checklist</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <Footer slot="footer" />
 </BaseLayout>

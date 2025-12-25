@@ -9,7 +9,7 @@ import { siteConfig } from '@/data/siteConfig';
 
 const title = `Contact | ${siteConfig.brand.name}`;
 const description =
-  'Request a walkthrough for cleaning, supplies/restocking, or facilities support. We respond quickly during business hours.';
+  'Request a quote for cleaning, supplies/restocking, or facilities support. We respond quickly during business hours.';
 
 const base = import.meta.env.BASE_URL;
 const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
@@ -21,7 +21,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
   <PageHeroPro
     client:load
     title="Contact"
-    description="Request a walkthrough or ask a question. We’ll confirm scope, timing, and send a clear written quote before service."
+    description="Request a quote or ask a question. We’ll confirm scope, timing, and send a clear written quote before service."
   />
 
   <TrustBar />
@@ -115,7 +115,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
           </div>
         </div>
 
-        <ContactSection id="quote" heading="Send a message" description="" variant="embed" />
+        <ContactSection id="quote" heading="Request a quote" description="" variant="embed" />
       </div>
     </div>
   </section>

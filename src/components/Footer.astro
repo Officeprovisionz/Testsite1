@@ -25,13 +25,20 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
       </div>
 
       <nav class="grid gap-2 text-sm" aria-label="Footer">
-        <a class="link link-muted" href={href('services/')}>Services</a>
-        <a class="link link-muted" href={href('industries/')}>Industries</a>
-        <a class="link link-muted" href={href('pricing/')}>Scope</a>
-        <a class="link link-muted" href={href('services/#faq')}>FAQ</a>
+        <p class="text-strong text-xs font-semibold">Services</p>
+        <a class="link link-muted" href={href('services/')}>Overview</a>
+        <a class="link link-muted" href={href('services/#specialty')}>Specialty + add-ons</a>
+
+        <p class="text-strong mt-4 text-xs font-semibold">Industries</p>
+        <a class="link link-muted" href={href('industries/')}>Who we serve</a>
+
+        <p class="text-strong mt-4 text-xs font-semibold">Resources</p>
         <a class="link link-muted" href={href('checklist/')}>Checklist</a>
+        <a class="link link-muted" href={href('pricing/')}>Scope</a>
+
+        <p class="text-strong mt-4 text-xs font-semibold">Company</p>
         <a class="link link-muted" href={href('about/')}>About</a>
-        <a class="link link-muted" href={href('contact/')}>Contact</a>
+        <a class="link link-muted" href={href('about/#proof')}>Proof</a>
       </nav>
 
       <div class="text-sm md:justify-self-end">
@@ -41,7 +48,7 @@ const telHref = `tel:${siteConfig.contact.phoneE164}`;
         </ul>
 
         <div class="mt-6 flex flex-col gap-3">
-          <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+          <a class="btn-primary" href={href('contact/')}>Request a quote</a>
           <a class="btn-secondary" href="#top">Back to top</a>
         </div>
       </div>

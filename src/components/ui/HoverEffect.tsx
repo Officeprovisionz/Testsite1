@@ -48,7 +48,7 @@ export const HoverEffect = ({
             <a
               href={item.link}
               className="relative z-20 block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
-              aria-label={`${item.title} — request a walkthrough`}
+              aria-label={`${item.title} — request a quote`}
             >
               <Card>
                 <CardTitle>{item.title}</CardTitle>

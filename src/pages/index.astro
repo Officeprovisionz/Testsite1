@@ -2,9 +2,10 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
-import { FeatureTilesPro } from '@/components/FeatureTilesPro';
 import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
+import { IndustriesPro } from '@/components/IndustriesPro';
+import ProofShowcase from '@/components/ProofShowcase.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 ---
@@ -13,11 +14,13 @@ import Footer from '@/components/Footer.astro';
   <Header slot="header" transparent={true} />
   <HeroPro client:load />
 
-  <FeatureTilesPro client:visible />
+  <ServicesPro client:visible />
+
+  <IndustriesPro client:visible />
 
   <HowItWorksPro client:visible />
 
-  <ServicesPro client:visible />
+  <ProofShowcase />
 
   <FAQ />
 

@@ -19,7 +19,7 @@ const {
   id,
   eyebrow = 'Next step',
   heading = 'Ready to scope your space?',
-  description = 'Request a walkthrough, call/text, or preview our checklist. We’ll confirm scope and send a clear written quote.',
+  description = 'Request a quote, call/text, or preview our checklist. We’ll confirm scope (including a walkthrough if needed) and send a clear written quote.',
   tone = 'muted',
   showChecklist = true,
   showEmail = true,
@@ -74,7 +74,7 @@ const mailtoHref = `mailto:${siteConfig.contact.email}`;
 
         <div class="flex flex-col gap-3 md:justify-self-end">
           <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
-            <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+            <a class="btn-primary" href={href('contact/')}>Request a quote</a>
             <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
             {
               showChecklist ? (

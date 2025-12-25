@@ -33,6 +33,14 @@ export type ProcessStep = {
   description: string;
 };
 
+export type ServiceFamily = {
+  title: string;
+  description: string;
+  bullets: string[];
+  /** Used for pre-filling the contact form via query params. */
+  prefillServices: string[];
+};
+
 export const siteConfig = {
   brand: {
     name: 'Office Provisionz',
@@ -44,8 +52,7 @@ export const siteConfig = {
     phoneDisplay: '(415) 555-0123',
     phoneE164: '+14155550123',
     email: 'hello@officeprovisionz.example',
-    smsBody:
-      'Hi Office Provisionz — I’d like to request a walkthrough for cleaning + supplies support.',
+    smsBody: 'Hi Office Provisionz — I’d like to request a quote for cleaning + supplies support.',
   },
   hours: {
     lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
@@ -93,9 +100,9 @@ export const siteConfig = {
 
   processSteps: [
     {
-      title: 'Request a walkthrough',
+      title: 'Request a quote',
       description:
-        'Share basics (space, frequency, access). We respond quickly during business hours.',
+        'Share basics (space, services, frequency). We’ll respond quickly and confirm scope before quoting.',
     },
     {
       title: 'Scope + checklist',
@@ -175,6 +182,48 @@ export const siteConfig = {
       ],
     },
   ] satisfies Service[],
+
+  serviceFamilies: [
+    {
+      title: 'Janitorial & recurring cleaning',
+      description:
+        'Reliable scheduled service for consistent upkeep—ideal for offices, shared spaces, and multi-room suites.',
+      bullets: ['Checklist-driven scope', 'After-hours options', 'Quality follow-up'],
+      prefillServices: ['Recurring Janitorial (Nightly/Weekly)', 'Office Cleaning'],
+    },
+    {
+      title: 'Deep / detail cleaning',
+      description:
+        'A reset for first visits, quarterly maintenance, turnovers, or high-traffic periods.',
+      bullets: ['Detail work', 'Build-up removal', 'Coordinated add-ons'],
+      prefillServices: ['Deep / Detail Cleaning', 'Move-In / Move-Out (Office Turnovers)'],
+    },
+    {
+      title: 'Supplies & restocking',
+      description:
+        'Keep essentials stocked so teams don’t chase paper goods, soap, and breakroom basics.',
+      bullets: ['Inventory checks', 'Restock checklists', 'Reorder notes'],
+      prefillServices: ['Supplies & Restocking'],
+    },
+    {
+      title: 'Facilities support',
+      description:
+        'Light support and coordination to keep your workplace running smoothly between vendors.',
+      bullets: ['Punch-list items (scope dependent)', 'Vendor coordination', 'On-site checks'],
+      prefillServices: ['Facilities Support'],
+    },
+  ] satisfies ServiceFamily[],
+
+  mostRequestedServices: [
+    'Recurring janitorial (nightly / weekly)',
+    'Restroom servicing + restocking',
+    'Breakroom/kitchenette reset',
+    'Day porter / daytime upkeep',
+    'Office turnovers (move-in / move-out)',
+    'Post-construction cleanup',
+    'Interior glass + touch-ups',
+    'Periodic floor care',
+  ] as const,
 
   specialtyServices: [
     {

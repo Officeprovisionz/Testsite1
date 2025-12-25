@@ -15,12 +15,10 @@ const href = makeHref(base);
 const isActive = makeIsActive(Astro.url.pathname, base);
 
 const navItems = [
-  { label: 'Home', href: href('') },
   { label: 'Services', href: href('services/') },
   { label: 'Industries', href: href('industries/') },
-  { label: 'Scope', href: href('pricing/') },
-  { label: 'Checklist', href: href('checklist/') },
-  { label: 'About', href: href('about/') },
+  { label: 'Resources', href: href('checklist/') },
+  { label: 'Company', href: href('about/') },
   { label: 'Contact', href: href('contact/') },
 ];
 
@@ -159,7 +157,7 @@ const initials = (() => {
         Mode
       </button>
       <a class="btn-secondary hidden sm:inline-flex" href={telHref}>Call/Text</a>
-      <a class="btn-primary" href={href('contact/')}>Request a walkthrough</a>
+      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
     </div>
   </div>
 </header>

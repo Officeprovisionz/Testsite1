@@ -20,7 +20,7 @@ const {
   limit,
   items: itemsOverride,
   ctaHref,
-  ctaLabel = 'Request a walkthrough',
+  ctaLabel = 'Request a quote',
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
@@ -174,7 +174,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
                 {isFeatured && (
                   <div class="mt-6 flex flex-col gap-3 sm:flex-row">
                     <a class="btn-primary" href={cta}>
-                      Request a walkthrough
+                      Request a quote
                     </a>
                     <a class="btn-secondary" href={href('services/')}>
                       See all services

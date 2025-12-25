@@ -30,37 +30,23 @@ const items = siteConfig.faqs;
 
     <div class="mt-8 grid gap-3" data-faq>
       {
-        items.map((it, idx) => {
-          const buttonId = `faq-button-${idx}`;
-          const panelId = `faq-panel-${idx}`;
-          return (
-            <div class="glass-panel overflow-hidden">
-              <h3>
-                <button
-                  id={buttonId}
-                  class="text-strong flex w-full items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold focus-visible:outline-none"
-                  type="button"
-                  aria-expanded="false"
-                  aria-controls={panelId}
-                >
-                  <span>{it.question}</span>
-                  <span class="text-brand-700 dark:text-brand-300" aria-hidden="true">
-                    +
-                  </span>
-                </button>
-              </h3>
-              <div
-                id={panelId}
-                role="region"
-                aria-labelledby={buttonId}
-                hidden
-                class="text-muted px-6 pb-6 text-sm"
+        items.map((it) => (
+          <details class="glass-panel group overflow-hidden" data-faq-item>
+            <summary class="text-strong flex w-full cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left text-sm font-semibold focus-visible:outline-none">
+              <span>{it.question}</span>
+              <span
+                class="grid h-8 w-8 place-items-center rounded-full border border-brand-200/50 bg-white/60 text-base leading-none text-brand-700 shadow-sm backdrop-blur-sm dark:border-white/10 dark:bg-slate-900/40 dark:text-brand-300"
+                aria-hidden="true"
+                data-faq-icon
               >
-                <p>{it.answer}</p>
-              </div>
+                +
+              </span>
+            </summary>
+            <div class="text-muted px-6 pb-6 text-sm leading-relaxed">
+              <p>{it.answer}</p>
             </div>
-          );
-        })
+          </details>
+        ))
       }
     </div>
   </div>
@@ -78,29 +64,29 @@ const items = siteConfig.faqs;
       const root = document.querySelector('[data-faq]');
       if (!root) return;
 
-      const buttons = Array.from(root.querySelectorAll<HTMLButtonElement>('button[aria-controls]'));
+      const items = Array.from(root.querySelectorAll<HTMLDetailsElement>('[data-faq-item]'));
 
-      const setExpanded = (btn: HTMLButtonElement, expanded: boolean) => {
-        const panelId = btn.getAttribute('aria-controls');
-        if (!panelId) return;
-        const panel = document.getElementById(panelId);
-        if (!panel) return;
-        btn.setAttribute('aria-expanded', String(expanded));
-        const icon = btn.querySelector('[aria-hidden="true"]');
-        if (icon) icon.textContent = expanded ? '–' : '+';
-        panel.hidden = !expanded;
+      const syncIcon = (el: HTMLDetailsElement) => {
+        const icon = el.querySelector<HTMLElement>('[data-faq-icon]');
+        if (!icon) return;
+        icon.textContent = el.open ? '–' : '+';
       };
 
-      buttons.forEach((btn) => {
-        setExpanded(btn, false);
-        btn.addEventListener('click', () => {
-          const isOpen = btn.getAttribute('aria-expanded') === 'true';
-          // close others
-          buttons.forEach((b) => setExpanded(b, false));
-          // toggle clicked
-          setExpanded(btn, !isOpen);
+      items.forEach((el) => {
+        syncIcon(el);
+        el.addEventListener('toggle', () => {
+          // Keep it "dropdown" style: only one open at a time.
+          if (el.open) items.forEach((other) => other !== el && (other.open = false));
+          items.forEach(syncIcon);
         });
       });
     })();
   </script>
 </section>
+
+<style>
+  /* Remove the default disclosure triangle marker for a cleaner dropdown look. */
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

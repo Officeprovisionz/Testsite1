@@ -2,12 +2,48 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
-import { HowItWorksPro } from '@/components/HowItWorksPro';
 import { ServicesPro } from '@/components/ServicesPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
-import ProofShowcase from '@/components/ProofShowcase.astro';
+import Gallery from '@/components/Gallery.astro';
+import type { GalleryItem } from '@/data/gallery';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
+
+const base = import.meta.env.BASE_URL;
+const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
+
+const proofGallery: GalleryItem[] = [
+  {
+    src: 'gallery/01.svg',
+    caption: 'Client-ready reception',
+    alt: 'Entry and common areas reset for a professional first impression',
+  },
+  {
+    src: 'gallery/02.svg',
+    caption: 'Conference rooms reset',
+    alt: 'Tables, floors, touchpoints—cleaned consistently visit after visit',
+  },
+  {
+    src: 'gallery/03.svg',
+    caption: 'Restrooms serviced',
+    alt: 'Sanitized, restocked, and checked—so issues don’t linger',
+  },
+  {
+    src: 'gallery/04.svg',
+    caption: 'Breakrooms refreshed',
+    alt: 'Counters, sinks, and high-touch areas cleaned without cutting corners',
+  },
+  {
+    src: 'gallery/05.svg',
+    caption: 'High-touch focus',
+    alt: 'Handles, switches, and shared surfaces prioritized every visit',
+  },
+  {
+    src: 'gallery/06.svg',
+    caption: 'Floors that stay sharp',
+    alt: 'Vacuuming, mopping, and detailing handled per scope and schedule',
+  },
+];
 ---
 
 <BaseLayout>
@@ -18,9 +54,19 @@ import Footer from '@/components/Footer.astro';
 
   <IndustriesPro client:visible />
 
-  <HowItWorksPro client:visible />
-
-  <ProofShowcase />
+  <Gallery
+    id="proof"
+    eyebrow="Proof"
+    heading="What clean looks like"
+    description="Tap any photo to zoom. Clear scope, consistent checklists, and communication-first service."
+    showTip={false}
+    variant="overlay"
+    items={proofGallery}
+    primaryCtaHref={href('contact/')}
+    primaryCtaLabel="Request a quote"
+    secondaryCtaHref={href('about/#proof')}
+    secondaryCtaLabel="View proof"
+  />
 
   <FAQ />
 

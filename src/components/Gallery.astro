@@ -1,27 +1,55 @@
 ---
 import { galleryItems } from '@/data/gallery';
+import type { GalleryItem } from '@/data/gallery';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Props = {
   id?: string;
+  eyebrow?: string;
   heading?: string;
   description?: string;
   showTip?: boolean;
+  /** Override the default placeholder gallery items. */
+  items?: GalleryItem[];
+  /** Render caption blocks below the image or as an overlay on top of the image. */
+  variant?: 'below' | 'overlay';
+
+  /** Back-compat single CTA (treated as primary). */
   ctaHref?: string;
   ctaLabel?: string;
+
+  /** Optional dual CTAs (preferred going forward). */
+  primaryCtaHref?: string;
+  primaryCtaLabel?: string;
+  secondaryCtaHref?: string;
+  secondaryCtaLabel?: string;
 };
 
 const {
   id,
+  eyebrow,
   heading = 'Gallery',
   description = 'A quick look at the spaces we support. Replace these placeholders with your own photos.',
   showTip = true,
+  items,
+  variant = 'below',
   ctaHref,
   ctaLabel,
+  primaryCtaHref,
+  primaryCtaLabel,
+  secondaryCtaHref,
+  secondaryCtaLabel,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+
+const resolvedPrimaryHref = primaryCtaHref ?? ctaHref;
+const resolvedPrimaryLabel = primaryCtaLabel ?? ctaLabel;
+const resolvedSecondaryHref = secondaryCtaHref;
+const resolvedSecondaryLabel = secondaryCtaLabel;
+
+const resolvedItems = Array.isArray(items) && items.length ? items : galleryItems;
 
 const toPublicUrl = (src: string) => {
   // Allow absolute URLs
@@ -34,15 +62,24 @@ const toPublicUrl = (src: string) => {
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
   <div class="container-page relative">
-    <SectionHeader heading={heading} description={description}>
+    <SectionHeader eyebrow={eyebrow} heading={heading} description={description}>
       {
-        (showTip || (ctaHref && ctaLabel)) && (
+        (showTip ||
+          (resolvedPrimaryHref && resolvedPrimaryLabel) ||
+          (resolvedSecondaryHref && resolvedSecondaryLabel)) && (
           <div slot="actions" class="flex flex-col gap-2 sm:items-end">
-            {ctaHref && ctaLabel && (
-              <a class="btn-secondary px-4 py-2" href={ctaHref}>
-                {ctaLabel}
-              </a>
-            )}
+            <div class="flex flex-col gap-2 sm:flex-row sm:justify-end">
+              {resolvedSecondaryHref && resolvedSecondaryLabel && (
+                <a class="btn-secondary px-4 py-2" href={resolvedSecondaryHref}>
+                  {resolvedSecondaryLabel}
+                </a>
+              )}
+              {resolvedPrimaryHref && resolvedPrimaryLabel && (
+                <a class="btn-primary px-4 py-2" href={resolvedPrimaryHref}>
+                  {resolvedPrimaryLabel}
+                </a>
+              )}
+            </div>
             {showTip && (
               <p class="text-subtle text-sm">
                 Tip: add images to
@@ -59,10 +96,13 @@ const toPublicUrl = (src: string) => {
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-gallery>
       {
-        galleryItems.map((it, idx) => (
+        resolvedItems.map((it, idx) => (
           <a
             href={toPublicUrl(it.src)}
-            class="glass-panel group overflow-hidden"
+            class:list={[
+              'glass-panel group overflow-hidden',
+              variant === 'overlay' ? 'relative' : '',
+            ]}
             data-gallery-item
             data-gallery-index={String(idx)}
           >
@@ -74,11 +114,28 @@ const toPublicUrl = (src: string) => {
                 decoding="async"
                 class="gallery-hover-zoom h-full w-full object-cover"
               />
+
+              {variant === 'overlay' ? (
+                <>
+                  <div
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/20 to-transparent opacity-80"
+                  />
+                  <div class="pointer-events-none absolute inset-x-0 bottom-0 p-4">
+                    <p class="text-sm font-semibold tracking-tight text-white">
+                      {it.caption ?? 'Project photo'}
+                    </p>
+                    <p class="mt-1 line-clamp-2 text-xs text-white/80">{it.alt}</p>
+                  </div>
+                </>
+              ) : null}
             </div>
-            <div class="p-5">
-              <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
-              <p class="text-muted mt-1 text-sm">{it.alt}</p>
-            </div>
+            {variant === 'below' ? (
+              <div class="p-5">
+                <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
+                <p class="text-muted mt-1 text-sm">{it.alt}</p>
+              </div>
+            ) : null}
           </a>
         ))
       }

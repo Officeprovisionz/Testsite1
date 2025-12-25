@@ -4,7 +4,6 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import ContactSection from '@/components/Contact.astro';
-import TrustBar from '@/components/TrustBar.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Contact | ${siteConfig.brand.name}`;
@@ -23,8 +22,6 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
     title="Contact"
     description="Request a quote or ask a question. We’ll confirm scope, timing, and send a clear written quote before service."
   />
-
-  <TrustBar />
 
   <section class="section section-creative scroll-mt-20 pb-0">
     <div class="container-page">

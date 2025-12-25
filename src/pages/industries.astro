@@ -5,7 +5,6 @@ import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
-import TrustBar from '@/components/TrustBar.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Industries | ${siteConfig.brand.name}`;
@@ -23,8 +22,6 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
     title="Industries we serve"
     description="Built for real workplaces. Clear scope, consistent checklists, and fast communication—so cleaning stays off your plate."
   />
-
-  <TrustBar />
 
   <IndustriesPro client:visible />
 

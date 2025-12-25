@@ -7,7 +7,6 @@ import { ServicesPro } from '@/components/ServicesPro';
 import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
-import TrustBar from '@/components/TrustBar.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getCollection } from 'astro:content';
 
@@ -30,14 +29,13 @@ const specialtyServices = allServices
     description="From recurring janitorial to restocking and facilities support—scoped clearly and delivered consistently. We confirm scope before the job."
   />
 
-  <TrustBar />
-
   <ServicesPro client:visible />
 
   <ServicesSection
     id="specialty"
-    heading="Specialty + add-on services"
-    description="Popular add-ons we can scope and schedule based on your space and building requirements."
+    heading="Specialty & add-on services"
+    description="Add these one-off or periodic services when you need them. We confirm access, timing, and building rules during scoping—so pricing and expectations stay clear."
+    presentation="dropdown"
     items={specialtyServices}
   />
 

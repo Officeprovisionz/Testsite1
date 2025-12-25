@@ -1,9 +1,8 @@
-import React from 'react';
 import { Spotlight } from './ui/Spotlight';
 import { GridBackground } from './ui/GridBackground';
 import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
-import { ArrowRight, Phone, Shield, CheckCircle, Clock } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 
 export const HeroPro = () => {
   const base = import.meta.env.BASE_URL;
@@ -55,22 +54,6 @@ export const HeroPro = () => {
                 <ArrowRight className="h-4 w-4" />
               </a>
             </Button>
-          </div>
-
-          {/* Trust indicators - replaced empty avatars with real badges */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground md:gap-8">
-            <div className="flex items-center gap-2">
-              <Shield className="h-4 w-4 text-brand-500" />
-              <span>Fully Insured</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <CheckCircle className="h-4 w-4 text-brand-500" />
-              <span>Checklist-Driven</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <Clock className="h-4 w-4 text-brand-500" />
-              <span>Fast Response</span>
-            </div>
           </div>
         </div>
       </div>

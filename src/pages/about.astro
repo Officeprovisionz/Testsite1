@@ -4,9 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { ProcessStepsPro } from '@/components/ProcessStepsPro';
-import TrustBar from '@/components/TrustBar.astro';
 import AreasServed from '@/components/AreasServed.astro';
-import QualityPromise from '@/components/QualityPromise.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import Gallery from '@/components/Gallery.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
@@ -25,8 +23,6 @@ const description =
     title="A cleaner workspace, a simpler workday"
     description="We’re built for reliability: clear communication, consistent checklists, and a team that respects your space."
   />
-
-  <TrustBar />
 
   <section class="section section-creative scroll-mt-20 pb-0" id="how-we-work">
     <div class="container-page">
@@ -81,14 +77,10 @@ const description =
               delivery, and fast follow-up.
             </p>
 
-            <div class="mt-6 grid gap-4 sm:grid-cols-3">
+            <div class="mt-6 grid gap-4 sm:grid-cols-2">
               <div class="panel panel-muted p-4">
                 <p class="text-strong text-sm font-semibold">Clear scope</p>
                 <p class="mt-1 text-sm text-muted">Written checklist + agreed add-ons.</p>
-              </div>
-              <div class="panel panel-muted p-4">
-                <p class="text-strong text-sm font-semibold">Fast response</p>
-                <p class="mt-1 text-sm text-muted">Quick replies during business hours.</p>
               </div>
               <div class="panel panel-muted p-4">
                 <p class="text-strong text-sm font-semibold">Follow-through</p>
@@ -113,18 +105,12 @@ const description =
         description="We keep the experience simple: clear scope, predictable service, and communication that doesn’t disappear after the first visit."
       />
 
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         <div class="glass-panel card-hover p-6">
           <p class="text-strong text-sm font-semibold">Communication-first</p>
           <p class="mt-2 text-sm leading-relaxed text-muted">
             You’ll know what’s happening—arrival, issues, and follow-ups—without chasing anyone
             down.
-          </p>
-        </div>
-        <div class="glass-panel card-hover p-6">
-          <p class="text-strong text-sm font-semibold">Checklist-driven</p>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            A written scope reduces surprises and keeps quality consistent across visits and crews.
           </p>
         </div>
         <div class="glass-panel card-hover p-6">
@@ -144,12 +130,6 @@ const description =
       </div>
     </div>
   </section>
-
-  <QualityPromise
-    id="quality"
-    heading="Reliability is the product"
-    description="We show up, follow the checklist, and communicate clearly—so your space stays client-ready without extra management work."
-  />
 
   <AreasServed />
 

@@ -57,20 +57,6 @@ export const siteConfig = {
   hours: {
     lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
   },
-  trustBadges: [
-    {
-      title: 'Insured',
-      description: 'Coverage details available during scoping.',
-    },
-    {
-      title: 'Checklist-driven',
-      description: 'Consistent results across visits, teams, and shifts.',
-    },
-    {
-      title: 'Fast response',
-      description: 'Quick replies during business hours.',
-    },
-  ],
 
   industries: [
     {

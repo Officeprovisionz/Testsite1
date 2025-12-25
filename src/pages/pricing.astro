@@ -8,6 +8,7 @@ import { PricingPro } from '@/components/PricingPro';
 import ScopeSection from '@/components/Scope.astro';
 import FAQ from '@/components/FAQ.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 
 const title = `Scope & process | ${siteConfig.brand.name}`;
@@ -24,14 +25,15 @@ const description =
     description="We confirm what’s included before service. Share your space and schedule and we’ll send a clear written quote."
   />
 
-  <section class="section pb-0">
+  <section class="section section-creative scroll-mt-20 pb-0">
     <div class="container-page">
-      <div class="mb-12 text-center">
-        <h2 class="heading-2">How scope works</h2>
-        <p class="text-muted mx-auto mt-4 max-w-2xl text-lg">
-          Scope depends on your space and service frequency. We confirm what’s included first—then
-          send a clear, written quote.
-        </p>
+      <div class="mb-12">
+        <SectionHeader
+          align="center"
+          eyebrow="Scope"
+          heading="How scope works"
+          description="Scope depends on your space and service frequency. We confirm what’s included first—then send a clear, written quote."
+        />
       </div>
 
       <PricingPro client:visible />

@@ -1,6 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import type { Service } from '@/data/siteConfig';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Props = {
   id?: string;
@@ -41,15 +42,11 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
 <section id={id} class="section section-creative scroll-mt-20">
   <div class="container-page">
-    <div class="section-head">
-      <div>
-        <h2 class="heading-2">{heading}</h2>
-        <p class="lede">{description}</p>
-      </div>
-      <a class="btn-secondary hidden sm:inline-flex" href={cta}>
+    <SectionHeader heading={heading} description={description}>
+      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={cta}>
         {ctaLabel}
       </a>
-    </div>
+    </SectionHeader>
 
     <div
       class:list={[

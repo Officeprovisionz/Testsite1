@@ -27,7 +27,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
   <TrustBar />
 
-  <section class="section pb-0">
+  <section class="section section-creative scroll-mt-20 pb-0">
     <div class="container-page">
       <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
         <div>
@@ -37,13 +37,18 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
             service begins.
           </p>
 
-          <div class="glass-panel mt-7 p-5">
+          <div class="glass-panel card-hover relative mt-7 overflow-hidden p-6">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+            >
+            </div>
             <p class="text-strong text-sm font-semibold">Want to come prepared?</p>
             <p class="text-muted mt-2 text-sm">
               Use our printable checklist to scope your walkthrough and keep expectations clear.
             </p>
             <a
-              class="mt-3 inline-flex text-sm font-semibold text-brand-700 underline decoration-brand-300/50 underline-offset-4 hover:text-brand-600 dark:text-brand-300 dark:hover:text-brand-200"
+              class="link link-muted mt-3 inline-flex text-sm font-semibold"
               href={href('checklist/')}
             >
               Preview the checklist
@@ -53,7 +58,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
           <div class="mt-8 space-y-6">
             <div class="flex items-start gap-4">
               <div
-                class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
+                class="grid h-10 w-10 flex-none place-items-center rounded-2xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -71,12 +76,9 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
                 </svg>
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Phone</h3>
-                <p class="mt-1 text-slate-600 dark:text-slate-400">
-                  <a
-                    href={`tel:${siteConfig.contact.phoneE164}`}
-                    class="hover:text-brand-600 dark:hover:text-brand-400"
-                  >
+                <h3 class="text-strong text-lg font-semibold">Phone</h3>
+                <p class="text-muted mt-1">
+                  <a href={`tel:${siteConfig.contact.phoneE164}`} class="link link-muted">
                     {siteConfig.contact.phoneDisplay}
                   </a>
                 </p>
@@ -85,7 +87,7 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
 
             <div class="flex items-start gap-4">
               <div
-                class="flex h-10 w-10 flex-none items-center justify-center rounded-lg bg-brand-100 text-brand-600 dark:bg-brand-900/30 dark:text-brand-400"
+                class="grid h-10 w-10 flex-none place-items-center rounded-2xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -103,12 +105,9 @@ const href = (path: string) => `${base}${path.replace(/^\/+/, '')}`;
                 </svg>
               </div>
               <div>
-                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Email</h3>
-                <p class="mt-1 text-slate-600 dark:text-slate-400">
-                  <a
-                    href={`mailto:${siteConfig.contact.email}`}
-                    class="hover:text-brand-600 dark:hover:text-brand-400"
-                  >
+                <h3 class="text-strong text-lg font-semibold">Email</h3>
+                <p class="text-muted mt-1">
+                  <a href={`mailto:${siteConfig.contact.email}`} class="link link-muted">
                     {siteConfig.contact.email}
                   </a>
                 </p>

@@ -1,6 +1,7 @@
 ---
 import { galleryItems } from '@/data/gallery';
 import WaveDivider from '@/components/WaveDivider.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 
 type Props = {
   id?: string;
@@ -33,14 +34,10 @@ const toPublicUrl = (src: string) => {
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
   <div class="container-page relative">
-    <div class="section-head">
-      <div>
-        <h2 class="heading-2">{heading}</h2>
-        <p class="lede">{description}</p>
-      </div>
+    <SectionHeader heading={heading} description={description}>
       {
         (showTip || (ctaHref && ctaLabel)) && (
-          <div class="flex flex-col gap-2 sm:items-end">
+          <div slot="actions" class="flex flex-col gap-2 sm:items-end">
             {ctaHref && ctaLabel && (
               <a class="btn-secondary px-4 py-2" href={ctaHref}>
                 {ctaLabel}
@@ -58,7 +55,7 @@ const toPublicUrl = (src: string) => {
           </div>
         )
       }
-    </div>
+    </SectionHeader>
 
     <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3" data-gallery>
       {

@@ -123,6 +123,61 @@ const jsonLd = (() => {
       })();
     </script>
 
+    <script is:inline>
+      (() => {
+        // Keep Tailwind `dark:` variants and CSS variables aligned.
+        // Problem this solves: when `data-mode="auto"` and the OS is dark, CSS media queries may flip
+        // some tokens while Tailwind `dark:` styles and shadcn vars stay in light mode -> mixed theme.
+        if (typeof window === 'undefined') return;
+
+        const root = document.documentElement;
+
+        const getMode = () => {
+          const m = root.dataset.mode;
+          return m === 'light' || m === 'dark' || m === 'auto' ? m : 'auto';
+        };
+
+        const getEffective = () => {
+          const m = getMode();
+          if (m === 'light' || m === 'dark') return m;
+          try {
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+          } catch {
+            return 'light';
+          }
+        };
+
+        const apply = () => {
+          const eff = getEffective();
+          root.dataset.modeEffective = eff;
+          root.classList.toggle('dark', eff === 'dark');
+        };
+
+        apply();
+
+        // React to system changes when in auto.
+        try {
+          const mq = window.matchMedia('(prefers-color-scheme: dark)');
+          const onChange = () => {
+            if (getMode() !== 'auto') return;
+            apply();
+          };
+          if ('addEventListener' in mq) {
+            mq.addEventListener('change', onChange);
+          } else {
+            // Safari legacy
+            // @ts-expect-error - legacy MediaQueryList API
+            mq.addListener(onChange);
+          }
+        } catch {
+          // ignore
+        }
+
+        // Allow other scripts (Header toggles, etc.) to request a re-sync.
+        window.addEventListener('damra:mode-change', apply);
+      })();
+    </script>
+
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}

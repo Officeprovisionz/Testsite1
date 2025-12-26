@@ -340,6 +340,13 @@ const logoMarkSrc = `${base}brand/logo-orb.svg`;
         // ignore
       }
 
+      // Re-sync effective mode (especially important for `auto`).
+      try {
+        window.dispatchEvent(new Event('damra:mode-change'));
+      } catch {
+        // ignore
+      }
+
       const label = m === 'auto' ? 'Mode: Auto' : `Mode: ${m}`;
       btns.forEach((b) => {
         const isIcon = b.classList.contains('icon-btn');

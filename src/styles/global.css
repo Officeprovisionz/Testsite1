@@ -103,14 +103,15 @@
   :root[data-mode='dark'] {
     color-scheme: dark;
     /* Dark theme: higher contrast, less muddy, and more consistent with slate-950 meta theme color. */
-    --color-bg: 2 6 23;
-    --color-surface: 10 16 33;
-    --color-surface-muted: 7 12 26;
-    --color-border: 44 56 80;
+    /* Slightly lifted from true-black to avoid crushed shadows and unreadable sections. */
+    --color-bg: 6 10 24;
+    --color-surface: 12 18 38;
+    --color-surface-muted: 9 14 30;
+    --color-border: 56 70 98;
     --color-text: 248 250 252;
     --color-text-muted: 203 213 225;
     --color-text-subtle: 148 163 184;
-    --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.6);
+    --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
     --glass-border: rgba(255, 255, 255, 0.08);
     --glass-border-hover: rgba(255, 255, 255, 0.16);
@@ -145,14 +146,15 @@
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) {
       color-scheme: dark;
-      --color-bg: 2 6 23;
-      --color-surface: 10 16 33;
-      --color-surface-muted: 7 12 26;
-      --color-border: 44 56 80;
+      /* Mirror the dark-mode token set when user is in auto and OS is dark. */
+      --color-bg: 6 10 24;
+      --color-surface: 12 18 38;
+      --color-surface-muted: 9 14 30;
+      --color-border: 56 70 98;
       --color-text: 248 250 252;
       --color-text-muted: 203 213 225;
       --color-text-subtle: 148 163 184;
-      --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.6);
+      --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
       --glass-border: rgba(255, 255, 255, 0.08);
       --glass-border-hover: rgba(255, 255, 255, 0.16);
@@ -160,6 +162,27 @@
       --glass-bg-b: rgb(var(--color-surface) / 0.42);
       --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
       --glass-shadow-strong: 0 36px 100px -56px rgb(0 0 0 / 0.85);
+
+      /* Shadcn vars MUST also follow auto-dark; otherwise `text-muted-foreground` etc. stay light. */
+      --background: 222.2 84% 4.9%;
+      --foreground: 210 40% 98%;
+      --card: 222.2 84% 4.9%;
+      --card-foreground: 210 40% 98%;
+      --popover: 222.2 84% 4.9%;
+      --popover-foreground: 210 40% 98%;
+      --primary: 221 83% 60%;
+      --primary-foreground: 210 40% 98%;
+      --secondary: 217.2 32.6% 17.5%;
+      --secondary-foreground: 210 40% 98%;
+      --muted: 217.2 32.6% 17.5%;
+      --muted-foreground: 215 20.2% 72%;
+      --accent: 217.2 32.6% 17.5%;
+      --accent-foreground: 210 40% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 40% 98%;
+      --border: 217.2 32.6% 17.5%;
+      --input: 217.2 32.6% 17.5%;
+      --ring: 221 83% 60%;
     }
   }
 
@@ -706,12 +729,12 @@
   }
 
   .heading-1 {
-    @apply text-balance text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl;
+    @apply text-balance font-serif text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl;
     color: rgb(var(--color-text));
   }
 
   .heading-2 {
-    @apply text-balance text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
+    @apply text-balance font-serif text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
     color: rgb(var(--color-text));
   }
 
@@ -727,12 +750,12 @@
 
   /* Type scale utilities */
   .text-display {
-    @apply text-5xl font-bold tracking-tight lg:text-6xl;
+    @apply font-serif text-5xl font-bold tracking-tight lg:text-6xl;
     color: rgb(var(--color-text));
   }
 
   .text-title {
-    @apply text-3xl font-semibold tracking-tight lg:text-4xl;
+    @apply font-serif text-3xl font-semibold tracking-tight lg:text-4xl;
     color: rgb(var(--color-text));
   }
 
@@ -1140,7 +1163,8 @@
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    opacity: 0.35;
+    /* Too high makes light sections feel washed out and text less readable. */
+    opacity: 0.2;
     pointer-events: none;
   }
 

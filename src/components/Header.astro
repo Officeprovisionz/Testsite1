@@ -514,11 +514,19 @@ const navItems = [
     const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]'));
     if (!btns.length) return;
 
-    const themes = ['navy', 'emerald', 'slate'];
+    const themes = ['teal', 'navy', 'emerald', 'slate'];
 
     const getCurrent = () => {
       const current = document.documentElement.dataset.theme;
-      return current && themes.includes(current) ? current : 'navy';
+      return current && themes.includes(current) ? current : 'teal';
+    };
+
+    const prettyName = (t: string) => {
+      if (t === 'teal') return 'Theme: Teal';
+      if (t === 'navy') return 'Theme: Navy';
+      if (t === 'emerald') return 'Theme: Emerald';
+      if (t === 'slate') return 'Theme: Slate';
+      return `Theme: ${t}`;
     };
 
     const setTheme = (t: string) => {
@@ -528,7 +536,7 @@ const navItems = [
       } catch {
         // ignore
       }
-      const label = t === 'navy' ? 'Theme: Navy' : `Theme: ${t}`;
+      const label = prettyName(t);
       btns.forEach((b) => {
         const isIcon = b.classList.contains('icon-btn');
         if (!isIcon) b.textContent = label;

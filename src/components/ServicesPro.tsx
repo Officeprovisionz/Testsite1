@@ -1,7 +1,76 @@
-import React from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { siteConfig } from '@/data/siteConfig';
 import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
 import { Sparkles, Box, ClipboardCheck, Wrench } from 'lucide-react';
+
+const usePrefersReducedMotion = () => {
+  const [reduced, setReduced] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onChange = () => setReduced(Boolean(mq.matches));
+    onChange();
+    mq.addEventListener?.('change', onChange);
+    return () => mq.removeEventListener?.('change', onChange);
+  }, []);
+
+  return reduced;
+};
+
+const RotatingHeaderImage = ({
+  images,
+  alt,
+  fallbackSvg,
+  intervalMs = 9000,
+}: {
+  images: string[];
+  alt: string;
+  fallbackSvg: string;
+  intervalMs?: number;
+}) => {
+  const prefersReducedMotion = usePrefersReducedMotion();
+  const pool = useMemo(() => Array.from(new Set(images)).filter(Boolean), [images]);
+  const [idx, setIdx] = useState(0);
+
+  useEffect(() => {
+    if (prefersReducedMotion) return;
+    if (pool.length < 2) return;
+
+    let mounted = true;
+    const tick = () => {
+      // Avoid advancing when the tab is hidden (feels less "busy" and saves work).
+      if (typeof document !== 'undefined' && document.visibilityState === 'hidden') return;
+      if (!mounted) return;
+      setIdx((i) => (i + 1) % pool.length);
+    };
+
+    // Small jitter prevents everything on the page flipping on the same millisecond.
+    const jitter = Math.floor(Math.random() * 900);
+    const id = window.setInterval(tick, intervalMs + jitter);
+    return () => {
+      mounted = false;
+      window.clearInterval(id);
+    };
+  }, [intervalMs, pool.length, prefersReducedMotion]);
+
+  const src = pool[idx] ?? pool[0] ?? '';
+
+  return (
+    <img
+      key={src}
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className="damra-fade-in absolute inset-0 h-full w-full object-cover opacity-90"
+      onError={(e) => {
+        // If the JPG is missing (e.g., before running gallery:fetch), fall back to the SVG placeholder.
+        if (e.currentTarget.src !== fallbackSvg) e.currentTarget.src = fallbackSvg;
+      }}
+    />
+  );
+};
 
 export function ServicesPro() {
   const icons: Record<string, React.ReactNode> = {
@@ -13,26 +82,46 @@ export function ServicesPro() {
 
   const base = import.meta.env.BASE_URL;
 
-  const headerImageByTitle: Record<string, { jpg: string; svg: string; alt: string }> = {
+  const headerImageByTitle: Record<string, { images: string[]; svg: string; alt: string }> = {
     'Janitorial & recurring cleaning': {
-      jpg: `${base}gallery/02.jpg`,
       svg: `${base}gallery/02.svg`,
       alt: 'Janitorial service in an office environment',
+      images: [
+        `${base}gallery/services/janitorial-01.jpg`,
+        `${base}gallery/services/janitorial-02.jpg`,
+        `${base}gallery/services/janitorial-03.jpg`,
+        `${base}gallery/02.jpg`,
+      ],
     },
     'Deep / detail cleaning': {
-      jpg: `${base}gallery/04.jpg`,
       svg: `${base}gallery/04.svg`,
       alt: 'Detail cleaning and disinfecting in a conference room',
+      images: [
+        `${base}gallery/services/detail-01.jpg`,
+        `${base}gallery/services/detail-02.jpg`,
+        `${base}gallery/services/detail-03.jpg`,
+        `${base}gallery/04.jpg`,
+      ],
     },
     'Supplies & restocking': {
-      jpg: `${base}gallery/06.jpg`,
       svg: `${base}gallery/06.svg`,
       alt: 'Supply shelves and inventory organization for restocking',
+      images: [
+        `${base}gallery/services/restocking-01.jpg`,
+        `${base}gallery/services/restocking-02.jpg`,
+        `${base}gallery/services/restocking-03.jpg`,
+        `${base}gallery/06.jpg`,
+      ],
     },
     'Facilities support': {
-      jpg: `${base}gallery/05.jpg`,
       svg: `${base}gallery/05.svg`,
       alt: 'Floor care and upkeep in a commercial space',
+      images: [
+        `${base}gallery/services/facilities-01.jpg`,
+        `${base}gallery/services/facilities-02.jpg`,
+        `${base}gallery/services/facilities-03.jpg`,
+        `${base}gallery/05.jpg`,
+      ],
     },
   };
 
@@ -41,18 +130,9 @@ export function ServicesPro() {
     const icon = icons[title] || <Sparkles className="h-6 w-6 text-brand-500" />;
 
     return (
-      <div className="relative flex h-24 w-full flex-1 items-center justify-center overflow-hidden rounded-xl border border-brand-100/50 bg-slate-50 dark:border-brand-800/30 dark:bg-slate-950/30">
+      <div className="relative flex h-32 w-full flex-1 items-center justify-center overflow-hidden rounded-xl border border-brand-100/50 bg-slate-50 dark:border-brand-800/30 dark:bg-slate-950/30 sm:h-28 md:h-24">
         {img ? (
-          <img
-            src={img.jpg}
-            alt={img.alt}
-            loading="lazy"
-            decoding="async"
-            className="absolute inset-0 h-full w-full object-cover opacity-90"
-            onError={(e) => {
-              if (e.currentTarget.src !== img.svg) e.currentTarget.src = img.svg;
-            }}
-          />
+          <RotatingHeaderImage images={img.images} alt={img.alt} fallbackSvg={img.svg} />
         ) : null}
 
         <div

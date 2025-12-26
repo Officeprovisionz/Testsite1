@@ -94,7 +94,7 @@ const toPublicUrl = (src: string) => {
       }
     </SectionHeader>
 
-    <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" data-gallery>
+    <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-gallery>
       {
         resolvedItems.map((it, idx) => (
           <a
@@ -143,7 +143,7 @@ const toPublicUrl = (src: string) => {
     </div>
 
     <dialog
-      class="glass-card max-h-[calc(100dvh-2rem)] w-full max-w-3xl overflow-hidden rounded-2xl p-0"
+      class="glass-card max-h-[calc(100dvh-2rem)] w-[calc(100%-1.25rem)] max-w-none overflow-hidden rounded-2xl p-0 sm:w-full sm:max-w-3xl"
       data-lightbox
     >
       <div class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
@@ -170,7 +170,7 @@ const toPublicUrl = (src: string) => {
         <img
           data-lightbox-img
           alt=""
-          class="border-app surface-muted w-full rounded-xl border object-contain"
+          class="border-app surface-muted mx-auto h-auto max-h-[min(68dvh,720px)] w-auto max-w-full rounded-xl border object-contain"
         />
         <figcaption class="text-sm text-muted" data-lightbox-caption></figcaption>
       </figure>

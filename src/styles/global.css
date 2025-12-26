@@ -82,7 +82,8 @@
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
     --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Increase contrast for shadcn/tailwind `text-muted-foreground` usage */
+    --muted-foreground: 215.4 16.3% 38.5%;
     --accent: 210 40% 96.1%;
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
@@ -106,8 +107,9 @@
     --color-surface-muted: 17 24 39;
     --color-border: 51 65 85;
     --color-text: 241 245 249;
-    --color-text-muted: 148 163 184;
-    --color-text-subtle: 100 116 139;
+    /* Slightly brighter muted text in dark mode for readability */
+    --color-text-muted: 165 180 201;
+    --color-text-subtle: 148 163 184;
     --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
     --glass-border: rgba(255, 255, 255, 0.08);
@@ -129,7 +131,7 @@
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted-foreground: 215 20.2% 72%;
     --accent: 217.2 32.6% 17.5%;
     --accent-foreground: 210 40% 98%;
     --destructive: 0 62.8% 30.6%;
@@ -148,8 +150,8 @@
       --color-surface-muted: 17 24 39;
       --color-border: 51 65 85;
       --color-text: 241 245 249;
-      --color-text-muted: 148 163 184;
-      --color-text-subtle: 100 116 139;
+      --color-text-muted: 165 180 201;
+      --color-text-subtle: 148 163 184;
       --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
 
       --glass-border: rgba(255, 255, 255, 0.08);
@@ -542,6 +544,19 @@
     .group:hover .gallery-hover-zoom {
       transform: scale(1.05);
     }
+  }
+
+  @keyframes damraFadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .damra-fade-in {
+    animation: damraFadeIn 520ms ease-out;
   }
 
   .btn {

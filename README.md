@@ -80,6 +80,28 @@ Tips:
 - Aim for ~1600px–2400px wide for portfolio photos.
 - If you change the folder name, update the paths in `src/data/gallery.ts`.
 
+## Optional: lightweight hero video
+
+The homepage hero supports an **optional background video** that is:
+
+- muted + looping
+- mobile-friendly (`playsInline`)
+- automatically **disabled** for users with **reduced motion** or **data saver / very slow connections**
+
+To enable it, add either (or both) of these files:
+
+- `public/media/hero-cleaning.webm` (preferred)
+- `public/media/hero-cleaning.mp4` (fallback)
+
+Recommended settings (keep it light):
+
+- 6–10 seconds loop
+- 720p (or 1080p if it still stays small)
+- no audio track
+- target size: ~1–3MB
+
+If the files are missing, the hero falls back to a static image.
+
 ## Configuration (env)
 
 Copy `.env.example` to `.env` and adjust as needed.

@@ -5,6 +5,7 @@ import sharp from 'sharp';
 
 const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, 'public', 'gallery');
+const OUT_SERVICES_DIR = path.join(OUT_DIR, 'services');
 const ATTRIBUTION_PATH = path.join(OUT_DIR, 'ATTRIBUTION.txt');
 
 function parseDotEnv(contents) {
@@ -93,6 +94,7 @@ async function main() {
   }
 
   await fs.mkdir(OUT_DIR, { recursive: true });
+  await fs.mkdir(OUT_SERVICES_DIR, { recursive: true });
 
   // Each slot maps to a specific theme so the site feels intentionally curated.
   // You can tweak these queries anytime and re-run `pnpm gallery:fetch`.
@@ -155,6 +157,20 @@ async function main() {
     return withSrc[0];
   };
 
+  const writePhoto = async ({ photo, outPath }) => {
+    const srcUrl = photo?.src?.original || photo?.src?.large2x || photo?.src?.large;
+    if (!srcUrl) throw new Error(`Missing photo src for Pexels id=${photo?.id}`);
+
+    const buf = await downloadBuffer(srcUrl);
+
+    // Downscale to 4K max-width to keep files reasonable but still high-res.
+    const image = sharp(buf).rotate();
+    const meta = await image.metadata();
+    const pipeline = meta.width && meta.width > 3840 ? image.resize({ width: 3840 }) : image;
+
+    await pipeline.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
+  };
+
   for (let i = 0; i < slots.length; i++) {
     const slot = slots[i];
     const p = await pickBestForSlot(slot);
@@ -165,20 +181,9 @@ async function main() {
 
     const n = slot.id;
 
-    const srcUrl = p?.src?.original || p?.src?.large2x || p?.src?.large;
-    if (!srcUrl) throw new Error(`Missing photo src for Pexels id=${p?.id}`);
-
-    const buf = await downloadBuffer(srcUrl);
-
     const outPath = path.join(OUT_DIR, `${n}.jpg`);
 
-    // Downscale to 4K max-width to keep files reasonable but still high-res.
-    const image = sharp(buf).rotate();
-    const meta = await image.metadata();
-
-    const pipeline = meta.width && meta.width > 3840 ? image.resize({ width: 3840 }) : image;
-
-    await pipeline.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
+    await writePhoto({ photo: p, outPath });
 
     const photographer = p?.photographer ?? 'Unknown';
     const photographerUrl = p?.photographer_url ?? '';
@@ -199,6 +204,73 @@ async function main() {
 
     // Friendly progress line.
     process.stdout.write(`Downloaded ${i + 1}/${slots.length}: gallery/${n}.jpg\n`);
+  }
+
+  // Additional rotating images for the Services cards (3 per card by default).
+  const serviceSets = [
+    {
+      key: 'janitorial',
+      label: 'Services: Janitorial & recurring cleaning',
+      query: 'janitor cart office cleaning',
+      count: 3,
+    },
+    {
+      key: 'detail',
+      label: 'Services: Deep / detail cleaning',
+      query: 'disinfecting office conference room cleaning',
+      count: 3,
+    },
+    {
+      key: 'restocking',
+      label: 'Services: Supplies & restocking',
+      query: 'restocking paper towels soap office supplies',
+      count: 3,
+    },
+    {
+      key: 'facilities',
+      label: 'Services: Facilities support',
+      query: 'mopping office floor cleaning',
+      count: 3,
+    },
+  ];
+
+  let serviceWritten = 0;
+  const serviceTotal = serviceSets.reduce((sum, s) => sum + (s.count ?? 0), 0);
+
+  for (const set of serviceSets) {
+    for (let j = 1; j <= set.count; j++) {
+      const p = await pickBestForSlot({ query: set.query });
+      if (!p) throw new Error(`No photos returned from Pexels for query: ${set.query}`);
+
+      const photographerName = (p?.photographer ?? '').trim();
+      if (photographerName) seenPhotographers.add(photographerName);
+
+      const idx = String(j).padStart(2, '0');
+      const outRel = `gallery/services/${set.key}-${idx}.jpg`;
+      const outPath = path.join(OUT_SERVICES_DIR, `${set.key}-${idx}.jpg`);
+
+      await writePhoto({ photo: p, outPath });
+
+      const photographer = p?.photographer ?? 'Unknown';
+      const photographerUrl = p?.photographer_url ?? '';
+      const photoUrl = p?.url ?? '';
+
+      attributions.push(
+        [
+          outRel,
+          `Slot: ${set.label}`,
+          `Query: ${set.query}`,
+          `Pexels photo by ${photographer}`,
+          photographerUrl ? `Photographer: ${photographerUrl}` : '',
+          photoUrl ? `Photo: ${photoUrl}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n')
+      );
+
+      serviceWritten++;
+      process.stdout.write(`Downloaded ${serviceWritten}/${serviceTotal}: ${outRel}\n`);
+    }
   }
 
   const header =

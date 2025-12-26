@@ -42,3 +42,87 @@ Query: cleaning supplies shelves inventory
 Pexels photo by Jimmy Liao
 Photographer: https://www.pexels.com/@jimmy-liao-3615017
 Photo: https://www.pexels.com/photo/metals-on-display-14838208/
+
+gallery/services/janitorial-01.jpg
+Slot: Services: Janitorial & recurring cleaning
+Query: janitor cart office cleaning
+Pexels photo by Yusuf sinan
+Photographer: https://www.pexels.com/@yusufsinan
+Photo: https://www.pexels.com/photo/a-man-cleaning-the-train-platform-11971718/
+
+gallery/services/janitorial-02.jpg
+Slot: Services: Janitorial & recurring cleaning
+Query: janitor cart office cleaning
+Pexels photo by Karola G
+Photographer: https://www.pexels.com/@karola-g
+Photo: https://www.pexels.com/photo/crop-person-in-rubber-glove-cleaning-toilet-bowl-4239067/
+
+gallery/services/janitorial-03.jpg
+Slot: Services: Janitorial & recurring cleaning
+Query: janitor cart office cleaning
+Pexels photo by Aleksandar Pasaric
+Photographer: https://www.pexels.com/@apasaric
+Photo: https://www.pexels.com/photo/five-person-cleaning-glass-building-625279/
+
+gallery/services/detail-01.jpg
+Slot: Services: Deep / detail cleaning
+Query: disinfecting office conference room cleaning
+Pexels photo by Roger Brown
+Photographer: https://www.pexels.com/@roger-brown-3435524
+Photo: https://www.pexels.com/photo/person-disinfecting-room-5499416/
+
+gallery/services/detail-02.jpg
+Slot: Services: Deep / detail cleaning
+Query: disinfecting office conference room cleaning
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/services/detail-03.jpg
+Slot: Services: Deep / detail cleaning
+Query: disinfecting office conference room cleaning
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/close-up-of-empty-seats-in-a-conference-hall-6344454/
+
+gallery/services/restocking-01.jpg
+Slot: Services: Supplies & restocking
+Query: restocking paper towels soap office supplies
+Pexels photo by Leeloo The First
+Photographer: https://www.pexels.com/@leeloothefirst
+Photo: https://www.pexels.com/photo/business-plan-on-a-pad-8970685/
+
+gallery/services/restocking-02.jpg
+Slot: Services: Supplies & restocking
+Query: restocking paper towels soap office supplies
+Pexels photo by Nataliya Vaitkevich
+Photographer: https://www.pexels.com/@n-voitkevich
+Photo: https://www.pexels.com/photo/white-pen-beside-macbook-pro-5554667/
+
+gallery/services/restocking-03.jpg
+Slot: Services: Supplies & restocking
+Query: restocking paper towels soap office supplies
+Pexels photo by Tima Miroshnichenko
+Photographer: https://www.pexels.com/@tima-miroshnichenko
+Photo: https://www.pexels.com/photo/white-and-red-paper-on-brown-wooden-table-6169021/
+
+gallery/services/facilities-01.jpg
+Slot: Services: Facilities support
+Query: mopping office floor cleaning
+Pexels photo by SHVETS production
+Photographer: https://www.pexels.com/@shvets-production
+Photo: https://www.pexels.com/photo/housewife-cleaning-wooden-floor-in-light-room-7513163/
+
+gallery/services/facilities-02.jpg
+Slot: Services: Facilities support
+Query: mopping office floor cleaning
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/a-woman-wiping-on-the-floor-5591928/
+
+gallery/services/facilities-03.jpg
+Slot: Services: Facilities support
+Query: mopping office floor cleaning
+Pexels photo by Carissa Rogers
+Photographer: https://www.pexels.com/@carissarogersphotography
+Photo: https://www.pexels.com/photo/several-bar-stools-in-a-row-1504236/

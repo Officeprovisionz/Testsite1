@@ -10,26 +10,26 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Professional Navy & Gold Theme */
-    --color-brand-50: 240 249 255; /* Lightest Blue */
-    --color-brand-100: 224 242 254;
-    --color-brand-200: 186 230 253;
-    --color-brand-300: 125 211 252;
-    --color-brand-400: 56 189 248;
-    --color-brand-500: 14 165 233; /* Primary Action Blue */
-    --color-brand-600: 2 132 199;
-    --color-brand-700: 3 105 161;
-    --color-brand-800: 7 89 133;
-    --color-brand-900: 12 74 110; /* Deep Navy */
-    --color-brand-950: 8 47 73;
+    /* Premium Blue + Gold Theme */
+    --color-brand-50: 239 246 255;
+    --color-brand-100: 219 234 254;
+    --color-brand-200: 191 219 254;
+    --color-brand-300: 147 197 253;
+    --color-brand-400: 96 165 250;
+    --color-brand-500: 59 130 246;
+    --color-brand-600: 37 99 235;
+    --color-brand-700: 29 78 216;
+    --color-brand-800: 30 64 175;
+    --color-brand-900: 30 58 138;
+    --color-brand-950: 23 37 84;
 
-    /* Accent Color (Warm Gold/Amber for CTAs & highlights) */
+    /* Accent Color (Warm Gold for CTAs & highlights) */
     --color-accent-50: 255 251 235;
     --color-accent-100: 254 243 199;
     --color-accent-200: 253 230 138;
     --color-accent-300: 252 211 77;
-    --color-accent-400: 251 191 36; /* Primary accent */
-    --color-accent-500: 245 158 11; /* Hover state */
+    --color-accent-400: 251 191 36;
+    --color-accent-500: 245 158 11;
     --color-accent-600: 217 119 6;
     --color-accent-700: 180 83 9;
     --color-accent-800: 146 64 14;
@@ -61,7 +61,7 @@
     --glass-shadow-strong: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
 
     /* Semantic surfaces (light) */
-    --color-bg: 250 250 250; /* Slightly off-white for depth */
+    --color-bg: 250 250 252; /* Slightly cool off-white for a cleaner, premium look */
     --color-surface: 255 255 255;
     --color-surface-muted: 248 250 252;
     --color-border: 226 232 240;
@@ -76,7 +76,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 199 89% 48%; /* Brand 500 */
+    --primary: 221 83% 53%; /* Blue-600 */
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -88,7 +88,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 199 89% 48%;
+    --ring: 221 83% 53%;
     --radius: 0.5rem;
   }
 

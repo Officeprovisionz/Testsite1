@@ -7,13 +7,20 @@ import '@fontsource/playfair-display/600.css';
 import '@fontsource/playfair-display/700.css';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
+import StickyActions from '@/components/StickyActions.astro';
 
 type Props = {
   title?: string;
   description?: string;
+  /** Disable the sticky bottom actions on this page. */
+  disableStickyActions?: boolean;
 };
 
-const { title = siteConfig.seo.title, description = siteConfig.seo.description } = Astro.props;
+const {
+  title = siteConfig.seo.title,
+  description = siteConfig.seo.description,
+  disableStickyActions = false,
+} = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 
@@ -51,6 +58,13 @@ const jsonLd = (() => {
 
   // Prevent accidental "</script>" injection via safe escaping.
   return JSON.stringify(data).replace(/</g, '\\u003c');
+})();
+
+const shouldShowStickyActions = (() => {
+  if (disableStickyActions) return false;
+  const path = Astro.url?.pathname || '';
+  // Avoid covering primary actions on key conversion pages.
+  return !/\/(contact|thanks)(\/|$)/i.test(path);
 })();
 ---
 
@@ -188,5 +202,7 @@ const jsonLd = (() => {
 
     <slot name="footer" />
     <slot name="sticky" />
+
+    {shouldShowStickyActions ? <StickyActions /> : null}
   </body>
 </html>

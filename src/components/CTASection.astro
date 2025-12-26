@@ -1,0 +1,288 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+import { makeMailtoHref, makeSmsHref, makeTelHref } from '@/lib/links';
+
+type Props = {
+  /**
+   * `centered` matches the old CTAStrip.
+   * `split` matches the old ConversionStrip.
+   */
+  layout?: 'centered' | 'split' | undefined;
+
+  // Shared-ish
+  id?: string | undefined;
+  eyebrow?: string | undefined;
+  heading?: string | undefined;
+  description?: string | undefined;
+
+  // Centered layout (CTAStrip)
+  background?: 'default' | 'accent' | undefined;
+  ctaText?: string | undefined;
+  ctaHref?: string | undefined;
+
+  // Split layout (ConversionStrip)
+  /**
+   * `muted` blends with the dotted section background.
+   * `surface` uses the default page surface.
+   */
+  tone?: 'muted' | 'surface' | undefined;
+  showChecklist?: boolean | undefined;
+  showEmail?: boolean | undefined;
+};
+
+const href = makeHref(import.meta.env.BASE_URL);
+
+const {
+  layout = 'centered',
+
+  id,
+  eyebrow,
+  heading,
+  description,
+
+  background = 'default',
+  ctaText,
+  ctaHref,
+
+  tone = 'muted',
+  showChecklist = true,
+  showEmail = true,
+} = Astro.props;
+
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const smsHref = makeSmsHref(siteConfig.contact.phoneE164, siteConfig.contact.smsBody);
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
+---
+
+{
+  layout === 'centered' ? (
+    <section
+      class:list={[
+        'section-creative py-16 lg:py-20',
+        background === 'accent'
+          ? 'bg-gradient-to-br from-brand-800 via-brand-900 to-slate-950 text-white'
+          : 'bg-gradient-to-b from-brand-50/50 to-white dark:from-brand-950/30 dark:to-slate-950',
+      ]}
+    >
+      <div class="container-page">
+        <div
+          class:list={[
+            'relative mx-auto max-w-3xl overflow-hidden rounded-[var(--radius-card)] border px-6 py-10 text-center shadow-soft sm:px-10',
+            background === 'accent'
+              ? 'border-white/10 bg-white/5 backdrop-blur-md'
+              : 'border-app bg-white/70 backdrop-blur-sm dark:bg-slate-900/40',
+          ]}
+        >
+          <div
+            aria-hidden="true"
+            class:list={[
+              'pointer-events-none absolute inset-0',
+              background === 'accent'
+                ? 'bg-[radial-gradient(800px_280px_at_20%_20%,rgba(255,255,255,0.12),transparent_60%),radial-gradient(700px_240px_at_80%_0%,rgba(14,165,233,0.18),transparent_55%)]'
+                : 'bg-[radial-gradient(800px_280px_at_20%_20%,rgba(14,165,233,0.10),transparent_60%),radial-gradient(700px_240px_at_80%_0%,rgba(245,158,11,0.10),transparent_55%)]',
+            ]}
+          />
+
+          <div class="relative">
+            <h2
+              class:list={[
+                'text-2xl font-bold tracking-tight sm:text-3xl',
+                background === 'accent' ? 'text-white' : 'text-strong',
+              ]}
+            >
+              {heading ?? 'Ready to get started?'}
+            </h2>
+            <p
+              class:list={[
+                'mx-auto mt-4 max-w-xl text-base',
+                background === 'accent' ? 'text-white/80' : 'text-muted',
+              ]}
+            >
+              {description ?? "Request a quote and we'll confirm scope, then send clear pricing."}
+            </p>
+
+            <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              {background === 'accent' ? (
+                <>
+                  <a
+                    href={ctaHref ?? href('contact/')}
+                    class="btn bg-white px-6 text-base font-semibold text-brand-800 shadow-lg shadow-black/10 hover:bg-white/95 hover:shadow-xl active:scale-[0.99] sm:w-auto sm:px-8"
+                    data-analytics="cta_primary"
+                  >
+                    {ctaText ?? 'Request a quote'}
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href={telHref}
+                    class="btn-invert inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
+                    data-analytics="cta_phone"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                    {siteConfig.contact.phoneDisplay}
+                  </a>
+                </>
+              ) : (
+                <>
+                  <a
+                    href={ctaHref ?? href('contact/')}
+                    class="btn-accent inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
+                    data-analytics="cta_primary"
+                  >
+                    {ctaText ?? 'Request a quote'}
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M17 8l4 4m0 0l-4 4m4-4H3"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href={telHref}
+                    class="btn-secondary inline-flex h-12 w-full items-center justify-center gap-2 px-6 text-base sm:w-auto sm:px-8"
+                    data-analytics="cta_phone"
+                  >
+                    <svg
+                      class="h-4 w-4"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                      />
+                    </svg>
+                    {siteConfig.contact.phoneDisplay}
+                  </a>
+                </>
+              )}
+            </div>
+
+            <p
+              class:list={[
+                'mt-5 text-xs',
+                background === 'accent' ? 'text-white/70' : 'text-subtle',
+              ]}
+            >
+              Clear scope. Consistent checklists. Fast follow-up.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  ) : (
+    <section
+      id={id}
+      class:list={[
+        'section section-creative scroll-mt-20',
+        tone === 'muted' ? 'section-muted' : '',
+      ]}
+      aria-label="Get started"
+    >
+      <div class="container-page">
+        <div class="glass-card relative overflow-hidden p-7 sm:p-10">
+          <div
+            aria-hidden="true"
+            class="from-brand-200/18 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+          />
+
+          <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
+            <div>
+              <p class="eyebrow">{eyebrow ?? 'Next step'}</p>
+              <h2 class="heading-2 mt-2">{heading ?? 'Ready to scope your space?'}</h2>
+              <p class="lede">
+                {description ??
+                  'Request a quote, call/text, or preview our checklist. We’ll confirm scope (including a walkthrough if needed) and send a clear written quote.'}
+              </p>
+
+              <ul class="check-list check-list--compact text-subtle text-sm sm:grid-cols-2">
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>Written scope + checklist</span>
+                </li>
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>Fast replies during business hours</span>
+                </li>
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>After-hours / weekend options</span>
+                </li>
+                <li>
+                  <span class="check-icon check-icon--sm" aria-hidden="true">
+                    ✓
+                  </span>
+                  <span>One point of contact</span>
+                </li>
+              </ul>
+            </div>
+
+            <div class="flex flex-col gap-3 md:justify-self-end">
+              <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
+                <a class="btn-secondary" href={telHref}>
+                  Call/Text {siteConfig.contact.phoneDisplay}
+                </a>
+                {showChecklist ? (
+                  <a class="btn-secondary" href={href('checklist/')}>
+                    Preview checklist
+                  </a>
+                ) : null}
+              </div>
+
+              <div class="text-subtle mt-1 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+                <a class="link link-muted" href={smsHref}>
+                  Text instead
+                </a>
+                {showEmail ? (
+                  <a class="link link-muted" href={mailtoHref}>
+                    Email
+                  </a>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

@@ -1,0 +1,147 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+
+const href = makeHref(import.meta.env.BASE_URL);
+const isDev = import.meta.env.DEV;
+
+const title = `Styleguide (Dev) | ${siteConfig.brand.name}`;
+const description = 'Dev-only styleguide to preview tokens, typography, and common components.';
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <section class="section section-creative">
+    <div class="container-page">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Dev tools</p>
+          <h1 class="heading-2 mt-2">Styleguide</h1>
+          <p class="lede">
+            Quick visual QA for colors, type, buttons, cards, and form controls.
+            {!isDev ? ' (Note: you are viewing this in production.)' : ''}
+          </p>
+        </div>
+
+        <div class="flex flex-col gap-2 sm:items-end">
+          <a class="btn-secondary" href={href('')}>Home</a>
+          <a class="btn-secondary" href={href('contact/')}>Contact</a>
+        </div>
+      </div>
+
+      <div class="mt-10 grid gap-8">
+        <div class="panel p-6">
+          <h2 class="heading-4">Typography</h2>
+          <div class="mt-4 grid gap-3">
+            <p class="heading-1">Heading 1 — Premium, clean, confident.</p>
+            <p class="heading-2">Heading 2 — Clear hierarchy.</p>
+            <p class="heading-3">Heading 3 — Section titles.</p>
+            <p class="text-body">
+              Body text: readable, calm, and professional. This should feel like a modern product
+              site but still like a service business.
+            </p>
+            <p class="text-body-sm">Small text: supporting details and helper copy.</p>
+            <p class="text-caption">Caption: subtle metadata.</p>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <h2 class="heading-4">Buttons</h2>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <a class="btn-primary" href="#">Primary</a>
+            <a class="btn-accent" href="#">Accent</a>
+            <a class="btn-secondary" href="#">Secondary</a>
+            <a class="btn-invert" href="#">Invert</a>
+            <a class="link link-muted" href="#">Text link</a>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <h2 class="heading-4">Surfaces</h2>
+          <div class="mt-4 grid gap-4 md:grid-cols-3">
+            <div class="card p-5">
+              <p class="text-strong font-semibold">Card</p>
+              <p class="mt-2 text-sm text-muted">Default card surface with soft shadow.</p>
+            </div>
+            <div class="glass-panel p-5">
+              <p class="text-strong font-semibold">Glass panel</p>
+              <p class="mt-2 text-sm text-muted">Subtle premium translucency.</p>
+            </div>
+            <div class="glass-card p-5">
+              <p class="text-strong font-semibold">Glass card</p>
+              <p class="mt-2 text-sm text-muted">A stronger featured treatment.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <h2 class="heading-4">Form controls</h2>
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <label class="grid gap-1 text-sm">
+              <span class="text-strong font-semibold">Text input</span>
+              <input class="input" placeholder="Type here…" />
+            </label>
+            <label class="grid gap-1 text-sm">
+              <span class="text-strong font-semibold">Select</span>
+              <select class="select">
+                <option>Option A</option>
+                <option>Option B</option>
+              </select>
+            </label>
+            <label class="grid gap-1 text-sm md:col-span-2">
+              <span class="text-strong font-semibold">Textarea</span>
+              <textarea class="textarea" placeholder="Details…"></textarea>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel p-6">
+          <h2 class="heading-4">Breakpoint indicator</h2>
+          <p class="mt-2 text-sm text-muted">
+            Useful while designing mobile-first. Resize the window and this label updates.
+          </p>
+          <div
+            class="border-app mt-4 rounded-xl border bg-white/60 p-4 text-sm dark:bg-slate-900/40"
+          >
+            <span class="font-semibold">Breakpoint:</span>
+            <span class="ml-2" data-bp>unknown</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="text-caption mt-10">
+        Tip: this page is meant for internal QA. If you want it hidden in production, we can wire a
+        build-time guard to render a 404.
+      </p>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const el = document.querySelector('[data-bp]');
+        if (!el) return;
+
+        const getBp = () => {
+          const w = window.innerWidth;
+          if (w >= 1280) return 'xl (≥1280)';
+          if (w >= 1024) return 'lg (≥1024)';
+          if (w >= 768) return 'md (≥768)';
+          if (w >= 640) return 'sm (≥640)';
+          return 'base (<640)';
+        };
+
+        const update = () => {
+          el.textContent = getBp();
+        };
+
+        update();
+        window.addEventListener('resize', update);
+      })();
+    </script>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

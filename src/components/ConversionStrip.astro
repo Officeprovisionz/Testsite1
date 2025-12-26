@@ -1,7 +1,5 @@
 ---
-import { siteConfig } from '@/data/siteConfig';
-import { makeHref } from '@/lib/nav';
-import { makeMailtoHref, makeSmsHref, makeTelHref } from '@/lib/links';
+import CTASection from '@/components/CTASection.astro';
 
 type Props = {
   id?: string;
@@ -17,86 +15,16 @@ type Props = {
   showEmail?: boolean;
 };
 
-const {
-  id,
-  eyebrow = 'Next step',
-  heading = 'Ready to scope your space?',
-  description = 'Request a quote, call/text, or preview our checklist. We’ll confirm scope (including a walkthrough if needed) and send a clear written quote.',
-  tone = 'muted',
-  showChecklist = true,
-  showEmail = true,
-} = Astro.props;
-
-const href = makeHref(import.meta.env.BASE_URL);
-
-const telHref = makeTelHref(siteConfig.contact.phoneE164);
-const smsHref = makeSmsHref(siteConfig.contact.phoneE164, siteConfig.contact.smsBody);
-const mailtoHref = makeMailtoHref(siteConfig.contact.email);
+const { id, eyebrow, heading, description, tone, showChecklist, showEmail } = Astro.props;
 ---
 
-<section
+<CTASection
+  layout="split"
   id={id}
-  class:list={['section section-creative scroll-mt-20', tone === 'muted' ? 'section-muted' : '']}
-  aria-label="Get started"
->
-  <div class="container-page">
-    <div class="glass-card relative overflow-hidden p-7 sm:p-10">
-      <div
-        aria-hidden="true"
-        class="from-brand-200/18 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-      >
-      </div>
-
-      <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
-        <div>
-          <p class="eyebrow">{eyebrow}</p>
-          <h2 class="heading-2 mt-2">{heading}</h2>
-          <p class="lede">{description}</p>
-
-          <ul class="check-list check-list--compact text-subtle text-sm sm:grid-cols-2">
-            <li>
-              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-              <span>Written scope + checklist</span>
-            </li>
-            <li>
-              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-              <span>Fast replies during business hours</span>
-            </li>
-            <li>
-              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-              <span>After-hours / weekend options</span>
-            </li>
-            <li>
-              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-              <span>One point of contact</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="flex flex-col gap-3 md:justify-self-end">
-          <div class="flex flex-col gap-3 sm:flex-row md:flex-col">
-            <a class="btn-secondary" href={telHref}>Call/Text {siteConfig.contact.phoneDisplay}</a>
-            {
-              showChecklist ? (
-                <a class="btn-secondary" href={href('checklist/')}>
-                  Preview checklist
-                </a>
-              ) : null
-            }
-          </div>
-
-          <div class="text-subtle mt-1 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
-            <a class="link link-muted" href={smsHref}>Text instead</a>
-            {
-              showEmail ? (
-                <a class="link link-muted" href={mailtoHref}>
-                  Email
-                </a>
-              ) : null
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+  eyebrow={eyebrow}
+  heading={heading}
+  description={description}
+  tone={tone}
+  showChecklist={showChecklist}
+  showEmail={showEmail}
+/>

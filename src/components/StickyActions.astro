@@ -1,0 +1,46 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
+
+type Props = {
+  /** Hide the sticky actions on specific pages (e.g., when a form is already on-screen). */
+  hidden?: boolean;
+};
+
+const { hidden = false } = Astro.props;
+
+const href = makeHref(import.meta.env.BASE_URL);
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+---
+
+{
+  !hidden ? (
+    <div
+      class="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+      aria-hidden="false"
+      data-sticky-actions
+    >
+      <div class="container-page">
+        <div class="pointer-events-auto mx-auto w-full max-w-lg rounded-2xl border border-brand-100/60 bg-white/85 p-2 shadow-lg shadow-black/5 backdrop-blur-xl dark:border-brand-800/30 dark:bg-slate-900/70">
+          <div class="grid grid-cols-2 gap-2">
+            <a
+              class="btn-secondary h-12 w-full justify-center"
+              href={telHref}
+              data-analytics="sticky_phone"
+            >
+              Call/Text
+            </a>
+            <a
+              class="btn-primary h-12 w-full justify-center"
+              href={href('contact/')}
+              data-analytics="sticky_quote"
+            >
+              Request a quote
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  ) : null
+}

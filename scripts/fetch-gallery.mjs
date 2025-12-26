@@ -101,33 +101,48 @@ async function main() {
   const slots = [
     {
       id: '01',
-      query: 'clean modern office lobby',
-      label: 'Clean office / reception',
+      query: 'modern office reception lobby interior clean',
+      label: 'Reception / lobby',
     },
     {
       id: '02',
-      query: 'janitor cart office cleaning',
-      label: 'Janitorial / tools in use',
+      query: 'conference room office interior table clean',
+      label: 'Conference room',
     },
     {
       id: '03',
-      query: 'restocking paper towels soap dispenser',
-      label: 'Restocking / paper goods',
+      query: 'office restroom clean modern',
+      label: 'Restroom serviced',
     },
     {
       id: '04',
-      query: 'cleaning conference room table disinfecting',
-      label: 'Detail cleaning / disinfecting',
+      query: 'office breakroom kitchenette clean counters',
+      label: 'Breakroom / kitchenette',
     },
     {
       id: '05',
-      query: 'mopping office floor cleaning',
-      label: 'Floors / high-traffic lanes',
+      query: 'office cleaning high touch surfaces door handles',
+      label: 'High-touch focus',
     },
     {
       id: '06',
-      query: 'cleaning supplies shelves inventory',
-      label: 'Supplies / inventory',
+      query: 'office floor cleaning mopping commercial',
+      label: 'Floors / high-traffic lanes',
+    },
+    {
+      id: '07',
+      query: 'office desk workspace clean modern',
+      label: 'Workstations',
+    },
+    {
+      id: '08',
+      query: 'office glass partition cleaning',
+      label: 'Glass + partitions',
+    },
+    {
+      id: '09',
+      query: 'vacuuming carpet office cleaning',
+      label: 'Carpet + entry lanes',
     },
   ];
 

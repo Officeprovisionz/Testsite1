@@ -3,8 +3,6 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
 import { ServicesPro } from '@/components/ServicesPro';
-import { IndustriesPro } from '@/components/IndustriesPro';
-import Testimonials from '@/components/Testimonials.astro';
 import Gallery from '@/components/Gallery.astro';
 import CTAStrip from '@/components/CTAStrip.astro';
 import type { GalleryItem } from '@/data/gallery';
@@ -46,6 +44,21 @@ const proofGallery: GalleryItem[] = [
     caption: 'Floors that stay sharp',
     alt: 'Vacuuming, mopping, and detailing handled per scope and schedule',
   },
+  {
+    src: getGalleryImageSrc('07'),
+    caption: 'Workstations reset',
+    alt: 'Desks, shared spaces, and touchpoints kept client-ready without disruption',
+  },
+  {
+    src: getGalleryImageSrc('08'),
+    caption: 'Glass + partitions',
+    alt: 'Interior glass and partitions cleaned for a clear, polished look',
+  },
+  {
+    src: getGalleryImageSrc('09'),
+    caption: 'Carpet + entry lanes',
+    alt: 'High-traffic zones maintained so the whole space stays sharp',
+  },
 ];
 ---
 
@@ -54,10 +67,6 @@ const proofGallery: GalleryItem[] = [
   <HeroPro client:load />
 
   <ServicesPro client:visible />
-
-  <IndustriesPro client:visible />
-
-  <Testimonials />
 
   <CTAStrip variant="accent" />
 

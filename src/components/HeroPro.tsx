@@ -36,9 +36,10 @@ type HeroProProps = {
 
 export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => {
   const base = import.meta.env.BASE_URL;
-  const defaultHeroImg = `${base}media/hero-golden-gate.jpg`;
+  // Using a high-quality Unsplash image for the Golden Gate Bridge sunset
+  const defaultHeroImg = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2000&auto=format&fit=crop`;
   const heroFallback = `${base}gallery/01.jpg`;
-  const logoSrc = `${base}brand/logo-orb.svg`;
+  // Logo removed as requested
 
   const heroImg = imageSrc ?? defaultHeroImg;
 
@@ -92,27 +93,11 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
 
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">
-          <div className="mx-auto mb-6 grid h-20 w-20 place-items-center rounded-[28px] bg-white/70 ring-1 ring-black/5 backdrop-blur dark:bg-slate-900/35 dark:ring-white/10">
-            <img
-              src={logoSrc}
-              alt=""
-              width={64}
-              height={64}
-              loading="eager"
-              decoding="async"
-              className="block h-16 w-16"
-            />
-          </div>
-
-          <h1 className="heading-1 text-balance">Details matter here.</h1>
+          <h1 className="heading-1 text-balance">For spaces shaped by ambition and expectation.</h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-muted md:text-xl">
             {siteConfig.brand.tagline} Serving{' '}
             <span className="text-strong font-semibold">{siteConfig.brand.city}</span>.
-          </p>
-
-          <p className="text-subtle mt-10 text-sm">
-            Use the phone number above or request a quote from the top menu.
           </p>
         </div>
       </div>

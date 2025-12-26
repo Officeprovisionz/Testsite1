@@ -10,22 +10,22 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Premium Blue + Gold Theme */
-    --color-brand-50: 239 246 255;
-    --color-brand-100: 219 234 254;
-    --color-brand-200: 191 219 254;
-    --color-brand-300: 147 197 253;
-    --color-brand-400: 96 165 250;
-    --color-brand-500: 59 130 246;
-    --color-brand-600: 37 99 235;
-    --color-brand-700: 29 78 216;
-    --color-brand-800: 30 64 175;
-    --color-brand-900: 30 58 138;
-    --color-brand-950: 23 37 84;
+    /* Premium Blue + Gold Theme - Enhanced */
+    --color-brand-50: 240 249 255;
+    --color-brand-100: 224 242 254;
+    --color-brand-200: 186 230 253;
+    --color-brand-300: 125 211 252;
+    --color-brand-400: 56 189 248;
+    --color-brand-500: 14 165 233;
+    --color-brand-600: 2 132 199;
+    --color-brand-700: 3 105 161;
+    --color-brand-800: 7 89 133;
+    --color-brand-900: 12 74 110;
+    --color-brand-950: 8 47 73;
 
-    /* Accent Color (Warm Gold for CTAs & highlights) */
-    --color-accent-50: 255 251 235;
-    --color-accent-100: 254 243 199;
+    /* Accent Color (Rich Gold) */
+    --color-accent-50: 255 252 235;
+    --color-accent-100: 254 245 200;
     --color-accent-200: 253 230 138;
     --color-accent-300: 252 211 77;
     --color-accent-400: 251 191 36;
@@ -99,6 +99,35 @@
     color-scheme: light;
   }
 
+  body {
+    @apply relative min-h-screen font-sans antialiased;
+    background-color: rgb(var(--color-bg));
+    color: rgb(var(--color-text));
+  }
+
+  /* Global Background Image */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2000&auto=format&fit=crop'); /* Abstract gradient/flow */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.05; /* Very subtle */
+    pointer-events: none;
+  }
+
+  /* Make sections see-through */
+  .container-page,
+  section,
+  header,
+  footer {
+    @apply backdrop-blur-[2px];
+  }
   /* Forced dark mode */
   :root[data-mode='dark'] {
     color-scheme: dark;

@@ -11,53 +11,53 @@ const { class: className } = Astro.props;
     <div class="text-brand-400/55 dark:text-brand-300/45">
       <svg
         width="100%"
-        height="28"
-        viewBox="0 0 1000 28"
+        height="60"
+        viewBox="0 0 1000 60"
         preserveAspectRatio="none"
         role="presentation"
+        class="opacity-90"
       >
-        <!-- Main cable (subtle arc) -->
+        <!-- Main suspension cables (double arc) -->
         <path
-          d="M0 14 C 180 5, 320 5, 500 14 C 680 23, 820 23, 1000 14"
+          d="M0 10 Q 500 60 1000 10"
           fill="none"
           stroke="currentColor"
-          stroke-width="1.5"
+          stroke-width="2"
           stroke-linecap="round"
-          opacity="0.9"></path>
+          class="text-brand-500/80"></path>
 
-        <!-- Vertical hangers (very subtle) -->
+        <!-- Secondary cable for depth -->
         <path
-          d="
-            M80 14 V 24
-            M140 14 V 25
-            M200 14 V 24
-            M260 14 V 25
-            M320 14 V 24
-            M380 14 V 25
-            M440 14 V 24
-            M500 14 V 26
-            M560 14 V 24
-            M620 14 V 25
-            M680 14 V 24
-            M740 14 V 25
-            M800 14 V 24
-            M860 14 V 25
-            M920 14 V 24
-          "
+          d="M0 15 Q 500 65 1000 15"
           fill="none"
           stroke="currentColor"
           stroke-width="1"
           stroke-linecap="round"
-          opacity="0.35"></path>
+          class="text-brand-400/50"></path>
 
-        <!-- Faint baseline (helps it read as a divider, not an illustration) -->
-        <path
-          d="M0 26 H1000"
-          fill="none"
+        <!-- Vertical hangers (dense and varying) -->
+        <g stroke="currentColor" stroke-width="0.5" class="text-brand-300/40">
+          {
+            Array.from({ length: 50 }).map((_, i) => {
+              const x = 20 + i * 19.6;
+              // Parabolic curve approximation: y = a(x-h)^2 + k
+              // Vertex at (500, 60) roughly.
+              // Let's approximate the yStart on the curve.
+              const yCurve = 10 + 50 * Math.pow((x - 500) / 500, 2);
+              return <line x1={x} y1={yCurve} x2={x} y2={60} />;
+            })
+          }
+        </g>
+
+        <!-- Road deck -->
+        <line
+          x1="0"
+          y1="58"
+          x2="1000"
+          y2="58"
           stroke="currentColor"
-          stroke-width="1"
-          stroke-linecap="round"
-          opacity="0.18"></path>
+          stroke-width="2"
+          class="text-brand-500/30"></line>
       </svg>
     </div>
   </div>

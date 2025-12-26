@@ -16,7 +16,7 @@ export function ServicesPro() {
       <div className="container-page">
         <div className="mb-12 text-center">
           <h2 className="heading-2">Our Expertise</h2>
-          <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
+          <p className="mx-auto mt-4 max-w-2xl text-lg text-slate-600 dark:text-slate-300">
             Comprehensive facility solutions tailored to your standards.
           </p>
         </div>

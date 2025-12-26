@@ -132,8 +132,8 @@ export const HeroPro = ({
           </video>
         ) : null}
 
-        {/* Mobile-first readability veil (stronger on small screens, lighter on larger). */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-black/0 dark:from-black/65 dark:via-black/35 sm:from-black/35 sm:via-black/15" />
+        {/* Mobile-first readability veil with brand-tinted overlay (not pure black). */}
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/30 via-60% to-teal-900/20 dark:from-slate-950/70 dark:via-slate-950/40 sm:from-slate-900/45 sm:via-slate-900/20" />
       </div>
 
       {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}

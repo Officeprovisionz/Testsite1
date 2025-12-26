@@ -10,30 +10,30 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Brand (Teal) — bright, fresh, and readable */
-    --color-brand-50: 236 254 252;
-    --color-brand-100: 204 251 241;
-    --color-brand-200: 153 246 228;
-    --color-brand-300: 94 234 212;
-    --color-brand-400: 45 212 191;
-    --color-brand-500: 20 184 166;
-    --color-brand-600: 13 148 136;
-    --color-brand-700: 15 118 110;
-    --color-brand-800: 17 94 89;
-    --color-brand-900: 19 78 74;
-    --color-brand-950: 4 47 46;
+    /* Brand (Teal) — centered on #00B4A6 for fresh, trustworthy feel */
+    --color-brand-50: 240 253 250; /* #F0FDFA */
+    --color-brand-100: 204 251 241; /* #CCFBF1 */
+    --color-brand-200: 153 246 228; /* #99F6E4 */
+    --color-brand-300: 94 234 212; /* #5EEAD4 */
+    --color-brand-400: 45 212 191; /* #2DD4BF */
+    --color-brand-500: 0 180 166; /* #00B4A6 — design spec primary */
+    --color-brand-600: 0 153 141; /* #00998D */
+    --color-brand-700: 0 128 118; /* #008076 */
+    --color-brand-800: 0 102 95; /* #00665F */
+    --color-brand-900: 0 77 71; /* #004D47 */
+    --color-brand-950: 0 51 47; /* #00332F */
 
-    /* Accent (Coral) — reserved for CTAs + highlights */
-    --color-accent-50: 255 241 242;
-    --color-accent-100: 255 228 230;
-    --color-accent-200: 254 205 211;
-    --color-accent-300: 253 164 175;
-    --color-accent-400: 251 113 133;
-    --color-accent-500: 244 63 94;
-    --color-accent-600: 225 29 72;
-    --color-accent-700: 190 18 60;
-    --color-accent-800: 159 18 57;
-    --color-accent-900: 136 19 55;
+    /* Accent (Coral) — #FF6B6B for CTAs, warm and inviting */
+    --color-accent-50: 255 245 245; /* #FFF5F5 */
+    --color-accent-100: 255 228 228; /* #FFE4E4 */
+    --color-accent-200: 255 200 200; /* #FFC8C8 */
+    --color-accent-300: 255 160 160; /* #FFA0A0 */
+    --color-accent-400: 255 135 135; /* #FF8787 — dark mode primary */
+    --color-accent-500: 255 107 107; /* #FF6B6B — design spec accent */
+    --color-accent-600: 230 80 80; /* #E65050 */
+    --color-accent-700: 200 55 55; /* #C83737 */
+    --color-accent-800: 170 40 40; /* #AA2828 */
+    --color-accent-900: 140 30 30; /* #8C1E1E */
 
     /* Spacing Scale (4-8-12-16-24-32-48-64-96) */
     --space-1: 0.25rem; /* 4px */
@@ -70,28 +70,28 @@
     --color-text-muted: 64 64 64; /* #404040 */
     --color-text-subtle: 82 82 82; /* #525252 */
 
-    /* Shadcn UI Variables (Mapped to Brand) */
+    /* Shadcn UI Variables (Mapped to Brand - Teal #00B4A6) */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 0 0% 4%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 0 0% 4%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    /* Keep shadcn primary/ring aligned with the brand (teal) */
-    --primary: 173 80% 33%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    /* Increase contrast for shadcn/tailwind `text-muted-foreground` usage */
-    --muted-foreground: 0 0% 32%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 173 80% 33%;
+    --popover-foreground: 0 0% 4%;
+    /* Primary teal #00B4A6 in HSL: 174° 100% 35% */
+    --primary: 174 100% 35%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 40 6% 97%;
+    --secondary-foreground: 0 0% 4%;
+    --muted: 40 6% 97%;
+    /* High contrast muted foreground for readability */
+    --muted-foreground: 0 0% 35%;
+    --accent: 40 6% 97%;
+    --accent-foreground: 0 0% 4%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 6% 90%;
+    --input: 40 6% 90%;
+    --ring: 174 100% 35%;
     --radius: 0.5rem;
   }
 
@@ -411,6 +411,34 @@
     background: rgb(2 6 23 / 0.65);
   }
 
+  /* Scroll Progress Indicator — CSS-only, fixed at top */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 9999;
+    background: linear-gradient(
+      to right,
+      rgb(var(--color-brand-500)) var(--scroll-progress, 0%),
+      transparent var(--scroll-progress, 0%)
+    );
+    pointer-events: none;
+  }
+
+  /* Links with underline-offset and smooth transitions */
+  .link-underline {
+    @apply underline decoration-brand-400/40 underline-offset-4 transition-colors hover:decoration-brand-500;
+  }
+
+  /* Text shadow utility for hero text on images */
+  .text-hero-shadow {
+    text-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.35),
+      0 4px 16px rgba(0, 0, 0, 0.2);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     html {
       scroll-behavior: auto;
@@ -487,7 +515,17 @@
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     border-radius: var(--radius-card);
-    box-shadow: var(--shadow-soft);
+    /* Varied shadow - use shadow-md equivalent for cards */
+    box-shadow:
+      0 4px 6px -1px rgb(0 0 0 / 0.07),
+      0 2px 4px -2px rgb(0 0 0 / 0.07);
+  }
+
+  .card-elevated {
+    /* Stronger shadow for featured/highlighted cards */
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.08),
+      0 4px 6px -4px rgb(0 0 0 / 0.08);
   }
 
   .panel {
@@ -508,9 +546,9 @@
   }
 
   .link {
-    @apply underline underline-offset-4;
-    text-decoration-color: rgb(var(--color-brand-300) / 0.6);
-    text-decoration-thickness: 2px;
+    @apply underline underline-offset-[5px];
+    text-decoration-color: rgb(var(--color-brand-400) / 0.5);
+    text-decoration-thickness: 1.5px;
     text-decoration-skip-ink: auto;
     transition:
       text-decoration-color 180ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -518,7 +556,12 @@
   }
 
   .link:hover {
-    text-decoration-color: rgb(var(--color-brand-400) / 0.85);
+    text-decoration-color: rgb(var(--color-brand-500));
+    color: rgb(var(--color-brand-600));
+  }
+
+  .link:focus-visible {
+    @apply outline-none ring-2 ring-brand-400 ring-offset-2;
   }
 
   .link-muted {
@@ -723,9 +766,9 @@
   }
 
   .btn {
-    @apply inline-flex min-h-11 touch-manipulation select-none items-center justify-center gap-2 px-6 py-2.5 text-sm font-medium transition-all duration-200;
+    @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold transition-all duration-200;
     border-radius: var(--radius-control);
-    letter-spacing: 0.005em;
+    letter-spacing: 0.01em;
   }
 
   .btn:focus-visible {

@@ -223,6 +223,17 @@ const jsonLd = (() => {
 
         requestAnimationFrame(raf);
       }
+
+      // Track scroll progress for the progress bar
+      const updateScrollProgress = () => {
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        document.documentElement.style.setProperty('--scroll-progress', progress + '%');
+      };
+
+      window.addEventListener('scroll', updateScrollProgress, { passive: true });
+      updateScrollProgress();
     </script>
 
     <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
@@ -246,6 +257,8 @@ const jsonLd = (() => {
     {/* Optional: add your analytics provider script here (Plausible/GTM/etc). */}
   </head>
   <body id="top">
+    <div class="scroll-progress" aria-hidden="true"></div>
+
     <a
       href="#main-content"
       class="border-app surface text-strong sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-xl focus:px-4 focus:py-2 focus:shadow-soft"

@@ -28,7 +28,7 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
 
 <header
   class:list={[
-    'sticky top-0 z-40 border-b border-brand-100/30 bg-white/70 backdrop-blur-xl backdrop-saturate-150 transition-all duration-300 dark:border-brand-800/30 dark:bg-slate-900/70',
+    'border-app sticky top-0 z-40 border-b bg-white/95 transition-all duration-300 dark:bg-slate-950/85',
     transparent ? 'header-transparent' : '',
   ]}
   data-site-header
@@ -40,7 +40,7 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
       <span
-        class="brand-mark grid place-items-center rounded-xl bg-white/80 shadow-lg shadow-brand-900/15 ring-1 ring-black/5 backdrop-blur-sm dark:bg-slate-900/50 dark:ring-white/10"
+        class="brand-mark grid place-items-center rounded-lg bg-white ring-1 ring-black/5 dark:bg-slate-900/50 dark:ring-white/10"
       >
         <img
           src={logoMarkSrc}

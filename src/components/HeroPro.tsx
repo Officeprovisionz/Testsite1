@@ -1,5 +1,3 @@
-import { Spotlight } from './ui/Spotlight';
-import { GridBackground } from './ui/GridBackground';
 import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
@@ -12,23 +10,11 @@ export const HeroPro = () => {
 
   return (
     <section className="hero-splash relative w-full overflow-hidden antialiased">
-      <GridBackground />
-      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="rgba(14, 165, 233, 0.4)" />
-
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">
-          {/* Badge - removed pulse animation for cleaner look */}
-          <div className="mb-6 inline-flex items-center rounded-full border border-brand-200/60 bg-white/60 px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm backdrop-blur-sm dark:border-brand-700/40 dark:bg-brand-950/60 dark:text-brand-200">
-            <span className="mr-2 flex h-1.5 w-1.5 rounded-full bg-brand-500"></span>
-            {siteConfig.brand.name}
-          </div>
+          <p className="eyebrow">{siteConfig.brand.name}</p>
 
-          <h1 className="heading-1 text-balance">
-            A cleaner office—{' '}
-            <span className="bg-gradient-to-r from-brand-600 via-brand-500 to-brand-400 bg-clip-text text-transparent dark:from-brand-300 dark:via-brand-400 dark:to-brand-500">
-              simplified.
-            </span>
-          </h1>
+          <h1 className="heading-1 text-balance">A cleaner office—simplified.</h1>
 
           <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-muted md:text-xl">
             {siteConfig.brand.tagline} Serving{' '}

@@ -49,9 +49,9 @@ export const siteConfig = {
     city: 'San Francisco, CA',
   },
   contact: {
-    phoneDisplay: '(415) 555-0123',
-    phoneE164: '+14155550123',
-    email: 'hello@officeprovisionz.example',
+    phoneDisplay: '(510) 913-2197',
+    phoneE164: '+15109132197',
+    email: 'officeprovisionz@gmail.com',
     smsBody: 'Hi Office Provisionz — I’d like to request a quote for cleaning + supplies support.',
   },
   hours: {

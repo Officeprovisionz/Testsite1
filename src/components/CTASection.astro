@@ -59,10 +59,10 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
   layout === 'centered' ? (
     <section
       class:list={[
-        'section-creative py-16 lg:py-20',
+        'section section-creative border-y py-16 lg:py-20',
         background === 'accent'
-          ? 'bg-gradient-to-br from-brand-800 via-brand-900 to-slate-950 text-white'
-          : 'bg-gradient-to-b from-brand-50/50 to-white dark:from-brand-950/30 dark:to-slate-950',
+          ? 'border-white/10 bg-slate-950 text-white'
+          : 'border-app section-muted',
       ]}
     >
       <div class="container-page">
@@ -70,20 +70,10 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
           class:list={[
             'relative mx-auto max-w-3xl overflow-hidden rounded-[var(--radius-card)] border px-6 py-10 text-center shadow-soft sm:px-10',
             background === 'accent'
-              ? 'border-white/10 bg-white/5 backdrop-blur-md'
-              : 'border-app bg-white/70 backdrop-blur-sm dark:bg-slate-900/40',
+              ? 'border-white/10 bg-white/5'
+              : 'border-app bg-white dark:bg-slate-950/25',
           ]}
         >
-          <div
-            aria-hidden="true"
-            class:list={[
-              'pointer-events-none absolute inset-0',
-              background === 'accent'
-                ? 'bg-[radial-gradient(800px_280px_at_20%_20%,rgba(255,255,255,0.12),transparent_60%),radial-gradient(700px_240px_at_80%_0%,rgba(14,165,233,0.18),transparent_55%)]'
-                : 'bg-[radial-gradient(800px_280px_at_20%_20%,rgba(14,165,233,0.10),transparent_60%),radial-gradient(700px_240px_at_80%_0%,rgba(245,158,11,0.10),transparent_55%)]',
-            ]}
-          />
-
           <div class="relative">
             <h2
               class:list={[
@@ -214,12 +204,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
       aria-label="Get started"
     >
       <div class="container-page">
-        <div class="glass-card relative overflow-hidden p-7 sm:p-10">
-          <div
-            aria-hidden="true"
-            class="from-brand-200/18 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
-          />
-
+        <div class="card relative overflow-hidden p-7 sm:p-10">
           <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
             <div>
               <p class="eyebrow">{eyebrow ?? 'Next step'}</p>

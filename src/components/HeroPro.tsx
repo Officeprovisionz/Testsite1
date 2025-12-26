@@ -61,7 +61,7 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
           alt=""
           srcSet={imageSrcSet}
           sizes={imageSrcSet ? imageSizes : undefined}
-          className="h-full w-full object-cover opacity-[0.72]"
+          className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
           loading="eager"
           decoding="async"
           onError={(e) => {
@@ -87,13 +87,13 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
           </video>
         ) : null}
 
-        {/* Gentle readability veil that still lets the photo show through */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-transparent dark:from-black/50 dark:via-black/25" />
+        {/* Mobile-first readability veil (stronger on small screens, lighter on larger). */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-black/0 dark:from-black/65 dark:via-black/35 sm:from-black/35 sm:via-black/15" />
       </div>
 
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="heading-1 animate-slide-up text-balance font-serif drop-shadow-md">
+          <h1 className="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md">
             For spaces shaped by ambition and expectation.
           </h1>
 

@@ -67,8 +67,9 @@
     --color-surface-muted: 248 250 252;
     --color-border: 226 232 240;
     --color-text: 15 23 42;
-    --color-text-muted: 51 65 85; /* Improved contrast (slate-700) */
-    --color-text-subtle: 71 85 105; /* Bumped up for accessibility */
+    /* Mobile readability: keep secondary/tertiary copy darker than typical “muted”. */
+    --color-text-muted: 30 41 59; /* slate-800 */
+    --color-text-subtle: 51 65 85; /* slate-700 */
 
     /* Shadcn UI Variables (Mapped to Brand) */
     --background: 0 0% 100%;
@@ -143,8 +144,9 @@
     --color-surface-muted: 30 41 59; /* Slate-800 */
     --color-border: 51 65 85; /* Slate-700 */
     --color-text: 241 245 249; /* Slate-100 */
-    --color-text-muted: 148 163 184; /* Slate-400 */
-    --color-text-subtle: 100 116 139; /* Slate-500 */
+    /* Mobile readability: bump contrast for secondary/tertiary copy in dark mode. */
+    --color-text-muted: 203 213 225; /* slate-300 */
+    --color-text-subtle: 148 163 184; /* slate-400 */
     --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
 
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -1046,22 +1048,22 @@
     /* Glass overlay at top of page */
     background-color: rgb(var(--color-surface) / 0.04);
     border-color: rgb(var(--color-border) / 0.35);
-    backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
   }
 
   header[data-site-header].header-transparent.app-bar {
     background-color: transparent;
     border-color: transparent;
-    backdrop-filter: none;
     -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
 
   header[data-site-header].is-scrolled.app-bar {
     background-color: rgb(var(--color-surface) / 0.86);
     border-color: rgb(var(--color-border) / 0.55);
-    backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
     box-shadow: var(--shadow-soft);
   }
 
@@ -1097,8 +1099,8 @@
 
   .footer-surface {
     background: rgb(var(--color-surface) / 0.03);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     border-top: 1px solid rgb(var(--color-border) / 0.45);
   }
 

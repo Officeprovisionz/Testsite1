@@ -143,13 +143,13 @@ const getImgAttrs = (src: string) => {
                   <>
                     <div
                       aria-hidden="true"
-                      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"
+                      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/35 to-transparent"
                     />
                     <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5">
-                      <p class="text-sm font-semibold tracking-tight text-white">
+                      <p class="text-sm font-semibold tracking-tight text-white drop-shadow">
                         {it.caption ?? 'Project photo'}
                       </p>
-                      <p class="mt-1 line-clamp-2 text-xs text-white/75">{it.alt}</p>
+                      <p class="mt-1 line-clamp-2 text-xs text-white/85 drop-shadow-sm">{it.alt}</p>
                     </div>
                   </>
                 ) : null}

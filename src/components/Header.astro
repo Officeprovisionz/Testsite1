@@ -45,9 +45,17 @@ const navItems = [
         height="28"
         loading="eager"
         decoding="async"
-        class="brand-mark h-7 w-7"
+        class:list={[
+          'brand-mark h-7 w-7 drop-shadow-sm',
+          // Ensure mark stays visible over hero imagery.
+          transparent ? 'brightness-0 invert' : '',
+        ]}
       />
-      <span class="text-strong hidden sm:inline">{siteConfig.brand.name}</span>
+      <span
+        class:list={['hidden sm:inline', transparent ? 'text-white drop-shadow-sm' : 'text-strong']}
+      >
+        {siteConfig.brand.name}
+      </span>
     </a>
 
     <nav class="hidden items-center gap-1 text-sm font-medium md:flex" aria-label="Primary">
@@ -56,9 +64,14 @@ const navItems = [
           <a
             href={item.href}
             class:list={[
-              'relative rounded-lg px-3 py-2 text-muted transition-all hover:bg-brand-50 hover:text-brand-700 focus-visible:outline-none dark:hover:bg-brand-900/30 dark:hover:text-brand-300',
+              'relative rounded-lg px-3 py-2 transition-all focus-visible:outline-none',
+              transparent
+                ? 'text-white/85 hover:bg-white/10 hover:text-white'
+                : 'text-muted hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-brand-900/30 dark:hover:text-brand-300',
               isActive(item.href)
-                ? 'bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300'
+                ? transparent
+                  ? 'bg-white/10 text-white'
+                  : 'bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300'
                 : '',
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}
@@ -71,14 +84,19 @@ const navItems = [
 
     <div class="flex items-center gap-2">
       <a
-        class="btn-secondary hidden sm:inline-flex"
+        class:list={[
+          'btn-secondary hidden sm:inline-flex',
+          transparent
+            ? 'border-white/25 bg-white/10 text-white hover:border-white/30 hover:bg-white/15 hover:text-white'
+            : '',
+        ]}
         href={telHref}
         aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
       >
         {siteConfig.contact.phoneDisplay}
       </a>
       <a
-        class="icon-btn sm:hidden"
+        class:list={['icon-btn sm:hidden', transparent ? 'text-white hover:bg-white/10' : '']}
         href={telHref}
         aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
       >
@@ -106,7 +124,10 @@ const navItems = [
 
       <details class="relative md:hidden" data-mobile-menu>
         <summary
-          class="icon-btn cursor-pointer list-none"
+          class:list={[
+            'icon-btn cursor-pointer list-none',
+            transparent ? 'text-white hover:bg-white/10' : '',
+          ]}
           aria-label="Open menu"
           aria-controls="mobile-menu-panel"
           aria-expanded="false"

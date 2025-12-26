@@ -7,8 +7,8 @@ const href = makeHref(import.meta.env.BASE_URL);
 const testimonials = siteConfig.testimonials;
 ---
 
-<section class="section">
-  <div class="container-page">
+<section class="section lg:py-28">
+  <div class="container-page lg:max-w-6xl">
     <SectionHeader
       align="center"
       eyebrow="Trust"
@@ -18,16 +18,16 @@ const testimonials = siteConfig.testimonials;
       <a slot="actions" class="btn-secondary" href={href('about/#proof')}>See proof</a>
     </SectionHeader>
 
-    <div class="mt-10 grid gap-6 md:grid-cols-3">
+    <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8">
       {
         testimonials.map((t) => (
-          <figure class="glass-card card-hover relative overflow-hidden p-6">
+          <figure class="glass-card card-hover relative overflow-hidden p-6 lg:p-8">
             <div
               aria-hidden="true"
               class="from-brand-200/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
             />
             <div class="relative">
-              <blockquote class="text-sm leading-relaxed text-muted">
+              <blockquote class="text-sm leading-relaxed text-muted lg:text-base lg:leading-relaxed">
                 <span aria-hidden="true" class="text-strong mr-1">
                   “
                 </span>

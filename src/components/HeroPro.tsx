@@ -139,17 +139,30 @@ export const HeroPro = ({
       {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
 
-      <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
-        <div className="mx-auto max-w-4xl text-center">
-          <h1 className="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md">
+      <div className="container-page relative z-10 pb-24 pt-32 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48">
+        <div className="mx-auto max-w-4xl text-center lg:max-w-5xl">
+          <h1 className="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md lg:text-5xl xl:text-6xl">
             For spaces shaped by ambition and expectation.
           </h1>
-
-          <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl">
+          <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl">
             Premium commercial cleaning and facility management for{' '}
             <span className="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
             environments.
           </p>
+          <div className="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5">
+            <a
+              href={`${base}contact/`}
+              className="btn-accent shadow-accent-900/30 min-w-[180px] shadow-lg lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+            >
+              Get a Free Quote
+            </a>
+            <a
+              href={`${base}services/`}
+              className="btn-invert min-w-[180px] lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+            >
+              View Services
+            </a>
+          </div>{' '}
         </div>
       </div>
     </section>

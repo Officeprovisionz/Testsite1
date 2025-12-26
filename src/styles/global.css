@@ -457,19 +457,32 @@
 
 @layer components {
   .container-page {
-    @apply mx-auto w-full max-w-6xl;
+    @apply mx-auto w-full max-w-6xl xl:max-w-7xl;
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
 
+  @media (min-width: 1024px) {
+    .container-page {
+      padding-left: max(2rem, env(safe-area-inset-left));
+      padding-right: max(2rem, env(safe-area-inset-right));
+    }
+  }
+
   .container-narrow {
-    @apply mx-auto w-full max-w-3xl;
+    @apply mx-auto w-full max-w-3xl lg:max-w-4xl;
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
   }
 
   .section {
     padding-block: clamp(3.25rem, 6.5vw, 5.75rem);
+  }
+
+  @media (min-width: 1024px) {
+    .section {
+      padding-block: clamp(4rem, 7vw, 7rem);
+    }
   }
 
   /* Decorative section wrapper that stays compatible with tokens + themes.

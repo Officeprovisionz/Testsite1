@@ -72,17 +72,17 @@ const getImgAttrs = (src: string) => {
 };
 ---
 
-<section id={id} class="section py-16 md:py-24">
+<section id={id} class="section py-16 md:py-24 lg:py-28">
   <div class="container-page">
     <!-- Header -->
-    <div class="mb-10 text-center md:mb-14">
-      {eyebrow && <span class="eyebrow mb-3 inline-block">{eyebrow}</span>}
+    <div class="mb-12 text-center md:mb-16 lg:mb-20">
+      {eyebrow && <span class="eyebrow mb-4 inline-block">{eyebrow}</span>}
       <h2 class="heading-2">{heading}</h2>
-      {subheading && <p class="lede mx-auto mt-4 max-w-2xl">{subheading}</p>}
+      {subheading && <p class="lede mx-auto mt-5 max-w-2xl lg:text-lg">{subheading}</p>}
     </div>
 
     <!-- Grid: 2x2 on desktop, stacked on mobile -->
-    <div class="grid gap-5 sm:grid-cols-2 lg:gap-6">
+    <div class="grid gap-5 sm:grid-cols-2 lg:gap-8 xl:gap-10">
       {
         items.map((item, index) => {
           const attrs = getImgAttrs(item.src);
@@ -91,7 +91,7 @@ const getImgAttrs = (src: string) => {
               class="expertise-card group relative overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-slate-200/80 transition-all duration-300 hover:shadow-xl hover:ring-brand-200 dark:bg-slate-900 dark:ring-slate-700/60 dark:hover:ring-brand-600/50"
               style={`animation-delay: ${index * 100}ms`}
             >
-              <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9]">
+              <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:aspect-[16/10]">
                 <img
                   src={attrs.src}
                   srcset={attrs.srcSet}
@@ -99,19 +99,19 @@ const getImgAttrs = (src: string) => {
                   alt={item.alt}
                   loading="lazy"
                   decoding="async"
-                  class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                  class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
                 />
                 <div
-                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 via-50% to-slate-950/10"
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 via-55% to-slate-950/5"
                   aria-hidden="true"
                 />
               </div>
 
-              <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6 lg:p-8">
                 <h3 class="text-lg font-bold tracking-tight text-white drop-shadow-lg sm:text-xl lg:text-2xl">
                   {item.title}
                 </h3>
-                <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-white/95 drop-shadow sm:text-base">
+                <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-white/95 drop-shadow sm:text-base lg:mt-3 lg:line-clamp-3">
                   {item.description}
                 </p>
               </div>

@@ -59,7 +59,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
   layout === 'centered' ? (
     <section
       class:list={[
-        'section section-creative border-y py-16 lg:py-20',
+        'section section-creative border-y py-16 lg:py-24',
         background === 'accent'
           ? 'border-white/10 bg-slate-950 text-white'
           : 'border-app section-muted',
@@ -68,7 +68,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
       <div class="container-page">
         <div
           class:list={[
-            'glass-card relative mx-auto max-w-3xl overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-12',
+            'glass-card relative mx-auto max-w-3xl overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-12 lg:max-w-4xl lg:px-16 lg:py-16',
             background === 'accent'
               ? 'border-white/10 bg-slate-900/80'
               : 'bg-white/60 dark:bg-slate-900/60',
@@ -81,7 +81,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
           <div class="relative z-10">
             <h2
               class:list={[
-                'font-serif text-3xl font-bold tracking-tight sm:text-4xl',
+                'font-serif text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl',
                 background === 'accent' ? 'text-white' : 'text-strong',
               ]}
             >
@@ -89,7 +89,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             </h2>
             <p
               class:list={[
-                'mx-auto mt-6 max-w-xl text-lg leading-relaxed',
+                'mx-auto mt-6 max-w-xl text-lg leading-relaxed lg:mt-8 lg:text-xl',
                 background === 'accent' ? 'text-slate-300' : 'text-muted',
               ]}
             >
@@ -129,18 +129,18 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
     <section
       id={id}
       class:list={[
-        'section section-creative scroll-mt-20',
+        'section section-creative scroll-mt-20 lg:py-28',
         tone === 'muted' ? 'section-muted' : '',
       ]}
       aria-label="Get started"
     >
       <div class="container-page">
-        <div class="card relative overflow-hidden p-7 sm:p-10">
-          <div class="relative grid gap-8 md:grid-cols-2 md:items-center">
+        <div class="card relative overflow-hidden p-7 sm:p-10 lg:p-14">
+          <div class="relative grid gap-8 md:grid-cols-2 md:items-center lg:gap-12">
             <div>
               <p class="eyebrow">{eyebrow ?? 'Next step'}</p>
-              <h2 class="heading-2 mt-2">{heading ?? 'Ready to scope your space?'}</h2>
-              <p class="lede">
+              <h2 class="heading-2 mt-2 lg:text-4xl">{heading ?? 'Ready to scope your space?'}</h2>
+              <p class="lede lg:text-lg">
                 {description ??
                   'Preview our checklist and review scope details. When you’re ready, use the phone number above or request a quote from the top menu.'}
               </p>

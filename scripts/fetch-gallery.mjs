@@ -102,11 +102,7 @@ function isRejectedPhoto(p) {
     'biohazard',
     'covid',
     'pandemic',
-    'spraying',
-    'spray',
     'fogging',
-    'sanitizing',
-    'disinfecting',
     'mask',
     'ppe',
   ];
@@ -150,6 +146,7 @@ function isRejectedPhoto(p) {
 function scorePhoto(p) {
   const text = normalizePhotoText(p);
   const good = [
+    // Keep office context present.
     'office',
     'lobby',
     'reception',
@@ -167,12 +164,26 @@ function scorePhoto(p) {
     'partition',
     'restroom',
     'bathroom',
+    'toilet',
     'supply',
     'restock',
+    // Stronger janitorial/commercial-cleaning signals.
+    'janitorial',
     'janitor',
-    'vacuum',
+    'cleaner',
+    'cleaning',
+    'cleaning cart',
+    'cart',
     'mop',
+    'mop bucket',
+    'vacuum',
     'floor',
+    'floor cleaning',
+    'trash',
+    'waste',
+    'paper towel',
+    'soap dispenser',
+    'commercial',
   ];
   let score = 0;
   for (const term of good) {
@@ -199,47 +210,47 @@ async function main() {
   const slots = [
     {
       id: '01',
-      query: 'modern office reception lobby interior tidy',
+      query: 'janitor cleaning office lobby reception floor',
       label: 'Reception / lobby',
     },
     {
       id: '02',
-      query: 'modern conference room table chairs clean',
+      query: 'cleaning conference room commercial office table chairs',
       label: 'Conference room',
     },
     {
       id: '03',
-      query: 'modern restroom sink mirror clean',
+      query: 'janitor cleaning restroom sink mirror commercial',
       label: 'Restroom serviced',
     },
     {
       id: '04',
-      query: 'office pantry snack bar coffee station restocked',
+      query: 'office break room pantry coffee station snacks clean',
       label: 'Snack bar / coffee station',
     },
     {
       id: '05',
-      query: 'office cleaning wiping desk surfaces',
+      query: 'commercial office cleaning wiping surfaces after hours',
       label: 'High-touch focus',
     },
     {
       id: '06',
-      query: 'organized cleaning supplies shelves inventory office',
+      query: 'janitorial cleaning cart supplies commercial',
       label: 'Supplies + inventory',
     },
     {
       id: '07',
-      query: 'modern office workstations clean desks',
+      query: 'cleaning office workstations desks commercial',
       label: 'Workstations',
     },
     {
       id: '08',
-      query: 'cleaning glass partition office interior',
+      query: 'window cleaner cleaning office glass partition',
       label: 'Glass + partitions',
     },
     {
       id: '09',
-      query: 'office carpet vacuum clean',
+      query: 'vacuum cleaning office carpet commercial',
       label: 'Carpet + entry lanes',
     },
   ];

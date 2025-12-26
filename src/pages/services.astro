@@ -35,35 +35,6 @@ const heroImageMobile = getPublicResponsiveImage(
     sizes: '100vw',
   }
 );
-
-const makeHeroImage = (src: string, srcMobile: string, position = '50% 45%') => {
-  const desktop = getPublicResponsiveImage(src, import.meta.env.BASE_URL, { sizes: '100vw' });
-  const mobile = getPublicResponsiveImage(srcMobile, import.meta.env.BASE_URL, { sizes: '100vw' });
-  return {
-    src,
-    srcSet: desktop.srcSet,
-    sizes: desktop.sizes,
-    srcMobile,
-    srcSetMobile: mobile.srcSet,
-    sizesMobile: mobile.sizes,
-    position,
-    alt: 'Commercial cleaning in a professional office space',
-  };
-};
-
-const heroImages = [
-  makeHeroImage(
-    'gallery/services/janitorial-01.jpg',
-    'gallery/services/janitorial-02.jpg',
-    '50% 45%'
-  ),
-  makeHeroImage(
-    'gallery/services/restocking-02.jpg',
-    'gallery/services/restocking-03.jpg',
-    '50% 55%'
-  ),
-  makeHeroImage('gallery/services/detail-02.jpg', 'gallery/services/detail-03.jpg', '50% 45%'),
-];
 ---
 
 <BaseLayout title={title} description={description}>
@@ -81,8 +52,6 @@ const heroImages = [
     imageSrcSetMobile={heroImageMobile.srcSet}
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 45%"
-    images={heroImages}
-    rotateIntervalMs={5000}
   />
 
   <ServicesPro client:visible />

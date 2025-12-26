@@ -2,27 +2,6 @@ import React from 'react';
 import { Spotlight } from './ui/Spotlight';
 import { cn } from '@/lib/utils';
 
-type HeroImage = {
-  /** Background image path relative to `public/` (no leading slash), e.g. "gallery/04.jpg". */
-  src: string;
-  /** Optional responsive srcset for the background image (URLs should already include BASE_URL). */
-  srcSet?: string | undefined;
-  /** Optional sizes for the background image when using srcset. */
-  sizes?: string | undefined;
-
-  /** Optional mobile-only background image path relative to `public/` (no leading slash). */
-  srcMobile?: string;
-  /** Optional mobile-only srcset (URLs should already include BASE_URL). */
-  srcSetMobile?: string | undefined;
-  /** Optional mobile-only sizes when using `srcSetMobile`. */
-  sizesMobile?: string | undefined;
-
-  /** Decorative background: leave empty to hide from screen readers. */
-  alt?: string;
-  /** CSS `object-position` value, e.g. "50% 40%". */
-  position?: string;
-};
-
 interface PageHeroProProps {
   title: string;
   description: string;
@@ -43,11 +22,6 @@ interface PageHeroProProps {
   imageAlt?: string;
   /** CSS `object-position` value, e.g. "50% 40%". */
   imagePosition?: string;
-
-  /** Optional rotating hero images (e.g., 3 per page). When provided, it will rotate every ~5s. */
-  images?: HeroImage[];
-  /** Defaults to 5000ms when using `images`. */
-  rotateIntervalMs?: number;
   className?: string;
   children?: React.ReactNode;
 }
@@ -60,31 +34,6 @@ const toPublicUrl = (src: string) => {
   return `${import.meta.env.BASE_URL}${cleaned}`;
 };
 
-type NavigatorWithConnection = Navigator & {
-  connection?: {
-    saveData?: boolean;
-  };
-};
-
-function canAutoRotate(): boolean {
-  if (typeof window === 'undefined') return false;
-
-  try {
-    if (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches) return false;
-  } catch {
-    // ignore
-  }
-
-  try {
-    const conn = (navigator as NavigatorWithConnection).connection;
-    if (conn?.saveData) return false;
-  } catch {
-    // ignore
-  }
-
-  return true;
-}
-
 export const PageHeroPro = ({
   title,
   description,
@@ -96,81 +45,11 @@ export const PageHeroPro = ({
   imageSizesMobile,
   imageAlt = '',
   imagePosition = '50% 40%',
-  images,
-  rotateIntervalMs = 5000,
   className,
   children,
 }: PageHeroProProps) => {
-  const legacyImage: HeroImage | undefined = imageSrc
-    ? {
-        src: imageSrc,
-        ...(imageSrcSet ? { srcSet: imageSrcSet } : {}),
-        ...(imageSizes ? { sizes: imageSizes } : {}),
-        ...(imageSrcMobile ? { srcMobile: imageSrcMobile } : {}),
-        ...(imageSrcSetMobile ? { srcSetMobile: imageSrcSetMobile } : {}),
-        ...(imageSizesMobile ? { sizesMobile: imageSizesMobile } : {}),
-        ...(imageAlt ? { alt: imageAlt } : {}),
-        ...(imagePosition ? { position: imagePosition } : {}),
-      }
-    : undefined;
-
-  const allImages: HeroImage[] =
-    Array.isArray(images) && images.length ? images : legacyImage ? [legacyImage] : [];
-
-  const [idx, setIdx] = React.useState(0);
-  const rotationEnabled = allImages.length > 1 && canAutoRotate();
-
-  React.useEffect(() => {
-    if (!rotationEnabled) return;
-
-    let timer: number | undefined;
-    const start = () => {
-      if (timer) window.clearInterval(timer);
-      timer = window.setInterval(() => {
-        setIdx((prev) => (prev + 1) % allImages.length);
-      }, rotateIntervalMs);
-    };
-
-    const stop = () => {
-      if (timer) window.clearInterval(timer);
-      timer = undefined;
-    };
-
-    const onVis = () => {
-      if (document.hidden) stop();
-      else start();
-    };
-
-    document.addEventListener('visibilitychange', onVis);
-    start();
-
-    return () => {
-      stop();
-      document.removeEventListener('visibilitychange', onVis);
-    };
-  }, [allImages.length, rotateIntervalMs, rotationEnabled]);
-
-  React.useEffect(() => {
-    if (!rotationEnabled) return;
-    if (allImages.length < 2) return;
-
-    const next = (idx + 1) % allImages.length;
-    const nextImg = allImages[next];
-    if (!nextImg) return;
-    const preload = (src?: string) => {
-      if (!src) return;
-      const img = new Image();
-      img.decoding = 'async';
-      img.src = toPublicUrl(src);
-    };
-    preload(nextImg.src);
-    preload(nextImg.srcMobile);
-  }, [allImages, idx, rotationEnabled]);
-
-  const current = allImages.length ? allImages[Math.min(idx, allImages.length - 1)] : undefined;
-
-  const resolvedImageSrc = current?.src ? toPublicUrl(current.src) : undefined;
-  const resolvedMobileImageSrc = current?.srcMobile ? toPublicUrl(current.srcMobile) : undefined;
+  const resolvedImageSrc = imageSrc ? toPublicUrl(imageSrc) : undefined;
+  const resolvedMobileImageSrc = imageSrcMobile ? toPublicUrl(imageSrcMobile) : undefined;
   const fallbackImageSrc = toPublicUrl('gallery/services/detail-01.jpg');
 
   return (
@@ -182,24 +61,23 @@ export const PageHeroPro = ({
     >
       {resolvedImageSrc ? (
         <div aria-hidden="true" className="absolute inset-0">
-          {resolvedMobileImageSrc || current?.srcSetMobile ? (
+          {resolvedMobileImageSrc || imageSrcSetMobile ? (
             <picture>
               <source
                 media="(max-width: 639px)"
-                srcSet={current?.srcSetMobile ?? resolvedMobileImageSrc}
-                sizes={current?.srcSetMobile ? current?.sizesMobile : undefined}
+                srcSet={imageSrcSetMobile ?? resolvedMobileImageSrc}
+                sizes={imageSrcSetMobile ? imageSizesMobile : undefined}
               />
               <img
-                key={resolvedImageSrc}
                 src={resolvedImageSrc}
-                alt={current?.alt ?? ''}
-                srcSet={current?.srcSet}
-                sizes={current?.srcSet ? current?.sizes : undefined}
+                alt={imageAlt}
+                srcSet={imageSrcSet}
+                sizes={imageSrcSet ? imageSizes : undefined}
                 decoding="async"
                 fetchPriority="high"
                 loading="eager"
                 className={cn('damra-fade-in h-full w-full object-cover')}
-                style={{ objectPosition: current?.position ?? imagePosition }}
+                style={{ objectPosition: imagePosition }}
                 onError={(e) => {
                   const el = e.currentTarget;
                   if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;
@@ -208,16 +86,15 @@ export const PageHeroPro = ({
             </picture>
           ) : (
             <img
-              key={resolvedImageSrc}
               src={resolvedImageSrc}
-              alt={current?.alt ?? ''}
-              srcSet={current?.srcSet}
-              sizes={current?.srcSet ? current?.sizes : undefined}
+              alt={imageAlt}
+              srcSet={imageSrcSet}
+              sizes={imageSrcSet ? imageSizes : undefined}
               decoding="async"
               fetchPriority="high"
               loading="eager"
               className="damra-fade-in h-full w-full object-cover"
-              style={{ objectPosition: current?.position ?? imagePosition }}
+              style={{ objectPosition: imagePosition }}
               onError={(e) => {
                 const el = e.currentTarget;
                 if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;

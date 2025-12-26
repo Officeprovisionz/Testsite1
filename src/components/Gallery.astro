@@ -11,6 +11,8 @@ type Props = {
   heading?: string;
   description?: string;
   showTip?: boolean;
+  /** Optional auto-advance interval (ms) for mobile horizontal gallery browsing. */
+  autoAdvanceMs?: number;
   /** Override the default placeholder gallery items. */
   items?: GalleryItem[];
   /** Render caption blocks below the image or as an overlay on top of the image. */
@@ -33,6 +35,7 @@ const {
   heading = 'Gallery',
   description = 'A quick look at the spaces we support. Replace these placeholders with your own photos.',
   showTip = true,
+  autoAdvanceMs,
   items,
   variant = 'below',
   ctaHref,
@@ -117,6 +120,7 @@ const getImgAttrs = (src: string) => {
     <div
       class="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-3"
       data-gallery
+      data-auto-advance-ms={typeof autoAdvanceMs === 'number' ? String(autoAdvanceMs) : undefined}
     >
       {
         resolvedItems.map((it, idx) => {
@@ -234,9 +238,87 @@ const getImgAttrs = (src: string) => {
       const root = document.querySelector('[data-gallery]');
       if (!root) return;
 
+      // Optional auto-advance for the horizontal (mobile) gallery.
+      // Enabled only when a `data-auto-advance-ms` is present.
+      const autoMsRaw = root.getAttribute('data-auto-advance-ms');
+      const autoMs = autoMsRaw ? Number(autoMsRaw) : 0;
+
+      const prefersReducedMotion = () => {
+        try {
+          return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+        } catch {
+          return false;
+        }
+      };
+
+      const saveDataEnabled = () => {
+        try {
+          const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+          return Boolean(nav.connection?.saveData);
+        } catch {
+          return false;
+        }
+      };
+
+      const isHorizScrollable = () => {
+        const el = root as HTMLElement;
+        return el.scrollWidth > el.clientWidth + 24;
+      };
+
       const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('a[data-gallery-item]'));
       const dialog = document.querySelector('dialog[data-lightbox]') as HTMLDialogElement | null;
       if (!dialog) return;
+
+      if (Number.isFinite(autoMs) && autoMs > 0 && !prefersReducedMotion() && !saveDataEnabled()) {
+        let autoIndex = 0;
+        let timer: number | undefined;
+        let resumeTimer: number | undefined;
+
+        const stop = () => {
+          if (typeof timer === 'number') window.clearInterval(timer);
+          timer = undefined;
+        };
+
+        const scheduleResume = () => {
+          if (typeof resumeTimer === 'number') window.clearTimeout(resumeTimer);
+          resumeTimer = window.setTimeout(() => {
+            start();
+          }, 8000);
+        };
+
+        const step = () => {
+          if (!isHorizScrollable()) return;
+          if (!links.length) return;
+          if (document.hidden) return;
+
+          autoIndex = (autoIndex + 1) % links.length;
+          const el = links[autoIndex];
+          el?.scrollIntoView?.({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        };
+
+        const start = () => {
+          stop();
+          if (!isHorizScrollable()) return;
+          timer = window.setInterval(step, Math.max(1500, autoMs));
+        };
+
+        // Pause auto-advance on user interaction (they're browsing!).
+        const onUserIntent = () => {
+          stop();
+          scheduleResume();
+        };
+
+        root.addEventListener('pointerdown', onUserIntent, { passive: true });
+        root.addEventListener('touchstart', onUserIntent, { passive: true });
+        root.addEventListener('wheel', onUserIntent, { passive: true });
+        document.addEventListener('visibilitychange', () => {
+          if (document.hidden) stop();
+          else start();
+        });
+
+        // Start after first paint.
+        window.setTimeout(start, 600);
+      }
 
       const img = dialog.querySelector('[data-lightbox-img]') as HTMLImageElement | null;
       const caption = dialog.querySelector('[data-lightbox-caption]') as HTMLElement | null;

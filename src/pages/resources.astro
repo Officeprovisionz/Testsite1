@@ -7,7 +7,6 @@ import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
-import { RotatingImage } from '@/components/ui/RotatingImage';
 
 const title = `Resources | ${siteConfig.brand.name}`;
 const description =
@@ -31,35 +30,6 @@ const heroImageMobile = getPublicResponsiveImage(
   }
 );
 
-const makeHeroImage = (src: string, srcMobile: string, position = '50% 45%') => {
-  const desktop = getPublicResponsiveImage(src, import.meta.env.BASE_URL, { sizes: '100vw' });
-  const mobile = getPublicResponsiveImage(srcMobile, import.meta.env.BASE_URL, { sizes: '100vw' });
-  return {
-    src,
-    srcSet: desktop.srcSet,
-    sizes: desktop.sizes,
-    srcMobile,
-    srcSetMobile: mobile.srcSet,
-    sizesMobile: mobile.sizes,
-    position,
-    alt: 'Breakroom and supplies restocking in an office',
-  };
-};
-
-const heroImages = [
-  makeHeroImage(
-    'gallery/services/restocking-02.jpg',
-    'gallery/services/restocking-03.jpg',
-    '50% 45%'
-  ),
-  makeHeroImage(
-    'gallery/services/janitorial-02.jpg',
-    'gallery/services/janitorial-03.jpg',
-    '50% 45%'
-  ),
-  makeHeroImage('gallery/services/detail-02.jpg', 'gallery/services/detail-03.jpg', '50% 50%'),
-];
-
 const resources = [
   {
     eyebrow: 'Checklist',
@@ -67,11 +37,6 @@ const resources = [
     desc: 'Use for walkthroughs, vendor comparisons, and ongoing quality checks.',
     href: href('checklist/'),
     cta: 'View checklist',
-    media: [
-      'gallery/services/janitorial-01.jpg',
-      'gallery/services/janitorial-02.jpg',
-      'gallery/services/janitorial-03.jpg',
-    ],
   },
   {
     eyebrow: 'Scope',
@@ -79,11 +44,6 @@ const resources = [
     desc: 'How scope works: walkthrough, frequency, add-ons, and service levels.',
     href: href('pricing/'),
     cta: 'See scope',
-    media: [
-      'gallery/services/facilities-01.jpg',
-      'gallery/services/facilities-02.jpg',
-      'gallery/services/facilities-03.jpg',
-    ],
   },
   {
     eyebrow: 'Proof',
@@ -91,11 +51,6 @@ const resources = [
     desc: 'Examples and standards—what we mean by “done”.',
     href: href('about/#proof'),
     cta: 'See proof',
-    media: [
-      'gallery/services/detail-01.jpg',
-      'gallery/services/detail-02.jpg',
-      'gallery/services/detail-03.jpg',
-    ],
   },
   {
     eyebrow: 'Services',
@@ -103,11 +58,6 @@ const resources = [
     desc: 'Cleaning, supplies/restocking, facilities support, and specialty add-ons.',
     href: href('services/'),
     cta: 'Explore services',
-    media: [
-      'gallery/services/restocking-01.jpg',
-      'gallery/services/restocking-02.jpg',
-      'gallery/services/restocking-03.jpg',
-    ],
   },
 ];
 ---
@@ -127,8 +77,6 @@ const resources = [
     imageSrcSetMobile={heroImageMobile.srcSet}
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 45%"
-    images={heroImages}
-    rotateIntervalMs={5000}
   />
 
   <section class="section">
@@ -151,13 +99,6 @@ const resources = [
                 class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
               />
               <div class="relative">
-                <RotatingImage
-                  client:visible
-                  sources={(r.media ?? []).map((src) => ({ src, alt: '' }))}
-                  intervalMs={5000}
-                  className="mb-5 h-32 w-full rounded-2xl"
-                  overlayClassName="bg-gradient-to-t from-slate-950/40 via-slate-950/10 to-transparent"
-                />
                 <p class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400">
                   {r.eyebrow}
                 </p>

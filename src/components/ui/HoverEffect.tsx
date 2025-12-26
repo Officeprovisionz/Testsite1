@@ -11,7 +11,6 @@ export const HoverEffect = ({
     title: string;
     description: string;
     link?: string;
-    media?: React.ReactNode;
   }[];
   className?: string;
 }) => {
@@ -53,7 +52,6 @@ export const HoverEffect = ({
               aria-label={item.title}
             >
               <Card isHovered={hoveredIndex === idx}>
-                {item.media ? <div className="mb-4">{item.media}</div> : null}
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
                 <div className="mt-4 flex items-center text-sm font-medium text-brand-600 transition-colors group-hover:text-brand-700 dark:text-brand-400">
@@ -64,7 +62,6 @@ export const HoverEffect = ({
             </a>
           ) : (
             <Card isHovered={hoveredIndex === idx}>
-              {item.media ? <div className="mb-4">{item.media}</div> : null}
               <CardTitle>{item.title}</CardTitle>
               <CardDescription>{item.description}</CardDescription>
             </Card>

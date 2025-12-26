@@ -2,20 +2,13 @@
 import '@/styles/global.css';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
-import StickyActions from '@/components/StickyActions.astro';
 
 type Props = {
   title?: string;
   description?: string;
-  /** Disable the sticky bottom actions on this page. */
-  disableStickyActions?: boolean;
 };
 
-const {
-  title = siteConfig.seo.title,
-  description = siteConfig.seo.description,
-  disableStickyActions = false,
-} = Astro.props;
+const { title = siteConfig.seo.title, description = siteConfig.seo.description } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 
@@ -267,8 +260,5 @@ const jsonLd = (() => {
     </main>
 
     <slot name="footer" />
-    <slot name="sticky">
-      <StickyActions hidden={disableStickyActions} />
-    </slot>
   </body>
 </html>

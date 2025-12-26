@@ -361,15 +361,10 @@
     outline-offset: 3px;
   }
 
-  :root {
-    /* Reserved space for the sticky bottom actions bar (set by StickyActions.astro). */
-    --sticky-actions-pad: 0px;
-  }
-
   main#main-content {
-    /* Prevent the sticky CTA bar from covering content on mobile.
+    /* Keep iOS safe-area padding (home indicator) without relying on a removed sticky CTA bar.
        `!important` beats the Tailwind `pb-0` utility used in layout markup. */
-    padding-bottom: max(var(--sticky-actions-pad), env(safe-area-inset-bottom)) !important;
+    padding-bottom: env(safe-area-inset-bottom) !important;
   }
 
   a {
@@ -639,21 +634,6 @@
   .hero-splash > * {
     position: relative;
     z-index: 1;
-  }
-
-  /* --- Mobile sticky actions behavior --- */
-  :root[data-scroll-lock='true'] [data-sticky-actions] {
-    display: none;
-  }
-
-  :root[data-modal-open='true'] [data-sticky-actions] {
-    display: none;
-  }
-
-  [data-sticky-actions][data-hidden='true'] {
-    opacity: 0;
-    transform: translateY(14px);
-    pointer-events: none;
   }
 
   /* Slightly darker in dark mode for that “premium” hero feel */
@@ -1018,7 +998,7 @@
   }
 
   .mobile-menu-panel {
-    @apply fixed right-3 w-[min(20rem,calc(100vw-1.5rem))] border;
+    @apply fixed right-3 w-[min(18rem,calc(100vw-1.5rem))] border;
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     border-radius: var(--radius-card);

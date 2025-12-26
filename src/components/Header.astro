@@ -15,6 +15,8 @@ const base = import.meta.env.BASE_URL;
 const href = makeHref(base);
 const isActive = makeIsActive(Astro.url.pathname, base);
 const logoMarkSrc = `${base}brand/logo-mark.svg`;
+const logoOrbSrc = `${base}brand/logo-orb.svg`;
+const logoSrc = transparent ? logoOrbSrc : logoMarkSrc;
 
 const navItems = [
   { label: 'Services', href: href('services/') },
@@ -39,16 +41,18 @@ const navItems = [
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
       <img
-        src={logoMarkSrc}
+        src={logoSrc}
         alt=""
         width="28"
         height="28"
         loading="eager"
         decoding="async"
         class:list={[
-          'brand-mark h-7 w-7 drop-shadow-sm',
-          // Ensure mark stays visible over hero imagery.
-          transparent ? 'brightness-0 invert' : '',
+          'brand-mark drop-shadow-sm',
+          // Ensure the mark stays readable over hero imagery without destroying SVG gradients.
+          transparent
+            ? 'rounded-xl bg-white/90 p-1 shadow-sm ring-1 ring-white/25 backdrop-blur-sm'
+            : '',
         ]}
       />
       <span
@@ -158,7 +162,7 @@ const navItems = [
           aria-label="Menu"
           aria-modal="true"
         >
-          <div class="flex items-center justify-between gap-3 border-b border-white/10 p-4">
+          <div class="flex items-center justify-between gap-3 border-b border-white/10 p-3">
             <p class="text-strong text-sm font-semibold">Menu</p>
             <button type="button" class="icon-btn" aria-label="Close menu" data-menu-close>
               <svg
@@ -177,13 +181,13 @@ const navItems = [
               </svg>
             </button>
           </div>
-          <nav class="grid gap-2 p-4" aria-label="Mobile">
+          <nav class="grid gap-1 p-3" aria-label="Mobile">
             {
               navItems.map((item) => (
                 <a
                   href={item.href}
                   class:list={[
-                    'block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-brand-300',
+                    'block rounded-lg px-3 py-2.5 text-base font-medium transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-brand-300',
                     isActive(item.href)
                       ? 'bg-brand-50 text-brand-700 dark:bg-white/10 dark:text-brand-300'
                       : 'text-muted',
@@ -195,10 +199,10 @@ const navItems = [
               ))
             }
           </nav>
-          <div class="grid grid-cols-2 gap-4 border-t border-white/10 p-4">
+          <div class="grid grid-cols-2 gap-2 border-t border-white/10 p-3">
             <button
               type="button"
-              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-3 py-2.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
               data-theme-toggle
               aria-label="Change theme"
             >
@@ -207,7 +211,7 @@ const navItems = [
             </button>
             <button
               type="button"
-              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
+              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-3 py-2.5 text-xs font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
               data-mode-toggle
               aria-label="Change color mode"
             >
@@ -549,10 +553,5 @@ const navItems = [
   header.header-transparent:not(.is-scrolled) {
     background-color: transparent;
     border-color: transparent;
-  }
-
-  header.header-transparent:not(.is-scrolled) .brand-mark {
-    background-color: white;
-    color: rgb(15 23 42); /* slate-900 */
   }
 </style>

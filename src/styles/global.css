@@ -102,20 +102,20 @@
   /* Forced dark mode */
   :root[data-mode='dark'] {
     color-scheme: dark;
-    --color-bg: 10 10 12; /* Deep dark */
-    --color-surface: 15 23 42;
-    --color-surface-muted: 17 24 39;
-    --color-border: 51 65 85;
-    --color-text: 241 245 249;
-    /* Slightly brighter muted text in dark mode for readability */
-    --color-text-muted: 165 180 201;
+    /* Dark theme: higher contrast, less muddy, and more consistent with slate-950 meta theme color. */
+    --color-bg: 2 6 23;
+    --color-surface: 10 16 33;
+    --color-surface-muted: 7 12 26;
+    --color-border: 44 56 80;
+    --color-text: 248 250 252;
+    --color-text-muted: 203 213 225;
     --color-text-subtle: 148 163 184;
-    --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
+    --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.6);
 
     --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-hover: rgba(255, 255, 255, 0.15);
-    --glass-bg-a: rgba(0, 0, 0, 0.2);
-    --glass-bg-b: rgba(0, 0, 0, 0.4);
+    --glass-border-hover: rgba(255, 255, 255, 0.16);
+    --glass-bg-a: rgb(var(--color-surface) / 0.22);
+    --glass-bg-b: rgb(var(--color-surface) / 0.42);
     --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
     --glass-shadow-strong: 0 36px 100px -56px rgb(0 0 0 / 0.85);
 
@@ -126,8 +126,8 @@
     --card-foreground: 210 40% 98%;
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
-    --primary: 199 89% 48%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 221 83% 60%;
+    --primary-foreground: 210 40% 98%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -138,26 +138,26 @@
     --destructive-foreground: 210 40% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 199 89% 48%;
+    --ring: 221 83% 60%;
   }
 
   /* Auto mode: follow system preference unless forced to light */
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) {
       color-scheme: dark;
-      --color-bg: 10 10 12;
-      --color-surface: 15 23 42;
-      --color-surface-muted: 17 24 39;
-      --color-border: 51 65 85;
-      --color-text: 241 245 249;
-      --color-text-muted: 165 180 201;
+      --color-bg: 2 6 23;
+      --color-surface: 10 16 33;
+      --color-surface-muted: 7 12 26;
+      --color-border: 44 56 80;
+      --color-text: 248 250 252;
+      --color-text-muted: 203 213 225;
       --color-text-subtle: 148 163 184;
-      --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
+      --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.6);
 
       --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-border-hover: rgba(255, 255, 255, 0.15);
-      --glass-bg-a: rgba(0, 0, 0, 0.2);
-      --glass-bg-b: rgba(0, 0, 0, 0.4);
+      --glass-border-hover: rgba(255, 255, 255, 0.16);
+      --glass-bg-a: rgb(var(--color-surface) / 0.22);
+      --glass-bg-b: rgb(var(--color-surface) / 0.42);
       --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
       --glass-shadow-strong: 0 36px 100px -56px rgb(0 0 0 / 0.85);
     }
@@ -180,6 +180,10 @@
     --color-brand-800: 6 95 70;
     --color-brand-900: 6 78 59;
     --color-brand-950: 2 44 34;
+
+    /* Keep shadcn primary/ring aligned with the selected theme. */
+    --primary: 160 84% 36%;
+    --ring: 160 84% 36%;
   }
 
   :root[data-theme='slate'] {
@@ -194,6 +198,36 @@
     --color-brand-800: 30 41 59;
     --color-brand-900: 15 23 42;
     --color-brand-950: 2 6 23;
+
+    --primary: 215 16% 44%;
+    --ring: 215 16% 44%;
+  }
+
+  /* Theme variants (dark-mode tuning). */
+  :root[data-mode='dark'][data-theme='emerald'] {
+    --primary: 160 84% 44%;
+    --ring: 160 84% 44%;
+    --primary-foreground: 210 40% 98%;
+  }
+
+  :root[data-mode='dark'][data-theme='slate'] {
+    --primary: 215 20% 62%;
+    --ring: 215 20% 62%;
+    --primary-foreground: 210 40% 98%;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-mode='light'])[data-theme='emerald'] {
+      --primary: 160 84% 44%;
+      --ring: 160 84% 44%;
+      --primary-foreground: 210 40% 98%;
+    }
+
+    :root:not([data-mode='light'])[data-theme='slate'] {
+      --primary: 215 20% 62%;
+      --ring: 215 20% 62%;
+      --primary-foreground: 210 40% 98%;
+    }
   }
 
   html {
@@ -904,8 +938,8 @@
 
   .app-bar {
     /* Glass overlay at top of page */
-    background-color: rgba(255, 255, 255, 0.02);
-    border-color: rgba(255, 255, 255, 0.08);
+    background-color: rgb(var(--color-surface) / 0.04);
+    border-color: rgb(var(--color-border) / 0.35);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
   }
@@ -918,22 +952,22 @@
   }
 
   header[data-site-header].is-scrolled.app-bar {
-    background-color: rgba(255, 255, 255, 0.65);
-    border-color: rgba(255, 255, 255, 0.2);
+    background-color: rgb(var(--color-surface) / 0.86);
+    border-color: rgb(var(--color-border) / 0.55);
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--shadow-soft);
   }
 
   :root[data-mode='dark'] .app-bar {
-    background-color: rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.05);
+    background-color: rgb(var(--color-bg) / 0.35);
+    border-color: rgb(var(--color-border) / 0.45);
   }
 
   :root[data-mode='dark'] header[data-site-header].is-scrolled.app-bar {
-    background-color: rgba(15, 23, 42, 0.65);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.3);
+    background-color: rgb(var(--color-surface) / 0.8);
+    border-color: rgb(var(--color-border) / 0.55);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
   }
 
   .menu-link {
@@ -956,21 +990,21 @@
   }
 
   .footer-surface {
-    background: rgba(255, 255, 255, 0.02);
+    background: rgb(var(--color-surface) / 0.03);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: 1px solid rgb(var(--color-border) / 0.45);
   }
 
   :root[data-mode='dark'] .footer-surface {
-    background: rgba(0, 0, 0, 0.2);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgb(var(--color-surface) / 0.12);
+    border-top: 1px solid rgb(var(--color-border) / 0.5);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .footer-surface {
-      background: rgba(0, 0, 0, 0.2);
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgb(var(--color-surface) / 0.12);
+      border-top: 1px solid rgb(var(--color-border) / 0.5);
     }
   }
 

@@ -127,7 +127,6 @@ export function ServicesPro() {
 
   const renderHeader = (title: string) => {
     const img = headerImageByTitle[title];
-    const icon = icons[title] || <Sparkles className="h-6 w-6 text-brand-500" />;
 
     return (
       <div className="relative flex h-32 w-full flex-1 items-center justify-center overflow-hidden rounded-xl border border-brand-100/50 bg-slate-50 dark:border-brand-800/30 dark:bg-slate-950/30 sm:h-28 md:h-24">
@@ -139,10 +138,6 @@ export function ServicesPro() {
           aria-hidden="true"
           className="absolute inset-0 bg-gradient-to-br from-white/65 via-white/40 to-transparent dark:from-slate-950/70 dark:via-slate-950/45"
         />
-
-        <div className="relative rounded-xl bg-white/85 p-3 shadow-sm ring-1 ring-brand-100/60 backdrop-blur-sm dark:bg-slate-900/70 dark:ring-brand-800/30">
-          {icon}
-        </div>
       </div>
     );
   };

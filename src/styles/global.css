@@ -65,10 +65,10 @@
     --color-bg: 255 255 255;
     --color-surface: 255 255 255;
     --color-surface-muted: 250 250 249; /* #FAFAF9 */
-    --color-border: 231 229 228; /* stone-200-ish */
-    --color-text: 10 10 10; /* #0A0A0A */
-    --color-text-muted: 64 64 64; /* #404040 */
-    --color-text-subtle: 82 82 82; /* #525252 */
+    --color-border: 214 211 209; /* stone-300 - slightly darker */
+    --color-text: 23 23 23; /* #171717 - darker for max contrast */
+    --color-text-muted: 38 38 38; /* #262626 - much darker for readability */
+    --color-text-subtle: 64 64 64; /* #404040 */
 
     /* Shadcn UI Variables (Mapped to Brand - Teal #00B4A6) */
     --background: 0 0% 100%;
@@ -84,7 +84,7 @@
     --secondary-foreground: 0 0% 4%;
     --muted: 40 6% 97%;
     /* High contrast muted foreground for readability */
-    --muted-foreground: 0 0% 35%;
+    --muted-foreground: 0 0% 23%;
     --accent: 40 6% 97%;
     --accent-foreground: 0 0% 4%;
     --destructive: 0 72% 51%;

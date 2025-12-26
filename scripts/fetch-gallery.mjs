@@ -83,6 +83,102 @@ async function searchPexels({ apiKey, query, perPage = 30, page = 1 }) {
   });
 }
 
+function normalizePhotoText(p) {
+  return [p?.alt, p?.url, p?.photographer].filter(Boolean).join(' ').toLowerCase();
+}
+
+function isRejectedPhoto(p) {
+  const text = normalizePhotoText(p);
+
+  // Avoid “PPE / hazmat / COVID-era disinfecting” vibes.
+  const banned = [
+    'personal protective equipment',
+    'protective equipment',
+    'protective suit',
+    'hazmat',
+    'respirator',
+    'biohazard',
+    'covid',
+    'pandemic',
+    'spraying',
+    'spray',
+    'fogging',
+    'sanitizing',
+    'disinfecting',
+    'mask',
+    'ppe',
+  ];
+
+  // Avoid obviously off-theme environments for an office-cleaning brand.
+  // Note: keep these specific to avoid false positives like "workstation".
+  const offTheme = [
+    'train',
+    'train station',
+    'subway',
+    'platform',
+    'railway',
+    'bar stool',
+    'barstool',
+    'bar stools',
+  ];
+
+  // Avoid “restocking/office” results that are actually generic gadget/paperwork stock shots.
+  const irrelevant = [
+    'macbook',
+    'laptop',
+    'computer',
+    'monitor',
+    'smartphone',
+    'iphone',
+    'tablet',
+    'keyboard',
+    'mouse',
+    'business plan',
+    'business-plan',
+    'spreadsheet',
+    'paperwork',
+    'notes',
+    'notebook',
+    'pencil',
+  ];
+
+  return [...banned, ...offTheme, ...irrelevant].some((k) => text.includes(k));
+}
+
+function scorePhoto(p) {
+  const text = normalizePhotoText(p);
+  const good = [
+    'office',
+    'lobby',
+    'reception',
+    'conference',
+    'meeting',
+    'breakroom',
+    'pantry',
+    'kitchen',
+    'kitchenette',
+    'coffee',
+    'snack',
+    'workstation',
+    'desk',
+    'glass',
+    'partition',
+    'restroom',
+    'bathroom',
+    'supply',
+    'restock',
+    'janitor',
+    'vacuum',
+    'mop',
+    'floor',
+  ];
+  let score = 0;
+  for (const term of good) {
+    if (text.includes(term)) score += 1;
+  }
+  return score;
+}
+
 async function main() {
   await loadEnvFileIfPresent(path.join(ROOT, '.env'));
 
@@ -101,55 +197,55 @@ async function main() {
   const slots = [
     {
       id: '01',
-      query: 'modern office reception lobby interior clean',
+      query: 'modern office reception lobby interior tidy',
       label: 'Reception / lobby',
     },
     {
       id: '02',
-      query: 'conference room office interior table clean',
+      query: 'modern conference room table chairs clean',
       label: 'Conference room',
     },
     {
       id: '03',
-      query: 'office restroom clean modern',
+      query: 'modern restroom sink mirror clean',
       label: 'Restroom serviced',
     },
     {
       id: '04',
-      query: 'office breakroom kitchenette clean counters',
-      label: 'Breakroom / kitchenette',
+      query: 'office pantry snack bar coffee station restocked',
+      label: 'Snack bar / coffee station',
     },
     {
       id: '05',
-      query: 'office cleaning high touch surfaces door handles',
+      query: 'office cleaning wiping desk surfaces',
       label: 'High-touch focus',
     },
     {
       id: '06',
-      query: 'office floor cleaning mopping commercial',
-      label: 'Floors / high-traffic lanes',
+      query: 'organized cleaning supplies shelves inventory office',
+      label: 'Supplies + inventory',
     },
     {
       id: '07',
-      query: 'office desk workspace clean modern',
+      query: 'modern office workstations clean desks',
       label: 'Workstations',
     },
     {
       id: '08',
-      query: 'office glass partition cleaning',
+      query: 'cleaning glass partition office interior',
       label: 'Glass + partitions',
     },
     {
       id: '09',
-      query: 'vacuuming carpet office cleaning',
+      query: 'office carpet vacuum clean',
       label: 'Carpet + entry lanes',
     },
   ];
 
-  const seenPhotographers = new Set();
+  const seenGalleryPhotographers = new Set();
   const attributions = [];
 
-  const pickBestForSlot = async ({ query }) => {
+  const pickBestForSlot = async ({ query, seen }) => {
     // Try a couple pages to get variety, but keep it fast.
     const pools = [];
     for (const page of [1, 2]) {
@@ -161,15 +257,32 @@ async function main() {
     const unique = uniqBy(pools, (p) => String(p?.id));
     const withSrc = unique.filter((p) => p?.src?.original || p?.src?.large2x || p?.src?.large);
 
+    // Prefer on-theme photos and avoid obvious mismatches.
+    const filtered = withSrc.filter((p) => !isRejectedPhoto(p));
+    const candidates = filtered.length ? filtered : withSrc;
+    candidates.sort((a, b) => scorePhoto(b) - scorePhoto(a));
+
+    // Prefer results that match at least a couple “on-theme” terms when available.
+    const strong = candidates.filter((p) => scorePhoto(p) >= 2);
+    const ranked = strong.length ? strong : candidates;
+
     // Prefer a unique photographer per slot to avoid a “single shoot” feel.
-    for (const p of withSrc) {
+    if (seen && typeof seen.has === 'function') {
+      for (const p of ranked) {
+        const name = (p?.photographer ?? '').trim();
+        if (!name) continue;
+        if (seen.has(name)) continue;
+        return p;
+      }
+    }
+
+    for (const p of ranked) {
       const name = (p?.photographer ?? '').trim();
       if (!name) continue;
-      if (seenPhotographers.has(name)) continue;
       return p;
     }
 
-    return withSrc[0];
+    return ranked[0];
   };
 
   const writePhoto = async ({ photo, outPath }) => {
@@ -188,11 +301,11 @@ async function main() {
 
   for (let i = 0; i < slots.length; i++) {
     const slot = slots[i];
-    const p = await pickBestForSlot(slot);
+    const p = await pickBestForSlot({ query: slot.query, seen: seenGalleryPhotographers });
     if (!p) throw new Error(`No photos returned from Pexels for query: ${slot.query}`);
 
     const photographerName = (p?.photographer ?? '').trim();
-    if (photographerName) seenPhotographers.add(photographerName);
+    if (photographerName) seenGalleryPhotographers.add(photographerName);
 
     const n = slot.id;
 
@@ -226,25 +339,41 @@ async function main() {
     {
       key: 'janitorial',
       label: 'Services: Janitorial & recurring cleaning',
-      query: 'janitor cart office cleaning',
+      queries: [
+        'commercial office lobby vacuum cleaning',
+        'empty office lobby clean tidy',
+        'office cleaning crew vacuuming',
+      ],
       count: 3,
     },
     {
       key: 'detail',
       label: 'Services: Deep / detail cleaning',
-      query: 'disinfecting office conference room cleaning',
+      queries: [
+        'office carpet cleaning vacuum',
+        'floor scrubber cleaning commercial office',
+        'office cleaning after hours empty',
+      ],
       count: 3,
     },
     {
       key: 'restocking',
       label: 'Services: Supplies & restocking',
-      query: 'restocking paper towels soap office supplies',
+      queries: [
+        'office coffee station restocked',
+        'office pantry snack bar restocking',
+        'restocking paper towels soap dispenser supplies',
+      ],
       count: 3,
     },
     {
       key: 'facilities',
       label: 'Services: Facilities support',
-      query: 'mopping office floor cleaning',
+      queries: [
+        'office maintenance tools',
+        'changing light bulb office maintenance',
+        'office handyman repairs',
+      ],
       count: 3,
     },
   ];
@@ -253,12 +382,17 @@ async function main() {
   const serviceTotal = serviceSets.reduce((sum, s) => sum + (s.count ?? 0), 0);
 
   for (const set of serviceSets) {
+    const seenServicePhotographers = new Set();
     for (let j = 1; j <= set.count; j++) {
-      const p = await pickBestForSlot({ query: set.query });
-      if (!p) throw new Error(`No photos returned from Pexels for query: ${set.query}`);
+      const query = Array.isArray(set.queries)
+        ? set.queries[(j - 1) % set.queries.length]
+        : set.query;
+
+      const p = await pickBestForSlot({ query, seen: seenServicePhotographers });
+      if (!p) throw new Error(`No photos returned from Pexels for query: ${query}`);
 
       const photographerName = (p?.photographer ?? '').trim();
-      if (photographerName) seenPhotographers.add(photographerName);
+      if (photographerName) seenServicePhotographers.add(photographerName);
 
       const idx = String(j).padStart(2, '0');
       const outRel = `gallery/services/${set.key}-${idx}.jpg`;
@@ -274,7 +408,7 @@ async function main() {
         [
           outRel,
           `Slot: ${set.label}`,
-          `Query: ${set.query}`,
+          `Query: ${query}`,
           `Pexels photo by ${photographer}`,
           photographerUrl ? `Photographer: ${photographerUrl}` : '',
           photoUrl ? `Photo: ${photoUrl}` : '',

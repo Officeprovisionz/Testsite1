@@ -19,9 +19,28 @@ const {
 
 const faqs = await getCollection('faqs');
 const items = faqs.map((f) => f.data);
+
+const faqJsonLd = (() => {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((it) => ({
+      '@type': 'Question',
+      name: it.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: it.answer,
+      },
+    })),
+  };
+
+  // Prevent accidental "</script>" injection via safe escaping.
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+})();
 ---
 
 <section id={id} class="section scroll-mt-20">
+  <script type="application/ld+json" is:inline set:html={faqJsonLd} />
   <div class="container-page relative">
     <SectionHeader eyebrow="FAQ" heading={heading} description={description} />
 

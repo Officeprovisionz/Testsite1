@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
 import { ServicesPro } from '@/components/ServicesPro';
+import BridgeDivider from '@/components/BridgeDivider.astro';
 import Gallery from '@/components/Gallery.astro';
 import CTAStrip from '@/components/CTAStrip.astro';
 import type { GalleryItem } from '@/data/gallery';
@@ -65,6 +66,8 @@ const proofGallery: GalleryItem[] = [
 <BaseLayout>
   <Header slot="header" transparent={true} />
   <HeroPro client:load />
+
+  <BridgeDivider />
 
   <ServicesPro client:visible />
 

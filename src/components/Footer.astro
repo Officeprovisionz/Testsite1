@@ -14,8 +14,8 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
 <footer
   class="border-t border-brand-100/50 bg-gradient-to-b from-white to-brand-50/30 dark:border-brand-800/30 dark:from-slate-900 dark:to-slate-950"
 >
-  <div class="container-page py-16">
-    <div class="grid gap-12 md:grid-cols-4">
+  <div class="container-page pb-24 pt-14 md:py-16">
+    <div class="grid gap-10 md:grid-cols-4 md:gap-12">
       <!-- Brand Column -->
       <div class="md:col-span-1">
         <a
@@ -37,9 +37,9 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
         <p class="mt-3 text-sm leading-relaxed text-muted">{siteConfig.brand.tagline}</p>
         <p class="text-subtle mt-4 text-sm">Serving {siteConfig.brand.city}</p>
 
-        <div class="mt-6 space-y-2">
+        <div class="mt-6 space-y-1">
           <a
-            class="flex items-center gap-2 text-sm text-muted transition-colors hover:text-brand-600"
+            class="-mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
             href={telHref}
           >
             <svg
@@ -58,7 +58,7 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
             {siteConfig.contact.phoneDisplay}
           </a>
           <a
-            class="flex items-center gap-2 text-sm text-muted transition-colors hover:text-brand-600"
+            class="-mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
             href={mailtoHref}
           >
             <svg
@@ -79,8 +79,102 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
         </div>
       </div>
 
+      <!-- Mobile: collapsible link groups -->
+      <div class="md:hidden">
+        <div class="mt-2 grid gap-3">
+          <details
+            class="rounded-2xl border border-brand-100/60 bg-white/70 p-4 shadow-sm backdrop-blur-sm dark:border-brand-800/30 dark:bg-slate-950/30"
+          >
+            <summary
+              class="text-strong flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold"
+            >
+              Services
+              <span class="text-subtle">+</span>
+            </summary>
+            <nav class="mt-3 grid gap-1" aria-label="Footer Services">
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('services/')}>Overview</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('services/#specialty')}>Specialty + add-ons</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('pricing/')}>Scope & Pricing</a
+              >
+            </nav>
+          </details>
+
+          <details
+            class="rounded-2xl border border-brand-100/60 bg-white/70 p-4 shadow-sm backdrop-blur-sm dark:border-brand-800/30 dark:bg-slate-950/30"
+          >
+            <summary
+              class="text-strong flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold"
+            >
+              Company
+              <span class="text-subtle">+</span>
+            </summary>
+            <nav class="mt-3 grid gap-1" aria-label="Footer Company">
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('about/')}>About</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('industries/')}>Industries</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('resources/')}>Resources</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('checklist/')}>Checklist</a
+              >
+              <a
+                class="-mx-2 rounded-lg px-2 py-2 text-sm text-muted transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-slate-900/50 dark:hover:text-brand-200"
+                href={href('contact/')}>Contact</a
+              >
+            </nav>
+          </details>
+
+          <details
+            class="rounded-2xl border border-brand-100/60 bg-white/70 p-4 shadow-sm backdrop-blur-sm dark:border-brand-800/30 dark:bg-slate-950/30"
+          >
+            <summary
+              class="text-strong flex cursor-pointer list-none items-center justify-between gap-3 text-sm font-semibold"
+            >
+              Hours
+              <span class="text-subtle">+</span>
+            </summary>
+            <ul class="mt-3 space-y-1.5 text-sm text-muted">
+              {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
+            </ul>
+
+            <a
+              href="#top"
+              class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-brand-200/60 bg-white/60 px-4 py-2.5 text-sm font-medium text-brand-700 shadow-sm backdrop-blur-sm transition-all hover:border-brand-300 hover:bg-white hover:shadow-md dark:border-brand-700/40 dark:bg-slate-800/60 dark:text-brand-300 dark:hover:bg-slate-800"
+            >
+              <svg
+                class="h-4 w-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"
+                ></path>
+              </svg>
+              Back to top
+            </a>
+          </details>
+        </div>
+      </div>
+
       <!-- Services Column -->
-      <nav class="space-y-3" aria-label="Footer Services">
+      <nav class="hidden space-y-3 md:block" aria-label="Footer Services">
         <p
           class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400"
         >
@@ -101,7 +195,7 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
       </nav>
 
       <!-- Company Column -->
-      <nav class="space-y-3" aria-label="Footer Company">
+      <nav class="hidden space-y-3 md:block" aria-label="Footer Company">
         <p
           class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400"
         >
@@ -130,7 +224,7 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
       </nav>
 
       <!-- Hours Column -->
-      <div>
+      <div class="hidden md:block">
         <p
           class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400"
         >
@@ -160,12 +254,13 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
     </div>
 
     <div
-      class="mt-12 flex flex-col gap-4 border-t border-brand-100/50 pt-8 dark:border-brand-800/30 sm:flex-row sm:items-center sm:justify-between"
+      class="mt-10 flex flex-col gap-3 border-t border-brand-100/50 pt-6 dark:border-brand-800/30 sm:mt-12 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:pt-8"
     >
       <p class="text-subtle text-xs">
         © {new Date().getFullYear()}
         {siteConfig.brand.name}. All rights reserved.
       </p>
+      <p class="text-subtle text-xs">Bay Area • 37.77°N • 122.42°W</p>
       <p class="text-subtle text-xs">Checklist-driven service. Clear scope. Consistent results.</p>
     </div>
   </div>

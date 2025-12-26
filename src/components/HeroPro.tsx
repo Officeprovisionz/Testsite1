@@ -32,9 +32,27 @@ type HeroProProps = {
   imageSrcSet?: string | undefined;
   /** Optional sizes attribute when using srcset. */
   imageSizes?: string | undefined;
+
+  /** Optional mobile-only hero image URL (BASE_URL-prefixed). Enables art-direction via <picture>. */
+  imageSrcMobile?: string;
+  /** Optional mobile-only srcset string (URLs should already include BASE_URL). */
+  imageSrcSetMobile?: string | undefined;
+  /** Optional mobile-only sizes attribute when using the mobile srcset. */
+  imageSizesMobile?: string | undefined;
+
+  /** CSS `object-position` value for the hero image, e.g. "50% 30%". */
+  imagePosition?: string;
 };
 
-export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => {
+export const HeroPro = ({
+  imageSrc,
+  imageSrcSet,
+  imageSizes,
+  imageSrcMobile,
+  imageSrcSetMobile,
+  imageSizesMobile,
+  imagePosition = '50% 50%',
+}: HeroProProps) => {
   const base = import.meta.env.BASE_URL;
   // Using a high-quality Unsplash image for the Golden Gate Bridge sunset
   const defaultHeroImg = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2000&auto=format&fit=crop`;
@@ -56,19 +74,44 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
     <section className="hero-splash hero-photo relative w-full overflow-hidden antialiased">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {/* Always render a lightweight image base (also acts as the video poster / fallback). */}
-        <img
-          src={heroImg}
-          alt=""
-          srcSet={imageSrcSet}
-          sizes={imageSrcSet ? imageSizes : undefined}
-          className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
-          loading="eager"
-          fetchPriority="high"
-          decoding="async"
-          onError={(e) => {
-            if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
-          }}
-        />
+        {imageSrcMobile || imageSrcSetMobile ? (
+          <picture>
+            <source
+              media="(max-width: 639px)"
+              srcSet={imageSrcSetMobile ?? imageSrcMobile}
+              sizes={imageSrcSetMobile ? imageSizesMobile : undefined}
+            />
+            <img
+              src={heroImg}
+              alt=""
+              srcSet={imageSrcSet}
+              sizes={imageSrcSet ? imageSizes : undefined}
+              className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              style={{ objectPosition: imagePosition }}
+              onError={(e) => {
+                if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
+              }}
+            />
+          </picture>
+        ) : (
+          <img
+            src={heroImg}
+            alt=""
+            srcSet={imageSrcSet}
+            sizes={imageSrcSet ? imageSizes : undefined}
+            className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
+            loading="eager"
+            fetchPriority="high"
+            decoding="async"
+            style={{ objectPosition: imagePosition }}
+            onError={(e) => {
+              if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
+            }}
+          />
+        )}
 
         {/* Optional background video (muted + playsInline + loop). */}
         {videoEnabled ? (

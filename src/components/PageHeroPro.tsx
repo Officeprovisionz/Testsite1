@@ -11,6 +11,13 @@ interface PageHeroProProps {
   imageSrcSet?: string | undefined;
   /** Optional sizes for the background image when using srcset. */
   imageSizes?: string | undefined;
+
+  /** Optional mobile-only background image path relative to `public/` (no leading slash). */
+  imageSrcMobile?: string;
+  /** Optional mobile-only srcset (URLs should already include BASE_URL). */
+  imageSrcSetMobile?: string | undefined;
+  /** Optional mobile-only sizes when using `imageSrcSetMobile`. */
+  imageSizesMobile?: string | undefined;
   /** Decorative background: leave empty to hide from screen readers. */
   imageAlt?: string;
   /** CSS `object-position` value, e.g. "50% 40%". */
@@ -33,12 +40,16 @@ export const PageHeroPro = ({
   imageSrc,
   imageSrcSet,
   imageSizes,
+  imageSrcMobile,
+  imageSrcSetMobile,
+  imageSizesMobile,
   imageAlt = '',
   imagePosition = '50% 40%',
   className,
   children,
 }: PageHeroProProps) => {
   const resolvedImageSrc = imageSrc ? toPublicUrl(imageSrc) : undefined;
+  const resolvedMobileImageSrc = imageSrcMobile ? toPublicUrl(imageSrcMobile) : undefined;
   const fallbackImageSrc = toPublicUrl('gallery/01.svg');
 
   return (
@@ -50,21 +61,46 @@ export const PageHeroPro = ({
     >
       {resolvedImageSrc ? (
         <div aria-hidden="true" className="absolute inset-0">
-          <img
-            src={resolvedImageSrc}
-            alt={imageAlt}
-            srcSet={imageSrcSet}
-            sizes={imageSrcSet ? imageSizes : undefined}
-            decoding="async"
-            fetchPriority="high"
-            loading="eager"
-            className="h-full w-full object-cover"
-            style={{ objectPosition: imagePosition }}
-            onError={(e) => {
-              const el = e.currentTarget;
-              if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;
-            }}
-          />
+          {resolvedMobileImageSrc || imageSrcSetMobile ? (
+            <picture>
+              <source
+                media="(max-width: 639px)"
+                srcSet={imageSrcSetMobile ?? resolvedMobileImageSrc}
+                sizes={imageSrcSetMobile ? imageSizesMobile : undefined}
+              />
+              <img
+                src={resolvedImageSrc}
+                alt={imageAlt}
+                srcSet={imageSrcSet}
+                sizes={imageSrcSet ? imageSizes : undefined}
+                decoding="async"
+                fetchPriority="high"
+                loading="eager"
+                className="h-full w-full object-cover"
+                style={{ objectPosition: imagePosition }}
+                onError={(e) => {
+                  const el = e.currentTarget;
+                  if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;
+                }}
+              />
+            </picture>
+          ) : (
+            <img
+              src={resolvedImageSrc}
+              alt={imageAlt}
+              srcSet={imageSrcSet}
+              sizes={imageSrcSet ? imageSizes : undefined}
+              decoding="async"
+              fetchPriority="high"
+              loading="eager"
+              className="h-full w-full object-cover"
+              style={{ objectPosition: imagePosition }}
+              onError={(e) => {
+                const el = e.currentTarget;
+                if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;
+              }}
+            />
+          )}
           <div
             className="absolute inset-0 bg-gradient-to-b from-white/30 via-white/70 to-white/90 dark:from-slate-950/55 dark:via-slate-950/70 dark:to-slate-950/85"
             aria-hidden="true"

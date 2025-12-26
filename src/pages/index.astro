@@ -24,6 +24,14 @@ const heroImage = getPublicResponsiveImage(
   }
 );
 
+const heroImageMobile = getPublicResponsiveImage(
+  'gallery/services/janitorial-02.jpg',
+  import.meta.env.BASE_URL,
+  {
+    sizes: '100vw',
+  }
+);
+
 const proofGallery: GalleryItem[] = [
   {
     src: getGalleryImageSrc('01'),
@@ -80,6 +88,10 @@ const proofGallery: GalleryItem[] = [
     imageSrc={heroImage.src}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
+    imageSrcMobile={heroImageMobile.src}
+    imageSrcSetMobile={heroImageMobile.srcSet}
+    imageSizesMobile={heroImageMobile.sizes}
+    imagePosition="50% 45%"
   />
 
   <BridgeDivider />

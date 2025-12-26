@@ -316,6 +316,7 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
     /* Mobile: header + section nav stack. */
     scroll-padding-top: calc(var(--header-sticky, 5rem) + var(--section-nav-sticky, 3.25rem));
   }
@@ -361,6 +362,12 @@
 
   a {
     text-underline-offset: 4px;
+  }
+
+  a,
+  button,
+  [role='button'] {
+    touch-action: manipulation;
   }
 
   summary::-webkit-details-marker {
@@ -799,22 +806,30 @@
   }
 
   .heading-1 {
-    @apply text-balance font-serif text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl;
+    @apply text-balance font-serif font-bold tracking-tight;
+    font-size: clamp(2.05rem, 3.2vw + 1.15rem, 3.6rem);
+    line-height: 1.06;
     color: rgb(var(--color-text));
   }
 
   .heading-2 {
-    @apply text-balance font-serif text-3xl font-bold leading-tight tracking-tight sm:text-4xl;
+    @apply text-balance font-serif font-bold tracking-tight;
+    font-size: clamp(1.65rem, 2vw + 1.1rem, 2.5rem);
+    line-height: 1.12;
     color: rgb(var(--color-text));
   }
 
   .heading-3 {
-    @apply text-xl font-semibold leading-snug tracking-tight sm:text-2xl;
+    @apply text-balance font-semibold tracking-tight;
+    font-size: clamp(1.25rem, 1.05vw + 1.05rem, 1.85rem);
+    line-height: 1.22;
     color: rgb(var(--color-text));
   }
 
   .heading-4 {
-    @apply text-lg font-semibold leading-snug tracking-tight;
+    @apply text-balance font-semibold tracking-tight;
+    font-size: clamp(1.125rem, 0.6vw + 1rem, 1.35rem);
+    line-height: 1.25;
     color: rgb(var(--color-text));
   }
 
@@ -850,7 +865,8 @@
   }
 
   .lede {
-    @apply mt-2 max-w-prose text-base leading-relaxed sm:text-lg;
+    @apply mt-2 max-w-prose leading-relaxed;
+    font-size: clamp(1rem, 0.55vw + 0.95rem, 1.125rem);
     color: rgb(var(--color-text-muted));
   }
 

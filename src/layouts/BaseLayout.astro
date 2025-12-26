@@ -2,6 +2,7 @@
 import '@/styles/global.css';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
+import StickyActions from '@/components/StickyActions.astro';
 
 type Props = {
   title?: string;
@@ -15,10 +16,6 @@ const {
   description = siteConfig.seo.description,
   disableStickyActions = false,
 } = Astro.props;
-
-// Sticky actions are intentionally disabled to avoid duplicate CTAs.
-// Keep prop for compatibility with existing pages/layout usage.
-void disableStickyActions;
 
 const base = import.meta.env.BASE_URL;
 
@@ -235,6 +232,24 @@ const jsonLd = (() => {
       }
     </script>
 
+    <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
+      (() => {
+        // Register a lightweight service worker in production builds.
+        // Keeps repeat visits fast and provides a basic offline shell.
+        if (typeof window === 'undefined') return;
+        if (isDev) return;
+        if (!('serviceWorker' in navigator)) return;
+
+        const swUrl = `${base}sw.js`;
+
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register(swUrl, { scope: base }).catch(() => {
+            // ignore
+          });
+        });
+      })();
+    </script>
+
     {/* Optional: add your analytics provider script here (Plausible/GTM/etc). */}
   </head>
   <body id="top">
@@ -252,6 +267,8 @@ const jsonLd = (() => {
     </main>
 
     <slot name="footer" />
-    <slot name="sticky" />
+    <slot name="sticky">
+      <StickyActions hidden={disableStickyActions} />
+    </slot>
   </body>
 </html>

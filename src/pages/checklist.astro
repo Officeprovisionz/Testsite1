@@ -19,6 +19,14 @@ const heroImage = getPublicResponsiveImage(
   }
 );
 
+const heroImageMobile = getPublicResponsiveImage(
+  'gallery/services/restocking-02.jpg',
+  import.meta.env.BASE_URL,
+  {
+    sizes: '100vw',
+  }
+);
+
 const core = siteConfig.whatIncluded;
 const addOns = [
   'Glass and interior partitions (as scoped)',
@@ -38,9 +46,13 @@ const addOns = [
     title="Office cleaning checklist"
     description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
     imageSrc="gallery/services/restocking-01.jpg"
+    imageSrcMobile="gallery/services/restocking-02.jpg"
     imageAlt="Cleaning supplies restocking photo"
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
+    imageSrcSetMobile={heroImageMobile.srcSet}
+    imageSizesMobile={heroImageMobile.sizes}
+    imagePosition="50% 45%"
   />
 
   <section class="section">

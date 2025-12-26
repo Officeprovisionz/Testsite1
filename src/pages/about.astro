@@ -22,6 +22,14 @@ const heroImage = getPublicResponsiveImage(
     sizes: '100vw',
   }
 );
+
+const heroImageMobile = getPublicResponsiveImage(
+  'gallery/services/detail-03.jpg',
+  import.meta.env.BASE_URL,
+  {
+    sizes: '100vw',
+  }
+);
 ---
 
 <BaseLayout title={title} description={description}>
@@ -32,9 +40,13 @@ const heroImage = getPublicResponsiveImage(
     title="A cleaner workspace, a simpler workday"
     description="We’re built for reliability: clear communication, consistent checklists, and a team that respects your space."
     imageSrc="gallery/services/facilities-02.jpg"
+    imageSrcMobile="gallery/services/detail-03.jpg"
     imageAlt="Facility services detail photo"
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
+    imageSrcSetMobile={heroImageMobile.srcSet}
+    imageSizesMobile={heroImageMobile.sizes}
+    imagePosition="50% 40%"
   />
 
   <section class="section section-creative scroll-mt-20 pb-0" id="how-we-work">

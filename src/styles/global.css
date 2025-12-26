@@ -360,8 +360,26 @@
     outline-offset: 3px;
   }
 
+  :root {
+    /* Reserved space for the sticky bottom actions bar (set by StickyActions.astro). */
+    --sticky-actions-pad: 0px;
+  }
+
+  main#main-content {
+    /* Prevent the sticky CTA bar from covering content on mobile.
+       `!important` beats the Tailwind `pb-0` utility used in layout markup. */
+    padding-bottom: max(var(--sticky-actions-pad), env(safe-area-inset-bottom)) !important;
+  }
+
   a {
     text-underline-offset: 4px;
+  }
+
+  /* Mobile tap feedback (subtle): helps users feel that taps registered. */
+  @media (hover: none) and (pointer: coarse) {
+    a:active {
+      opacity: 0.92;
+    }
   }
 
   a,

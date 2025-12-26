@@ -63,6 +63,7 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
           sizes={imageSrcSet ? imageSizes : undefined}
           className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
           loading="eager"
+          fetchPriority="high"
           decoding="async"
           onError={(e) => {
             if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;

@@ -51,17 +51,47 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
     const bar = document.querySelector<HTMLElement>('[data-sticky-actions]');
     if (!bar) return;
 
+    const root = document.documentElement;
+
+    const setPad = (px: number) => {
+      const value = `${Math.max(0, Math.round(px))}px`;
+      root.style.setProperty('--sticky-actions-pad', value);
+    };
+
+    const measure = () => {
+      // If hidden via attribute, do not reserve space.
+      const hidden = bar.getAttribute('data-hidden') === 'true';
+      if (hidden) {
+        setPad(0);
+        return;
+      }
+      const rect = bar.getBoundingClientRect();
+      setPad(rect.height);
+    };
+
     // Smooth hide/show without removing from layout.
     const setHidden = (hidden: boolean) => {
       bar.setAttribute('data-hidden', hidden ? 'true' : 'false');
       if (!hidden) {
         bar.style.opacity = '1';
         bar.style.transform = 'translateY(0)';
+        // Reserve space so the bar doesn't cover content.
+        measure();
         return;
       }
       bar.style.opacity = '0';
       bar.style.transform = 'translateY(14px)';
+      setPad(0);
     };
+
+    // Initial measurement.
+    measure();
+
+    // Keep the reserved space correct on rotation / resize.
+    window.addEventListener('resize', () => {
+      // Defer to next frame so layout has settled.
+      requestAnimationFrame(measure);
+    });
 
     // Hide when the footer is visible (prevents overlapping the footer content).
     const footer = document.querySelector('footer');

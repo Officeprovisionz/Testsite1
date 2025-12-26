@@ -1,0 +1,60 @@
+---
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+
+const href = makeHref(import.meta.env.BASE_URL);
+const testimonials = siteConfig.testimonials;
+---
+
+<section class="section">
+  <div class="container-page">
+    <SectionHeader
+      align="center"
+      eyebrow="Trust"
+      heading="Teams choose us for consistency"
+      description="Real feedback from local offices—clear communication, reliable results, and checklist-driven scope."
+    >
+      <a slot="actions" class="btn-secondary" href={href('about/#proof')}>See proof</a>
+      <a slot="actions" class="btn-primary" href={href('contact/')}>Request a quote</a>
+    </SectionHeader>
+
+    <div class="mt-10 grid gap-6 md:grid-cols-3">
+      {
+        testimonials.map((t) => (
+          <figure class="glass-card card-hover relative overflow-hidden p-6">
+            <div
+              aria-hidden="true"
+              class="from-brand-200/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+            />
+            <div class="relative">
+              <blockquote class="text-sm leading-relaxed text-muted">
+                <span aria-hidden="true" class="text-strong mr-1">
+                  “
+                </span>
+                {t.quote}
+                <span aria-hidden="true" class="text-strong ml-1">
+                  ”
+                </span>
+              </blockquote>
+
+              <figcaption class="mt-4 flex items-center justify-between gap-3">
+                <div class="min-w-0">
+                  <p class="text-strong text-sm font-semibold">{t.name}</p>
+                  <p class="text-subtle text-xs">{t.location}</p>
+                </div>
+                <span
+                  class="inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-white/60 text-sm font-semibold text-brand-700 ring-1 ring-black/5 dark:bg-slate-900/40 dark:text-brand-200 dark:ring-white/10"
+                  aria-hidden="true"
+                  title="Verified"
+                >
+                  ✓
+                </span>
+              </figcaption>
+            </div>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
 import { ServicesPro } from '@/components/ServicesPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
+import Testimonials from '@/components/Testimonials.astro';
 import Gallery from '@/components/Gallery.astro';
 import CTAStrip from '@/components/CTAStrip.astro';
 import type { GalleryItem } from '@/data/gallery';
@@ -54,6 +55,8 @@ const proofGallery: GalleryItem[] = [
   <ServicesPro client:visible />
 
   <IndustriesPro client:visible />
+
+  <Testimonials />
 
   <CTAStrip variant="accent" />
 

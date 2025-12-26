@@ -1,0 +1,64 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { PageHeroPro } from '@/components/PageHeroPro';
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+
+const href = makeHref(import.meta.env.BASE_URL);
+const title = `Page not found | ${siteConfig.brand.name}`;
+const description =
+  'The page you’re looking for doesn’t exist (or moved). Use the links below to get back on track.';
+
+const quickLinks = [
+  { label: 'Home', href: href('') },
+  { label: 'Services', href: href('services/') },
+  { label: 'Industries', href: href('industries/') },
+  { label: 'Resources', href: href('resources/') },
+  { label: 'Contact', href: href('contact/') },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <Header slot="header" />
+
+  <PageHeroPro client:load title="404" description={description}>
+    <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
+      <a class="btn-primary" href={href('contact/')}>Request a quote</a>
+      <a class="btn-secondary" href={href('')}>Go to homepage</a>
+    </div>
+  </PageHeroPro>
+
+  <section class="section">
+    <div class="container-narrow">
+      <div class="glass-panel p-7 sm:p-9">
+        <h2 class="heading-3">Quick links</h2>
+        <p class="mt-2 text-sm text-muted">Most people are looking for one of these.</p>
+
+        <nav aria-label="Quick links" class="mt-6 grid gap-3 sm:grid-cols-2">
+          {
+            quickLinks.map((l) => (
+              <a class="menu-link rounded-xl" href={l.href}>
+                {l.label}
+              </a>
+            ))
+          }
+        </nav>
+
+        <div class="panel panel-muted mt-8 p-5">
+          <p class="text-strong text-sm font-semibold">Tip</p>
+          <p class="mt-2 text-sm text-muted">
+            If you got here from an old bookmark, we can still help—tell us what you were looking
+            for and we’ll point you to the right page.
+          </p>
+          <a class="link link-muted mt-3 inline-flex text-sm font-semibold" href={href('contact/')}
+            >Contact us</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

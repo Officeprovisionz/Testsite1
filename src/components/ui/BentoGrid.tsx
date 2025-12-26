@@ -33,6 +33,8 @@ export const BentoGridItem = ({
   header?: React.ReactNode;
   icon?: React.ReactNode;
 }) => {
+  const hasHeader = Boolean(header);
+
   return (
     <div
       className={cn(
@@ -42,7 +44,12 @@ export const BentoGridItem = ({
     >
       <div className="flex h-full flex-col">
         {header}
-        <div className="mt-6 transition-all duration-300 group-hover/bento:translate-x-1">
+        <div
+          className={cn(
+            'transition-all duration-300 group-hover/bento:translate-x-1',
+            hasHeader ? 'mt-6' : 'mt-1'
+          )}
+        >
           <div className="mb-4 flex items-center gap-3">
             {icon}
             <div className="font-serif text-lg font-bold tracking-tight text-slate-900 dark:text-slate-100">

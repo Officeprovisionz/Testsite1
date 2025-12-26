@@ -27,7 +27,7 @@ const navItems = [
 
 <header
   class:list={[
-    'border-app sticky top-0 z-40 border-b bg-white/95 transition-all duration-300 dark:bg-slate-950/85',
+    'app-bar border-app sticky top-0 z-40 border-b transition-all duration-300',
     transparent ? 'header-transparent' : '',
   ]}
   data-site-header
@@ -45,7 +45,7 @@ const navItems = [
         height="28"
         loading="eager"
         decoding="async"
-        class="h-7 w-7"
+        class="brand-mark h-7 w-7"
       />
       <span class="text-strong hidden sm:inline">{siteConfig.brand.name}</span>
     </a>

@@ -114,12 +114,11 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Clean, subtle gradient instead of a busy image */
-    background: radial-gradient(
-      circle at 50% 0%,
-      rgba(var(--color-brand-500), 0.03),
-      transparent 70%
-    );
+    /* Clean, premium gradients (subtle depth, no busy imagery) */
+    background:
+      radial-gradient(900px 520px at 20% 0%, rgba(var(--color-brand-500), 0.06), transparent 65%),
+      radial-gradient(820px 520px at 85% 15%, rgba(var(--color-accent-400), 0.05), transparent 68%),
+      radial-gradient(980px 640px at 50% 100%, rgba(var(--color-brand-700), 0.04), transparent 70%);
     pointer-events: none;
   }
 

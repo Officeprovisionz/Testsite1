@@ -30,12 +30,6 @@ export function ServicesPro() {
                 key={family.title}
                 title={family.title}
                 description={family.description}
-                header={
-                  <div className="flex h-full min-h-[6rem] w-full flex-1 items-center justify-center rounded-xl border border-brand-100/50 bg-gradient-to-br from-brand-50 to-slate-50 dark:border-white/5 dark:from-slate-900 dark:to-slate-800">
-                    {/* Simple, clean icon placeholder or abstract graphic could go here */}
-                    <div className="scale-150 transform opacity-10">{icons[family.title]}</div>
-                  </div>
-                }
                 icon={
                   <div className="w-fit rounded-lg bg-brand-50 p-2 dark:bg-slate-800">
                     {icons[family.title]}

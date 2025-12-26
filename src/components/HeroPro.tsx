@@ -1,5 +1,6 @@
 import { siteConfig } from '@/data/siteConfig';
 import { useEffect, useState } from 'react';
+import { Spotlight } from './ui/Spotlight';
 
 const shouldEnableVideo = () => {
   if (typeof window === 'undefined') return false;
@@ -134,6 +135,9 @@ export const HeroPro = ({
         {/* Mobile-first readability veil (stronger on small screens, lighter on larger). */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 to-black/0 dark:from-black/65 dark:via-black/35 sm:from-black/35 sm:via-black/15" />
       </div>
+
+      {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}
+      <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
 
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">

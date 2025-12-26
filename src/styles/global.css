@@ -48,7 +48,7 @@
 
     /* Type + layout defaults */
     /* Cleaner, less “bubbly” geometry */
-    --radius-card: 0.875rem;
+    --radius-card: 0.75rem;
     --radius-control: 0.625rem;
     --shadow-soft: 0 10px 26px -18px rgba(2, 6, 23, 0.18);
 

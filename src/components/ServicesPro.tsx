@@ -12,30 +12,27 @@ export function ServicesPro() {
   };
 
   return (
-    <section className="section py-24" id="services">
+    <section className="section py-20" id="services">
       <div className="container-page">
-        <div className="mb-16 text-center">
-          <h2 className="text-strong font-serif text-3xl font-bold tracking-tight sm:text-4xl">
-            Our Expertise
-          </h2>
+        <div className="mb-12 text-center">
+          <h2 className="heading-2">Our Expertise</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
             Comprehensive facility solutions tailored to your standards.
           </p>
         </div>
 
-        <BentoGrid className="mx-auto max-w-6xl gap-6 md:grid-cols-2">
-          {siteConfig.serviceFamilies.map((family, i) => {
+        <BentoGrid className="mx-auto max-w-6xl gap-6 md:auto-rows-[16.5rem] md:grid-cols-2">
+          {siteConfig.serviceFamilies.map((family) => {
             return (
               <BentoGridItem
                 key={family.title}
                 title={family.title}
                 description={family.description}
                 icon={
-                  <div className="w-fit rounded-lg bg-brand-50 p-2 dark:bg-slate-800">
+                  <div className="w-fit rounded-lg border border-brand-100 bg-brand-50/70 p-2 dark:border-brand-800/40 dark:bg-brand-950/25">
                     {icons[family.title]}
                   </div>
                 }
-                className={i === 0 || i === 3 ? 'md:col-span-2' : ''}
               />
             );
           })}

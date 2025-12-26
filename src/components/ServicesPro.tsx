@@ -11,6 +11,62 @@ export function ServicesPro() {
     'Facilities support': <Wrench className="h-5 w-5 text-brand-500" />,
   };
 
+  const base = import.meta.env.BASE_URL;
+
+  const headerImageByTitle: Record<string, { jpg: string; svg: string; alt: string }> = {
+    'Janitorial & recurring cleaning': {
+      jpg: `${base}gallery/02.jpg`,
+      svg: `${base}gallery/02.svg`,
+      alt: 'Janitorial service in an office environment',
+    },
+    'Deep / detail cleaning': {
+      jpg: `${base}gallery/04.jpg`,
+      svg: `${base}gallery/04.svg`,
+      alt: 'Detail cleaning and disinfecting in a conference room',
+    },
+    'Supplies & restocking': {
+      jpg: `${base}gallery/06.jpg`,
+      svg: `${base}gallery/06.svg`,
+      alt: 'Supply shelves and inventory organization for restocking',
+    },
+    'Facilities support': {
+      jpg: `${base}gallery/05.jpg`,
+      svg: `${base}gallery/05.svg`,
+      alt: 'Floor care and upkeep in a commercial space',
+    },
+  };
+
+  const renderHeader = (title: string) => {
+    const img = headerImageByTitle[title];
+    const icon = icons[title] || <Sparkles className="h-6 w-6 text-brand-500" />;
+
+    return (
+      <div className="relative flex h-24 w-full flex-1 items-center justify-center overflow-hidden rounded-xl border border-brand-100/50 bg-slate-50 dark:border-brand-800/30 dark:bg-slate-950/30">
+        {img ? (
+          <img
+            src={img.jpg}
+            alt={img.alt}
+            loading="lazy"
+            decoding="async"
+            className="absolute inset-0 h-full w-full object-cover opacity-90"
+            onError={(e) => {
+              if (e.currentTarget.src !== img.svg) e.currentTarget.src = img.svg;
+            }}
+          />
+        ) : null}
+
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-br from-white/65 via-white/40 to-transparent dark:from-slate-950/70 dark:via-slate-950/45"
+        />
+
+        <div className="relative rounded-xl bg-white/85 p-3 shadow-sm ring-1 ring-brand-100/60 backdrop-blur-sm dark:bg-slate-900/70 dark:ring-brand-800/30">
+          {icon}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <section
       className="section bg-gradient-to-b from-transparent via-brand-50/30 to-transparent dark:via-brand-950/20"
@@ -46,13 +102,7 @@ export function ServicesPro() {
                     </ul>
                   </div>
                 }
-                header={
-                  <div className="flex h-24 w-full flex-1 items-center justify-center rounded-xl bg-gradient-to-br from-brand-50 to-brand-100/50 dark:from-brand-900/30 dark:to-brand-800/20">
-                    <div className="rounded-xl bg-white/80 p-3 shadow-sm dark:bg-slate-800/80">
-                      {icons[family.title] || <Sparkles className="h-6 w-6 text-brand-500" />}
-                    </div>
-                  </div>
-                }
+                header={renderHeader(family.title)}
                 icon={icons[family.title]}
               />
             );

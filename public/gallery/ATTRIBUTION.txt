@@ -1,0 +1,44 @@
+Gallery photos downloaded from Pexels (https://www.pexels.com).
+Keep this file for attribution/reference and license tracking.
+
+gallery/01.jpg
+Slot: Clean office / reception
+Query: clean modern office lobby
+Pexels photo by Proxyclick Visitor Management System
+Photographer: https://www.pexels.com/@proxyclick
+Photo: https://www.pexels.com/photo/people-near-white-counter-desk-2451616/
+
+gallery/02.jpg
+Slot: Janitorial / tools in use
+Query: janitor cart office cleaning
+Pexels photo by The Juggle Studio
+Photographer: https://www.pexels.com/@jugglegroup
+Photo: https://www.pexels.com/photo/a-cart-with-an-equipment-in-a-white-apartment-20314949/
+
+gallery/03.jpg
+Slot: Restocking / paper goods
+Query: restocking paper towels soap dispenser
+Pexels photo by Ronald Slaton
+Photographer: https://www.pexels.com/@ronslatonphoto62
+Photo: https://www.pexels.com/photo/soaps-and-towels-on-a-white-surface-13814804/
+
+gallery/04.jpg
+Slot: Detail cleaning / disinfecting
+Query: cleaning conference room table disinfecting
+Pexels photo by Michelangelo Buonarroti
+Photographer: https://www.pexels.com/@michelangelo-buonarroti
+Photo: https://www.pexels.com/photo/a-woman-disinfecting-while-in-a-personal-protective-equipment-4176366/
+
+gallery/05.jpg
+Slot: Floors / high-traffic lanes
+Query: mopping office floor cleaning
+Pexels photo by MART  PRODUCTION
+Photographer: https://www.pexels.com/@mart-production
+Photo: https://www.pexels.com/photo/a-woman-mopping-the-floor-7641347/
+
+gallery/06.jpg
+Slot: Supplies / inventory
+Query: cleaning supplies shelves inventory
+Pexels photo by Jimmy Liao
+Photographer: https://www.pexels.com/@jimmy-liao-3615017
+Photo: https://www.pexels.com/photo/metals-on-display-14838208/

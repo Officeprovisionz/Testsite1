@@ -94,51 +94,76 @@ async function main() {
 
   await fs.mkdir(OUT_DIR, { recursive: true });
 
-  const wanted = 6;
-  const queries = [
-    'commercial cleaning office',
-    'janitorial cleaning office',
-    'office cleaner workspace',
-    'clean office lobby',
+  // Each slot maps to a specific theme so the site feels intentionally curated.
+  // You can tweak these queries anytime and re-run `pnpm gallery:fetch`.
+  const slots = [
+    {
+      id: '01',
+      query: 'clean modern office lobby',
+      label: 'Clean office / reception',
+    },
+    {
+      id: '02',
+      query: 'janitor cart office cleaning',
+      label: 'Janitorial / tools in use',
+    },
+    {
+      id: '03',
+      query: 'restocking paper towels soap dispenser',
+      label: 'Restocking / paper goods',
+    },
+    {
+      id: '04',
+      query: 'cleaning conference room table disinfecting',
+      label: 'Detail cleaning / disinfecting',
+    },
+    {
+      id: '05',
+      query: 'mopping office floor cleaning',
+      label: 'Floors / high-traffic lanes',
+    },
+    {
+      id: '06',
+      query: 'cleaning supplies shelves inventory',
+      label: 'Supplies / inventory',
+    },
   ];
 
-  let photos = [];
-  for (const q of queries) {
-    // Grab a decent pool per query and dedupe.
-    const data = await searchPexels({ apiKey, query: q, perPage: 24, page: 1 });
-    photos = uniqBy([...photos, ...(data?.photos ?? [])], (p) => String(p?.id));
-    if (photos.length >= wanted * 2) break;
-  }
-
-  if (photos.length < wanted) {
-    throw new Error(
-      `Not enough photos returned from Pexels (got ${photos.length}, need ${wanted}).`
-    );
-  }
-
-  // Pick the first N unique photographers to avoid a "same shoot" look.
-  const picked = [];
   const seenPhotographers = new Set();
-  for (const p of photos) {
-    const name = (p?.photographer ?? '').trim();
-    if (!name) continue;
-    if (seenPhotographers.has(name)) continue;
-    seenPhotographers.add(name);
-    picked.push(p);
-    if (picked.length >= wanted) break;
-  }
-
-  if (picked.length < wanted) {
-    // Fall back to first N.
-    picked.length = 0;
-    picked.push(...photos.slice(0, wanted));
-  }
-
   const attributions = [];
 
-  for (let i = 0; i < picked.length; i++) {
-    const p = picked[i];
-    const n = String(i + 1).padStart(2, '0');
+  const pickBestForSlot = async ({ query }) => {
+    // Try a couple pages to get variety, but keep it fast.
+    const pools = [];
+    for (const page of [1, 2]) {
+      const data = await searchPexels({ apiKey, query, perPage: 30, page });
+      pools.push(...(data?.photos ?? []));
+      if (pools.length >= 40) break;
+    }
+
+    const unique = uniqBy(pools, (p) => String(p?.id));
+    const withSrc = unique.filter((p) => p?.src?.original || p?.src?.large2x || p?.src?.large);
+
+    // Prefer a unique photographer per slot to avoid a “single shoot” feel.
+    for (const p of withSrc) {
+      const name = (p?.photographer ?? '').trim();
+      if (!name) continue;
+      if (seenPhotographers.has(name)) continue;
+      return p;
+    }
+
+    return withSrc[0];
+  };
+
+  for (let i = 0; i < slots.length; i++) {
+    const slot = slots[i];
+    const p = await pickBestForSlot(slot);
+    if (!p) throw new Error(`No photos returned from Pexels for query: ${slot.query}`);
+
+    const photographerName = (p?.photographer ?? '').trim();
+    if (photographerName) seenPhotographers.add(photographerName);
+
+    const n = slot.id;
 
     const srcUrl = p?.src?.original || p?.src?.large2x || p?.src?.large;
     if (!srcUrl) throw new Error(`Missing photo src for Pexels id=${p?.id}`);
@@ -162,6 +187,8 @@ async function main() {
     attributions.push(
       [
         `gallery/${n}.jpg`,
+        `Slot: ${slot.label}`,
+        `Query: ${slot.query}`,
         `Pexels photo by ${photographer}`,
         photographerUrl ? `Photographer: ${photographerUrl}` : '',
         photoUrl ? `Photo: ${photoUrl}` : '',
@@ -171,7 +198,7 @@ async function main() {
     );
 
     // Friendly progress line.
-    process.stdout.write(`Downloaded ${n}/${wanted}: gallery/${n}.jpg\n`);
+    process.stdout.write(`Downloaded ${i + 1}/${slots.length}: gallery/${n}.jpg\n`);
   }
 
   const header =

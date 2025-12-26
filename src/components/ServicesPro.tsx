@@ -1,14 +1,14 @@
 import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
 import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
-import { Sparkles, Box, ClipboardCheck, Wrench } from 'lucide-react';
+import { Sparkles, Box, Coffee, Wrench } from 'lucide-react';
 
 export function ServicesPro() {
   const icons: Record<string, React.ReactNode> = {
-    'Janitorial & recurring cleaning': <Sparkles className="h-6 w-6 text-brand-500" />,
-    'Deep / detail cleaning': <ClipboardCheck className="h-6 w-6 text-brand-500" />,
-    'Supplies & restocking': <Box className="h-6 w-6 text-brand-500" />,
-    'Facilities support': <Wrench className="h-6 w-6 text-brand-500" />,
+    'Office Cleaning': <Sparkles className="h-6 w-6 text-brand-500" />,
+    'Restocking & Supplies': <Box className="h-6 w-6 text-brand-500" />,
+    'Snacks & Coffee': <Coffee className="h-6 w-6 text-brand-500" />,
+    'Facilities Support': <Wrench className="h-6 w-6 text-brand-500" />,
   };
 
   return (

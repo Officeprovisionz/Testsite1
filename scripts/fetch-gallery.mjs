@@ -210,48 +210,33 @@ async function main() {
   const slots = [
     {
       id: '01',
-      query: 'janitor cleaning office lobby reception floor',
-      label: 'Reception / lobby',
+      query: 'modern clean office interior workspace',
+      label: 'Modern office interior',
     },
     {
       id: '02',
-      query: 'cleaning conference room commercial office table chairs',
-      label: 'Conference room',
+      query: 'office cleaning professional janitorial service',
+      label: 'Office cleaning',
     },
     {
       id: '03',
-      query: 'janitor cleaning restroom sink mirror commercial',
-      label: 'Restroom serviced',
+      query: 'specialty coffee latte art barista office',
+      label: 'Specialty coffee',
     },
     {
       id: '04',
-      query: 'office break room pantry coffee station snacks clean',
-      label: 'Snack bar / coffee station',
+      query: 'office pantry snacks breakroom supplies',
+      label: 'Office pantry + snacks',
     },
     {
       id: '05',
-      query: 'commercial office cleaning wiping surfaces after hours',
-      label: 'High-touch focus',
+      query: 'modern corporate lobby reception clean',
+      label: 'Corporate lobby',
     },
     {
       id: '06',
-      query: 'janitorial cleaning cart supplies commercial',
-      label: 'Supplies + inventory',
-    },
-    {
-      id: '07',
-      query: 'cleaning office workstations desks commercial',
-      label: 'Workstations',
-    },
-    {
-      id: '08',
-      query: 'window cleaner cleaning office glass partition',
-      label: 'Glass + partitions',
-    },
-    {
-      id: '09',
-      query: 'vacuum cleaning office carpet commercial',
-      label: 'Carpet + entry lanes',
+      query: 'office supply restocking organized shelves',
+      label: 'Restocking supplies',
     },
   ];
 
@@ -372,41 +357,41 @@ async function main() {
   const serviceSets = [
     {
       key: 'janitorial',
-      label: 'Services: Janitorial & recurring cleaning',
+      label: 'Services: Office cleaning',
       queries: [
-        'commercial office lobby vacuum cleaning',
-        'empty office lobby clean tidy',
-        'office cleaning crew vacuuming',
+        'professional office cleaning service',
+        'commercial cleaning crew modern office',
+        'clean empty office space interior',
       ],
       count: 3,
     },
     {
       key: 'detail',
-      label: 'Services: Deep / detail cleaning',
+      label: 'Services: Deep cleaning',
       queries: [
-        'office carpet cleaning vacuum',
-        'floor scrubber cleaning commercial office',
-        'office cleaning after hours empty',
+        'deep cleaning modern office',
+        'commercial floor cleaning polishing',
+        'professional cleaning service office',
       ],
       count: 3,
     },
     {
       key: 'restocking',
-      label: 'Services: Supplies & restocking',
+      label: 'Services: Restocking & supplies',
       queries: [
-        'office coffee station restocked',
-        'office pantry snack bar restocking',
-        'restocking paper towels soap dispenser supplies',
+        'office supply cabinet organized',
+        'paper towels soap dispenser restroom supplies',
+        'organized office storage shelves supplies',
       ],
       count: 3,
     },
     {
       key: 'facilities',
-      label: 'Services: Facilities support',
+      label: 'Services: Coffee & snacks',
       queries: [
-        'office maintenance tools',
-        'changing light bulb office maintenance',
-        'office handyman repairs',
+        'specialty coffee latte art office',
+        'modern office coffee machine espresso',
+        'office breakroom snacks pantry',
       ],
       count: 3,
     },

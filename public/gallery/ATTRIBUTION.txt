@@ -2,148 +2,127 @@ Gallery photos downloaded from Pexels (https://www.pexels.com).
 Keep this file for attribution/reference and license tracking.
 
 gallery/01.jpg
-Slot: Reception / lobby
-Query: janitor cleaning office lobby reception floor
-Pexels photo by Proxyclick Visitor Management System
-Photographer: https://www.pexels.com/@proxyclick
-Photo: https://www.pexels.com/photo/people-near-white-counter-desk-2451616/
+Slot: Modern office interior
+Query: modern clean office interior workspace
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
 
 gallery/02.jpg
-Slot: Conference room
-Query: cleaning conference room commercial office table chairs
-Pexels photo by Max Vakhtbovycn
-Photographer: https://www.pexels.com/@heyho
-Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
-
-gallery/03.jpg
-Slot: Restroom serviced
-Query: janitor cleaning restroom sink mirror commercial
-Pexels photo by cottonbro studio
-Photographer: https://www.pexels.com/@cottonbro
-Photo: https://www.pexels.com/photo/side-view-of-man-in-white-bathrobe-cleaning-his-face-5891034/
-
-gallery/04.jpg
-Slot: Snack bar / coffee station
-Query: office break room pantry coffee station snacks clean
-Pexels photo by Anastasia  Shuraeva
-Photographer: https://www.pexels.com/@anastasia-shuraeva
-Photo: https://www.pexels.com/photo/interracial-co-workers-having-fun-conversation-in-office-pantry-7279335/
-
-gallery/05.jpg
-Slot: High-touch focus
-Query: commercial office cleaning wiping surfaces after hours
-Pexels photo by Karola G
-Photographer: https://www.pexels.com/@karola-g
-Photo: https://www.pexels.com/photo/a-man-wiping-a-pair-of-eyeglasses-6334190/
-
-gallery/06.jpg
-Slot: Supplies + inventory
-Query: janitorial cleaning cart supplies commercial
+Slot: Office cleaning
+Query: office cleaning professional janitorial service
 Pexels photo by Tima Miroshnichenko
 Photographer: https://www.pexels.com/@tima-miroshnichenko
-Photo: https://www.pexels.com/photo/women-in-gray-shirt-and-orange-jumper-cleaning-the-house-6197121/
+Photo: https://www.pexels.com/photo/person-vacuuming-the-floor-6195275/
 
-gallery/07.jpg
-Slot: Workstations
-Query: cleaning office workstations desks commercial
-Pexels photo by Aleksandar Pasaric
-Photographer: https://www.pexels.com/@apasaric
-Photo: https://www.pexels.com/photo/five-person-cleaning-glass-building-625279/
+gallery/03.jpg
+Slot: Specialty coffee
+Query: specialty coffee latte art barista office
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/selective-focus-of-an-ice-coffee-on-wooden-surface-4921594/
 
-gallery/08.jpg
-Slot: Glass + partitions
-Query: window cleaner cleaning office glass partition
-Pexels photo by Wolfgang Weiser
-Photographer: https://www.pexels.com/@wolfgang-weiser-467045605
-Photo: https://www.pexels.com/photo/modern-office-building-with-window-cleaners-in-hamburg-29502230/
+gallery/04.jpg
+Slot: Office pantry + snacks
+Query: office pantry snacks breakroom supplies
+Pexels photo by Mikhail Nilov
+Photographer: https://www.pexels.com/@mikhail-nilov
+Photo: https://www.pexels.com/photo/three-people-having-a-coffee-break-at-work-8102047/
 
-gallery/09.jpg
-Slot: Carpet + entry lanes
-Query: vacuum cleaning office carpet commercial
-Pexels photo by Liliana Drew
-Photographer: https://www.pexels.com/@liliana-drew
-Photo: https://www.pexels.com/photo/red-and-black-vacuum-in-close-up-shot-9462141/
-
-gallery/services/janitorial-01.jpg
-Slot: Services: Janitorial & recurring cleaning
-Query: commercial office lobby vacuum cleaning
-Pexels photo by Max Vakhtbovycn
-Photographer: https://www.pexels.com/@heyho
-Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
-
-gallery/services/janitorial-02.jpg
-Slot: Services: Janitorial & recurring cleaning
-Query: empty office lobby clean tidy
+gallery/05.jpg
+Slot: Corporate lobby
+Query: modern corporate lobby reception clean
 Pexels photo by Proxyclick Visitor Management System
 Photographer: https://www.pexels.com/@proxyclick
 Photo: https://www.pexels.com/photo/people-near-white-counter-desk-2451616/
 
-gallery/services/janitorial-03.jpg
-Slot: Services: Janitorial & recurring cleaning
-Query: office cleaning crew vacuuming
-Pexels photo by Liliana Drew
-Photographer: https://www.pexels.com/@liliana-drew
-Photo: https://www.pexels.com/photo/red-and-black-vacuum-in-close-up-shot-9462141/
+gallery/06.jpg
+Slot: Restocking supplies
+Query: office supply restocking organized shelves
+Pexels photo by PNW Production
+Photographer: https://www.pexels.com/@pnw-prod
+Photo: https://www.pexels.com/photo/mockup-picture-frame-on-wall-above-desk-8490187/
 
-gallery/services/detail-01.jpg
-Slot: Services: Deep / detail cleaning
-Query: office carpet cleaning vacuum
-Pexels photo by Liliana Drew
-Photographer: https://www.pexels.com/@liliana-drew
-Photo: https://www.pexels.com/photo/red-and-black-vacuum-in-close-up-shot-9462141/
+gallery/services/janitorial-01.jpg
+Slot: Services: Office cleaning
+Query: professional office cleaning service
+Pexels photo by Tima Miroshnichenko
+Photographer: https://www.pexels.com/@tima-miroshnichenko
+Photo: https://www.pexels.com/photo/person-vacuuming-the-floor-6195275/
 
-gallery/services/detail-02.jpg
-Slot: Services: Deep / detail cleaning
-Query: floor scrubber cleaning commercial office
+gallery/services/janitorial-02.jpg
+Slot: Services: Office cleaning
+Query: commercial cleaning crew modern office
 Pexels photo by Max Vakhtbovycn
 Photographer: https://www.pexels.com/@heyho
 Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
 
-gallery/services/detail-03.jpg
-Slot: Services: Deep / detail cleaning
-Query: office cleaning after hours empty
+gallery/services/janitorial-03.jpg
+Slot: Services: Office cleaning
+Query: clean empty office space interior
 Pexels photo by cottonbro studio
 Photographer: https://www.pexels.com/@cottonbro
 Photo: https://www.pexels.com/photo/interior-design-of-an-office-5483233/
 
-gallery/services/restocking-01.jpg
-Slot: Services: Supplies & restocking
-Query: office coffee station restocked
-Pexels photo by Mikhail Nilov
-Photographer: https://www.pexels.com/@mikhail-nilov
-Photo: https://www.pexels.com/photo/a-happy-woman-sitting-on-the-swivel-chair-while-holding-a-cup-of-coffee-6592550/
-
-gallery/services/restocking-02.jpg
-Slot: Services: Supplies & restocking
-Query: office pantry snack bar restocking
-Pexels photo by Anastasia  Shuraeva
-Photographer: https://www.pexels.com/@anastasia-shuraeva
-Photo: https://www.pexels.com/photo/interracial-co-workers-having-fun-conversation-in-office-pantry-7279335/
-
-gallery/services/restocking-03.jpg
-Slot: Services: Supplies & restocking
-Query: restocking paper towels soap dispenser supplies
-Pexels photo by Karola G
-Photographer: https://www.pexels.com/@karola-g
-Photo: https://www.pexels.com/photo/person-in-glove-wiping-surface-of-sink-in-modern-bathroom-4239113/
-
-gallery/services/facilities-01.jpg
-Slot: Services: Facilities support
-Query: office maintenance tools
-Pexels photo by Karola G
-Photographer: https://www.pexels.com/@karola-g
-Photo: https://www.pexels.com/photo/a-person-cleaning-a-camera-while-using-a-bulb-blower-6661301/
-
-gallery/services/facilities-02.jpg
-Slot: Services: Facilities support
-Query: changing light bulb office maintenance
+gallery/services/detail-01.jpg
+Slot: Services: Deep cleaning
+Query: deep cleaning modern office
 Pexels photo by Max Vakhtbovycn
 Photographer: https://www.pexels.com/@heyho
 Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
 
+gallery/services/detail-02.jpg
+Slot: Services: Deep cleaning
+Query: commercial floor cleaning polishing
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/black-and-gray-vacuum-cleaner-7703301/
+
+gallery/services/detail-03.jpg
+Slot: Services: Deep cleaning
+Query: professional cleaning service office
+Pexels photo by Tima Miroshnichenko
+Photographer: https://www.pexels.com/@tima-miroshnichenko
+Photo: https://www.pexels.com/photo/person-vacuuming-the-floor-6195275/
+
+gallery/services/restocking-01.jpg
+Slot: Services: Restocking & supplies
+Query: office supply cabinet organized
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/interior-of-office-with-corridor-and-kitchen-7534220/
+
+gallery/services/restocking-02.jpg
+Slot: Services: Restocking & supplies
+Query: paper towels soap dispenser restroom supplies
+Pexels photo by Karola G
+Photographer: https://www.pexels.com/@karola-g
+Photo: https://www.pexels.com/photo/liquid-toilet-cleaner-pouring-in-toilet-bowl-4239089/
+
+gallery/services/restocking-03.jpg
+Slot: Services: Restocking & supplies
+Query: organized office storage shelves supplies
+Pexels photo by Caleb Oquendo
+Photographer: https://www.pexels.com/@caleboquendo
+Photo: https://www.pexels.com/photo/office-supply-shelf-with-stacked-paper-boxes-34708271/
+
+gallery/services/facilities-01.jpg
+Slot: Services: Coffee & snacks
+Query: specialty coffee latte art office
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/man-in-black-suit-jacket-holding-clear-drinking-glass-5922541/
+
+gallery/services/facilities-02.jpg
+Slot: Services: Coffee & snacks
+Query: modern office coffee machine espresso
+Pexels photo by Nao Triponez
+Photographer: https://www.pexels.com/@natri
+Photo: https://www.pexels.com/photo/black-and-white-ceramic-tea-cup-with-saucer-on-black-wooden-table-129209/
+
 gallery/services/facilities-03.jpg
-Slot: Services: Facilities support
-Query: office handyman repairs
-Pexels photo by Andrea Piacquadio
-Photographer: https://www.pexels.com/@olly
-Photo: https://www.pexels.com/photo/male-master-working-with-metal-tools-in-garage-3822844/
+Slot: Services: Coffee & snacks
+Query: office breakroom snacks pantry
+Pexels photo by Anastasia  Shuraeva
+Photographer: https://www.pexels.com/@anastasia-shuraeva
+Photo: https://www.pexels.com/photo/interracial-co-workers-having-fun-conversation-in-office-pantry-7279335/

@@ -1,4 +1,4 @@
-export type Service = {
+﻿export type Service = {
   title: string;
   description: string;
   bullets: string[];
@@ -51,10 +51,11 @@ export const siteConfig = {
     phoneDisplay: '(510) 913-2197',
     phoneE164: '+15109132197',
     email: 'officeprovisionz@gmail.com',
-    smsBody: 'Hi Office Provisionz — I’d like to request a quote for cleaning + supplies support.',
+    smsBody:
+      'Hi Office Provisionz â€” Iâ€™d like to request a quote for cleaning + supplies support.',
   },
   hours: {
-    lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
+    lines: ['Monâ€“Fri: 8amâ€“6pm', 'Sat: 9amâ€“2pm', 'Sun: Closed'],
   },
 
   industries: [
@@ -78,7 +79,7 @@ export const siteConfig = {
     {
       title: 'Retail & customer spaces',
       description:
-        'Keep entrances, floors, and restrooms presentable—especially in high-traffic periods.',
+        'Keep entrances, floors, and restrooms presentableâ€”especially in high-traffic periods.',
       bullets: ['Entryways + floors', 'Restroom servicing', 'Flexible scheduling'],
     },
   ] satisfies Industry[],
@@ -87,12 +88,12 @@ export const siteConfig = {
     {
       title: 'Request a quote',
       description:
-        'Share basics (space, services, frequency). We’ll respond quickly and confirm scope before quoting.',
+        'Share basics (space, services, frequency). Weâ€™ll respond quickly and confirm scope before quoting.',
     },
     {
       title: 'Scope + checklist',
       description:
-        'We confirm what’s included, what’s optional, and any building requirements—then lock the scope.',
+        'We confirm whatâ€™s included, whatâ€™s optional, and any building requirementsâ€”then lock the scope.',
     },
     {
       title: 'Service delivery',
@@ -127,7 +128,7 @@ export const siteConfig = {
     {
       title: 'Recurring Janitorial (Nightly/Weekly)',
       description:
-        'Scheduled service for consistent upkeep—ideal for busy offices and shared spaces.',
+        'Scheduled service for consistent upkeepâ€”ideal for busy offices and shared spaces.',
       bullets: [
         'High-touch sanitizing (handles, switches, shared points)',
         'Trash + recycling, liners as needed',
@@ -148,7 +149,7 @@ export const siteConfig = {
     },
     {
       title: 'Supplies & Restocking',
-      description: 'We keep essentials stocked so your team doesn’t have to chase supplies.',
+      description: 'We keep essentials stocked so your team doesnâ€™t have to chase supplies.',
       bullets: [
         'Paper goods & soap (per checklist)',
         'Breakroom essentials (optional)',
@@ -170,31 +171,30 @@ export const siteConfig = {
 
   serviceFamilies: [
     {
-      title: 'Janitorial & recurring cleaning',
-      description:
-        'Reliable scheduled service for consistent upkeep—ideal for offices, shared spaces, and multi-room suites.',
-      bullets: ['Checklist-driven scope', 'After-hours options', 'Quality follow-up'],
+      title: 'Office Cleaning',
+      description: 'Reliable scheduled cleaning for offices, shared spaces, and multi-room suites.',
+      bullets: ['Recurring schedules', 'After-hours options', 'Checklist-driven'],
       prefillServices: ['Recurring Janitorial (Nightly/Weekly)', 'Office Cleaning'],
     },
     {
-      title: 'Deep / detail cleaning',
+      title: 'Restocking & Supplies',
       description:
-        'A reset for first visits, quarterly maintenance, turnovers, or high-traffic periods.',
-      bullets: ['Detail work', 'Build-up removal', 'Coordinated add-ons'],
-      prefillServices: ['Deep / Detail Cleaning', 'Move-In / Move-Out (Office Turnovers)'],
-    },
-    {
-      title: 'Supplies & restocking',
-      description:
-        'Keep essentials stocked so teams don’t chase paper goods, soap, and breakroom basics.',
-      bullets: ['Inventory checks', 'Restock checklists', 'Reorder notes'],
+        'Keep paper goods, soap, and breakroom essentials stocked so your team never has to chase supplies.',
+      bullets: ['Inventory tracking', 'Restock checklists', 'Delivery coordination'],
       prefillServices: ['Supplies & Restocking'],
     },
     {
-      title: 'Facilities support',
+      title: 'Snacks & Coffee',
       description:
-        'Light support and coordination to keep your workplace running smoothly between vendors.',
-      bullets: ['Punch-list items (scope dependent)', 'Vendor coordination', 'On-site checks'],
+        'Specialty coffee service and curated snack programs to keep your team fueled and happy.',
+      bullets: ['Espresso & specialty drinks', 'Healthy snack options', 'Pantry organization'],
+      prefillServices: ['Supplies & Restocking'],
+    },
+    {
+      title: 'Facilities Support',
+      description:
+        'Light maintenance and coordination to keep your workplace running smoothly between vendors.',
+      bullets: ['Punch-list items', 'Vendor coordination', 'On-site checks'],
       prefillServices: ['Facilities Support'],
     },
   ] satisfies ServiceFamily[],
@@ -283,7 +283,7 @@ export const siteConfig = {
     },
   ] satisfies Service[],
   scope: {
-    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm what’s included before service and provide a clear written quote.',
+    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm whatâ€™s included before service and provide a clear written quote.',
     levels: [
       {
         name: 'Essential',
@@ -348,7 +348,7 @@ export const siteConfig = {
     {
       question: 'Do you bring your own supplies and equipment?',
       answer:
-        'Yes—we bring standard supplies and equipment. If you prefer specific products or your building has requirements, we’ll accommodate.',
+        'Yesâ€”we bring standard supplies and equipment. If you prefer specific products or your building has requirements, weâ€™ll accommodate.',
     },
     {
       question: 'Can you restock paper goods and breakroom supplies?',
@@ -363,7 +363,7 @@ export const siteConfig = {
     {
       question: 'How do you handle quality?',
       answer:
-        'We follow a checklist and encourage feedback. If something was missed, tell us within 24 hours and we’ll work with you to resolve it.',
+        'We follow a checklist and encourage feedback. If something was missed, tell us within 24 hours and weâ€™ll work with you to resolve it.',
     },
   ] satisfies FAQItem[],
   seo: {

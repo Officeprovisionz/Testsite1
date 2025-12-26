@@ -44,14 +44,14 @@ const faqJsonLd = (() => {
   <div class="container-page relative">
     <SectionHeader eyebrow="FAQ" heading={heading} description={description} />
 
-    <div class="mx-auto mt-10 max-w-3xl space-y-3" data-faq>
+    <div class="mx-auto mt-7 max-w-3xl space-y-2" data-faq>
       {
         items.map((it) => (
           <details
             class="group overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-200 open:shadow-md dark:border-brand-800/30 dark:bg-slate-900/50"
             data-faq-item
           >
-            <summary class="text-strong flex w-full cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 text-left font-medium transition-colors hover:bg-brand-50/50 focus-visible:outline-none dark:hover:bg-brand-900/20">
+            <summary class="text-strong flex w-full cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left font-medium transition-colors hover:bg-brand-50/50 focus-visible:outline-none dark:hover:bg-brand-900/20">
               <span>{it.question}</span>
               <svg
                 class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-180"
@@ -65,7 +65,7 @@ const faqJsonLd = (() => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </summary>
-            <div class="border-t border-brand-100/50 px-6 py-5 text-sm leading-relaxed text-muted dark:border-brand-800/30">
+            <div class="border-t border-brand-100/50 px-5 py-4 text-sm leading-relaxed text-muted dark:border-brand-800/30">
               <p>{it.answer}</p>
             </div>
           </details>
@@ -76,7 +76,7 @@ const faqJsonLd = (() => {
 
   {
     showWave ? (
-      <div class="relative -mb-px mt-16">
+      <div class="relative -mb-px mt-12">
         <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
       </div>
     ) : null

@@ -93,11 +93,14 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
 
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">
         <div className="mx-auto max-w-4xl text-center">
-          <h1 className="heading-1 text-balance">For spaces shaped by ambition and expectation.</h1>
+          <h1 className="heading-1 animate-slide-up text-balance font-serif drop-shadow-md">
+            For spaces shaped by ambition and expectation.
+          </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-balance text-lg leading-relaxed text-muted md:text-xl">
-            {siteConfig.brand.tagline} Serving{' '}
-            <span className="text-strong font-semibold">{siteConfig.brand.city}</span>.
+          <p className="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl">
+            Premium commercial cleaning and facility management for{' '}
+            <span className="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
+            environments.
           </p>
         </div>
       </div>

@@ -1,7 +1,7 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
-import { makeMailtoHref } from '@/lib/links';
+import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
 type Props = {
   /**
@@ -34,6 +34,7 @@ type Props = {
 };
 
 const href = makeHref(import.meta.env.BASE_URL);
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
 
 const {
   layout = 'centered',
@@ -67,16 +68,20 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
       <div class="container-page">
         <div
           class:list={[
-            'relative mx-auto max-w-3xl overflow-hidden rounded-[var(--radius-card)] border px-6 py-10 text-center shadow-soft sm:px-10',
+            'glass-card relative mx-auto max-w-3xl overflow-hidden rounded-2xl px-6 py-12 text-center sm:px-12',
             background === 'accent'
-              ? 'border-white/10 bg-white/5'
-              : 'border-app bg-white dark:bg-slate-950/25',
+              ? 'border-white/10 bg-slate-900/80'
+              : 'bg-white/60 dark:bg-slate-900/60',
           ]}
         >
-          <div class="relative">
+          {/* Decorative gradient blob */}
+          <div class="pointer-events-none absolute -left-24 -top-24 h-64 w-64 rounded-full bg-brand-400/20 blur-3xl dark:bg-brand-600/10" />
+          <div class="pointer-events-none absolute -bottom-24 -right-24 h-64 w-64 rounded-full bg-yellow-400/20 blur-3xl dark:bg-yellow-600/10" />
+
+          <div class="relative z-10">
             <h2
               class:list={[
-                'text-2xl font-bold tracking-tight sm:text-3xl',
+                'font-serif text-3xl font-bold tracking-tight sm:text-4xl',
                 background === 'accent' ? 'text-white' : 'text-strong',
               ]}
             >
@@ -84,21 +89,24 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             </h2>
             <p
               class:list={[
-                'mx-auto mt-4 max-w-xl text-base',
-                background === 'accent' ? 'text-white/80' : 'text-muted',
+                'mx-auto mt-6 max-w-xl text-lg leading-relaxed',
+                background === 'accent' ? 'text-slate-300' : 'text-muted',
               ]}
             >
               {description ?? "Request a quote and we'll confirm scope, then send clear pricing."}
             </p>
 
-            <p
-              class:list={[
-                'mt-7 text-sm',
-                background === 'accent' ? 'text-white/75' : 'text-subtle',
-              ]}
-            >
-              Phone and quote request are available in the top menu.
-            </p>
+            <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
+              <a href={href('contact/')} class="btn-gold">
+                Get a Free Quote
+              </a>
+              <a
+                href={telHref}
+                class="text-sm font-medium text-muted transition-colors hover:text-brand-600"
+              >
+                Or call us directly: {siteConfig.contact.phoneDisplay}
+              </a>
+            </div>
 
             <p
               class:list={[

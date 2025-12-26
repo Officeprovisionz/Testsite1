@@ -15,12 +15,14 @@ import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const href = makeHref(import.meta.env.BASE_URL);
 
-// Drop a licensed Golden Gate Bridge sunset photo at:
-//   public/media/hero-golden-gate.jpg
-// It will be served at /media/hero-golden-gate.jpg.
-const heroImage = getPublicResponsiveImage('media/hero-golden-gate.jpg', import.meta.env.BASE_URL, {
-  sizes: '100vw',
-});
+// Homepage hero image: use an existing local stock photo (responsive variants already generated).
+const heroImage = getPublicResponsiveImage(
+  'gallery/services/detail-02.jpg',
+  import.meta.env.BASE_URL,
+  {
+    sizes: '100vw',
+  }
+);
 
 const proofGallery: GalleryItem[] = [
   {

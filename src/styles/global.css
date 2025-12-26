@@ -10,20 +10,20 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Premium Blue + Gold Theme - Enhanced */
-    --color-brand-50: 240 249 255;
-    --color-brand-100: 224 242 254;
-    --color-brand-200: 186 230 253;
-    --color-brand-300: 125 211 252;
-    --color-brand-400: 56 189 248;
-    --color-brand-500: 14 165 233;
-    --color-brand-600: 2 132 199;
-    --color-brand-700: 3 105 161;
-    --color-brand-800: 7 89 133;
-    --color-brand-900: 12 74 110;
-    --color-brand-950: 8 47 73;
+    /* Premium Royal Slate Theme (High-End, Trustworthy, Clean) */
+    --color-brand-50: 240 244 248;
+    --color-brand-100: 217 226 236;
+    --color-brand-200: 188 204 220;
+    --color-brand-300: 159 179 200;
+    --color-brand-400: 130 154 177;
+    --color-brand-500: 98 125 152;
+    --color-brand-600: 72 101 129;
+    --color-brand-700: 51 78 104;
+    --color-brand-800: 36 59 83;
+    --color-brand-900: 16 42 67;
+    --color-brand-950: 8 25 45;
 
-    /* Accent Color (Rich Gold) */
+    /* Accent Color (Champagne Gold - Subtle & Elegant) */
     --color-accent-50: 255 252 235;
     --color-accent-100: 254 245 200;
     --color-accent-200: 253 230 138;
@@ -105,7 +105,7 @@
     color: rgb(var(--color-text));
   }
 
-  /* Global Background Image */
+  /* Global Background Image - Simplified */
   body::before {
     content: '';
     position: fixed;
@@ -114,40 +114,46 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    background-image: url('https://images.unsplash.com/photo-1579546929518-9e396f3cc809?q=80&w=2000&auto=format&fit=crop'); /* Abstract gradient/flow */
-    background-size: cover;
-    background-position: center;
-    opacity: 0.05; /* Very subtle */
+    /* Clean, subtle gradient instead of a busy image */
+    background: radial-gradient(
+      circle at 50% 0%,
+      rgba(var(--color-brand-500), 0.03),
+      transparent 70%
+    );
     pointer-events: none;
   }
 
-  /* Make sections see-through */
+  /* Remove excessive backdrop blurs to reduce visual noise */
   .container-page,
   section,
   header,
   footer {
-    @apply backdrop-blur-[2px];
+    /* Only keep blur on sticky elements if needed, otherwise clean */
+  }
+
+  /* Sticky header needs blur */
+  header.sticky {
+    @apply bg-white/80 backdrop-blur-md dark:bg-slate-950/80;
   }
   /* Forced dark mode */
   :root[data-mode='dark'] {
     color-scheme: dark;
-    /* Dark theme: higher contrast, less muddy, and more consistent with slate-950 meta theme color. */
-    /* Slightly lifted from true-black to avoid crushed shadows and unreadable sections. */
-    --color-bg: 6 10 24;
-    --color-surface: 12 18 38;
-    --color-surface-muted: 9 14 30;
-    --color-border: 56 70 98;
-    --color-text: 248 250 252;
-    --color-text-muted: 203 213 225;
-    --color-text-subtle: 148 163 184;
-    --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
+    /* Premium Dark Theme: Deep Navy/Slate with Gold Accents */
+    --color-bg: 2 6 23; /* Slate-950 */
+    --color-surface: 15 23 42; /* Slate-900 */
+    --color-surface-muted: 30 41 59; /* Slate-800 */
+    --color-border: 51 65 85; /* Slate-700 */
+    --color-text: 241 245 249; /* Slate-100 */
+    --color-text-muted: 148 163 184; /* Slate-400 */
+    --color-text-subtle: 100 116 139; /* Slate-500 */
+    --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.7);
 
-    --glass-border: rgba(255, 255, 255, 0.08);
-    --glass-border-hover: rgba(255, 255, 255, 0.16);
-    --glass-bg-a: rgb(var(--color-surface) / 0.22);
-    --glass-bg-b: rgb(var(--color-surface) / 0.42);
-    --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
-    --glass-shadow-strong: 0 36px 100px -56px rgb(0 0 0 / 0.85);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-border-hover: rgba(255, 255, 255, 0.2);
+    --glass-bg-a: rgba(15, 23, 42, 0.6);
+    --glass-bg-b: rgba(15, 23, 42, 0.8);
+    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    --glass-shadow-strong: 0 35px 60px -15px rgba(0, 0, 0, 0.7);
 
     /* Shadcn Dark Mode */
     --background: 222.2 84% 4.9%;
@@ -169,6 +175,31 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 221 83% 60%;
+  }
+
+  /* Utility Classes for Premium Effects */
+  .text-gradient-gold {
+    @apply bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-600 bg-clip-text text-transparent;
+  }
+
+  .glass-panel {
+    @apply border border-white/20 bg-white/70 shadow-lg backdrop-blur-md dark:border-white/10 dark:bg-slate-900/70;
+  }
+
+  .glass-card {
+    @apply border border-white/20 bg-white/50 shadow-md backdrop-blur-sm transition-all duration-300 hover:bg-white/60 hover:shadow-xl dark:border-white/10 dark:bg-slate-900/50 dark:hover:bg-slate-900/60;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-lg bg-brand-600 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition-all hover:-translate-y-0.5 hover:bg-brand-500 hover:shadow-md focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-600 disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-lg border border-slate-200 bg-white px-5 py-2.5 text-sm font-semibold text-slate-900 shadow-sm transition-all hover:-translate-y-0.5 hover:border-brand-200 hover:bg-slate-50 hover:text-brand-700 hover:shadow-md dark:border-slate-800 dark:bg-slate-950 dark:text-slate-100 dark:hover:bg-slate-900 dark:hover:text-brand-300;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-600 px-6 py-3 text-sm font-bold text-white shadow-lg shadow-yellow-500/20 transition-all hover:-translate-y-0.5 hover:scale-105 hover:shadow-yellow-500/40 active:scale-95;
   }
 
   /* Auto mode: follow system preference unless forced to light */

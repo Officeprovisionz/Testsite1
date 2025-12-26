@@ -14,6 +14,7 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const base = import.meta.env.BASE_URL;
 const href = makeHref(base);
 const isActive = makeIsActive(Astro.url.pathname, base);
+const logoMarkSrc = `${base}brand/logo-mark.svg`;
 
 const navItems = [
   { label: 'Services', href: href('services/') },
@@ -37,6 +38,15 @@ const navItems = [
       class="flex items-center gap-3 text-xl font-bold tracking-tight"
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
+      <img
+        src={logoMarkSrc}
+        alt=""
+        width="28"
+        height="28"
+        loading="eager"
+        decoding="async"
+        class="h-7 w-7"
+      />
       <span class="text-strong hidden sm:inline">{siteConfig.brand.name}</span>
     </a>
 
@@ -120,13 +130,23 @@ const navItems = [
         </summary>
         <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
         ></button>
-        <div class="mobile-menu-panel" id="mobile-menu-panel" role="dialog" aria-label="Menu">
-          <nav class="grid" aria-label="Mobile">
+        <div
+          class="mobile-menu-panel glass-panel border-l border-white/20"
+          id="mobile-menu-panel"
+          role="dialog"
+          aria-label="Menu"
+        >
+          <nav class="grid gap-2 p-4" aria-label="Mobile">
             {
               navItems.map((item) => (
                 <a
                   href={item.href}
-                  class:list={['menu-link', isActive(item.href) ? 'surface-muted text-strong' : '']}
+                  class:list={[
+                    'block rounded-lg px-4 py-3 text-lg font-medium transition-colors hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-white/10 dark:hover:text-brand-300',
+                    isActive(item.href)
+                      ? 'bg-brand-50 text-brand-700 dark:bg-white/10 dark:text-brand-300'
+                      : 'text-muted',
+                  ]}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                 >
                   {item.label}
@@ -134,21 +154,23 @@ const navItems = [
               ))
             }
           </nav>
-          <div class="border-app border-t p-2">
+          <div class="grid grid-cols-2 gap-4 border-t border-white/10 p-4">
             <button
               type="button"
-              class="menu-link w-full text-left"
+              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
               data-theme-toggle
               aria-label="Change theme"
             >
+              <span class="sr-only">Theme</span>
               Theme
             </button>
             <button
               type="button"
-              class="menu-link w-full text-left"
+              class="flex items-center justify-center gap-2 rounded-lg bg-slate-100 px-4 py-3 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:hover:bg-slate-700"
               data-mode-toggle
               aria-label="Change color mode"
             >
+              <span class="sr-only">Mode</span>
               Mode
             </button>
           </div>

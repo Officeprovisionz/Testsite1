@@ -6,45 +6,42 @@ type Props = {
 const { class: className } = Astro.props;
 ---
 
-<div class:list={['pointer-events-none py-6 md:py-8', className]} aria-hidden="true">
+<div class:list={['pointer-events-none py-8 md:py-10 lg:py-12', className]} aria-hidden="true">
   <div class="container-page">
-    <div class="text-brand-400/55 dark:text-brand-300/45">
+    <div class="text-brand-400/60 dark:text-brand-300/50">
       <svg
         width="100%"
-        height="60"
-        viewBox="0 0 1000 60"
+        height="70"
+        viewBox="0 0 1000 70"
         preserveAspectRatio="none"
         role="presentation"
-        class="opacity-90"
+        class="opacity-95"
       >
         <!-- Main suspension cables (double arc) -->
         <path
-          d="M0 10 Q 500 60 1000 10"
+          d="M0 12 Q 500 68 1000 12"
           fill="none"
           stroke="currentColor"
-          stroke-width="2"
+          stroke-width="2.5"
           stroke-linecap="round"
-          class="text-brand-500/80"></path>
+          class="text-brand-500/85"></path>
 
         <!-- Secondary cable for depth -->
         <path
-          d="M0 15 Q 500 65 1000 15"
+          d="M0 17 Q 500 73 1000 17"
           fill="none"
           stroke="currentColor"
-          stroke-width="1"
+          stroke-width="1.5"
           stroke-linecap="round"
-          class="text-brand-400/50"></path>
+          class="text-brand-400/55"></path>
 
         <!-- Vertical hangers (dense and varying) -->
-        <g stroke="currentColor" stroke-width="0.5" class="text-brand-300/40">
+        <g stroke="currentColor" stroke-width="0.6" class="text-brand-300/45">
           {
             Array.from({ length: 50 }).map((_, i) => {
               const x = 20 + i * 19.6;
-              // Parabolic curve approximation: y = a(x-h)^2 + k
-              // Vertex at (500, 60) roughly.
-              // Let's approximate the yStart on the curve.
-              const yCurve = 10 + 50 * Math.pow((x - 500) / 500, 2);
-              return <line x1={x} y1={yCurve} x2={x} y2={60} />;
+              const yCurve = 12 + 56 * Math.pow((x - 500) / 500, 2);
+              return <line x1={x} y1={yCurve} x2={x} y2={68} />;
             })
           }
         </g>
@@ -52,12 +49,12 @@ const { class: className } = Astro.props;
         <!-- Road deck -->
         <line
           x1="0"
-          y1="58"
+          y1="66"
           x2="1000"
-          y2="58"
+          y2="66"
           stroke="currentColor"
-          stroke-width="2"
-          class="text-brand-500/30"></line>
+          stroke-width="2.5"
+          class="text-brand-500/35"></line>
       </svg>
     </div>
   </div>

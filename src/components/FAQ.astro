@@ -48,10 +48,10 @@ const faqJsonLd = (() => {
       {
         items.map((it) => (
           <details
-            class="group overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-200 open:shadow-md dark:border-brand-800/30 dark:bg-slate-900/50"
+            class="group overflow-hidden rounded-2xl border border-brand-100/60 bg-white/90 shadow-sm backdrop-blur-sm transition-all duration-300 open:border-brand-200 open:shadow-lg hover:border-brand-200 hover:shadow-md dark:border-brand-800/30 dark:bg-slate-900/60 dark:open:border-brand-700/50 dark:hover:border-brand-700/50"
             data-faq-item
           >
-            <summary class="text-strong flex w-full cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left font-medium transition-colors hover:bg-brand-50/50 focus-visible:outline-none dark:hover:bg-brand-900/20 lg:px-7 lg:py-5 lg:text-lg">
+            <summary class="text-strong flex w-full cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left font-medium transition-all hover:bg-brand-50/60 focus-visible:outline-none dark:hover:bg-brand-900/25 lg:px-7 lg:py-5 lg:text-lg">
               <span>{it.question}</span>
               <svg
                 class="h-5 w-5 shrink-0 text-brand-500 transition-transform duration-200 group-open:rotate-180"
@@ -65,7 +65,7 @@ const faqJsonLd = (() => {
                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
               </svg>
             </summary>
-            <div class="border-t border-brand-100/50 px-5 py-4 text-sm leading-relaxed text-muted dark:border-brand-800/30 lg:px-7 lg:py-5 lg:text-base">
+            <div class="border-t border-brand-100/60 bg-brand-50/30 px-5 py-4 text-sm leading-relaxed text-muted dark:border-brand-800/30 dark:bg-brand-950/20 lg:px-7 lg:py-5 lg:text-base lg:leading-relaxed">
               <p>{it.answer}</p>
             </div>
           </details>

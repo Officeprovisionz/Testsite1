@@ -9,10 +9,15 @@ import ConversionStrip from '@/components/ConversionStrip.astro';
 import Gallery from '@/components/Gallery.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const title = `About | ${siteConfig.brand.name}`;
 const description =
   'Commercial-grade cleaning focused on clear communication, consistent checklists, and respectful service.';
+
+const heroImage = getPublicResponsiveImage('gallery/01.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 ---
 
 <BaseLayout title={title} description={description}>
@@ -24,6 +29,8 @@ const description =
     description="We’re built for reliability: clear communication, consistent checklists, and a team that respects your space."
     imageSrc="gallery/01.jpg"
     imageAlt="Clean, modern office reception area"
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
   />
 
   <section class="section section-creative scroll-mt-20 pb-0" id="how-we-work">

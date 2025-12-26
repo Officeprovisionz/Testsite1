@@ -7,6 +7,10 @@ interface PageHeroProProps {
   description: string;
   /** Optional background image path relative to `public/` (no leading slash), e.g. "gallery/04.jpg". */
   imageSrc?: string;
+  /** Optional responsive srcset for the background image (URLs should already include BASE_URL). */
+  imageSrcSet?: string | undefined;
+  /** Optional sizes for the background image when using srcset. */
+  imageSizes?: string | undefined;
   /** Decorative background: leave empty to hide from screen readers. */
   imageAlt?: string;
   /** CSS `object-position` value, e.g. "50% 40%". */
@@ -27,6 +31,8 @@ export const PageHeroPro = ({
   title,
   description,
   imageSrc,
+  imageSrcSet,
+  imageSizes,
   imageAlt = '',
   imagePosition = '50% 40%',
   className,
@@ -47,6 +53,8 @@ export const PageHeroPro = ({
           <img
             src={resolvedImageSrc}
             alt={imageAlt}
+            srcSet={imageSrcSet}
+            sizes={imageSrcSet ? imageSizes : undefined}
             decoding="async"
             fetchPriority="high"
             loading="eager"

@@ -17,9 +17,10 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
 {
   !hidden ? (
     <div
-      class="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[max(0.75rem,env(safe-area-inset-bottom))]"
+      class="pointer-events-none fixed inset-x-0 bottom-0 z-40 pb-[max(0.75rem,env(safe-area-inset-bottom))] transition-all duration-200 ease-out"
       aria-hidden="false"
       data-sticky-actions
+      data-hidden="false"
     >
       <div class="container-page">
         <div class="border-app pointer-events-auto mx-auto w-full max-w-lg rounded-[var(--radius-card)] border bg-white p-2 shadow-soft dark:bg-slate-950/30">
@@ -44,3 +45,41 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
     </div>
   ) : null
 }
+
+<script>
+  (() => {
+    const bar = document.querySelector<HTMLElement>('[data-sticky-actions]');
+    if (!bar) return;
+
+    // Smooth hide/show without removing from layout.
+    const setHidden = (hidden: boolean) => {
+      bar.setAttribute('data-hidden', hidden ? 'true' : 'false');
+      if (!hidden) {
+        bar.style.opacity = '1';
+        bar.style.transform = 'translateY(0)';
+        return;
+      }
+      bar.style.opacity = '0';
+      bar.style.transform = 'translateY(14px)';
+    };
+
+    // Hide when the footer is visible (prevents overlapping the footer content).
+    const footer = document.querySelector('footer');
+    if (!footer || typeof IntersectionObserver !== 'function') return;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const anyVisible = entries.some((e) => e.isIntersecting);
+        setHidden(anyVisible);
+      },
+      {
+        root: null,
+        // Start hiding a little before the footer fully enters.
+        rootMargin: '0px 0px -20% 0px',
+        threshold: 0.01,
+      }
+    );
+
+    io.observe(footer);
+  })();
+</script>

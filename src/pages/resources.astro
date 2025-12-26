@@ -6,12 +6,17 @@ import { PageHeroPro } from '@/components/PageHeroPro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const title = `Resources | ${siteConfig.brand.name}`;
 const description =
   'Checklists and practical guides for office cleaning scope, walkthroughs, and setting expectations. Print-friendly and built for busy teams.';
 
 const href = makeHref(import.meta.env.BASE_URL);
+
+const heroImage = getPublicResponsiveImage('gallery/06.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 
 const resources = [
   {
@@ -54,6 +59,8 @@ const resources = [
     description="Practical, print-friendly tools to scope cleaning and keep expectations clear."
     imageSrc="gallery/06.jpg"
     imageAlt="Supplies shelves organized and inventory checked"
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
   />
 
   <section class="section">
@@ -64,7 +71,6 @@ const resources = [
         heading="Make scope crystal clear"
         description="Pros keep it simple: written scope, checklists, and consistent follow-up. These resources help you do exactly that."
       >
-        <a slot="actions" class="btn-primary" href={href('contact/')}>Request a quote</a>
         <a slot="actions" class="btn-secondary" href={href('services/')}>See services</a>
       </SectionHeader>
 
@@ -100,7 +106,6 @@ const resources = [
           a clear written quote.
         </p>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row">
-          <a class="btn-primary" href={href('contact/')}>Request a quote</a>
           <a class="btn-secondary" href={href('industries/')}>Industries we serve</a>
         </div>
       </div>

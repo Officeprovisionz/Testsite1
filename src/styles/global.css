@@ -522,6 +522,21 @@
     z-index: 1;
   }
 
+  /* --- Mobile sticky actions behavior --- */
+  :root[data-scroll-lock='true'] [data-sticky-actions] {
+    display: none;
+  }
+
+  :root[data-modal-open='true'] [data-sticky-actions] {
+    display: none;
+  }
+
+  [data-sticky-actions][data-hidden='true'] {
+    opacity: 0;
+    transform: translateY(14px);
+    pointer-events: none;
+  }
+
   /* Slightly darker in dark mode for that “premium” hero feel */
   :root[data-mode='dark'] .hero-splash {
     background: linear-gradient(180deg, rgb(var(--color-surface) / 0.35), rgb(var(--color-bg)) 70%);

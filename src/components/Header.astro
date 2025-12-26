@@ -23,7 +23,7 @@ const navItems = [
   { label: 'Contact', href: href('contact/') },
 ];
 
-const logoMarkSrc = `${base}brand/logo-mark.svg`;
+const logoMarkSrc = `${base}brand/logo-orb.svg`;
 ---
 
 <header
@@ -74,17 +74,50 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
       }
     </nav>
 
-    <details class="relative md:hidden" data-mobile-menu>
-      <summary
-        class="btn-secondary cursor-pointer list-none px-3 py-2"
-        aria-label="Open menu"
-        aria-controls="mobile-menu-panel"
-        aria-expanded="false"
-        data-menu-summary
+    <div class="flex items-center gap-2">
+      <a
+        class="btn-secondary hidden sm:inline-flex"
+        href={telHref}
+        aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
       >
-        <span class="sr-only">Open menu</span>
-        <span aria-hidden="true" class="inline-flex items-center gap-2">
-          <span class="text-sm font-semibold">Menu</span>
+        {siteConfig.contact.phoneDisplay}
+      </a>
+      <a
+        class="icon-btn sm:hidden"
+        href={telHref}
+        aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="h-5 w-5"
+          aria-hidden="true"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.51a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.57-1.06a2 2 0 0 1 2.11-.45c.81.24 1.65.42 2.51.54A2 2 0 0 1 22 16.92z"
+          ></path>
+        </svg>
+      </a>
+
+      <a class="btn-primary px-4 sm:px-6" href={href('contact/')}>
+        <span class="sm:hidden">Quote</span>
+        <span class="hidden sm:inline">Request a quote</span>
+      </a>
+
+      <details class="relative md:hidden" data-mobile-menu>
+        <summary
+          class="icon-btn cursor-pointer list-none"
+          aria-label="Open menu"
+          aria-controls="mobile-menu-panel"
+          aria-expanded="false"
+          data-menu-summary
+        >
+          <span class="sr-only">Open menu</span>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 24 24"
@@ -92,75 +125,50 @@ const logoMarkSrc = `${base}brand/logo-mark.svg`;
             stroke="currentColor"
             stroke-width="2"
             stroke-linecap="round"
-            class="h-4 w-4"
+            class="h-5 w-5"
+            aria-hidden="true"
           >
             <path d="M4 7h16"></path>
             <path d="M4 12h16"></path>
             <path d="M4 17h16"></path>
           </svg>
-        </span>
-      </summary>
-      <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
-      ></button>
-      <div class="mobile-menu-panel" id="mobile-menu-panel" role="dialog" aria-label="Menu">
-        <nav class="grid" aria-label="Mobile">
-          {
-            navItems.map((item) => (
-              <a
-                href={item.href}
-                class:list={['menu-link', isActive(item.href) ? 'surface-muted text-strong' : '']}
-                aria-current={isActive(item.href) ? 'page' : undefined}
-              >
-                {item.label}
-              </a>
-            ))
-          }
-        </nav>
-        <div class="border-app border-t p-2">
-          <button
-            type="button"
-            class="menu-link w-full text-left"
-            data-theme-toggle
-            aria-label="Change theme"
-          >
-            Theme
-          </button>
-          <button
-            type="button"
-            class="menu-link w-full text-left"
-            data-mode-toggle
-            aria-label="Change color mode"
-          >
-            Mode
-          </button>
+        </summary>
+        <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
+        ></button>
+        <div class="mobile-menu-panel" id="mobile-menu-panel" role="dialog" aria-label="Menu">
+          <nav class="grid" aria-label="Mobile">
+            {
+              navItems.map((item) => (
+                <a
+                  href={item.href}
+                  class:list={['menu-link', isActive(item.href) ? 'surface-muted text-strong' : '']}
+                  aria-current={isActive(item.href) ? 'page' : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+          <div class="border-app border-t p-2">
+            <button
+              type="button"
+              class="menu-link w-full text-left"
+              data-theme-toggle
+              aria-label="Change theme"
+            >
+              Theme
+            </button>
+            <button
+              type="button"
+              class="menu-link w-full text-left"
+              data-mode-toggle
+              aria-label="Change color mode"
+            >
+              Mode
+            </button>
+          </div>
         </div>
-      </div>
-    </details>
-
-    <div class="flex items-center gap-2">
-      <button
-        type="button"
-        class="icon-btn hidden sm:inline-flex"
-        aria-label="Change theme"
-        data-theme-toggle
-        title="Change theme"
-      >
-        Theme
-      </button>
-      <button
-        type="button"
-        class="icon-btn hidden sm:inline-flex"
-        aria-label="Change color mode"
-        data-mode-toggle
-        title="Change color mode"
-      >
-        Mode
-      </button>
-      <a class="btn-secondary hidden sm:inline-flex" href={telHref}>Call/Text</a>
-      <a class="btn-primary px-4 sm:px-6" href={href('contact/')}>
-        <span class="sm:hidden">Quote</span>
-        <span class="hidden sm:inline">Request a quote</span>
-      </a>
+      </details>
     </div>
   </div>
 </header>

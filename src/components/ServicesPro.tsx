@@ -56,13 +56,25 @@ const RotatingHeaderImage = ({
 
   const src = pool[idx] ?? pool[0] ?? '';
 
+  const srcSet = (() => {
+    if (!src) return undefined;
+    if (!/\.jpe?g$/i.test(src)) return undefined;
+    const stem = src.replace(/\.jpe?g$/i, '');
+    const ext = src.toLowerCase().endsWith('.jpeg') ? '.jpeg' : '.jpg';
+    const widths = [640, 960, 1280, 1600, 1920];
+    return widths.map((w) => `${stem}-${w}${ext} ${w}w`).join(', ');
+  })();
+
   return (
     <img
       key={src}
       src={src}
+      srcSet={srcSet}
+      sizes={srcSet ? '(min-width: 768px) 520px, 100vw' : undefined}
       alt={alt}
       loading="lazy"
       decoding="async"
+      fetchPriority="low"
       className="damra-fade-in absolute inset-0 h-full w-full object-cover opacity-90"
       onError={(e) => {
         // If the JPG is missing (e.g., before running gallery:fetch), fall back to the SVG placeholder.

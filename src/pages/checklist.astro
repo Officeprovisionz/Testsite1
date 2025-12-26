@@ -5,10 +5,15 @@ import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const title = `Office cleaning checklist | ${siteConfig.brand.name}`;
 const description =
   'A practical office cleaning checklist you can use for walkthroughs, vendor comparisons, and ongoing quality checks.';
+
+const heroImage = getPublicResponsiveImage('gallery/03.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 
 const core = siteConfig.whatIncluded;
 const addOns = [
@@ -30,6 +35,8 @@ const addOns = [
     description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
     imageSrc="gallery/03.jpg"
     imageAlt="Breakroom and restroom supplies restocked and staged"
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
   />
 
   <section class="section">

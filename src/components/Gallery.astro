@@ -3,6 +3,7 @@ import { galleryItems } from '@/data/gallery';
 import type { GalleryItem } from '@/data/gallery';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 type Props = {
   id?: string;
@@ -58,6 +59,20 @@ const toPublicUrl = (src: string) => {
   const cleaned = src.replace(/^\/+/, '');
   return `${base}${cleaned}`;
 };
+
+const getImgAttrs = (src: string) => {
+  // Allow absolute URLs
+  if (/^https?:\/\//i.test(src)) return { src, srcSet: undefined, sizes: undefined };
+
+  const cleaned = src.replace(/^\/+/, '');
+  if (/\.jpe?g$/i.test(cleaned)) {
+    return getPublicResponsiveImage(cleaned, base, {
+      sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
+    });
+  }
+
+  return { src: `${base}${cleaned}`, srcSet: undefined, sizes: undefined };
+};
 ---
 
 <section id={id} class="section section-creative scroll-mt-20 pb-0">
@@ -96,49 +111,58 @@ const toPublicUrl = (src: string) => {
 
     <div class="mt-10 grid gap-5 md:grid-cols-2 xl:grid-cols-3" data-gallery>
       {
-        resolvedItems.map((it, idx) => (
-          <a
-            href={toPublicUrl(it.src)}
-            class:list={[
-              'group overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-brand-200 hover:shadow-lg dark:border-brand-800/30 dark:bg-slate-900/50',
-              variant === 'overlay' ? 'relative' : '',
-            ]}
-            data-gallery-item
-            data-gallery-index={String(idx)}
-          >
-            <div class="relative aspect-[4/3] overflow-hidden">
-              <img
-                src={toPublicUrl(it.src)}
-                alt={it.alt}
-                loading="lazy"
-                decoding="async"
-                sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-                class="gallery-hover-zoom h-full w-full object-cover"
-              />
+        resolvedItems.map((it, idx) => {
+          const attrs = getImgAttrs(it.src);
+          return (
+            <a
+              href={toPublicUrl(it.src)}
+              class:list={[
+                'group overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-brand-200 hover:shadow-lg dark:border-brand-800/30 dark:bg-slate-900/50',
+                variant === 'overlay' ? 'relative' : '',
+              ]}
+              data-gallery-item
+              data-gallery-index={String(idx)}
+            >
+              <div class="relative aspect-[4/3] overflow-hidden">
+                <img
+                  src={attrs.src}
+                  srcset={attrs.srcSet}
+                  alt={it.alt}
+                  loading="lazy"
+                  decoding="async"
+                  fetchpriority="low"
+                  sizes={
+                    attrs.srcSet
+                      ? attrs.sizes
+                      : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+                  }
+                  class="gallery-hover-zoom h-full w-full object-cover"
+                />
 
-              {variant === 'overlay' ? (
-                <>
-                  <div
-                    aria-hidden="true"
-                    class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"
-                  />
-                  <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5">
-                    <p class="text-sm font-semibold tracking-tight text-white">
-                      {it.caption ?? 'Project photo'}
-                    </p>
-                    <p class="mt-1 line-clamp-2 text-xs text-white/75">{it.alt}</p>
-                  </div>
-                </>
-              ) : null}
-            </div>
-            {variant === 'below' ? (
-              <div class="p-5">
-                <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
-                <p class="mt-1 text-sm text-muted">{it.alt}</p>
+                {variant === 'overlay' ? (
+                  <>
+                    <div
+                      aria-hidden="true"
+                      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"
+                    />
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5">
+                      <p class="text-sm font-semibold tracking-tight text-white">
+                        {it.caption ?? 'Project photo'}
+                      </p>
+                      <p class="mt-1 line-clamp-2 text-xs text-white/75">{it.alt}</p>
+                    </div>
+                  </>
+                ) : null}
               </div>
-            ) : null}
-          </a>
-        ))
+              {variant === 'below' ? (
+                <div class="p-5">
+                  <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
+                  <p class="mt-1 text-sm text-muted">{it.alt}</p>
+                </div>
+              ) : null}
+            </a>
+          );
+        })
       }
     </div>
 
@@ -146,12 +170,26 @@ const toPublicUrl = (src: string) => {
       class="glass-card max-h-[calc(100dvh-2rem)] w-[calc(100%-1.25rem)] max-w-none overflow-hidden rounded-2xl p-0 sm:w-full sm:max-w-3xl"
       data-lightbox
     >
-      <div class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4">
+      <div
+        class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
+        data-lightbox-chrome
+      >
         <div class="min-w-0">
           <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>Preview</p>
           <p class="text-subtle mt-0.5 text-xs" data-lightbox-count></p>
         </div>
         <div class="flex flex-wrap items-center gap-2">
+          <button type="button" class="btn-secondary px-3 py-2" data-share aria-label="Share photo">
+            Share
+          </button>
+          <button
+            type="button"
+            class="btn-secondary px-3 py-2"
+            data-copy
+            aria-label="Copy photo link"
+          >
+            Copy link
+          </button>
           <button
             type="button"
             class="btn-secondary px-3 py-2"
@@ -166,13 +204,15 @@ const toPublicUrl = (src: string) => {
           <button type="button" class="btn-secondary px-3 py-2" data-close>Close</button>
         </div>
       </div>
-      <figure class="grid max-h-[calc(100dvh-9rem)] gap-3 overflow-auto p-5">
+      <figure class="grid max-h-[calc(100dvh-9rem)] gap-3 overflow-auto p-5" data-lightbox-figure>
         <img
           data-lightbox-img
           alt=""
           class="border-app surface-muted mx-auto h-auto max-h-[min(68dvh,720px)] w-auto max-w-full rounded-xl border object-contain"
         />
-        <figcaption class="text-sm text-muted" data-lightbox-caption></figcaption>
+        <figcaption class="text-sm text-muted" data-lightbox-caption data-lightbox-chrome>
+        </figcaption>
+        <p class="sr-only" aria-live="polite" data-lightbox-toast></p>
       </figure>
     </dialog>
   </div>
@@ -197,6 +237,10 @@ const toPublicUrl = (src: string) => {
       const closeBtn = dialog.querySelector('[data-close]') as HTMLButtonElement | null;
       const prevBtn = dialog.querySelector('[data-prev]') as HTMLButtonElement | null;
       const nextBtn = dialog.querySelector('[data-next]') as HTMLButtonElement | null;
+      const shareBtn = dialog.querySelector('[data-share]') as HTMLButtonElement | null;
+      const copyBtn = dialog.querySelector('[data-copy]') as HTMLButtonElement | null;
+      const toast = dialog.querySelector('[data-lightbox-toast]') as HTMLElement | null;
+      const figure = dialog.querySelector('[data-lightbox-figure]') as HTMLElement | null;
 
       const items = links.map((a) => {
         const href = a.getAttribute('href') || '';
@@ -210,17 +254,20 @@ const toPublicUrl = (src: string) => {
       let previousOverflow: string | null = null;
       let previousScrollLock: string | null = null;
       let lastFocused: HTMLElement | null = null;
+      let toastTimer: number | undefined;
 
       const setScrollLock = (locked: boolean) => {
         const el = document.documentElement;
         if (locked) {
           if (previousScrollLock === null) previousScrollLock = el.dataset.scrollLock ?? null;
           el.dataset.scrollLock = 'true';
+          el.dataset.modalOpen = 'true';
           if (previousOverflow === null) previousOverflow = el.style.overflow || '';
           el.style.overflow = 'hidden';
         } else {
           if (previousOverflow !== null) el.style.overflow = previousOverflow;
           previousOverflow = null;
+          delete el.dataset.modalOpen;
           if (previousScrollLock !== null) {
             if (previousScrollLock === '') delete el.dataset.scrollLock;
             else el.dataset.scrollLock = previousScrollLock;
@@ -229,6 +276,15 @@ const toPublicUrl = (src: string) => {
           }
           previousScrollLock = null;
         }
+      };
+
+      const showToast = (message: string) => {
+        if (!toast) return;
+        toast.textContent = message;
+        if (typeof toastTimer === 'number') window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => {
+          toast.textContent = '';
+        }, 1800);
       };
 
       const getFocusables = () => {
@@ -278,6 +334,36 @@ const toPublicUrl = (src: string) => {
         setContent(currentIndex + delta);
       };
 
+      const currentHref = () => {
+        const it = items[currentIndex];
+        return it?.href ?? '';
+      };
+
+      const currentShareTitle = () => {
+        const it = items[currentIndex];
+        return it?.caption ? it.caption : 'Photo';
+      };
+
+      const copyToClipboard = async (text: string) => {
+        try {
+          if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+            await navigator.clipboard.writeText(text);
+            showToast('Link copied.');
+            return true;
+          }
+        } catch {
+          // fall through
+        }
+        // Fallback: no clipboard access. Provide a manual copy affordance.
+        try {
+          window.prompt('Copy this link:', text);
+          showToast('Copy manually.');
+        } catch {
+          showToast('Copy failed.');
+        }
+        return false;
+      };
+
       // Swipe support (mobile)
       let touchStartX = 0;
       let touchStartY = 0;
@@ -298,6 +384,26 @@ const toPublicUrl = (src: string) => {
         else go(1);
       };
 
+      const onSwipeDownToClose = (e: TouchEvent) => {
+        const t = e.changedTouches?.[0];
+        if (!t) return;
+        const dx = t.clientX - touchStartX;
+        const dy = t.clientY - touchStartY;
+        // Only close on a fairly decisive vertical gesture.
+        if (Math.abs(dy) < 120 || Math.abs(dx) > 60) return;
+        if (dy > 0) close();
+      };
+
+      const toggleChrome = () => {
+        const next = dialog.getAttribute('data-ui') === 'hidden' ? 'shown' : 'hidden';
+        dialog.setAttribute('data-ui', next);
+        const chromes = dialog.querySelectorAll<HTMLElement>('[data-lightbox-chrome]');
+        chromes.forEach((el) => {
+          el.style.opacity = next === 'hidden' ? '0' : '1';
+          el.style.pointerEvents = next === 'hidden' ? 'none' : '';
+        });
+      };
+
       links.forEach((a) => {
         a.addEventListener('click', (e) => {
           e.preventDefault();
@@ -310,6 +416,34 @@ const toPublicUrl = (src: string) => {
       closeBtn?.addEventListener('click', close);
       prevBtn?.addEventListener('click', () => go(-1));
       nextBtn?.addEventListener('click', () => go(1));
+      shareBtn?.addEventListener('click', async () => {
+        const url = currentHref();
+        if (!url) return;
+
+        try {
+          if (navigator.share) {
+            await navigator.share({ title: currentShareTitle(), url });
+            showToast('Shared.');
+            return;
+          }
+        } catch {
+          // share aborted or unavailable
+        }
+
+        await copyToClipboard(url);
+      });
+      copyBtn?.addEventListener('click', async () => {
+        const url = currentHref();
+        if (!url) return;
+        await copyToClipboard(url);
+      });
+
+      // Tap image area to hide/show chrome (nice on mobile).
+      figure?.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement | null;
+        if (target?.tagName?.toLowerCase() === 'button') return;
+        toggleChrome();
+      });
       dialog.addEventListener('click', (e) => {
         // Click outside the modal content closes it.
         if (e.target === dialog) close();
@@ -317,6 +451,7 @@ const toPublicUrl = (src: string) => {
       dialog.addEventListener('close', () => setScrollLock(false));
       dialog.addEventListener('touchstart', onTouchStart, { passive: true });
       dialog.addEventListener('touchend', onTouchEnd, { passive: true });
+      dialog.addEventListener('touchend', onSwipeDownToClose, { passive: true });
 
       document.addEventListener('keydown', (e) => {
         const isOpen = dialog.open || dialog.hasAttribute('open');

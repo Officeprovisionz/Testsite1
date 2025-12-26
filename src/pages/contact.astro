@@ -7,6 +7,7 @@ import ContactSection from '@/components/Contact.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { makeMailtoHref, makeTelHref } from '@/lib/links';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const title = `Contact | ${siteConfig.brand.name}`;
 const description =
@@ -15,6 +16,10 @@ const description =
 const href = makeHref(import.meta.env.BASE_URL);
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
+
+const heroImage = getPublicResponsiveImage('gallery/07.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,6 +31,8 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
     description="Request a quote or ask a question. We’ll confirm scope, timing, and send a clear written quote before service."
     imageSrc="gallery/07.jpg"
     imageAlt="Clean, organized office workstations"
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
   />
 
   <section class="section section-creative scroll-mt-20 pb-0">

@@ -11,8 +11,13 @@ import { getGalleryImageSrc } from '@/data/gallery';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { makeHref } from '@/lib/nav';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const href = makeHref(import.meta.env.BASE_URL);
+
+const heroImage = getPublicResponsiveImage('gallery/01.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 
 const proofGallery: GalleryItem[] = [
   {
@@ -65,7 +70,12 @@ const proofGallery: GalleryItem[] = [
 
 <BaseLayout>
   <Header slot="header" transparent={true} />
-  <HeroPro client:load />
+  <HeroPro
+    client:load
+    imageSrc={heroImage.src}
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
+  />
 
   <BridgeDivider />
 

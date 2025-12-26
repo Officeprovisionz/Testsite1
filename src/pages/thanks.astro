@@ -4,10 +4,9 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
-import { makeTelHref, makeMailtoHref } from '@/lib/links';
+import { makeMailtoHref } from '@/lib/links';
 
 const href = makeHref(import.meta.env.BASE_URL);
-const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 ---
 
@@ -54,9 +53,6 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               <a class="btn-accent" href={href('checklist/')}> View our checklist </a>
 
               <div class="flex flex-col gap-2 sm:flex-row">
-                <a class="btn-secondary" href={telHref}
-                  >Call/Text {siteConfig.contact.phoneDisplay}</a
-                >
                 <a class="btn-secondary" href={mailtoHref}>Email us</a>
               </div>
             </div>

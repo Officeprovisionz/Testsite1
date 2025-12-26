@@ -8,6 +8,8 @@ const OUT_DIR = path.join(ROOT, 'public', 'gallery');
 const OUT_SERVICES_DIR = path.join(OUT_DIR, 'services');
 const ATTRIBUTION_PATH = path.join(OUT_DIR, 'ATTRIBUTION.txt');
 
+const RESPONSIVE_WIDTHS = [640, 960, 1280, 1600, 1920, 2560, 3840];
+
 function parseDotEnv(contents) {
   const out = {};
   for (const rawLine of contents.split(/\r?\n/)) {
@@ -291,12 +293,33 @@ async function main() {
 
     const buf = await downloadBuffer(srcUrl);
 
-    // Downscale to 4K max-width to keep files reasonable but still high-res.
     const image = sharp(buf).rotate();
     const meta = await image.metadata();
-    const pipeline = meta.width && meta.width > 3840 ? image.resize({ width: 3840 }) : image;
 
-    await pipeline.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
+    // Downscale to 4K max-width to keep files reasonable but still high-res.
+    const maxWidth = meta.width && meta.width > 3840 ? 3840 : meta.width;
+    const base = maxWidth ? image.resize({ width: maxWidth }) : image;
+
+    // 1) Write the primary image (kept for back-compat paths like gallery/01.jpg).
+    await base.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
+
+    // 2) Write responsive variants for srcset usage.
+    // Naming: <name>-<width>.jpg next to the primary file.
+    const ext = path.extname(outPath);
+    const stem = outPath.slice(0, -ext.length);
+    const availableMax = typeof maxWidth === 'number' && maxWidth > 0 ? maxWidth : 3840;
+
+    const widths = RESPONSIVE_WIDTHS.filter((w) => w <= availableMax);
+    for (const w of widths) {
+      const variantPath = `${stem}-${w}${ext}`;
+      // Avoid unnecessary re-encoding if the primary image already matches this width.
+      if (w === availableMax && variantPath === outPath) continue;
+      await sharp(buf)
+        .rotate()
+        .resize({ width: w, withoutEnlargement: true })
+        .jpeg({ quality: 80, progressive: true, mozjpeg: true })
+        .toFile(variantPath);
+    }
   };
 
   for (let i = 0; i < slots.length; i++) {

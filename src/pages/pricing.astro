@@ -9,10 +9,15 @@ import FAQ from '@/components/FAQ.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
 
 const title = `Scope & process | ${siteConfig.brand.name}`;
 const description =
   'How service scope works: walkthrough, checklist, access, frequency, and add-ons. Get a clear scope and a written quote before service.';
+
+const heroImage = getPublicResponsiveImage('gallery/02.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 ---
 
 <BaseLayout title={title} description={description}>
@@ -24,6 +29,8 @@ const description =
     description="We confirm what’s included before service. Share your space and schedule and we’ll send a clear written quote."
     imageSrc="gallery/02.jpg"
     imageAlt="Conference room reset and ready for the next meeting"
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
   />
 
   <section class="section section-creative scroll-mt-20 pb-0">

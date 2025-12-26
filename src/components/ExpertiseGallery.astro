@@ -1,0 +1,178 @@
+---
+/**
+ * ExpertiseGallery - Combined expertise + gallery section
+ * Shows 4 large image cards with titles and descriptions
+ * Mobile-first responsive grid layout
+ */
+import { getPublicResponsiveImage } from '@/lib/publicImages';
+
+type ExpertiseItem = {
+  src: string;
+  title: string;
+  description: string;
+  alt: string;
+};
+
+type Props = {
+  id?: string;
+  eyebrow?: string;
+  heading?: string;
+  subheading?: string;
+  items?: ExpertiseItem[];
+};
+
+const {
+  id = 'expertise',
+  eyebrow = 'What we do',
+  heading = 'Our Expertise',
+  subheading = 'Comprehensive facility solutions tailored to your standards.',
+  items = [
+    {
+      src: 'gallery/01.jpg',
+      title: 'Office Cleaning',
+      description:
+        'Routine cleaning to keep your workspace client-ready and team-friendly. Work areas, restrooms, and common spaces—handled consistently.',
+      alt: 'Modern clean office interior with organized workspace',
+    },
+    {
+      src: 'gallery/02.jpg',
+      title: 'Professional Janitorial',
+      description:
+        'Scheduled service for consistent upkeep—ideal for busy offices. High-touch sanitizing, trash removal, and checklist verification.',
+      alt: 'Professional office cleaning service in action',
+    },
+    {
+      src: 'gallery/03.jpg',
+      title: 'Coffee, Snacks & Restocking',
+      description:
+        'Breakroom essentials handled. Specialty coffee, snacks, paper goods, and supplies—restocked so your team stays fueled.',
+      alt: 'Office coffee, snacks, and supplies fully stocked',
+    },
+    {
+      src: 'gallery/05.jpg',
+      title: 'Facilities Support',
+      description:
+        'Light maintenance and coordination for common areas. Day porter services, vendor coordination, and on-site quick response.',
+      alt: 'Corporate lobby clean and ready for clients',
+    },
+  ],
+} = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL;
+
+const getImgAttrs = (src: string) => {
+  if (/^https?:\/\//i.test(src)) return { src, srcSet: undefined, sizes: undefined };
+  const cleaned = src.replace(/^\/+/, '');
+  if (/\.jpe?g$/i.test(cleaned)) {
+    return getPublicResponsiveImage(cleaned, base, {
+      sizes: '(min-width: 1024px) 50vw, 100vw',
+    });
+  }
+  return { src: `${base}${cleaned}`, srcSet: undefined, sizes: undefined };
+};
+---
+
+<section id={id} class="section py-16 md:py-24">
+  <div class="container-page">
+    <!-- Header -->
+    <div class="mb-10 text-center md:mb-14">
+      {eyebrow && <span class="eyebrow mb-3 inline-block">{eyebrow}</span>}
+      <h2 class="heading-2">{heading}</h2>
+      {subheading && <p class="lede mx-auto mt-4 max-w-2xl">{subheading}</p>}
+    </div>
+
+    <!-- Grid: 2x2 on desktop, stacked on mobile -->
+    <div class="grid gap-5 sm:grid-cols-2 lg:gap-6">
+      {
+        items.map((item, index) => {
+          const attrs = getImgAttrs(item.src);
+          return (
+            <article
+              class="expertise-card group relative overflow-hidden rounded-2xl bg-white shadow-lg ring-1 ring-slate-200/80 transition-all duration-300 hover:shadow-xl hover:ring-brand-200 dark:bg-slate-900 dark:ring-slate-700/60 dark:hover:ring-brand-600/50"
+              style={`animation-delay: ${index * 100}ms`}
+            >
+              <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9]">
+                <img
+                  src={attrs.src}
+                  srcset={attrs.srcSet}
+                  sizes={attrs.sizes ?? '(min-width: 1024px) 50vw, 100vw'}
+                  alt={item.alt}
+                  loading="lazy"
+                  decoding="async"
+                  class="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                />
+                <div
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/40 via-50% to-slate-950/10"
+                  aria-hidden="true"
+                />
+              </div>
+
+              <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                <h3 class="text-lg font-bold tracking-tight text-white drop-shadow-lg sm:text-xl lg:text-2xl">
+                  {item.title}
+                </h3>
+                <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-white/95 drop-shadow sm:text-base">
+                  {item.description}
+                </p>
+              </div>
+
+              <div
+                class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                aria-hidden="true"
+              >
+                <div class="absolute inset-x-0 bottom-0 h-1 bg-gradient-to-r from-brand-400 via-brand-500 to-brand-400" />
+              </div>
+            </article>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .expertise-card {
+    /* Smooth entrance animation */
+    animation: fadeSlideUp 0.6s ease-out both;
+  }
+
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Smooth hover lift - only on hover-capable devices */
+  @media (hover: hover) {
+    .expertise-card:hover {
+      transform: translateY(-6px);
+    }
+  }
+
+  /* Touch device optimization */
+  @media (hover: none) {
+    .expertise-card {
+      transform: none !important;
+    }
+    .expertise-card img {
+      transform: none !important;
+    }
+  }
+
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .expertise-card {
+      animation: none;
+    }
+    .expertise-card,
+    .expertise-card img {
+      transition: none !important;
+      transform: none !important;
+    }
+  }
+</style>

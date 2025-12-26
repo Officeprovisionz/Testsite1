@@ -2,57 +2,21 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import { HeroPro } from '@/components/HeroPro';
-import { ServicesPro } from '@/components/ServicesPro';
+import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
-import Gallery from '@/components/Gallery.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
-import type { GalleryItem } from '@/data/gallery';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
-import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 
-const href = makeHref(import.meta.env.BASE_URL);
+// Homepage hero images
+const heroImage = getPublicResponsiveImage('gallery/01.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 
-// Homepage hero image: use an existing local stock photo (responsive variants already generated).
-const heroImage = getPublicResponsiveImage(
-  'gallery/services/detail-02.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
-
-const heroImageMobile = getPublicResponsiveImage(
-  'gallery/services/janitorial-02.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
-
-const proofGallery: GalleryItem[] = [
-  {
-    src: 'gallery/01.jpg',
-    caption: 'Modern office spaces',
-    alt: 'Modern clean office interior with organized workspace',
-  },
-  {
-    src: 'gallery/02.jpg',
-    caption: 'Professional cleaning',
-    alt: 'Professional office cleaning service in action',
-  },
-  {
-    src: 'gallery/03.jpg',
-    caption: 'Coffee, snacks & restocking',
-    alt: 'Office coffee, snacks, and supplies fully stocked',
-  },
-  {
-    src: 'gallery/05.jpg',
-    caption: 'Corporate lobbies',
-    alt: 'Corporate lobby clean and ready for clients',
-  },
-];
+const heroImageMobile = getPublicResponsiveImage('gallery/02.jpg', import.meta.env.BASE_URL, {
+  sizes: '100vw',
+});
 ---
 
 <BaseLayout>
@@ -70,26 +34,13 @@ const proofGallery: GalleryItem[] = [
 
   <BridgeDivider />
 
-  <ServicesPro client:visible />
-
-  <Gallery
-    id="proof"
-    eyebrow="Proof"
-    heading="What clean looks like"
-    description="Tap any photo to zoom. Clear scope, consistent checklists, and communication-first service."
-    showTip={false}
-    variant="overlay"
-    items={proofGallery}
-    secondaryCtaHref={href('about/#proof')}
-    secondaryCtaLabel="View proof"
-    autoAdvanceMs={5000}
-  />
+  <ExpertiseGallery />
 
   <ConversionStrip
     tone="surface"
     eyebrow="Next step"
     heading="Request a quote"
-    description="Send your space basics and priorities. We’ll confirm scope + access details and reply with a clear, written quote."
+    description="Send your space basics and priorities. We'll confirm scope + access details and reply with a clear, written quote."
     showChecklist={true}
     showEmail={false}
   />

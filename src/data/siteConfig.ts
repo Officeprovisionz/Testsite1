@@ -177,17 +177,17 @@ export const siteConfig = {
       prefillServices: ['Recurring Janitorial (Nightly/Weekly)', 'Office Cleaning'],
     },
     {
-      title: 'Restocking & Supplies',
+      title: 'Professional Janitorial',
       description:
-        'Keep paper goods, soap, and breakroom essentials stocked so your team never has to chase supplies.',
-      bullets: ['Inventory tracking', 'Restock checklists', 'Delivery coordination'],
-      prefillServices: ['Supplies & Restocking'],
+        'Scheduled service for consistent upkeep—high-touch sanitizing, trash removal, and checklist verification.',
+      bullets: ['Nightly/weekly service', 'High-touch sanitizing', 'Restroom servicing'],
+      prefillServices: ['Recurring Janitorial (Nightly/Weekly)'],
     },
     {
-      title: 'Snacks & Coffee',
+      title: 'Coffee, Snacks & Restocking',
       description:
-        'Specialty coffee service and curated snack programs to keep your team fueled and happy.',
-      bullets: ['Espresso & specialty drinks', 'Healthy snack options', 'Pantry organization'],
+        'Breakroom essentials handled—specialty coffee, snacks, paper goods, and supplies restocked so your team stays fueled.',
+      bullets: ['Specialty coffee service', 'Snack programs', 'Paper goods & supplies'],
       prefillServices: ['Supplies & Restocking'],
     },
     {

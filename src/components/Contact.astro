@@ -192,6 +192,8 @@ const serviceOptions = [
 
       const status = form.querySelector<HTMLElement>('[data-contact-status]');
       const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
+      const servicesBox = form.querySelector<HTMLElement>('[data-services-box]');
+      const servicesError = form.querySelector<HTMLElement>('[data-services-error]');
 
       type StatusKind = 'info' | 'success' | 'error';
 
@@ -258,6 +260,19 @@ const serviceOptions = [
         else el.removeAttribute('aria-invalid');
       };
 
+      const setServicesInvalid = (invalid: boolean) => {
+        if (servicesBox) {
+          if (invalid) {
+            servicesBox.setAttribute('aria-invalid', 'true');
+          } else {
+            servicesBox.removeAttribute('aria-invalid');
+          }
+        }
+        if (servicesError) {
+          servicesError.classList.toggle('hidden', !invalid);
+        }
+      };
+
       const clearInvalidOnInput = () => {
         const watched = [
           'companyName',
@@ -275,6 +290,16 @@ const serviceOptions = [
           el.addEventListener('input', () => setFieldInvalid(n, false));
           el.addEventListener('change', () => setFieldInvalid(n, false));
         });
+
+        // Checkbox group: clear group-level error as soon as the user checks anything.
+        const boxes = Array.from(
+          form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="servicesNeeded"]')
+        );
+        boxes.forEach((b) =>
+          b.addEventListener('change', () => {
+            if (boxes.some((x) => x.checked)) setServicesInvalid(false);
+          })
+        );
       };
 
       const prefillFromQuery = () => {
@@ -368,14 +393,25 @@ const serviceOptions = [
           setFieldInvalid('frequency', !frequency);
           setFieldInvalid('message', !message);
           setFieldInvalid('consent', !consent);
+          setServicesInvalid(!servicesNeeded.length);
 
           setStatus(
             'Please fill in the required fields (company, contact name, email, location, industry, frequency, services needed, consent, and notes).',
             'error'
           );
           focusFirstInvalid();
+
+          if (!servicesNeeded.length) {
+            const firstService = form.querySelector<HTMLInputElement>(
+              'input[type="checkbox"][name="servicesNeeded"]'
+            );
+            firstService?.focus?.();
+          }
           return;
         }
+
+        // Clear any previous group-level error.
+        setServicesInvalid(false);
 
         // If endpoint exists, try an async submission (better UX on mobile).
         if (endpoint && typeof fetch === 'function') {

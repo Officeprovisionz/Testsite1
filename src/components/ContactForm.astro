@@ -26,6 +26,8 @@ const {
   helpId = 'contact-help',
   servicesHelpId = 'services-help',
 } = Astro.props;
+
+const servicesErrorId = `${servicesHelpId}-error`;
 ---
 
 <div>
@@ -89,6 +91,7 @@ const {
           name="companyName"
           autocomplete="organization"
           autocapitalize="words"
+          enterkeyhint="next"
           required
         />
       </label>
@@ -101,6 +104,7 @@ const {
           name="name"
           autocomplete="name"
           autocapitalize="words"
+          enterkeyhint="next"
           required
         />
       </label>
@@ -113,13 +117,23 @@ const {
           name="email"
           autocomplete="email"
           inputmode="email"
+          autocapitalize="none"
+          spellcheck="false"
+          enterkeyhint="next"
           required
         />
       </label>
 
       <label class="grid gap-1 text-sm">
         <span class="text-strong font-semibold">Phone</span>
-        <input class="input" type="tel" name="phone" autocomplete="tel" inputmode="tel" />
+        <input
+          class="input"
+          type="tel"
+          name="phone"
+          autocomplete="tel"
+          inputmode="tel"
+          enterkeyhint="next"
+        />
       </label>
     </div>
 
@@ -140,6 +154,7 @@ const {
           type="text"
           name="location"
           autocomplete="postal-code"
+          enterkeyhint="next"
           required
           placeholder="Example: San Francisco, 94103"
         />
@@ -180,21 +195,27 @@ const {
       </label>
     </div>
 
-    <fieldset class="grid gap-2 text-sm" aria-describedby={servicesHelpId}>
+    <fieldset class="grid gap-2 text-sm" aria-describedby={`${servicesHelpId} ${servicesErrorId}`}>
       <legend class="text-strong font-semibold">Services needed *</legend>
       <p id={servicesHelpId} class="text-subtle text-xs">
         Pick all that apply. We’ll confirm scope during quoting.
       </p>
-      <div class="grid gap-2 sm:grid-cols-2">
-        {
-          serviceOptions.map((opt) => (
-            <label class="flex items-start gap-2">
-              <input class="checkbox mt-1" type="checkbox" name="servicesNeeded" value={opt} />
-              <span class="text-muted">{opt}</span>
-            </label>
-          ))
-        }
+      <div class="rounded-xl border p-3" data-services-box>
+        <div class="grid gap-2 sm:grid-cols-2">
+          {
+            serviceOptions.map((opt) => (
+              <label class="flex cursor-pointer items-start gap-2">
+                <input class="checkbox mt-1" type="checkbox" name="servicesNeeded" value={opt} />
+                <span class="text-muted">{opt}</span>
+              </label>
+            ))
+          }
+        </div>
       </div>
+
+      <p id={servicesErrorId} class="hidden text-xs text-rose-700" data-services-error>
+        Please pick at least one service.
+      </p>
     </fieldset>
 
     <label class="grid gap-1 text-sm">
@@ -203,6 +224,7 @@ const {
         class="textarea min-h-28"
         name="message"
         required
+        enterkeyhint="send"
         placeholder="Example: ~2,500 sq ft office; weekly after 6pm; focus on restrooms + kitchen; monthly deep clean."
       ></textarea>
     </label>
@@ -216,7 +238,7 @@ const {
 
     <button class="btn-primary" type="submit" data-contact-submit> Submit Request </button>
 
-    <label class="flex items-start gap-2 text-xs">
+    <label class="flex cursor-pointer items-start gap-2 text-sm">
       <input class="checkbox mt-0.5" type="checkbox" name="consent" value="Yes" required />
       <span class="text-subtle">I agree to be contacted about this quote request. No spam.</span>
     </label>

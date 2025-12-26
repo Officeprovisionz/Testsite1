@@ -156,7 +156,27 @@ const navItems = [
           id="mobile-menu-panel"
           role="dialog"
           aria-label="Menu"
+          aria-modal="true"
         >
+          <div class="flex items-center justify-between gap-3 border-b border-white/10 p-4">
+            <p class="text-strong text-sm font-semibold">Menu</p>
+            <button type="button" class="icon-btn" aria-label="Close menu" data-menu-close>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="h-5 w-5"
+                aria-hidden="true"
+              >
+                <path d="M18 6L6 18"></path>
+                <path d="M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
           <nav class="grid gap-2 p-4" aria-label="Mobile">
             {
               navItems.map((item) => (
@@ -208,7 +228,12 @@ const navItems = [
 
     const summary = menu.querySelector('[data-menu-summary]') as HTMLElement | null;
     const panel = menu.querySelector('#mobile-menu-panel') as HTMLElement | null;
-    const overlayBtn = menu.querySelector('[data-menu-close]') as HTMLButtonElement | null;
+    const overlayBtn = menu.querySelector(
+      'button.mobile-menu-overlay[data-menu-close]'
+    ) as HTMLButtonElement | null;
+    const closeBtns = Array.from(
+      menu.querySelectorAll<HTMLButtonElement>('button[data-menu-close]')
+    );
 
     let lastFocused: HTMLElement | null = null;
     let locked = false;
@@ -260,6 +285,7 @@ const navItems = [
       menu.open = false;
     };
     overlayBtn?.addEventListener('click', close);
+    closeBtns.forEach((b) => b.addEventListener('click', close));
 
     const links = Array.from(menu.querySelectorAll<HTMLAnchorElement>('a[href]'));
     links.forEach((a) => a.addEventListener('click', close));
@@ -319,6 +345,88 @@ const navItems = [
 
     // Initialize state.
     setExpanded(menu.open);
+
+    // --- Swipe to close (touch devices) ---
+    // Drag the panel to the right to dismiss. Keeps it subtle and doesn't break scrolling.
+    if (panel && typeof window !== 'undefined') {
+      let startX = 0;
+      let startY = 0;
+      let dragging = false;
+
+      const resetDragStyles = () => {
+        panel.style.transition = '';
+        panel.style.transform = '';
+        panel.style.opacity = '';
+      };
+
+      const onTouchStart = (e: TouchEvent) => {
+        if (!menu.open) return;
+        const t = e.touches[0];
+        if (!t) return;
+        startX = t.clientX;
+        startY = t.clientY;
+        dragging = false;
+        resetDragStyles();
+      };
+
+      const onTouchMove = (e: TouchEvent) => {
+        if (!menu.open) return;
+        const t = e.touches[0];
+        if (!t) return;
+
+        const dx = t.clientX - startX;
+        const dy = t.clientY - startY;
+
+        // Only treat as a gesture when it's clearly horizontal and moving right.
+        if (dx <= 0) return;
+        if (Math.abs(dx) < Math.abs(dy)) return;
+
+        dragging = true;
+        panel.style.transition = 'none';
+
+        // Clamp drag distance to panel width.
+        const w = Math.max(1, panel.getBoundingClientRect().width);
+        const clamped = Math.min(dx, w);
+        const progress = clamped / w;
+        panel.style.transform = `translateX(${clamped}px)`;
+        panel.style.opacity = String(Math.max(0.35, 1 - progress * 0.75));
+
+        // Prevent the page from scrolling while we drag-dismiss.
+        e.preventDefault();
+      };
+
+      const onTouchEnd = () => {
+        if (!menu.open) return;
+        if (!dragging) return;
+
+        const w = Math.max(1, panel.getBoundingClientRect().width);
+        // If the panel moved far enough, dismiss.
+        const current = panel.style.transform;
+        const m = /translateX\(([-\d.]+)px\)/.exec(current);
+        const dx = m ? Number(m[1]) : 0;
+
+        if (dx > Math.min(140, w * 0.35)) {
+          // Animate out a bit then close.
+          panel.style.transition =
+            'transform 140ms cubic-bezier(0.4, 0, 0.2, 1), opacity 140ms cubic-bezier(0.4, 0, 0.2, 1)';
+          panel.style.transform = `translateX(${w}px)`;
+          panel.style.opacity = '0';
+          window.setTimeout(() => close(), 120);
+        } else {
+          // Snap back.
+          panel.style.transition =
+            'transform 160ms cubic-bezier(0.4, 0, 0.2, 1), opacity 160ms cubic-bezier(0.4, 0, 0.2, 1)';
+          panel.style.transform = 'translateX(0px)';
+          panel.style.opacity = '1';
+          window.setTimeout(() => resetDragStyles(), 170);
+        }
+      };
+
+      panel.addEventListener('touchstart', onTouchStart, { passive: true });
+      panel.addEventListener('touchmove', onTouchMove, { passive: false });
+      panel.addEventListener('touchend', onTouchEnd, { passive: true });
+      panel.addEventListener('touchcancel', onTouchEnd, { passive: true });
+    }
   })();
 </script>
 

@@ -46,16 +46,38 @@ This project is static-host friendly and supports a simple gallery with a built-
 - Gallery images live in: `public/gallery/`
 - Gallery data lives in: `src/data/gallery.ts`
 
-To replace the placeholder images:
+### Replace the placeholder images
 
-1. Add your real images to `public/gallery/` (recommended: `.webp`, also `.jpg`/`.png` work).
-2. Update the `src` fields in `src/data/gallery.ts` to match filenames.
+Out of the box, the repo ships with lightweight SVG placeholders in `public/gallery/`.
+
+To replace them with your own images:
+
+1. Add your real images to `public/gallery/`.
+
+- Easiest path: keep the numbered convention: `01`, `02`, … `06`.
+- If `public/gallery/01.jpg` exists, the site will automatically use it.
+- If it does not exist, it will fall back to `public/gallery/01.svg`.
+
+2. (Optional) Update the captions/alt text in `src/data/gallery.ts`.
 3. Keep filenames lowercase and avoid spaces (helps with URLs).
+
+### Optional: automatically fetch stock photos
+
+If you want to automatically populate the gallery with high-quality, watermark-free stock photos via Pexels:
+
+1. Create an API key: https://www.pexels.com/api/
+2. Put it in `.env` as `PEXELS_API_KEY=...`
+3. Run: `pnpm gallery:fetch`
+
+This will write:
+
+- `public/gallery/01.jpg` … `public/gallery/06.jpg`
+- `public/gallery/ATTRIBUTION.txt` (keep this for license/reference tracking)
 
 Tips:
 
-- Use **WebP** for smaller file sizes.
-- Aim for ~1600px wide for portfolio photos.
+- Use **WebP** for smaller file sizes (if you manage images manually).
+- Aim for ~1600px–2400px wide for portfolio photos.
 - If you change the folder name, update the paths in `src/data/gallery.ts`.
 
 ## Configuration (env)

@@ -8,6 +8,7 @@ import Testimonials from '@/components/Testimonials.astro';
 import Gallery from '@/components/Gallery.astro';
 import CTAStrip from '@/components/CTAStrip.astro';
 import type { GalleryItem } from '@/data/gallery';
+import { getGalleryImageSrc } from '@/data/gallery';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { makeHref } from '@/lib/nav';
@@ -16,32 +17,32 @@ const href = makeHref(import.meta.env.BASE_URL);
 
 const proofGallery: GalleryItem[] = [
   {
-    src: 'gallery/01.svg',
+    src: getGalleryImageSrc('01'),
     caption: 'Client-ready reception',
     alt: 'Entry and common areas reset for a professional first impression',
   },
   {
-    src: 'gallery/02.svg',
+    src: getGalleryImageSrc('02'),
     caption: 'Conference rooms reset',
     alt: 'Tables, floors, touchpoints—cleaned consistently visit after visit',
   },
   {
-    src: 'gallery/03.svg',
+    src: getGalleryImageSrc('03'),
     caption: 'Restrooms serviced',
     alt: 'Sanitized, restocked, and checked—so issues don’t linger',
   },
   {
-    src: 'gallery/04.svg',
+    src: getGalleryImageSrc('04'),
     caption: 'Breakrooms refreshed',
     alt: 'Counters, sinks, and high-touch areas cleaned without cutting corners',
   },
   {
-    src: 'gallery/05.svg',
+    src: getGalleryImageSrc('05'),
     caption: 'High-touch focus',
     alt: 'Handles, switches, and shared surfaces prioritized every visit',
   },
   {
-    src: 'gallery/06.svg',
+    src: getGalleryImageSrc('06'),
     caption: 'Floors that stay sharp',
     alt: 'Vacuuming, mopping, and detailing handled per scope and schedule',
   },

@@ -32,6 +32,35 @@ const heroImageMobile = getPublicResponsiveImage(
     sizes: '100vw',
   }
 );
+
+const makeHeroImage = (src: string, srcMobile: string, position = '50% 40%') => {
+  const desktop = getPublicResponsiveImage(src, import.meta.env.BASE_URL, { sizes: '100vw' });
+  const mobile = getPublicResponsiveImage(srcMobile, import.meta.env.BASE_URL, { sizes: '100vw' });
+  return {
+    src,
+    srcSet: desktop.srcSet,
+    sizes: desktop.sizes,
+    srcMobile,
+    srcSetMobile: mobile.srcSet,
+    sizesMobile: mobile.sizes,
+    position,
+    alt: 'Commercial cleaning service in a modern office',
+  };
+};
+
+const heroImages = [
+  makeHeroImage(
+    'gallery/services/janitorial-03.jpg',
+    'gallery/services/facilities-02.jpg',
+    '50% 40%'
+  ),
+  makeHeroImage(
+    'gallery/services/restocking-02.jpg',
+    'gallery/services/restocking-03.jpg',
+    '50% 55%'
+  ),
+  makeHeroImage('gallery/services/detail-02.jpg', 'gallery/services/detail-03.jpg', '50% 45%'),
+];
 ---
 
 <BaseLayout title={title} description={description} disableStickyActions>
@@ -40,7 +69,7 @@ const heroImageMobile = getPublicResponsiveImage(
   <PageHeroPro
     client:load
     title="Contact"
-    description="Request a quote or ask a question. We’ll confirm scope, timing, and send a clear written quote before service."
+    description="Request a quote or ask a question. We’ll confirm scope + access details and send a clear written quote before service."
     imageSrc="gallery/services/janitorial-03.jpg"
     imageSrcMobile="gallery/services/facilities-02.jpg"
     imageAlt="Commercial cleaning service photo"
@@ -49,6 +78,8 @@ const heroImageMobile = getPublicResponsiveImage(
     imageSrcSetMobile={heroImageMobile.srcSet}
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 40%"
+    images={heroImages}
+    rotateIntervalMs={5000}
   />
 
   <section class="section section-creative scroll-mt-20 pb-0">

@@ -29,6 +29,35 @@ const heroImageMobile = getPublicResponsiveImage(
     sizes: '100vw',
   }
 );
+
+const makeHeroImage = (src: string, srcMobile: string, position = '50% 40%') => {
+  const desktop = getPublicResponsiveImage(src, import.meta.env.BASE_URL, { sizes: '100vw' });
+  const mobile = getPublicResponsiveImage(srcMobile, import.meta.env.BASE_URL, { sizes: '100vw' });
+  return {
+    src,
+    srcSet: desktop.srcSet,
+    sizes: desktop.sizes,
+    srcMobile,
+    srcSetMobile: mobile.srcSet,
+    sizesMobile: mobile.sizes,
+    position,
+    alt: 'Professional commercial cleaning for workplaces',
+  };
+};
+
+const heroImages = [
+  makeHeroImage(
+    'gallery/services/facilities-03.jpg',
+    'gallery/services/restocking-03.jpg',
+    '50% 40%'
+  ),
+  makeHeroImage(
+    'gallery/services/janitorial-02.jpg',
+    'gallery/services/janitorial-03.jpg',
+    '50% 45%'
+  ),
+  makeHeroImage('gallery/services/detail-02.jpg', 'gallery/services/detail-03.jpg', '50% 45%'),
+];
 ---
 
 <BaseLayout title={title} description={description}>
@@ -46,6 +75,8 @@ const heroImageMobile = getPublicResponsiveImage(
     imageSrcSetMobile={heroImageMobile.srcSet}
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 40%"
+    images={heroImages}
+    rotateIntervalMs={5000}
   />
 
   <IndustriesPro client:visible />

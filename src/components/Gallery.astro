@@ -318,9 +318,25 @@ const getImgAttrs = (src: string) => {
         if (count) count.textContent = items.length ? `${safeIndex + 1} of ${items.length}` : '';
       };
 
+      const prefetchNeighbors = () => {
+        if (!items.length) return;
+        const indices = [currentIndex - 1, currentIndex + 1].map(
+          (i) => ((i % items.length) + items.length) % items.length
+        );
+        indices.forEach((i) => {
+          const href = items[i]?.href;
+          if (!href) return;
+          const pre = new Image();
+          pre.decoding = 'async';
+          pre.loading = 'eager';
+          pre.src = href;
+        });
+      };
+
       const open = (index: number) => {
         if (!items.length) return;
         setContent(index);
+        prefetchNeighbors();
         setScrollLock(true);
         lastFocused = document.activeElement as HTMLElement | null;
         if (typeof dialog.showModal === 'function') dialog.showModal();
@@ -340,6 +356,7 @@ const getImgAttrs = (src: string) => {
       const go = (delta: number) => {
         if (!items.length) return;
         setContent(currentIndex + delta);
+        prefetchNeighbors();
       };
 
       const currentHref = () => {
@@ -372,34 +389,55 @@ const getImgAttrs = (src: string) => {
         return false;
       };
 
-      // Swipe support (mobile)
+      // Gesture support (mobile): swipe left/right to navigate.
+      // Scoped to the image area so buttons/chrome remain easy to tap.
       let touchStartX = 0;
       let touchStartY = 0;
+      let touchLastX = 0;
+      let touchLastY = 0;
+      let touchMoved = false;
+
       const onTouchStart = (e: TouchEvent) => {
         const t = e.touches?.[0];
         if (!t) return;
         touchStartX = t.clientX;
         touchStartY = t.clientY;
-      };
-      const onTouchEnd = (e: TouchEvent) => {
-        const t = e.changedTouches?.[0];
-        if (!t) return;
-        const dx = t.clientX - touchStartX;
-        const dy = t.clientY - touchStartY;
-        // Horizontal swipe threshold; ignore mostly-vertical gestures.
-        if (Math.abs(dx) < 40 || Math.abs(dy) > 80) return;
-        if (dx > 0) go(-1);
-        else go(1);
+        touchLastX = t.clientX;
+        touchLastY = t.clientY;
+        touchMoved = false;
       };
 
-      const onSwipeDownToClose = (e: TouchEvent) => {
-        const t = e.changedTouches?.[0];
+      const onTouchMove = (e: TouchEvent) => {
+        const t = e.touches?.[0];
         if (!t) return;
-        const dx = t.clientX - touchStartX;
-        const dy = t.clientY - touchStartY;
-        // Only close on a fairly decisive vertical gesture.
-        if (Math.abs(dy) < 120 || Math.abs(dx) > 60) return;
-        if (dy > 0) close();
+        touchLastX = t.clientX;
+        touchLastY = t.clientY;
+        touchMoved = true;
+      };
+
+      const onTouchEnd = () => {
+        if (!touchMoved) return;
+
+        const dx = touchLastX - touchStartX;
+        const dy = touchLastY - touchStartY;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+
+        // Require a clear intent (avoid accidental diagonal scrolls).
+        const horizontalIntent = absDx > 46 && absDx > absDy * 1.2;
+        const verticalIntent = absDy > 140 && absDy > absDx * 1.25;
+
+        if (horizontalIntent) {
+          if (dx > 0) go(-1);
+          else go(1);
+          return;
+        }
+
+        // Optional: swipe down to close (only when scrolled to top).
+        if (verticalIntent && dy > 0) {
+          const atTop = !figure || figure.scrollTop <= 0;
+          if (atTop) close();
+        }
       };
 
       const toggleChrome = () => {
@@ -457,9 +495,9 @@ const getImgAttrs = (src: string) => {
         if (e.target === dialog) close();
       });
       dialog.addEventListener('close', () => setScrollLock(false));
-      dialog.addEventListener('touchstart', onTouchStart, { passive: true });
-      dialog.addEventListener('touchend', onTouchEnd, { passive: true });
-      dialog.addEventListener('touchend', onSwipeDownToClose, { passive: true });
+      figure?.addEventListener('touchstart', onTouchStart, { passive: true });
+      figure?.addEventListener('touchmove', onTouchMove, { passive: true });
+      figure?.addEventListener('touchend', onTouchEnd, { passive: true });
 
       document.addEventListener('keydown', (e) => {
         const isOpen = dialog.open || dialog.hasAttribute('open');

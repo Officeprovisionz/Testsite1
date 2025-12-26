@@ -1,6 +1,3 @@
-import fs from 'node:fs';
-import path from 'node:path';
-
 export type GalleryItem = {
   /** Path relative to the public root (no leading slash), e.g. "gallery/01.jpg" */
   src: string;
@@ -8,77 +5,67 @@ export type GalleryItem = {
   caption?: string;
 };
 
-const publicGalleryFile = (fileName: string) =>
-  path.join(process.cwd(), 'public', 'gallery', fileName);
-
-const fileExists = (fileName: string) => {
-  try {
-    return fs.existsSync(publicGalleryFile(fileName));
-  } catch {
-    return false;
-  }
-};
-
-/**
- * Returns a path (relative to `public/`) for a gallery image.
- *
- * If `public/gallery/<id>.jpg` exists, it uses that.
- * Otherwise it falls back to the existing SVG placeholders (`public/gallery/<id>.svg`).
- * If neither exists (e.g. you reference 07+ before generating assets), it falls back to 01.svg.
- */
-export const getGalleryImageSrc = (id: string) => {
-  const cleaned = id.replace(/\D/g, '').padStart(2, '0').slice(-2);
-  if (fileExists(`${cleaned}.jpg`)) return `gallery/${cleaned}.jpg`;
-  if (fileExists(`${cleaned}.svg`)) return `gallery/${cleaned}.svg`;
-  return 'gallery/01.svg';
-};
-
 // Replace these placeholders with real before/after photos or portfolio shots.
 // Put files in `public/gallery/` and update `src` accordingly.
 export const galleryItems: GalleryItem[] = [
   {
-    src: getGalleryImageSrc('01'),
-    alt: 'Office reception area cleaned and staged',
+    src: 'gallery/services/facilities-01.jpg',
+    alt: 'A client-facing office entry and common area cleaned and ready for the day',
     caption: 'Reception + common areas',
   },
   {
-    src: getGalleryImageSrc('02'),
-    alt: 'Conference room cleaned and reset for the next meeting',
+    src: 'gallery/services/janitorial-01.jpg',
+    alt: 'A conference room reset with tables and floors cleaned for the next meeting',
     caption: 'Conference room reset',
   },
   {
-    src: getGalleryImageSrc('03'),
-    alt: 'Restroom cleaned and restocked',
+    src: 'gallery/services/janitorial-03.jpg',
+    alt: 'Restroom cleaning with restocking and touchpoint detailing completed',
     caption: 'Restrooms cleaned + restocked',
   },
   {
-    src: getGalleryImageSrc('04'),
-    alt: 'Breakroom counters wiped down and sanitized',
+    src: 'gallery/services/restocking-01.jpg',
+    alt: 'Breakroom or pantry surfaces cleaned with supplies set up for easy use',
     caption: 'Breakroom refresh',
   },
   {
-    src: getGalleryImageSrc('05'),
-    alt: 'Workstations cleaned and high-touch points disinfected',
-    caption: 'Workstations + high-touch',
+    src: 'gallery/services/detail-02.jpg',
+    alt: 'High-touch cleaning detail with a checklist-first process',
+    caption: 'High-touch detail',
   },
   {
-    src: getGalleryImageSrc('06'),
-    alt: 'Supply shelves organized and inventory checked',
-    caption: 'Supplies + inventory checks',
+    src: 'gallery/services/detail-01.jpg',
+    alt: 'Floors maintained and detailed to keep traffic areas sharp',
+    caption: 'Floors that stay sharp',
   },
   {
-    src: getGalleryImageSrc('07'),
-    alt: 'Office workstations reset and staged for the next day',
+    src: 'gallery/services/facilities-03.jpg',
+    alt: 'Workspace reset and staged so the office feels client-ready',
     caption: 'Workstations reset',
   },
   {
-    src: getGalleryImageSrc('08'),
-    alt: 'Interior glass and partitions cleaned in an office space',
+    src: 'gallery/services/facilities-02.jpg',
+    alt: 'Interior glass and partitions cleaned for a clear, polished look',
     caption: 'Glass + partitions',
   },
   {
-    src: getGalleryImageSrc('09'),
-    alt: 'Carpeted office area vacuumed and refreshed',
+    src: 'gallery/services/detail-03.jpg',
+    alt: 'High-traffic entry lanes and carpets maintained so the whole space stays sharp',
     caption: 'Carpet + entry lanes',
+  },
+  {
+    src: 'gallery/services/restocking-02.jpg',
+    alt: 'Office pantry restocking with snacks and breakroom essentials topped up',
+    caption: 'Snack + pantry restocking',
+  },
+  {
+    src: 'gallery/services/restocking-03.jpg',
+    alt: 'Coffee station restocking with coffee and breakroom supplies organized',
+    caption: 'Coffee + espresso station restock',
+  },
+  {
+    src: 'gallery/services/restocking-01.jpg',
+    alt: 'Supplies organized with inventory checked so teams never run out unexpectedly',
+    caption: 'Supplies + inventory checks',
   },
 ];

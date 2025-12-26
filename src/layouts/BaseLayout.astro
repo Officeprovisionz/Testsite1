@@ -33,7 +33,6 @@ const ogUrl = Astro.site ? new URL(ogPath, Astro.site).toString() : ogPath;
 const faviconHref = `${base}favicon.svg`;
 const manifestHref = `${base}site.webmanifest`;
 
-const assetHeroBg = `${base}hero-bg.svg`;
 const assetNoise = `${base}noise.svg`;
 
 const jsonLd = (() => {
@@ -69,7 +68,7 @@ const jsonLd = (() => {
   lang="en"
   data-theme="navy"
   data-mode="auto"
-  style={`--asset-hero-bg: url('${assetHeroBg}'); --asset-noise: url('${assetNoise}')`}
+  style={`--asset-hero-bg: none; --asset-noise: url('${assetNoise}')`}
 >
   <head>
     <meta charset="utf-8" />

@@ -528,6 +528,15 @@
     background: linear-gradient(180deg, rgb(var(--color-surface-muted)), rgb(var(--color-bg)) 70%);
   }
 
+  /* Homepage photo hero: let the actual image do the work (less decorative wash). */
+  .hero-photo {
+    background: transparent;
+  }
+
+  .hero-photo::before {
+    opacity: 0;
+  }
+
   .hero-splash::before {
     content: '';
     position: absolute;

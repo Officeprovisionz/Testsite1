@@ -36,8 +36,8 @@ type HeroProProps = {
 
 export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => {
   const base = import.meta.env.BASE_URL;
-  const defaultHeroImg = `${base}gallery/01.jpg`;
-  const heroFallback = `${base}gallery/01.svg`;
+  const defaultHeroImg = `${base}media/hero-golden-gate.jpg`;
+  const heroFallback = `${base}gallery/01.jpg`;
   const logoSrc = `${base}brand/logo-orb.svg`;
 
   const heroImg = imageSrc ?? defaultHeroImg;
@@ -52,7 +52,7 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
   }, []);
 
   return (
-    <section className="hero-splash relative w-full overflow-hidden antialiased">
+    <section className="hero-splash hero-photo relative w-full overflow-hidden antialiased">
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {/* Always render a lightweight image base (also acts as the video poster / fallback). */}
         <img
@@ -60,7 +60,7 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
           alt=""
           srcSet={imageSrcSet}
           sizes={imageSrcSet ? imageSizes : undefined}
-          className="h-full w-full object-cover opacity-[0.26]"
+          className="h-full w-full object-cover opacity-[0.72]"
           loading="eager"
           decoding="async"
           onError={(e) => {
@@ -71,7 +71,7 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
         {/* Optional background video (muted + playsInline + loop). */}
         {videoEnabled ? (
           <video
-            className="absolute inset-0 h-full w-full object-cover opacity-[0.22]"
+            className="absolute inset-0 h-full w-full object-cover opacity-[0.14]"
             autoPlay
             muted
             loop
@@ -86,7 +86,8 @@ export const HeroPro = ({ imageSrc, imageSrcSet, imageSizes }: HeroProProps) => 
           </video>
         ) : null}
 
-        <div className="via-white/28 absolute inset-0 bg-gradient-to-b from-white/45 to-transparent dark:from-slate-950/65 dark:via-slate-950/45" />
+        {/* Gentle readability veil that still lets the photo show through */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-black/10 to-transparent dark:from-black/50 dark:via-black/25" />
       </div>
 
       <div className="container-page relative z-10 pb-20 pt-28 lg:pb-28 lg:pt-36">

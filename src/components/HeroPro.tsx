@@ -2,7 +2,7 @@ import { Button } from './ui/button';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { makeTelHref } from '@/lib/links';
-import { ArrowRight, ClipboardCheck, MessageCircle, Phone, ShieldCheck } from 'lucide-react';
+import { ArrowRight, Phone } from 'lucide-react';
 
 export const HeroPro = () => {
   const href = makeHref(import.meta.env.BASE_URL);
@@ -41,21 +41,6 @@ export const HeroPro = () => {
                 Call {siteConfig.contact.phoneDisplay}
               </a>
             </Button>
-          </div>
-
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
-            <span className="pill inline-flex items-center gap-2">
-              <ShieldCheck className="h-4 w-4 text-brand-600" aria-hidden="true" />
-              Insured + professional
-            </span>
-            <span className="pill inline-flex items-center gap-2">
-              <ClipboardCheck className="h-4 w-4 text-brand-600" aria-hidden="true" />
-              Checklist-driven scope
-            </span>
-            <span className="pill inline-flex items-center gap-2">
-              <MessageCircle className="h-4 w-4 text-brand-600" aria-hidden="true" />
-              One point of contact
-            </span>
           </div>
         </div>
       </div>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Logo mark">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(40 32) rotate(50) scale(120)">
+      <stop offset="0" stop-color="#A7F3FF"/>
+      <stop offset="0.45" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#0B2A6F"/>
+    </radialGradient>
+
+    <linearGradient id="shine" x1="26" y1="20" x2="108" y2="118" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#E0FBFF" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#7CEBFF" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#0B2A6F" stop-opacity="0"/>
+    </linearGradient>
+
+    <linearGradient id="waveA" x1="18" y1="22" x2="116" y2="106" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#BDFBFF"/>
+      <stop offset="0.55" stop-color="#46E7FF"/>
+      <stop offset="1" stop-color="#0EA5E9"/>
+    </linearGradient>
+
+    <linearGradient id="waveB" x1="14" y1="34" x2="114" y2="110" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#06225D"/>
+      <stop offset="0.55" stop-color="#0B2A6F"/>
+      <stop offset="1" stop-color="#021437"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="10" stdDeviation="10" flood-color="#00122D" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Orb base -->
+  <circle cx="64" cy="62" r="44" fill="url(#bg)" filter="url(#shadow)"/>
+  <circle cx="64" cy="62" r="44" fill="url(#shine)"/>
+
+  <!-- Waves (stylized) -->
+  <path d="M28 46c10-10 24-15 38-15 18 0 30 6 36 13 4 4 9 6 13 6-7 12-20 18-39 18-16 0-29-4-41-10-4-2-10-4-14-12 2 0 4 0 7 0z" fill="url(#waveA)" opacity="0.95"/>
+  <path d="M25 58c12 8 28 12 44 12 18 0 33-5 43-12-2 14-16 25-35 29-6 1-12 2-18 2-15 0-27-3-37-9-6-4-10-9-12-22 4 0 9 0 15 0z" fill="url(#waveB)" opacity="0.92"/>
+  <path d="M30 74c9 8 22 13 36 13 18 0 30-6 36-13 3-3 8-5 13-6-3 16-16 30-35 34-4 1-9 1-14 1-16 0-30-5-40-14-6-5-9-10-10-22 5 2 10 4 14 7z" fill="url(#waveA)" opacity="0.85"/>
+
+  <!-- Inner cut for depth -->
+  <circle cx="64" cy="62" r="44" fill="none" stroke="#E6FCFF" stroke-opacity="0.30"/>
+</svg>

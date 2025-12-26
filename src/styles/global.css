@@ -10,18 +10,18 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Premium Royal Slate Theme (High-End, Trustworthy, Clean) */
-    --color-brand-50: 240 244 248;
-    --color-brand-100: 217 226 236;
-    --color-brand-200: 188 204 220;
-    --color-brand-300: 159 179 200;
-    --color-brand-400: 130 154 177;
-    --color-brand-500: 98 125 152;
-    --color-brand-600: 72 101 129;
-    --color-brand-700: 51 78 104;
-    --color-brand-800: 36 59 83;
-    --color-brand-900: 16 42 67;
-    --color-brand-950: 8 25 45;
+    /* Brand (Clean Azure) — bright, modern, and not “navy-dark” by default */
+    --color-brand-50: 240 249 255;
+    --color-brand-100: 224 242 254;
+    --color-brand-200: 186 230 253;
+    --color-brand-300: 125 211 252;
+    --color-brand-400: 56 189 248;
+    --color-brand-500: 14 165 233;
+    --color-brand-600: 2 132 199;
+    --color-brand-700: 3 105 161;
+    --color-brand-800: 7 89 133;
+    --color-brand-900: 12 74 110;
+    --color-brand-950: 8 47 73;
 
     /* Accent Color (Champagne Gold - Subtle & Elegant) */
     --color-accent-50: 255 252 235;
@@ -78,7 +78,8 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221 83% 53%; /* Blue-600 */
+    /* Keep shadcn primary/ring in the same family as the brand hue */
+    --primary: 199 89% 48%;
     --primary-foreground: 210 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -91,7 +92,7 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 221 83% 53%;
+    --ring: 199 89% 48%;
     --radius: 0.5rem;
   }
 

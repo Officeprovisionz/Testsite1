@@ -56,7 +56,7 @@ export const HeroPro = ({
   const base = import.meta.env.BASE_URL;
   // Using a high-quality Unsplash image for the Golden Gate Bridge sunset
   const defaultHeroImg = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2000&auto=format&fit=crop`;
-  const heroFallback = `${base}gallery/01.jpg`;
+  const heroFallback = `${base}gallery/services/detail-01.jpg`;
   // Logo removed as requested
 
   const heroImg = imageSrc ?? defaultHeroImg;

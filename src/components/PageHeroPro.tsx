@@ -50,7 +50,7 @@ export const PageHeroPro = ({
 }: PageHeroProProps) => {
   const resolvedImageSrc = imageSrc ? toPublicUrl(imageSrc) : undefined;
   const resolvedMobileImageSrc = imageSrcMobile ? toPublicUrl(imageSrcMobile) : undefined;
-  const fallbackImageSrc = toPublicUrl('gallery/01.svg');
+  const fallbackImageSrc = toPublicUrl('gallery/services/detail-01.jpg');
 
   return (
     <div

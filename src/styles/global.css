@@ -1104,13 +1104,20 @@
     pointer-events: none;
   }
 
+  @media (max-width: 768px) {
+    body::before {
+      /* Avoid scroll-jank on mobile GPUs while keeping the same aesthetic. */
+      background-attachment: scroll;
+    }
+  }
+
   /* Subtle noise texture overlay for depth */
   body::after {
     content: '';
     position: fixed;
     inset: 0;
     z-index: -40;
-    background-image: url('/noise.svg');
+    background-image: var(--asset-noise, url('/noise.svg'));
     background-repeat: repeat;
     background-size: 200px 200px;
     opacity: 0.03;

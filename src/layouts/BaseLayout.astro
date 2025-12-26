@@ -24,6 +24,7 @@ const faviconHref = `${base}favicon.svg`;
 const manifestHref = `${base}site.webmanifest`;
 
 const assetHeroBg = `${base}hero-bg.svg`;
+const assetNoise = `${base}noise.svg`;
 
 const jsonLd = (() => {
   const [localityRaw, regionRaw] = siteConfig.brand.city.split(',').map((s) => s.trim());
@@ -54,7 +55,12 @@ const jsonLd = (() => {
 ---
 
 <!doctype html>
-<html lang="en" data-theme="navy" data-mode="auto" style={`--asset-hero-bg: url('${assetHeroBg}')`}>
+<html
+  lang="en"
+  data-theme="navy"
+  data-mode="auto"
+  style={`--asset-hero-bg: url('${assetHeroBg}'); --asset-noise: url('${assetNoise}')`}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
@@ -65,6 +71,32 @@ const jsonLd = (() => {
     />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617" />
     <ClientRouter />
+
+    <script is:inline>
+      (() => {
+        // Vendor-neutral tracking hook.
+        // - If Plausible is present, we forward events.
+        // - If GTM dataLayer is present, we push events.
+        // - Otherwise we no-op (and optionally log in dev).
+        if (typeof window === 'undefined') return;
+
+        // @ts-expect-error - attach a stable global
+        window.damraTrack = (event, props) => {
+          try {
+            if (typeof window.plausible === 'function') {
+              window.plausible(event, props ? { props } : undefined);
+              return;
+            }
+            if (Array.isArray(window.dataLayer)) {
+              window.dataLayer.push({ event, ...(props || {}) });
+              return;
+            }
+          } catch {
+            // ignore
+          }
+        };
+      })();
+    </script>
 
     <script is:inline>
       (() => {
@@ -138,7 +170,7 @@ const jsonLd = (() => {
       }
     </script>
 
-    {/* Analytics placeholder (vendor-neutral): add your script here if desired. */}
+    {/* Optional: add your analytics provider script here (Plausible/GTM/etc). */}
   </head>
   <body id="top">
     <a

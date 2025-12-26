@@ -1,0 +1,90 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
+import { makeTelHref, makeMailtoHref } from '@/lib/links';
+
+const href = makeHref(import.meta.env.BASE_URL);
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const mailtoHref = makeMailtoHref(siteConfig.contact.email);
+---
+
+<BaseLayout
+  title={`Thanks — ${siteConfig.brand.name}`}
+  description="Thanks for reaching out. We'll reply within 1 business day."
+>
+  <Header slot="header" />
+
+  <section class="section section-creative">
+    <div class="container-narrow">
+      <div class="glass-card relative overflow-hidden p-8 sm:p-10">
+        <div
+          aria-hidden="true"
+          class="from-brand-200/16 to-brand-300/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+        >
+        </div>
+
+        <div class="relative">
+          <p class="eyebrow">Request received</p>
+          <h1 class="heading-2 mt-2">Thanks — we’ve got it.</h1>
+          <p class="lede">
+            We’ll reply within <span class="text-strong font-semibold">1 business day</span> to confirm
+            scope (often via a quick walkthrough) and send clear written pricing.
+          </p>
+
+          <div class="mt-8 grid gap-4">
+            <div class="panel panel-muted p-5">
+              <p class="text-strong text-sm font-semibold">What happens next</p>
+              <ol class="mt-2 grid gap-2 text-sm text-muted">
+                <li>
+                  <span class="text-strong font-semibold">1.</span> We confirm scope + schedule.
+                </li>
+                <li>
+                  <span class="text-strong font-semibold">2.</span> You receive a written quote.
+                </li>
+                <li>
+                  <span class="text-strong font-semibold">3.</span> We start service with a checklist.
+                </li>
+              </ol>
+            </div>
+
+            <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <a class="btn-accent" href={href('checklist/')}> View our checklist </a>
+
+              <div class="flex flex-col gap-2 sm:flex-row">
+                <a class="btn-secondary" href={telHref}
+                  >Call/Text {siteConfig.contact.phoneDisplay}</a
+                >
+                <a class="btn-secondary" href={mailtoHref}>Email us</a>
+              </div>
+            </div>
+
+            <p class="text-caption">
+              If you don’t see our reply soon, check spam/junk and whitelist
+              <span class="text-strong"> {siteConfig.contact.email}</span>.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-10 text-center">
+        <a class="link link-muted" href={href('')}>Back to home</a>
+      </div>
+    </div>
+
+    <script is:inline>
+      (() => {
+        try {
+          // @ts-expect-error global provided by layout
+          window.damraTrack?.('lead_thanks_view', { path: window.location.pathname });
+        } catch {
+          // ignore
+        }
+      })();
+    </script>
+  </section>
+
+  <Footer slot="footer" />
+</BaseLayout>

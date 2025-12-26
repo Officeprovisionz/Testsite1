@@ -29,6 +29,8 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoTo = siteConfig.contact.email;
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 const sourcePath = Astro.url.pathname;
+const base = import.meta.env.BASE_URL;
+const successRedirect = `${base}thanks/`;
 
 const industryOptions = [...siteConfig.industries.map((i) => i.title), 'Other / Not listed'];
 
@@ -88,6 +90,7 @@ const serviceOptions = [
             data-contact-form
             data-form-endpoint={formEndpoint ?? ''}
             data-mailto-to={mailtoTo}
+            data-success-redirect={successRedirect}
             aria-describedby="contact-help"
           >
             <input type="hidden" name="source" value={sourcePath} />
@@ -371,6 +374,7 @@ const serviceOptions = [
                   data-contact-form
                   data-form-endpoint={formEndpoint ?? ''}
                   data-mailto-to={mailtoTo}
+                  data-success-redirect={successRedirect}
                   aria-describedby="contact-help"
                 >
                   <input type="hidden" name="source" value={sourcePath} />
@@ -566,6 +570,17 @@ const serviceOptions = [
 
     const params = new URLSearchParams(window.location.search);
 
+    const track = (event: string, props?: Record<string, unknown>) => {
+      try {
+        // Vendor-neutral hook (e.g. Plausible via window.plausible, GTM via dataLayer)
+        // provided by the layout.
+        // @ts-expect-error - global injected at runtime
+        window.damraTrack?.(event, props);
+      } catch {
+        // ignore
+      }
+    };
+
     const initForm = (form: HTMLFormElement) => {
       const endpoint = form.dataset.formEndpoint || '';
 
@@ -713,6 +728,15 @@ const serviceOptions = [
         const message = String(fd.get('message') ?? '').trim();
         const honeypot = String(fd.get('website') ?? '').trim();
 
+        track('lead_submit', {
+          source,
+          industry,
+          frequency,
+          hasPhone: Boolean(phone),
+          servicesCount: servicesNeeded.length,
+          via: endpoint ? 'endpoint' : 'mailto',
+        });
+
         // Simple bot check: if honeypot is filled, do nothing.
         if (honeypot) {
           setStatus('Thanks!', 'success');
@@ -782,10 +806,26 @@ const serviceOptions = [
             .then(() => {
               setStatus('Quote request received — we’ll reply within 1 business day.', 'success');
               form.reset();
+
+              track('lead_submit_success', { source, via: 'endpoint' });
+
+              const redirect = form.dataset.successRedirect || '';
+              if (redirect) {
+                window.setTimeout(() => {
+                  try {
+                    window.location.assign(redirect);
+                  } catch {
+                    // ignore
+                  }
+                }, 650);
+              }
             })
             .catch((err) => {
               const msg = err instanceof Error ? err.message : 'Something went wrong.';
               setStatus(msg, 'error');
+
+              track('lead_submit_error', { source, via: 'endpoint', message: String(msg) });
+
               // Fallback: attempt a normal submit (if endpoint supports it).
               try {
                 form.submit();
@@ -821,6 +861,9 @@ const serviceOptions = [
           .join('\n');
 
         setStatus('Opening your email app…', 'success');
+
+        track('lead_submit_success', { source, via: 'mailto' });
+
         const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
         window.location.href = href;
       });

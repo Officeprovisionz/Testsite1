@@ -110,6 +110,14 @@ Copy `.env.example` to `.env` and adjust as needed.
 - `SITE_URL` (recommended) — full canonical URL including base, e.g. `https://<owner>.github.io/<repo>/`
 - `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.)
 
+### Secrets & API keys (important)
+
+- ✅ Use `.env` for **local** secrets and keep it **out of git** (this repo gitignores `.env`).
+- ✅ Keep `.env.example` **safe to commit**: placeholders only, never real keys.
+- If an API key ever lands in a repo, issue, screenshot, or pastebin: **rotate it immediately**.
+
+- `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.)
+
 ### Sitemap notes
 
 This project includes `@astrojs/sitemap`, but it is **only enabled when `SITE_URL` is set**.
@@ -182,3 +190,4 @@ Update phone, hours, service areas, quotes, FAQs, testimonials, etc. there.
 - `pnpm lint` — ESLint
 - `pnpm format` — Prettier check
 - `pnpm typecheck` — `astro check`
+- `pnpm check` — format + lint + typecheck

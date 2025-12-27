@@ -40,6 +40,9 @@ jobs:
       - name: Format check
         run: pnpm format
 
+      - name: Copy/encoding check
+        run: pnpm check:copy
+
       - name: Lint
         run: pnpm lint
 

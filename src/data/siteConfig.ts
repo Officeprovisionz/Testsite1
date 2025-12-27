@@ -51,11 +51,10 @@ export const siteConfig = {
     phoneDisplay: '(510) 913-2197',
     phoneE164: '+15109132197',
     email: 'officeprovisionz@gmail.com',
-    smsBody:
-      'Hi Office Provisionz â€” Iâ€™d like to request a quote for cleaning + supplies support.',
+    smsBody: 'Hi Office Provisionz — I’d like to request a quote for cleaning + supplies support.',
   },
   hours: {
-    lines: ['Monâ€“Fri: 8amâ€“6pm', 'Sat: 9amâ€“2pm', 'Sun: Closed'],
+    lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
   },
 
   industries: [
@@ -79,7 +78,7 @@ export const siteConfig = {
     {
       title: 'Retail & customer spaces',
       description:
-        'Keep entrances, floors, and restrooms presentableâ€”especially in high-traffic periods.',
+        'Keep entrances, floors, and restrooms presentable—especially in high-traffic periods.',
       bullets: ['Entryways + floors', 'Restroom servicing', 'Flexible scheduling'],
     },
   ] satisfies Industry[],
@@ -88,12 +87,12 @@ export const siteConfig = {
     {
       title: 'Request a quote',
       description:
-        'Share basics (space, services, frequency). Weâ€™ll respond quickly and confirm scope before quoting.',
+        'Share basics (space, services, frequency). We’ll respond quickly and confirm scope before quoting.',
     },
     {
       title: 'Scope + checklist',
       description:
-        'We confirm whatâ€™s included, whatâ€™s optional, and any building requirementsâ€”then lock the scope.',
+        'We confirm what’s included, what’s optional, and any building requirements—then lock the scope.',
     },
     {
       title: 'Service delivery',
@@ -128,7 +127,7 @@ export const siteConfig = {
     {
       title: 'Recurring Janitorial (Nightly/Weekly)',
       description:
-        'Scheduled service for consistent upkeepâ€”ideal for busy offices and shared spaces.',
+        'Scheduled service for consistent upkeep—ideal for busy offices and shared spaces.',
       bullets: [
         'High-touch sanitizing (handles, switches, shared points)',
         'Trash + recycling, liners as needed',
@@ -149,7 +148,7 @@ export const siteConfig = {
     },
     {
       title: 'Supplies & Restocking',
-      description: 'We keep essentials stocked so your team doesnâ€™t have to chase supplies.',
+      description: 'We keep essentials stocked so your team doesn’t have to chase supplies.',
       bullets: [
         'Paper goods & soap (per checklist)',
         'Breakroom essentials (optional)',
@@ -283,7 +282,7 @@ export const siteConfig = {
     },
   ] satisfies Service[],
   scope: {
-    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm whatâ€™s included before service and provide a clear written quote.',
+    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm what’s included before service and provide a clear written quote.',
     levels: [
       {
         name: 'Essential',
@@ -348,7 +347,7 @@ export const siteConfig = {
     {
       question: 'Do you bring your own supplies and equipment?',
       answer:
-        'Yesâ€”we bring standard supplies and equipment. If you prefer specific products or your building has requirements, weâ€™ll accommodate.',
+        'Yes—we bring standard supplies and equipment. If you prefer specific products or your building has requirements, we’ll accommodate.',
     },
     {
       question: 'Can you restock paper goods and breakroom supplies?',
@@ -363,7 +362,7 @@ export const siteConfig = {
     {
       question: 'How do you handle quality?',
       answer:
-        'We follow a checklist and encourage feedback. If something was missed, tell us within 24 hours and weâ€™ll work with you to resolve it.',
+        'We follow a checklist and encourage feedback. If something was missed, tell us within 24 hours and we’ll work with you to resolve it.',
     },
   ] satisfies FAQItem[],
   seo: {

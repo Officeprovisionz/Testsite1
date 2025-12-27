@@ -15,6 +15,7 @@
     "preview:pages": "node scripts/run-pages.mjs preview",
     "simulate:pages": "node scripts/simulate-pages.mjs",
     "gallery:fetch": "node scripts/fetch-gallery.mjs",
+    "check:copy": "node scripts/check-mojibake.mjs",
     "typecheck": "astro check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",

@@ -39,6 +39,9 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
+      - name: Copy/encoding check
+        run: pnpm check:copy
+
       - name: Build (static)
         env:
           # Custom domain deployment (root).

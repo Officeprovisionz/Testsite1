@@ -838,15 +838,16 @@
     transform: none;
   }
 
-  /* Accent button - warm gold for important CTAs */
+  /* Accent button - warm coral for important CTAs */
   .btn-accent {
     @apply btn text-white shadow-sm active:scale-[0.99];
-    background-color: rgb(var(--color-accent-500));
-    border: 1px solid rgb(var(--color-accent-700) / 0.2);
+    /* Slightly darker base improves contrast with white text (especially on smaller buttons). */
+    background-color: rgb(var(--color-accent-600));
+    border: 1px solid rgb(var(--color-accent-800) / 0.22);
   }
 
   .btn-accent:hover {
-    background-color: rgb(var(--color-accent-600));
+    background-color: rgb(var(--color-accent-700));
   }
 
   .btn-secondary {
@@ -1405,7 +1406,7 @@
 
 @layer base {
   body {
-    @apply text-base leading-relaxed antialiased selection:bg-brand-500 selection:text-white;
+    @apply text-base leading-relaxed antialiased;
     background-color: rgb(var(--color-bg));
   }
 

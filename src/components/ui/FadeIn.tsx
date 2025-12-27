@@ -1,4 +1,4 @@
-import React from 'react';
+import { type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 
 export const FadeIn = ({
@@ -6,7 +6,7 @@ export const FadeIn = ({
   className,
   delay = 0,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   className?: string;
   delay?: number;
 }) => {

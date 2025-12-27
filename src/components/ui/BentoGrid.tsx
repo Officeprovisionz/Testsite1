@@ -1,12 +1,12 @@
+import { type ReactNode } from 'react';
 import { cn } from '@/lib/utils';
-import React from 'react';
 
 export const BentoGrid = ({
   className,
   children,
 }: {
   className?: string;
-  children?: React.ReactNode;
+  children?: ReactNode;
 }) => {
   return (
     <div
@@ -28,10 +28,10 @@ export const BentoGridItem = ({
   icon,
 }: {
   className?: string;
-  title?: string | React.ReactNode;
-  description?: string | React.ReactNode;
-  header?: React.ReactNode;
-  icon?: React.ReactNode;
+  title?: string | ReactNode;
+  description?: string | ReactNode;
+  header?: ReactNode;
+  icon?: ReactNode;
 }) => {
   const hasHeader = Boolean(header);
 

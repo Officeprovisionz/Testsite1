@@ -33,7 +33,7 @@ export const PricingPro = () => {
           className="card card-hover relative overflow-hidden p-6 sm:p-8 lg:p-10"
         >
           <h3 className="heading-3 lg:text-2xl">{plan.title}</h3>
-          <ul className="mt-6 space-y-4 lg:mt-8 lg:space-y-5">
+          <ul className="mt-5 space-y-3 sm:mt-6 sm:space-y-4 lg:mt-8 lg:space-y-5">
             {plan.features.map((feature, i) => (
               <li key={i} className="flex items-start gap-3">
                 <span className="check-icon check-icon--sm" aria-hidden="true">

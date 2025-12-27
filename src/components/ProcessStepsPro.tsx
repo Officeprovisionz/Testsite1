@@ -29,7 +29,7 @@ export const ProcessStepsPro = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.2, duration: 0.5 }}
           viewport={{ once: true }}
-          className="glass-panel card-hover group relative overflow-hidden p-6 lg:p-8"
+          className="glass-panel card-hover group relative overflow-hidden p-5 sm:p-6 lg:p-8"
         >
           <div
             aria-hidden="true"

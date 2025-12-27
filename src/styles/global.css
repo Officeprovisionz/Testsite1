@@ -1077,6 +1077,16 @@
     @apply flex items-start gap-3;
   }
 
+  @media (max-width: 640px) {
+    .check-list {
+      @apply mt-5 gap-2;
+    }
+
+    .check-list > li {
+      @apply gap-2;
+    }
+  }
+
   .check-icon {
     display: inline-flex;
     flex: none;

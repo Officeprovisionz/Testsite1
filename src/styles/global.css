@@ -774,6 +774,17 @@
     }
   }
 
+  .gallery-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 320px 260px;
+  }
+
+  @media (max-width: 640px) {
+    .gallery-card {
+      contain-intrinsic-size: 280px 230px;
+    }
+  }
+
   @keyframes damraFadeIn {
     from {
       opacity: 0;

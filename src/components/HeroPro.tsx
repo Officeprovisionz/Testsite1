@@ -165,13 +165,13 @@ export const HeroPro = ({
           <div className="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5">
             <a
               href={`${base}contact/`}
-              className="btn-accent shadow-accent-900/30 min-w-[180px] shadow-lg lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+              className="btn-accent shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
             >
               Get a Free Quote
             </a>
             <a
               href={`${base}services/`}
-              className="btn-invert min-w-[180px] lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+              className="btn-invert w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
             >
               View Services
             </a>

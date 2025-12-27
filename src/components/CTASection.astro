@@ -97,7 +97,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             </p>
 
             <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a href={href('contact/')} class="btn-gold">
+              <a href={href('contact/')} class="btn-accent w-full sm:w-auto">
                 Get a Free Quote
               </a>
               <a
@@ -175,7 +175,10 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 
             <div class="flex flex-col gap-3 md:justify-self-end">
               {showChecklist ? (
-                <a class="btn-secondary md:justify-self-end" href={href('checklist/')}>
+                <a
+                  class="btn-secondary w-full sm:w-auto md:justify-self-end"
+                  href={href('checklist/')}
+                >
                   Preview checklist
                 </a>
               ) : null}

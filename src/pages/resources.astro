@@ -88,7 +88,9 @@ const resources = [
         heading="Make scope crystal clear"
         description="Pros keep it simple: written scope, checklists, and consistent follow-up. These resources help you do exactly that."
       >
-        <a slot="actions" class="btn-secondary" href={href('services/')}>See services</a>
+        <a slot="actions" class="btn-secondary w-full sm:w-auto" href={href('services/')}>
+          See services
+        </a>
       </SectionHeader>
 
       <div class="mt-10 grid gap-6 md:grid-cols-2">
@@ -106,7 +108,7 @@ const resources = [
                 <h2 class="text-strong mt-2 text-xl font-semibold tracking-tight">{r.title}</h2>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{r.desc}</p>
                 <div class="mt-5">
-                  <a class="btn-secondary" href={r.href}>
+                  <a class="btn-secondary w-full sm:w-auto" href={r.href}>
                     {r.cta}
                   </a>
                 </div>
@@ -123,7 +125,9 @@ const resources = [
           a clear written quote.
         </p>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row">
-          <a class="btn-secondary" href={href('industries/')}>Industries we serve</a>
+          <a class="btn-secondary w-full sm:w-auto" href={href('industries/')}>
+            Industries we serve
+          </a>
         </div>
       </div>
     </div>

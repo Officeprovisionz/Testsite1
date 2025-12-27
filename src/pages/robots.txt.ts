@@ -12,16 +12,25 @@ export async function GET() {
   // restrict to that base to avoid accidental crawling of the parent origin.
   lines.push(`Allow: ${base}`);
 
+  // Block crawling of development/staging pages
+  lines.push('Disallow: /dev/');
+
   // Only advertise a sitemap when the build is configured with a canonical URL.
   // `@astrojs/sitemap` is enabled only when SITE_URL is set.
   if (site) {
     try {
       const sitemapUrl = new URL('sitemap-index.xml', site).toString();
+      lines.push('');
       lines.push(`Sitemap: ${sitemapUrl}`);
     } catch {
       // ignore
     }
   }
+
+  // Add crawl-delay to be respectful to the origin
+  lines.push('');
+  lines.push('# Crawl-delay is advisory and respected by some crawlers');
+  lines.push('Crawl-delay: 1');
 
   lines.push('');
 
@@ -29,7 +38,7 @@ export async function GET() {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
       // Let hosting control caching; avoid aggressively caching robots during iteration.
-      'Cache-Control': 'public, max-age=0, must-revalidate',
+      'Cache-Control': 'public, max-age=3600, must-revalidate',
     },
   });
 }

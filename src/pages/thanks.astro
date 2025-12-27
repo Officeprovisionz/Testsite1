@@ -74,7 +74,6 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
     <script is:inline>
       (() => {
         try {
-          // @ts-expect-error global provided by layout
           window.damraTrack?.('lead_thanks_view', { path: window.location.pathname });
         } catch {
           // ignore

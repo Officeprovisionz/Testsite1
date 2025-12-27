@@ -1,6 +1,6 @@
 import React from 'react';
 import { Spotlight } from './ui/Spotlight';
-import { cn } from '@/lib/utils';
+import { cn, getImagePositionClass } from '@/lib/utils';
 
 export interface PageHeroProProps {
   title: string;
@@ -52,14 +52,7 @@ export const PageHeroPro = ({
   const resolvedMobileImageSrc = imageSrcMobile ? toPublicUrl(imageSrcMobile) : undefined;
   const fallbackImageSrc = resolvedImageSrc ?? resolvedMobileImageSrc ?? '';
 
-  const imagePositionClass =
-    imagePosition === '50% 40%'
-      ? 'object-[50%_40%]'
-      : imagePosition === '50% 45%'
-        ? 'object-[50%_45%]'
-        : imagePosition === '50% 50%'
-          ? 'object-center'
-          : 'object-center';
+  const imagePositionClass = getImagePositionClass(imagePosition);
 
   return (
     <div

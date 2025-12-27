@@ -1,6 +1,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import { useEffect, useState } from 'react';
 import { Spotlight } from './ui/Spotlight';
+import { getImagePositionClass } from '@/lib/utils';
 
 const shouldEnableVideo = () => {
   if (typeof window === 'undefined') return false;
@@ -66,14 +67,7 @@ export const HeroPro = ({
 
   const heroImg = imageSrc ?? imageSrcMobile ?? heroFallback;
 
-  const imagePositionClass =
-    imagePosition === '50% 40%'
-      ? 'object-[50%_40%]'
-      : imagePosition === '50% 45%'
-        ? 'object-[50%_45%]'
-        : imagePosition === '50% 50%'
-          ? 'object-center'
-          : 'object-center';
+  const imagePositionClass = getImagePositionClass(imagePosition);
 
   const heroVideoWebm = `${base}media/hero-cleaning.webm`;
   const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;

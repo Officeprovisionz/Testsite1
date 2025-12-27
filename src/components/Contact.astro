@@ -190,7 +190,6 @@ const serviceOptions = [
         try {
           // Vendor-neutral hook (e.g. Plausible via window.plausible, GTM via dataLayer)
           // provided by the layout.
-          // @ts-expect-error - global injected at runtime
           window.damraTrack?.(event, props);
         } catch {
           // ignore

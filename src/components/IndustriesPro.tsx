@@ -1,4 +1,3 @@
-import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
 import { makeContactHref } from '@/lib/routes';
 import { HoverEffect } from './ui/HoverEffect';

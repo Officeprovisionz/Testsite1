@@ -108,7 +108,6 @@ const jsonLd = (() => {
         // - Otherwise we no-op (and optionally log in dev).
         if (typeof window === 'undefined') return;
 
-        // @ts-expect-error - attach a stable global
         window.damraTrack = (event, props) => {
           try {
             if (typeof window.plausible === 'function') {

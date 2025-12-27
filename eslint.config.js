@@ -4,6 +4,7 @@ import astro from 'eslint-plugin-astro';
 import astroParser from 'astro-eslint-parser';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
+import reactHooks from 'eslint-plugin-react-hooks';
 
 export default [
   {
@@ -63,10 +64,14 @@ export default [
   },
   // React-specific rules for TSX files
   {
-    files: ['**/*.tsx'],
+    files: ['**/*.{jsx,tsx}'],
+    plugins: {
+      'react-hooks': reactHooks,
+    },
     rules: {
-      // Require key prop in iterators
-      'react/jsx-key': 'off', // Would need eslint-plugin-react
+      ...reactHooks.configs.recommended.rules,
+      // Too aggressive for typical app code (legitimate to sync state from env/feature flags).
+      'react-hooks/set-state-in-effect': 'off',
     },
   },
 ];

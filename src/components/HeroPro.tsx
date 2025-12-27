@@ -80,7 +80,7 @@ export const HeroPro = ({
       return;
     }
     setVideoEnabled(shouldEnableVideo());
-  }, []);
+  }, [heroVideoOptIn]);
 
   return (
     <section className="hero-splash hero-photo relative w-full overflow-hidden antialiased">

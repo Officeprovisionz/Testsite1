@@ -69,6 +69,10 @@ export default defineConfig({
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'SAMEORIGIN',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
+      // Keep local dev behavior closer to hosts that honor `public/_headers`.
+      // (GitHub Pages ignores custom headers; see README.)
+      'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+      'X-DNS-Prefetch-Control': 'on',
     },
   },
   integrations,

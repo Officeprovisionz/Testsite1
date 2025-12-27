@@ -5,6 +5,7 @@ import astroParser from 'astro-eslint-parser';
 import tseslint from 'typescript-eslint';
 import prettier from 'eslint-config-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
 
 export default [
   {
@@ -67,11 +68,20 @@ export default [
     files: ['**/*.{jsx,tsx}'],
     plugins: {
       'react-hooks': reactHooks,
+      'jsx-a11y': jsxA11y,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
       // Too aggressive for typical app code (legitimate to sync state from env/feature flags).
       'react-hooks/set-state-in-effect': 'off',
+
+      // Accessibility checks (warnings so we can improve steadily without blocking builds).
+      ...Object.fromEntries(
+        Object.entries(jsxA11y.configs.recommended.rules).map(([ruleName, ruleValue]) => [
+          ruleName,
+          Array.isArray(ruleValue) ? ['warn', ...ruleValue.slice(1)] : 'warn',
+        ])
+      ),
     },
   },
 ];

@@ -55,7 +55,7 @@ export const HoverEffect = ({
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
                 <div className="mt-4 flex items-center text-sm font-medium text-brand-600 transition-colors group-hover:text-brand-700 dark:text-brand-400">
-                  <span>Learn more</span>
+                  <span>Learn more about {item.title}</span>
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
               </Card>

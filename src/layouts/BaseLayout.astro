@@ -184,8 +184,7 @@ const jsonLd = (() => {
           if ('addEventListener' in mq) {
             mq.addEventListener('change', onChange);
           } else {
-            // Safari legacy
-            // @ts-expect-error - legacy MediaQueryList API
+            // Safari < 14 legacy API
             mq.addListener(onChange);
           }
         } catch {

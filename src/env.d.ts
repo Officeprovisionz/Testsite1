@@ -30,3 +30,14 @@ interface Window {
   /** Google Tag Manager dataLayer */
   dataLayer?: Array<Record<string, unknown>>;
 }
+
+/**
+ * Legacy MediaQueryList API (Safari < 14).
+ * Extends the standard interface with deprecated addListener/removeListener methods.
+ */
+interface MediaQueryListLegacy extends MediaQueryList {
+  /** @deprecated Use addEventListener('change', cb) instead */
+  addListener(callback: (this: MediaQueryList, ev: MediaQueryListEvent) => void): void;
+  /** @deprecated Use removeEventListener('change', cb) instead */
+  removeListener(callback: (this: MediaQueryList, ev: MediaQueryListEvent) => void): void;
+}

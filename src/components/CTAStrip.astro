@@ -4,19 +4,20 @@ import CTASection from '@/components/CTASection.astro';
 type Props = {
   heading?: string;
   description?: string;
+  /**
+   * @deprecated `CTASection` no longer renders CTA buttons from these props.
+   * Kept only for backwards-compat with older usages.
+   */
   ctaText?: string;
+  /**
+   * @deprecated `CTASection` no longer renders CTA buttons from these props.
+   * Kept only for backwards-compat with older usages.
+   */
   ctaHref?: string;
   variant?: 'default' | 'accent';
 };
 
-const { heading, description, ctaText, ctaHref, variant = 'default' } = Astro.props;
+const { heading, description, variant = 'default' } = Astro.props;
 ---
 
-<CTASection
-  layout="centered"
-  background={variant}
-  heading={heading}
-  description={description}
-  ctaText={ctaText}
-  ctaHref={ctaHref}
-/>
+<CTASection layout="centered" background={variant} heading={heading} description={description} />

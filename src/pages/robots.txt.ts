@@ -12,7 +12,11 @@ export async function GET() {
   // restrict to that base to avoid accidental crawling of the parent origin.
   lines.push(`Allow: ${base}`);
 
-  // Block crawling of development/staging pages
+  // Block crawling of development/staging pages.
+  // Use both patterns:
+  // - `${base}dev/` for subpath deployments (/<repo>/dev/)
+  // - `/dev/` as a fallback for root deployments
+  lines.push(`Disallow: ${base}dev/`);
   lines.push('Disallow: /dev/');
 
   // Only advertise a sitemap when the build is configured with a canonical URL.

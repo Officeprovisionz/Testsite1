@@ -292,6 +292,15 @@ const navItems = [
       togglePanelTabbables(false);
     };
 
+    // Used by the swipe-to-close gesture: we temporarily set inline transform/opacity/transition.
+    // If the menu closes via overlay/ESC/button mid-gesture, clear those inline overrides.
+    const resetPanelInlineStyles = () => {
+      if (!panel) return;
+      panel.style.transition = '';
+      panel.style.transform = '';
+      panel.style.opacity = '';
+    };
+
     const lockScroll = () => {
       if (locked) return;
       locked = true;
@@ -340,6 +349,7 @@ const navItems = [
         const focusables = getFocusables();
         (focusables[0] ?? overlayBtn ?? summary)?.focus();
       } else {
+        resetPanelInlineStyles();
         unlockScroll();
         // Restore focus to the control that opened the menu.
         (lastFocused ?? summary)?.focus?.();
@@ -395,12 +405,6 @@ const navItems = [
       let startY = 0;
       let dragging = false;
 
-      const resetDragStyles = () => {
-        panel.style.transition = '';
-        panel.style.transform = '';
-        panel.style.opacity = '';
-      };
-
       const onTouchStart = (e: TouchEvent) => {
         if (!menu.open) return;
         const t = e.touches[0];
@@ -408,7 +412,7 @@ const navItems = [
         startX = t.clientX;
         startY = t.clientY;
         dragging = false;
-        resetDragStyles();
+        resetPanelInlineStyles();
       };
 
       const onTouchMove = (e: TouchEvent) => {
@@ -460,7 +464,7 @@ const navItems = [
             'transform 160ms cubic-bezier(0.4, 0, 0.2, 1), opacity 160ms cubic-bezier(0.4, 0, 0.2, 1)';
           panel.style.transform = 'translateX(0px)';
           panel.style.opacity = '1';
-          window.setTimeout(() => resetDragStyles(), 170);
+          window.setTimeout(() => resetPanelInlineStyles(), 170);
         }
       };
 

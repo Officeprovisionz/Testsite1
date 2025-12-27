@@ -434,14 +434,16 @@ const serviceOptions = [
             }
           }, timeoutMs);
 
-          fetch(endpoint, {
+          const requestInit: RequestInit = {
             method: 'POST',
             body: fd,
             headers: {
               Accept: 'application/json',
             },
-            signal: controller?.signal,
-          })
+          };
+          if (controller) requestInit.signal = controller.signal;
+
+          fetch(endpoint, requestInit)
             .then(async (res) => {
               window.clearTimeout(timeoutId);
               if (res.ok) return;

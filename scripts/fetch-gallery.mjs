@@ -332,7 +332,12 @@ async function main() {
   const attributions = [];
   const optionsAttributions = [];
 
-  const pickPhotosForQuery = async ({ query, count, seenPhotographers, rejectPeople: noPeople }) => {
+  const pickPhotosForQuery = async ({
+    query,
+    count,
+    seenPhotographers,
+    rejectPeople: noPeople,
+  }) => {
     const pools = [];
     for (const page of [1, 2, 3]) {
       const data = await searchPexels({ apiKey, query, perPage: 30, page });
@@ -628,7 +633,7 @@ async function main() {
     }
   }
 
-    if (downloadOptions) {
+  if (downloadOptions) {
     let optionWritten = 0;
     const optionTotal = slots.length * optionsCount + serviceSets.length * optionsCount;
 
@@ -677,8 +682,7 @@ async function main() {
       await fs.mkdir(setDir, { recursive: true });
 
       const queries =
-        optionServiceQueries[set.key] ??
-        (Array.isArray(set.queries) ? set.queries : [set.query]);
+        optionServiceQueries[set.key] ?? (Array.isArray(set.queries) ? set.queries : [set.query]);
       const picks = await collectOptions({ queries, count: optionsCount });
 
       for (let i = 0; i < picks.length; i++) {

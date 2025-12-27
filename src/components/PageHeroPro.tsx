@@ -109,11 +109,15 @@ export const PageHeroPro = ({
       ) : null}
 
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
-      <div className="container-page relative z-10 text-center">
-        <div className={cn(resolvedImageSrc ? 'mx-auto max-w-3xl px-2 sm:px-6' : undefined)}>
+      <div className="container-page relative z-10 py-16 text-center md:py-20 lg:py-24">
+        <div
+          className={cn(
+            resolvedImageSrc ? 'mx-auto max-w-3xl px-2 sm:px-6 lg:max-w-4xl' : undefined
+          )}
+        >
           <h1
             className={cn(
-              'heading-1 text-balance',
+              'heading-1 text-balance lg:text-5xl xl:text-6xl',
               resolvedImageSrc ? 'text-white drop-shadow-[0_10px_28px_rgba(0,0,0,0.35)]' : undefined
             )}
           >
@@ -121,9 +125,9 @@ export const PageHeroPro = ({
           </h1>
           <p
             className={cn(
-              'mx-auto mt-4 max-w-2xl text-balance text-lg sm:text-xl',
+              'mx-auto mt-4 max-w-2xl text-balance text-lg sm:text-xl lg:mt-6 lg:max-w-3xl lg:text-2xl',
               resolvedImageSrc
-                ? 'text-white/85 drop-shadow-[0_8px_18px_rgba(0,0,0,0.28)]'
+                ? 'text-white/90 drop-shadow-[0_8px_18px_rgba(0,0,0,0.28)]'
                 : 'text-muted'
             )}
           >

@@ -17,7 +17,7 @@ export const HoverEffect = ({
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <div className={cn('grid grid-cols-1 gap-4 py-8 md:grid-cols-2', className)}>
+    <div className={cn('grid grid-cols-1 gap-5 py-8 md:grid-cols-2 lg:gap-6', className)}>
       {items.map((item, idx) => (
         <div
           key={item?.title}
@@ -84,10 +84,10 @@ export const Card = ({
   return (
     <div
       className={cn(
-        'relative z-20 h-full w-full overflow-hidden rounded-2xl border bg-white/80 p-6 backdrop-blur-sm transition-all duration-300 dark:bg-slate-900/60',
+        'relative z-20 h-full w-full overflow-hidden rounded-2xl border bg-white/85 p-6 backdrop-blur-sm transition-all duration-300 dark:bg-slate-900/65 lg:p-8',
         isHovered
-          ? 'border-brand-200 shadow-lg shadow-brand-500/5 dark:border-brand-700/50'
-          : 'border-brand-100/50 shadow-sm dark:border-brand-800/30',
+          ? 'shadow-brand-500/8 border-brand-300 shadow-xl dark:border-brand-600/60'
+          : 'border-brand-100/60 shadow-md dark:border-brand-800/30',
         className
       )}
     >
@@ -103,7 +103,7 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn('text-strong text-lg font-semibold tracking-tight', className)}>
+    <h4 className={cn('text-strong text-lg font-semibold tracking-tight lg:text-xl', className)}>
       {children}
     </h4>
   );
@@ -115,5 +115,14 @@ export const CardDescription = ({
   className?: string;
   children: React.ReactNode;
 }) => {
-  return <p className={cn('mt-2 text-sm leading-relaxed text-muted', className)}>{children}</p>;
+  return (
+    <p
+      className={cn(
+        'mt-2 text-sm leading-relaxed text-muted lg:text-base lg:leading-relaxed',
+        className
+      )}
+    >
+      {children}
+    </p>
+  );
 };

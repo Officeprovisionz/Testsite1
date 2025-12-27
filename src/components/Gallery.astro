@@ -78,8 +78,8 @@ const getImgAttrs = (src: string) => {
 };
 ---
 
-<section id={id} class="section section-creative scroll-mt-20 pb-0">
-  <div class="container-page relative">
+<section id={id} class="section section-creative scroll-mt-20 pb-0 lg:pt-28">
+  <div class="container-page relative lg:max-w-7xl">
     <SectionHeader eyebrow={eyebrow} heading={heading} description={description}>
       {
         (showTip ||
@@ -118,7 +118,7 @@ const getImgAttrs = (src: string) => {
     </SectionHeader>
 
     <div
-      class="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 xl:grid-cols-3"
+      class="no-scrollbar -mx-4 mt-10 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 md:mx-0 md:grid md:snap-none md:grid-cols-2 md:overflow-visible md:px-0 md:pb-0 lg:mt-14 lg:gap-6 xl:grid-cols-3"
       data-gallery
       data-auto-advance-ms={typeof autoAdvanceMs === 'number' ? String(autoAdvanceMs) : undefined}
     >
@@ -129,7 +129,7 @@ const getImgAttrs = (src: string) => {
             <a
               href={toPublicUrl(it.src)}
               class:list={[
-                'group w-[min(22rem,85vw)] shrink-0 snap-start overflow-hidden rounded-2xl border border-brand-100/50 bg-white/80 shadow-sm backdrop-blur-sm transition-all duration-300 hover:border-brand-200 hover:shadow-lg dark:border-brand-800/30 dark:bg-slate-900/50 md:w-auto md:shrink md:snap-none',
+                'group w-[min(22rem,85vw)] shrink-0 snap-start overflow-hidden rounded-2xl border border-brand-100/60 bg-white/85 shadow-md backdrop-blur-sm transition-all duration-300 hover:border-brand-300 hover:shadow-xl dark:border-brand-800/30 dark:bg-slate-900/55 md:w-auto md:shrink md:snap-none',
                 variant === 'overlay' ? 'relative' : '',
               ]}
               data-gallery-item
@@ -148,28 +148,32 @@ const getImgAttrs = (src: string) => {
                       ? attrs.sizes
                       : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
                   }
-                  class="gallery-hover-zoom h-full w-full object-cover"
+                  class="gallery-hover-zoom h-full w-full object-cover transition-transform duration-700"
                 />
 
                 {variant === 'overlay' ? (
                   <>
                     <div
                       aria-hidden="true"
-                      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-950/35 to-transparent"
+                      class="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/40 to-transparent transition-opacity duration-300 group-hover:from-slate-950/90"
                     />
-                    <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5">
-                      <p class="text-sm font-semibold tracking-tight text-white drop-shadow">
+                    <div class="pointer-events-none absolute inset-x-0 bottom-0 p-5 lg:p-6">
+                      <p class="text-sm font-semibold tracking-tight text-white drop-shadow lg:text-base">
                         {it.caption ?? 'Project photo'}
                       </p>
-                      <p class="mt-1 line-clamp-2 text-xs text-white/85 drop-shadow-sm">{it.alt}</p>
+                      <p class="mt-1 line-clamp-2 text-xs text-white/90 drop-shadow-sm lg:text-sm">
+                        {it.alt}
+                      </p>
                     </div>
                   </>
                 ) : null}
               </div>
               {variant === 'below' ? (
-                <div class="p-5">
-                  <p class="text-strong text-sm font-semibold">{it.caption ?? 'Project photo'}</p>
-                  <p class="mt-1 text-sm text-muted">{it.alt}</p>
+                <div class="p-5 lg:p-6">
+                  <p class="text-strong text-sm font-semibold lg:text-base">
+                    {it.caption ?? 'Project photo'}
+                  </p>
+                  <p class="mt-1 text-sm text-muted lg:text-base">{it.alt}</p>
                 </div>
               ) : null}
             </a>

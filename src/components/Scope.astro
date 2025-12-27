@@ -27,27 +27,27 @@ const levels = siteConfig.scope.levels;
 const featuredIndex = levels.length >= 3 ? 1 : 0;
 ---
 
-<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
-  <div class="container-page">
+<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0 lg:pt-28">
+  <div class="container-page lg:max-w-6xl">
     <SectionHeader heading={heading} description={description}>
       <a slot="actions" class="btn-secondary" href={href('checklist/')}>Preview the checklist</a>
       <a slot="actions" class="btn-primary" href={cta}>{ctaLabel}</a>
     </SectionHeader>
 
-    <div class="mt-8 grid gap-5 lg:grid-cols-3">
+    <div class="mt-8 grid gap-5 lg:mt-12 lg:grid-cols-3 lg:gap-6">
       {
         levels.map((lvl, idx) => (
           <div
             class:list={[
               idx === featuredIndex
-                ? 'glass-card overflow-hidden p-7 lg:-translate-y-2'
-                : 'glass-panel overflow-hidden p-6',
+                ? 'glass-card overflow-hidden p-7 lg:-translate-y-3 lg:p-8'
+                : 'glass-panel overflow-hidden p-6 lg:p-7',
             ]}
           >
             <div class="flex items-start justify-between gap-4">
               <div>
-                <h3 class="text-strong text-lg font-bold">{lvl.name}</h3>
-                <p class="mt-1 text-sm text-muted">Best for: {lvl.bestFor}</p>
+                <h3 class="text-strong text-lg font-bold lg:text-xl">{lvl.name}</h3>
+                <p class="mt-1 text-sm text-muted lg:text-base">Best for: {lvl.bestFor}</p>
               </div>
               <span class="pill" aria-label="Checklist-driven">
                 Checklist

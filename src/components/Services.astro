@@ -58,32 +58,32 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
     {
       presentation === 'dropdown' ? (
-        <details class="glass-panel mt-8 overflow-hidden p-0">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5">
+        <details class="glass-panel mt-8 overflow-hidden p-0 lg:mt-12">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 lg:px-8 lg:py-6">
             <div class="min-w-0">
-              <p class="text-strong text-base font-semibold">View specialty services</p>
-              <p class="mt-1 text-sm text-muted">
+              <p class="text-strong text-base font-semibold lg:text-lg">View specialty services</p>
+              <p class="mt-1 text-sm text-muted lg:text-base">
                 Expand to see what we can add on—each item is scoped and scheduled to your building
                 rules.
               </p>
             </div>
             <span
-              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15"
+              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15 lg:h-12 lg:w-12"
               aria-hidden="true"
             >
               ▾
             </span>
           </summary>
 
-          <div class="border-t border-white/10 px-6 py-4">
+          <div class="border-t border-white/10 px-6 py-4 lg:px-8 lg:py-6">
             {items.length === 0 ? (
               <p class="text-sm text-muted">No specialty services are listed yet.</p>
             ) : (
               <div class="divide-y divide-white/10">
                 {items.map((s) => (
-                  <div class="py-4">
-                    <p class="text-strong font-semibold">{s.title}</p>
-                    <p class="mt-1 text-sm text-muted">{s.description}</p>
+                  <div class="py-4 lg:py-5">
+                    <p class="text-strong font-semibold lg:text-lg">{s.title}</p>
+                    <p class="mt-1 text-sm text-muted lg:text-base">{s.description}</p>
                   </div>
                 ))}
               </div>

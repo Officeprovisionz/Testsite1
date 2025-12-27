@@ -176,373 +176,389 @@ const serviceOptions = [
 
 <script>
   (() => {
-    const forms = Array.from(document.querySelectorAll<HTMLFormElement>('form[data-contact-form]'));
-    if (!forms.length) return;
+    const root = document.documentElement;
 
-    const params = new URLSearchParams(window.location.search);
+    const init = () => {
+      const forms = Array.from(
+        document.querySelectorAll<HTMLFormElement>('form[data-contact-form]')
+      );
+      if (!forms.length) return;
 
-    const track = (event: string, props?: Record<string, unknown>) => {
-      try {
-        // Vendor-neutral hook (e.g. Plausible via window.plausible, GTM via dataLayer)
-        // provided by the layout.
-        // @ts-expect-error - global injected at runtime
-        window.damraTrack?.(event, props);
-      } catch {
-        // ignore
-      }
-    };
+      const getParams = () => new URLSearchParams(window.location.search);
 
-    const initForm = (form: HTMLFormElement) => {
-      const endpoint = form.dataset.formEndpoint || '';
-
-      const status = form.querySelector<HTMLElement>('[data-contact-status]');
-      const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
-      const servicesBox = form.querySelector<HTMLElement>('[data-services-box]');
-      const servicesError = form.querySelector<HTMLElement>('[data-services-error]');
-
-      type StatusKind = 'info' | 'success' | 'error';
-
-      const escapeName = (value: string) => {
+      const track = (event: string, props?: Record<string, unknown>) => {
         try {
-          if (window.CSS && typeof CSS.escape === 'function') return CSS.escape(String(value));
+          // Vendor-neutral hook (e.g. Plausible via window.plausible, GTM via dataLayer)
+          // provided by the layout.
+          // @ts-expect-error - global injected at runtime
+          window.damraTrack?.(event, props);
         } catch {
           // ignore
         }
-        return String(value).replace(/["\\]/g, '\\$&');
       };
 
-      const setStatus = (message: string, kind: StatusKind = 'info') => {
-        if (!status) return;
-        status.textContent = String(message);
-        status.dataset.contactStatusKind = kind;
-        status.classList.remove('hidden');
+      const initForm = (form: HTMLFormElement) => {
+        if (form.dataset.contactInit === 'true') return;
+        form.dataset.contactInit = 'true';
+        const endpoint = form.dataset.formEndpoint || '';
 
-        // Visual styles via classes (kept simple and theme-safe).
-        status.classList.remove(
-          'text-muted',
-          'border-app',
-          'surface',
-          'bg-brand-500/10',
-          'border-brand-500/20',
-          'text-strong',
-          'bg-rose-50',
-          'border-rose-200',
-          'text-rose-900',
-          'bg-rose-500/10',
-          'border-rose-500/20'
-        );
+        const status = form.querySelector<HTMLElement>('[data-contact-status]');
+        const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
+        const servicesBox = form.querySelector<HTMLElement>('[data-services-box]');
+        const servicesError = form.querySelector<HTMLElement>('[data-services-error]');
 
-        if (kind === 'success') {
-          status.classList.add('bg-brand-500/10', 'border-brand-500/20', 'text-strong');
-        } else if (kind === 'error') {
-          status.classList.add('bg-rose-500/10', 'border-rose-500/20', 'text-strong');
-        } else {
-          status.classList.add('surface', 'border-app', 'text-muted');
-        }
-      };
+        type StatusKind = 'info' | 'success' | 'error';
 
-      const setBusy = (busy: boolean) => {
-        form.setAttribute('aria-busy', busy ? 'true' : 'false');
-        if (submitBtn) {
-          submitBtn.disabled = busy;
-          submitBtn.classList.toggle('opacity-70', busy);
-          submitBtn.classList.toggle('cursor-not-allowed', busy);
-          submitBtn.textContent = busy ? 'Sending…' : 'Submit Request';
-        }
-      };
-
-      const focusFirstInvalid = () => {
-        const el = form.querySelector<HTMLElement>(':invalid');
-        el?.focus?.();
-      };
-
-      const setFieldInvalid = (name: string, invalid: boolean) => {
-        const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
-          `[name="${escapeName(name)}"]`
-        );
-        if (!el) return;
-        if (invalid) el.setAttribute('aria-invalid', 'true');
-        else el.removeAttribute('aria-invalid');
-      };
-
-      const setServicesInvalid = (invalid: boolean) => {
-        if (servicesBox) {
-          if (invalid) {
-            servicesBox.setAttribute('aria-invalid', 'true');
-          } else {
-            servicesBox.removeAttribute('aria-invalid');
+        const escapeName = (value: string) => {
+          try {
+            if (window.CSS && typeof CSS.escape === 'function') return CSS.escape(String(value));
+          } catch {
+            // ignore
           }
-        }
-        if (servicesError) {
-          servicesError.classList.toggle('hidden', !invalid);
-        }
-      };
+          return String(value).replace(/["\\]/g, '\\$&');
+        };
 
-      const clearInvalidOnInput = () => {
-        const watched = [
-          'companyName',
-          'name',
-          'email',
-          'location',
-          'industry',
-          'frequency',
-          'message',
-          'consent',
-        ];
-        watched.forEach((n) => {
-          const el = form.querySelector(`[name="${escapeName(n)}"]`);
-          if (!el) return;
-          el.addEventListener('input', () => setFieldInvalid(n, false));
-          el.addEventListener('change', () => setFieldInvalid(n, false));
-        });
+        const setStatus = (message: string, kind: StatusKind = 'info') => {
+          if (!status) return;
+          status.textContent = String(message);
+          status.dataset.contactStatusKind = kind;
+          status.classList.remove('hidden');
 
-        // Checkbox group: clear group-level error as soon as the user checks anything.
-        const boxes = Array.from(
-          form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="servicesNeeded"]')
-        );
-        boxes.forEach((b) =>
-          b.addEventListener('change', () => {
-            if (boxes.some((x) => x.checked)) setServicesInvalid(false);
-          })
-        );
-      };
-
-      const prefillFromQuery = () => {
-        const industry = params.get('industry');
-        if (industry) {
-          const sel = form.querySelector<HTMLSelectElement>('select[name="industry"]');
-          if (sel && Array.from(sel.options).some((o) => o.value === industry)) {
-            sel.value = industry;
-            sel.dispatchEvent(new Event('change', { bubbles: true }));
-          }
-        }
-
-        // Support both service=One and services=a,b,c
-        const servicesRaw = params.get('services') || params.get('service') || '';
-        if (servicesRaw) {
-          servicesRaw
-            .split(',')
-            .map((v) => v.trim())
-            .filter(Boolean)
-            .forEach((value) => {
-              const box = form.querySelector<HTMLInputElement>(
-                `input[type="checkbox"][name="servicesNeeded"][value="${escapeName(value)}"]`
-              );
-              if (box) box.checked = true;
-            });
-        }
-      };
-
-      prefillFromQuery();
-      clearInvalidOnInput();
-
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-
-        const to = form.dataset.mailtoTo || '';
-        if (!to) {
-          setStatus('Email address not configured. Please call/text instead.');
-          return;
-        }
-
-        const fd = new FormData(form);
-        const source = String(fd.get('source') ?? '').trim();
-        const companyName = String(fd.get('companyName') ?? '').trim();
-        const name = String(fd.get('name') ?? '').trim();
-        const email = String(fd.get('email') ?? '').trim();
-        const phone = String(fd.get('phone') ?? '').trim();
-        const contactMethod = String(fd.get('contactMethod') ?? '').trim();
-        const location = String(fd.get('location') ?? '').trim();
-        const industry = String(fd.get('industry') ?? '').trim();
-        const frequency = String(fd.get('frequency') ?? '').trim();
-        const startTiming = String(fd.get('startTiming') ?? '').trim();
-        const servicesNeeded = fd
-          .getAll('servicesNeeded')
-          .map((v) => String(v).trim())
-          .filter(Boolean);
-        const consent = String(fd.get('consent') ?? '').trim();
-        const message = String(fd.get('message') ?? '').trim();
-        const honeypot = String(fd.get('website') ?? '').trim();
-
-        track('lead_submit', {
-          source,
-          industry,
-          frequency,
-          hasPhone: Boolean(phone),
-          servicesCount: servicesNeeded.length,
-          via: endpoint ? 'endpoint' : 'mailto',
-        });
-
-        // Simple bot check: if honeypot is filled, do nothing.
-        if (honeypot) {
-          setStatus('Thanks!', 'success');
-          return;
-        }
-
-        if (
-          !companyName ||
-          !name ||
-          !email ||
-          !location ||
-          !industry ||
-          !frequency ||
-          !message ||
-          !consent ||
-          !servicesNeeded.length
-        ) {
-          setFieldInvalid('companyName', !companyName);
-          setFieldInvalid('name', !name);
-          setFieldInvalid('email', !email);
-          setFieldInvalid('location', !location);
-          setFieldInvalid('industry', !industry);
-          setFieldInvalid('frequency', !frequency);
-          setFieldInvalid('message', !message);
-          setFieldInvalid('consent', !consent);
-          setServicesInvalid(!servicesNeeded.length);
-
-          setStatus(
-            'Please fill in the required fields (company, contact name, email, location, industry, frequency, services needed, consent, and notes).',
-            'error'
+          // Visual styles via classes (kept simple and theme-safe).
+          status.classList.remove(
+            'text-muted',
+            'border-app',
+            'surface',
+            'bg-brand-500/10',
+            'border-brand-500/20',
+            'text-strong',
+            'bg-rose-50',
+            'border-rose-200',
+            'text-rose-900',
+            'bg-rose-500/10',
+            'border-rose-500/20'
           );
-          focusFirstInvalid();
 
-          if (!servicesNeeded.length) {
-            const firstService = form.querySelector<HTMLInputElement>(
-              'input[type="checkbox"][name="servicesNeeded"]'
-            );
-            firstService?.focus?.();
+          if (kind === 'success') {
+            status.classList.add('bg-brand-500/10', 'border-brand-500/20', 'text-strong');
+          } else if (kind === 'error') {
+            status.classList.add('bg-rose-500/10', 'border-rose-500/20', 'text-strong');
+          } else {
+            status.classList.add('surface', 'border-app', 'text-muted');
           }
-          return;
-        }
+        };
 
-        // Clear any previous group-level error.
-        setServicesInvalid(false);
+        const setBusy = (busy: boolean) => {
+          form.setAttribute('aria-busy', busy ? 'true' : 'false');
+          if (submitBtn) {
+            submitBtn.disabled = busy;
+            submitBtn.classList.toggle('opacity-70', busy);
+            submitBtn.classList.toggle('cursor-not-allowed', busy);
+            submitBtn.textContent = busy ? 'Sending...' : 'Submit Request';
+          }
+        };
 
-        // If endpoint exists, try an async submission (better UX on mobile).
-        if (endpoint && typeof fetch === 'function') {
-          setBusy(true);
-          setStatus('Sending…', 'info');
+        const focusFirstInvalid = () => {
+          const el = form.querySelector<HTMLElement>(':invalid');
+          el?.focus?.();
+        };
 
-          const controller =
-            typeof AbortController !== 'undefined' ? new AbortController() : undefined;
-          const timeoutMs = 12_000;
-          const timeoutId = window.setTimeout(() => {
-            try {
-              controller?.abort();
-            } catch {
-              // ignore
+        const setFieldInvalid = (name: string, invalid: boolean) => {
+          const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
+            `[name="${escapeName(name)}"]`
+          );
+          if (!el) return;
+          if (invalid) el.setAttribute('aria-invalid', 'true');
+          else el.removeAttribute('aria-invalid');
+        };
+
+        const setServicesInvalid = (invalid: boolean) => {
+          if (servicesBox) {
+            if (invalid) {
+              servicesBox.setAttribute('aria-invalid', 'true');
+            } else {
+              servicesBox.removeAttribute('aria-invalid');
             }
-          }, timeoutMs);
+          }
+          if (servicesError) {
+            servicesError.classList.toggle('hidden', !invalid);
+          }
+        };
 
-          const requestInit: RequestInit = {
-            method: 'POST',
-            body: fd,
-            headers: {
-              Accept: 'application/json',
-            },
-          };
-          if (controller) requestInit.signal = controller.signal;
+        const clearInvalidOnInput = () => {
+          const watched = [
+            'companyName',
+            'name',
+            'email',
+            'location',
+            'industry',
+            'frequency',
+            'message',
+            'consent',
+          ];
+          watched.forEach((n) => {
+            const el = form.querySelector(`[name="${escapeName(n)}"]`);
+            if (!el) return;
+            el.addEventListener('input', () => setFieldInvalid(n, false));
+            el.addEventListener('change', () => setFieldInvalid(n, false));
+          });
 
-          fetch(endpoint, requestInit)
-            .then(async (res) => {
-              window.clearTimeout(timeoutId);
-              if (res.ok) return;
+          // Checkbox group: clear group-level error as soon as the user checks anything.
+          const boxes = Array.from(
+            form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="servicesNeeded"]')
+          );
+          boxes.forEach((b) =>
+            b.addEventListener('change', () => {
+              if (boxes.some((x) => x.checked)) setServicesInvalid(false);
+            })
+          );
+        };
 
-              // Try to parse a helpful error payload.
-              let msg = 'Could not send your request. Please try again or call/text.';
+        const prefillFromQuery = () => {
+          const params = getParams();
+          const industry = params.get('industry');
+          if (industry) {
+            const sel = form.querySelector<HTMLSelectElement>('select[name="industry"]');
+            if (sel && Array.from(sel.options).some((o) => o.value === industry)) {
+              sel.value = industry;
+              sel.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+          }
+
+          // Support both service=One and services=a,b,c
+          const servicesRaw = params.get('services') || params.get('service') || '';
+          if (servicesRaw) {
+            servicesRaw
+              .split(',')
+              .map((v) => v.trim())
+              .filter(Boolean)
+              .forEach((value) => {
+                const box = form.querySelector<HTMLInputElement>(
+                  `input[type="checkbox"][name="servicesNeeded"][value="${escapeName(value)}"]`
+                );
+                if (box) box.checked = true;
+              });
+          }
+        };
+
+        prefillFromQuery();
+        clearInvalidOnInput();
+
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+
+          const to = form.dataset.mailtoTo || '';
+          if (!to) {
+            setStatus('Email address not configured. Please call/text instead.');
+            return;
+          }
+
+          const fd = new FormData(form);
+          const source = String(fd.get('source') ?? '').trim();
+          const companyName = String(fd.get('companyName') ?? '').trim();
+          const name = String(fd.get('name') ?? '').trim();
+          const email = String(fd.get('email') ?? '').trim();
+          const phone = String(fd.get('phone') ?? '').trim();
+          const contactMethod = String(fd.get('contactMethod') ?? '').trim();
+          const location = String(fd.get('location') ?? '').trim();
+          const industry = String(fd.get('industry') ?? '').trim();
+          const frequency = String(fd.get('frequency') ?? '').trim();
+          const startTiming = String(fd.get('startTiming') ?? '').trim();
+          const servicesNeeded = fd
+            .getAll('servicesNeeded')
+            .map((v) => String(v).trim())
+            .filter(Boolean);
+          const consent = String(fd.get('consent') ?? '').trim();
+          const message = String(fd.get('message') ?? '').trim();
+          const honeypot = String(fd.get('website') ?? '').trim();
+
+          track('lead_submit', {
+            source,
+            industry,
+            frequency,
+            hasPhone: Boolean(phone),
+            servicesCount: servicesNeeded.length,
+            via: endpoint ? 'endpoint' : 'mailto',
+          });
+
+          // Simple bot check: if honeypot is filled, do nothing.
+          if (honeypot) {
+            setStatus('Thanks!', 'success');
+            return;
+          }
+
+          if (
+            !companyName ||
+            !name ||
+            !email ||
+            !location ||
+            !industry ||
+            !frequency ||
+            !message ||
+            !consent ||
+            !servicesNeeded.length
+          ) {
+            setFieldInvalid('companyName', !companyName);
+            setFieldInvalid('name', !name);
+            setFieldInvalid('email', !email);
+            setFieldInvalid('location', !location);
+            setFieldInvalid('industry', !industry);
+            setFieldInvalid('frequency', !frequency);
+            setFieldInvalid('message', !message);
+            setFieldInvalid('consent', !consent);
+            setServicesInvalid(!servicesNeeded.length);
+
+            setStatus(
+              'Please fill in the required fields (company, contact name, email, location, industry, frequency, services needed, consent, and notes).',
+              'error'
+            );
+            focusFirstInvalid();
+
+            if (!servicesNeeded.length) {
+              const firstService = form.querySelector<HTMLInputElement>(
+                'input[type="checkbox"][name="servicesNeeded"]'
+              );
+              firstService?.focus?.();
+            }
+            return;
+          }
+
+          // Clear any previous group-level error.
+          setServicesInvalid(false);
+
+          // If endpoint exists, try an async submission (better UX on mobile).
+          if (endpoint && typeof fetch === 'function') {
+            setBusy(true);
+            setStatus('Sending...', 'info');
+
+            const controller =
+              typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+            const timeoutMs = 12_000;
+            const timeoutId = window.setTimeout(() => {
               try {
-                const data = await res.json();
-                if (
-                  data &&
-                  typeof data === 'object' &&
-                  'error' in data &&
-                  typeof data.error === 'string'
-                ) {
-                  msg = data.error;
-                }
+                controller?.abort();
               } catch {
                 // ignore
               }
-              throw new Error(msg);
-            })
-            .then(() => {
-              setStatus('Quote request received — we’ll reply within 1 business day.', 'success');
-              form.reset();
+            }, timeoutMs);
 
-              track('lead_submit_success', { source, via: 'endpoint' });
+            const requestInit: RequestInit = {
+              method: 'POST',
+              body: fd,
+              headers: {
+                Accept: 'application/json',
+              },
+            };
+            if (controller) requestInit.signal = controller.signal;
 
-              const redirect = form.dataset.successRedirect || '';
-              if (redirect) {
-                window.setTimeout(() => {
-                  try {
-                    window.location.assign(redirect);
-                  } catch {
-                    // ignore
-                  }
-                }, 650);
-              }
-            })
-            .catch((err) => {
-              window.clearTimeout(timeoutId);
+            fetch(endpoint, requestInit)
+              .then(async (res) => {
+                window.clearTimeout(timeoutId);
+                if (res.ok) return;
 
-              const msg = err instanceof Error ? err.message : 'Something went wrong.';
-              const aborted = err instanceof DOMException && err.name === 'AbortError';
-              setStatus(
-                aborted
-                  ? 'Request timed out. Please try again, or call/text for the fastest response.'
-                  : msg,
-                'error'
-              );
-
-              track('lead_submit_error', { source, via: 'endpoint', message: String(msg) });
-
-              // Fallback: attempt a normal submit only on network-level fetch failures.
-              // Avoid double-submitting when the server replied with a non-2xx response.
-              const networkError = err instanceof TypeError;
-              if (networkError && !aborted) {
+                // Try to parse a helpful error payload.
+                let msg = 'Could not send your request. Please try again or call/text.';
                 try {
-                  form.submit();
+                  const data = await res.json();
+                  if (
+                    data &&
+                    typeof data === 'object' &&
+                    'error' in data &&
+                    typeof data.error === 'string'
+                  ) {
+                    msg = data.error;
+                  }
                 } catch {
                   // ignore
                 }
-              }
-            })
-            .finally(() => {
-              setBusy(false);
-            });
+                throw new Error(msg);
+              })
+              .then(() => {
+                setStatus("Quote request received - we'll reply within 1 business day.", 'success');
+                form.reset();
 
-          return;
-        }
+                track('lead_submit_success', { source, via: 'endpoint' });
 
-        const subject = `Quote request — ${companyName || name}`;
-        const body = [
-          source ? `Page: ${source}` : undefined,
-          companyName ? `Company: ${companyName}` : undefined,
-          `Name: ${name}`,
-          `Email: ${email}`,
-          phone ? `Phone: ${phone}` : undefined,
-          contactMethod ? `Preferred contact: ${contactMethod}` : undefined,
-          location ? `Location: ${location}` : undefined,
-          industry ? `Industry: ${industry}` : undefined,
-          servicesNeeded.length ? `Services needed: ${servicesNeeded.join(', ')}` : undefined,
-          frequency ? `Frequency: ${frequency}` : undefined,
-          startTiming ? `Timing: ${startTiming}` : undefined,
-          consent ? `Consent: ${consent}` : undefined,
-          '',
-          message,
-        ]
-          .filter(Boolean)
-          .join('\n');
+                const redirect = form.dataset.successRedirect || '';
+                if (redirect) {
+                  window.setTimeout(() => {
+                    try {
+                      window.location.assign(redirect);
+                    } catch {
+                      // ignore
+                    }
+                  }, 650);
+                }
+              })
+              .catch((err) => {
+                window.clearTimeout(timeoutId);
 
-        setStatus('Opening your email app…', 'success');
+                const msg = err instanceof Error ? err.message : 'Something went wrong.';
+                const aborted = err instanceof DOMException && err.name === 'AbortError';
+                setStatus(
+                  aborted
+                    ? 'Request timed out. Please try again, or call/text for the fastest response.'
+                    : msg,
+                  'error'
+                );
 
-        track('lead_submit_success', { source, via: 'mailto' });
+                track('lead_submit_error', { source, via: 'endpoint', message: String(msg) });
 
-        const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-        window.location.href = href;
-      });
+                // Fallback: attempt a normal submit only on network-level fetch failures.
+                // Avoid double-submitting when the server replied with a non-2xx response.
+                const networkError = err instanceof TypeError;
+                if (networkError && !aborted) {
+                  try {
+                    form.submit();
+                  } catch {
+                    // ignore
+                  }
+                }
+              })
+              .finally(() => {
+                setBusy(false);
+              });
+
+            return;
+          }
+
+          const subject = `Quote request - ${companyName || name}`;
+          const body = [
+            source ? `Page: ${source}` : undefined,
+            companyName ? `Company: ${companyName}` : undefined,
+            `Name: ${name}`,
+            `Email: ${email}`,
+            phone ? `Phone: ${phone}` : undefined,
+            contactMethod ? `Preferred contact: ${contactMethod}` : undefined,
+            location ? `Location: ${location}` : undefined,
+            industry ? `Industry: ${industry}` : undefined,
+            servicesNeeded.length ? `Services needed: ${servicesNeeded.join(', ')}` : undefined,
+            frequency ? `Frequency: ${frequency}` : undefined,
+            startTiming ? `Timing: ${startTiming}` : undefined,
+            consent ? `Consent: ${consent}` : undefined,
+            '',
+            message,
+          ]
+            .filter(Boolean)
+            .join('\n');
+
+          setStatus('Opening your email app...', 'success');
+
+          track('lead_submit_success', { source, via: 'mailto' });
+
+          const href = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+          window.location.href = href;
+        });
+      };
+
+      forms.forEach(initForm);
     };
 
-    forms.forEach(initForm);
+    if (root.dataset.contactFormListen !== 'true') {
+      root.dataset.contactFormListen = 'true';
+      document.addEventListener('astro:page-load', init);
+    }
+
+    init();
   })();
 </script>

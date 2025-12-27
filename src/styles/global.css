@@ -1380,3 +1380,118 @@
     background-color: rgba(156, 163, 175, 0.6);
   }
 }
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+  /* Reset colors to save ink and improve readability. */
+  :root {
+    --color-bg: 255 255 255;
+    --color-surface: 255 255 255;
+    --color-text: 0 0 0;
+    --color-text-muted: 55 65 81;
+    --color-text-subtle: 107 114 128;
+  }
+
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.4;
+  }
+
+  body::before,
+  body::after {
+    display: none !important;
+  }
+
+  /* Hide non-essential UI elements. */
+  header[data-site-header],
+  footer,
+  .scroll-progress,
+  .wave-divider,
+  [aria-hidden='true']:not(img),
+  details[data-mobile-menu],
+  .btn-primary,
+  .btn-secondary,
+  .btn-accent,
+  .btn-invert,
+  [data-lightbox-dialog] {
+    display: none !important;
+  }
+
+  /* Ensure images print and respect their container. */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Avoid page breaks inside important elements. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  blockquote,
+  pre,
+  figure,
+  .glass-card,
+  .glass-panel,
+  .panel {
+    page-break-inside: avoid;
+    page-break-after: avoid;
+  }
+
+  /* Keep headings with their following content. */
+  h1,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Show URLs after links (except for internal anchors). */
+  a[href^='http']::after {
+    content: ' (' attr(href) ')';
+    font-size: 0.8em;
+    font-weight: normal;
+    word-wrap: break-word;
+  }
+
+  a[href^='#']::after,
+  a[href^='javascript:']::after {
+    content: '';
+  }
+
+  /* Basic table styling for print. */
+  table {
+    border-collapse: collapse;
+  }
+
+  th,
+  td {
+    border: 1px solid #ccc;
+    padding: 0.5em;
+  }
+
+  /* Simplify sections for print. */
+  .section {
+    padding: 1rem 0 !important;
+  }
+
+  .container-page,
+  .container-narrow {
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}

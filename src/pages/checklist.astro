@@ -116,8 +116,20 @@ const addOns = [
 
 <script>
   (() => {
-    const btn = document.querySelector('[data-print]');
-    if (!btn) return;
-    btn.addEventListener('click', () => window.print());
+    const init = () => {
+      const btn = document.querySelector('[data-print]');
+      if (!btn) return;
+      if (btn.dataset.printInit === 'true') return;
+      btn.dataset.printInit = 'true';
+      btn.addEventListener('click', () => window.print());
+    };
+
+    const doc = document.documentElement;
+    if (doc.dataset.printListen !== 'true') {
+      doc.dataset.printListen = 'true';
+      document.addEventListener('astro:page-load', init);
+    }
+
+    init();
   })();
 </script>

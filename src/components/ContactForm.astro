@@ -93,6 +93,8 @@ const servicesErrorId = `${servicesHelpId}-error`;
           autocomplete="organization"
           autocapitalize="words"
           enterkeyhint="next"
+          minlength="2"
+          maxlength="100"
           required
         />
       </label>
@@ -106,6 +108,8 @@ const servicesErrorId = `${servicesHelpId}-error`;
           autocomplete="name"
           autocapitalize="words"
           enterkeyhint="next"
+          minlength="2"
+          maxlength="80"
           required
         />
       </label>
@@ -121,6 +125,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           autocapitalize="none"
           spellcheck="false"
           enterkeyhint="next"
+          maxlength="254"
           required
         />
       </label>
@@ -134,6 +139,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           autocomplete="tel"
           inputmode="tel"
           enterkeyhint="next"
+          maxlength="20"
         />
       </label>
     </div>
@@ -154,8 +160,10 @@ const servicesErrorId = `${servicesHelpId}-error`;
           class="input"
           type="text"
           name="location"
-          autocomplete="postal-code"
+          autocomplete="address-level2"
           enterkeyhint="next"
+          minlength="3"
+          maxlength="100"
           required
           placeholder="Example: San Francisco, 94103"
         />
@@ -230,6 +238,8 @@ const servicesErrorId = `${servicesHelpId}-error`;
         name="message"
         required
         enterkeyhint="send"
+        minlength="10"
+        maxlength="2000"
         placeholder="Example: ~2,500 sq ft office; weekly after 6pm; focus on restrooms + kitchen; monthly deep clean."
       ></textarea>
     </label>

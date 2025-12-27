@@ -6,9 +6,15 @@ import { ClientRouter } from 'astro:transitions';
 type Props = {
   title?: string;
   description?: string;
+  /** Prevent search engines from indexing this page (useful for dev-only pages). */
+  noIndex?: boolean;
 };
 
-const { title = siteConfig.seo.title, description = siteConfig.seo.description } = Astro.props;
+const {
+  title = siteConfig.seo.title,
+  description = siteConfig.seo.description,
+  noIndex = false,
+} = Astro.props;
 
 const base = import.meta.env.BASE_URL;
 
@@ -57,13 +63,17 @@ const jsonLd = (() => {
 >
   <head>
     <meta charset="utf-8" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    {noIndex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
@@ -121,6 +131,8 @@ const jsonLd = (() => {
         if (typeof window === 'undefined') return;
 
         const root = document.documentElement;
+        if (root.dataset.modeSyncInit === 'true') return;
+        root.dataset.modeSyncInit = 'true';
 
         const getMode = () => {
           const m = root.dataset.mode;
@@ -179,6 +191,7 @@ const jsonLd = (() => {
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={siteConfig.brand.name} />
     {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
     <meta property="og:image" content={ogUrl} />
 
@@ -190,6 +203,8 @@ const jsonLd = (() => {
     <script type="application/ld+json" is:inline set:html={jsonLd} />
 
     <script>
+      const root = document.documentElement;
+
       const prefersReducedMotion = (() => {
         try {
           return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -212,34 +227,50 @@ const jsonLd = (() => {
       if (prefersReducedMotion || isTouchLike) {
         // Respect OS/user preference: avoid forced smooth scrolling.
       } else {
-        // Only load Lenis when we intend to use it.
-        import('lenis')
-          .then((mod) => {
-            const Lenis = (mod as { default: new () => { raf: (t: number) => void } }).default;
-            const lenis = new Lenis();
+        if (root.dataset.lenisInit !== 'true') {
+          root.dataset.lenisInit = 'true';
+          // Only load Lenis when we intend to use it.
+          import('lenis')
+            .then((mod) => {
+              const Lenis = (mod as { default: new () => { raf: (t: number) => void } }).default;
+              const lenis = new Lenis();
 
-            function raf(time: number) {
-              lenis.raf(time);
+              function raf(time: number) {
+                lenis.raf(time);
+                requestAnimationFrame(raf);
+              }
+
               requestAnimationFrame(raf);
-            }
-
-            requestAnimationFrame(raf);
-          })
-          .catch(() => {
-            // If Lenis fails to load for any reason, fall back to native scrolling.
-          });
+            })
+            .catch(() => {
+              // If Lenis fails to load for any reason, fall back to native scrolling.
+            });
+        }
       }
 
       // Track scroll progress for the progress bar
+      let scrollRaf = 0;
       const updateScrollProgress = () => {
+        scrollRaf = 0;
         const scrollTop = window.scrollY || document.documentElement.scrollTop;
         const docHeight = document.documentElement.scrollHeight - window.innerHeight;
         const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        document.documentElement.style.setProperty('--scroll-progress', progress + '%');
+        root.style.setProperty('--scroll-progress', `${progress}%`);
       };
 
-      window.addEventListener('scroll', updateScrollProgress, { passive: true });
-      updateScrollProgress();
+      const requestScrollProgress = () => {
+        if (scrollRaf) return;
+        scrollRaf = window.requestAnimationFrame(updateScrollProgress);
+      };
+
+      if (root.dataset.scrollProgressInit !== 'true') {
+        root.dataset.scrollProgressInit = 'true';
+        window.addEventListener('scroll', requestScrollProgress, { passive: true });
+        window.addEventListener('resize', requestScrollProgress);
+        document.addEventListener('astro:page-load', requestScrollProgress);
+      }
+
+      requestScrollProgress();
     </script>
 
     <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
@@ -247,6 +278,9 @@ const jsonLd = (() => {
         // Register a lightweight service worker in production builds.
         // Keeps repeat visits fast and provides a basic offline shell.
         if (typeof window === 'undefined') return;
+        const root = document.documentElement;
+        if (root.dataset.swInit === 'true') return;
+        root.dataset.swInit = 'true';
         if (isDev) return;
         if (!('serviceWorker' in navigator)) return;
 

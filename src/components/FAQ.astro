@@ -84,17 +84,29 @@ const faqJsonLd = (() => {
 
   <script>
     (() => {
-      const root = document.querySelector('[data-faq]');
-      if (!root) return;
+      const init = () => {
+        const root = document.querySelector('[data-faq]');
+        if (!root) return;
+        if (root.dataset.faqInit === 'true') return;
+        root.dataset.faqInit = 'true';
 
-      const items = Array.from(root.querySelectorAll<HTMLDetailsElement>('[data-faq-item]'));
+        const items = Array.from(root.querySelectorAll<HTMLDetailsElement>('[data-faq-item]'));
 
-      items.forEach((el) => {
-        el.addEventListener('toggle', () => {
-          // Keep it "dropdown" style: only one open at a time.
-          if (el.open) items.forEach((other) => other !== el && (other.open = false));
+        items.forEach((el) => {
+          el.addEventListener('toggle', () => {
+            // Keep it "dropdown" style: only one open at a time.
+            if (el.open) items.forEach((other) => other !== el && (other.open = false));
+          });
         });
-      });
+      };
+
+      const doc = document.documentElement;
+      if (doc.dataset.faqListen !== 'true') {
+        doc.dataset.faqListen = 'true';
+        document.addEventListener('astro:page-load', init);
+      }
+
+      init();
     })();
   </script>
 </section>

@@ -224,6 +224,8 @@ const navItems = [
   (() => {
     const menu = document.querySelector('details[data-mobile-menu]') as HTMLDetailsElement | null;
     if (!menu) return;
+    if (menu.dataset.menuInit === 'true') return;
+    menu.dataset.menuInit = 'true';
 
     const summary = menu.querySelector('[data-menu-summary]') as HTMLElement | null;
     const panel = menu.querySelector('#mobile-menu-panel') as HTMLElement | null;
@@ -478,12 +480,18 @@ const navItems = [
 
 <script>
   (() => {
-    const header = document.querySelector('header[data-site-header]') as HTMLElement | null;
-    if (!header) return;
+    const root = document.documentElement;
+    if (root.dataset.headerScrollInit === 'true') return;
+    root.dataset.headerScrollInit = 'true';
+
+    const getHeader = () =>
+      document.querySelector('header[data-site-header]') as HTMLElement | null;
 
     let raf = 0;
     const update = () => {
       raf = 0;
+      const header = getHeader();
+      if (!header) return;
       header.classList.toggle('is-scrolled', (window.scrollY || 0) > 8);
 
       // Keep anchor offsets in sync with the *actual* rendered header height.
@@ -499,6 +507,7 @@ const navItems = [
     update();
     window.addEventListener('scroll', onUpdateRequest, { passive: true });
     window.addEventListener('resize', onUpdateRequest);
+    document.addEventListener('astro:page-load', onUpdateRequest);
   })();
 </script>
 
@@ -547,7 +556,11 @@ const navItems = [
     };
 
     setMode(getCurrent());
-    btns.forEach((b) => b.addEventListener('click', cycle));
+    btns.forEach((b) => {
+      if (b.dataset.modeToggleInit === 'true') return;
+      b.dataset.modeToggleInit = 'true';
+      b.addEventListener('click', cycle);
+    });
   })();
 </script>
 
@@ -595,7 +608,11 @@ const navItems = [
     };
 
     setTheme(getCurrent());
-    btns.forEach((b) => b.addEventListener('click', cycle));
+    btns.forEach((b) => {
+      if (b.dataset.themeToggleInit === 'true') return;
+      b.dataset.themeToggleInit = 'true';
+      b.addEventListener('click', cycle);
+    });
   })();
 </script>
 

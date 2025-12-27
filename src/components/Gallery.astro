@@ -242,379 +242,396 @@ const getImgAttrs = (src: string) => {
 
   <script>
     (() => {
-      const root = document.querySelector('[data-gallery]');
-      if (!root) return;
+      const init = () => {
+        const root = document.querySelector('[data-gallery]');
+        if (!root) return;
+        if (root.dataset.galleryInit === 'true') return;
+        root.dataset.galleryInit = 'true';
 
-      // Optional auto-advance for the horizontal (mobile) gallery.
-      // Enabled only when a `data-auto-advance-ms` is present.
-      const autoMsRaw = root.getAttribute('data-auto-advance-ms');
-      const autoMs = autoMsRaw ? Number(autoMsRaw) : 0;
+        // Optional auto-advance for the horizontal (mobile) gallery.
+        // Enabled only when a `data-auto-advance-ms` is present.
+        const autoMsRaw = root.getAttribute('data-auto-advance-ms');
+        const autoMs = autoMsRaw ? Number(autoMsRaw) : 0;
 
-      const prefersReducedMotion = () => {
-        try {
-          return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
-        } catch {
-          return false;
+        const prefersReducedMotion = () => {
+          try {
+            return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+          } catch {
+            return false;
+          }
+        };
+
+        const saveDataEnabled = () => {
+          try {
+            const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+            return Boolean(nav.connection?.saveData);
+          } catch {
+            return false;
+          }
+        };
+
+        const isHorizScrollable = () => {
+          const el = root as HTMLElement;
+          return el.scrollWidth > el.clientWidth + 24;
+        };
+
+        const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('a[data-gallery-item]'));
+        const dialog = document.querySelector('dialog[data-lightbox]') as HTMLDialogElement | null;
+        if (!dialog) return;
+
+        if (
+          Number.isFinite(autoMs) &&
+          autoMs > 0 &&
+          !prefersReducedMotion() &&
+          !saveDataEnabled()
+        ) {
+          let autoIndex = 0;
+          let timer: number | undefined;
+          let resumeTimer: number | undefined;
+
+          const stop = () => {
+            if (typeof timer === 'number') window.clearInterval(timer);
+            timer = undefined;
+          };
+
+          const scheduleResume = () => {
+            if (typeof resumeTimer === 'number') window.clearTimeout(resumeTimer);
+            resumeTimer = window.setTimeout(() => {
+              start();
+            }, 8000);
+          };
+
+          const step = () => {
+            if (!isHorizScrollable()) return;
+            if (!links.length) return;
+            if (document.hidden) return;
+
+            autoIndex = (autoIndex + 1) % links.length;
+            const el = links[autoIndex];
+            el?.scrollIntoView?.({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+          };
+
+          const start = () => {
+            stop();
+            if (!isHorizScrollable()) return;
+            timer = window.setInterval(step, Math.max(1500, autoMs));
+          };
+
+          // Pause auto-advance on user interaction (they're browsing!).
+          const onUserIntent = () => {
+            stop();
+            scheduleResume();
+          };
+
+          root.addEventListener('pointerdown', onUserIntent, { passive: true });
+          root.addEventListener('touchstart', onUserIntent, { passive: true });
+          root.addEventListener('wheel', onUserIntent, { passive: true });
+          document.addEventListener('visibilitychange', () => {
+            if (document.hidden) stop();
+            else start();
+          });
+
+          // Start after first paint.
+          window.setTimeout(start, 600);
         }
-      };
 
-      const saveDataEnabled = () => {
-        try {
-          const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
-          return Boolean(nav.connection?.saveData);
-        } catch {
-          return false;
-        }
-      };
+        const img = dialog.querySelector('[data-lightbox-img]') as HTMLImageElement | null;
+        const caption = dialog.querySelector('[data-lightbox-caption]') as HTMLElement | null;
+        const title = dialog.querySelector('[data-lightbox-title]') as HTMLElement | null;
+        const count = dialog.querySelector('[data-lightbox-count]') as HTMLElement | null;
+        const closeBtn = dialog.querySelector('[data-close]') as HTMLButtonElement | null;
+        const prevBtn = dialog.querySelector('[data-prev]') as HTMLButtonElement | null;
+        const nextBtn = dialog.querySelector('[data-next]') as HTMLButtonElement | null;
+        const shareBtn = dialog.querySelector('[data-share]') as HTMLButtonElement | null;
+        const copyBtn = dialog.querySelector('[data-copy]') as HTMLButtonElement | null;
+        const toast = dialog.querySelector('[data-lightbox-toast]') as HTMLElement | null;
+        const figure = dialog.querySelector('[data-lightbox-figure]') as HTMLElement | null;
 
-      const isHorizScrollable = () => {
-        const el = root as HTMLElement;
-        return el.scrollWidth > el.clientWidth + 24;
-      };
-
-      const links = Array.from(root.querySelectorAll<HTMLAnchorElement>('a[data-gallery-item]'));
-      const dialog = document.querySelector('dialog[data-lightbox]') as HTMLDialogElement | null;
-      if (!dialog) return;
-
-      if (Number.isFinite(autoMs) && autoMs > 0 && !prefersReducedMotion() && !saveDataEnabled()) {
-        let autoIndex = 0;
-        let timer: number | undefined;
-        let resumeTimer: number | undefined;
-
-        const stop = () => {
-          if (typeof timer === 'number') window.clearInterval(timer);
-          timer = undefined;
-        };
-
-        const scheduleResume = () => {
-          if (typeof resumeTimer === 'number') window.clearTimeout(resumeTimer);
-          resumeTimer = window.setTimeout(() => {
-            start();
-          }, 8000);
-        };
-
-        const step = () => {
-          if (!isHorizScrollable()) return;
-          if (!links.length) return;
-          if (document.hidden) return;
-
-          autoIndex = (autoIndex + 1) % links.length;
-          const el = links[autoIndex];
-          el?.scrollIntoView?.({ behavior: 'smooth', inline: 'start', block: 'nearest' });
-        };
-
-        const start = () => {
-          stop();
-          if (!isHorizScrollable()) return;
-          timer = window.setInterval(step, Math.max(1500, autoMs));
-        };
-
-        // Pause auto-advance on user interaction (they're browsing!).
-        const onUserIntent = () => {
-          stop();
-          scheduleResume();
-        };
-
-        root.addEventListener('pointerdown', onUserIntent, { passive: true });
-        root.addEventListener('touchstart', onUserIntent, { passive: true });
-        root.addEventListener('wheel', onUserIntent, { passive: true });
-        document.addEventListener('visibilitychange', () => {
-          if (document.hidden) stop();
-          else start();
+        const items = links.map((a) => {
+          const href = a.getAttribute('href') || '';
+          const imgEl = a.querySelector('img');
+          const alt = imgEl?.getAttribute('alt') || '';
+          const cap = a.querySelector('p')?.textContent || '';
+          return { href, alt, caption: cap };
         });
 
-        // Start after first paint.
-        window.setTimeout(start, 600);
-      }
+        let currentIndex = 0;
+        let previousOverflow: string | null = null;
+        let previousScrollLock: string | null = null;
+        let lastFocused: HTMLElement | null = null;
+        let toastTimer: number | undefined;
 
-      const img = dialog.querySelector('[data-lightbox-img]') as HTMLImageElement | null;
-      const caption = dialog.querySelector('[data-lightbox-caption]') as HTMLElement | null;
-      const title = dialog.querySelector('[data-lightbox-title]') as HTMLElement | null;
-      const count = dialog.querySelector('[data-lightbox-count]') as HTMLElement | null;
-      const closeBtn = dialog.querySelector('[data-close]') as HTMLButtonElement | null;
-      const prevBtn = dialog.querySelector('[data-prev]') as HTMLButtonElement | null;
-      const nextBtn = dialog.querySelector('[data-next]') as HTMLButtonElement | null;
-      const shareBtn = dialog.querySelector('[data-share]') as HTMLButtonElement | null;
-      const copyBtn = dialog.querySelector('[data-copy]') as HTMLButtonElement | null;
-      const toast = dialog.querySelector('[data-lightbox-toast]') as HTMLElement | null;
-      const figure = dialog.querySelector('[data-lightbox-figure]') as HTMLElement | null;
-
-      const items = links.map((a) => {
-        const href = a.getAttribute('href') || '';
-        const imgEl = a.querySelector('img');
-        const alt = imgEl?.getAttribute('alt') || '';
-        const cap = a.querySelector('p')?.textContent || '';
-        return { href, alt, caption: cap };
-      });
-
-      let currentIndex = 0;
-      let previousOverflow: string | null = null;
-      let previousScrollLock: string | null = null;
-      let lastFocused: HTMLElement | null = null;
-      let toastTimer: number | undefined;
-
-      const setScrollLock = (locked: boolean) => {
-        const el = document.documentElement;
-        if (locked) {
-          if (previousScrollLock === null) previousScrollLock = el.dataset.scrollLock ?? null;
-          el.dataset.scrollLock = 'true';
-          el.dataset.modalOpen = 'true';
-          if (previousOverflow === null) previousOverflow = el.style.overflow || '';
-          el.style.overflow = 'hidden';
-        } else {
-          if (previousOverflow !== null) el.style.overflow = previousOverflow;
-          previousOverflow = null;
-          delete el.dataset.modalOpen;
-          if (previousScrollLock !== null) {
-            if (previousScrollLock === '') delete el.dataset.scrollLock;
-            else el.dataset.scrollLock = previousScrollLock;
+        const setScrollLock = (locked: boolean) => {
+          const el = document.documentElement;
+          if (locked) {
+            if (previousScrollLock === null) previousScrollLock = el.dataset.scrollLock ?? null;
+            el.dataset.scrollLock = 'true';
+            el.dataset.modalOpen = 'true';
+            if (previousOverflow === null) previousOverflow = el.style.overflow || '';
+            el.style.overflow = 'hidden';
           } else {
-            delete el.dataset.scrollLock;
+            if (previousOverflow !== null) el.style.overflow = previousOverflow;
+            previousOverflow = null;
+            delete el.dataset.modalOpen;
+            if (previousScrollLock !== null) {
+              if (previousScrollLock === '') delete el.dataset.scrollLock;
+              else el.dataset.scrollLock = previousScrollLock;
+            } else {
+              delete el.dataset.scrollLock;
+            }
+            previousScrollLock = null;
           }
-          previousScrollLock = null;
-        }
-      };
+        };
 
-      const showToast = (message: string) => {
-        if (!toast) return;
-        toast.textContent = message;
-        if (typeof toastTimer === 'number') window.clearTimeout(toastTimer);
-        toastTimer = window.setTimeout(() => {
-          toast.textContent = '';
-        }, 1800);
-      };
+        const showToast = (message: string) => {
+          if (!toast) return;
+          toast.textContent = message;
+          if (typeof toastTimer === 'number') window.clearTimeout(toastTimer);
+          toastTimer = window.setTimeout(() => {
+            toast.textContent = '';
+          }, 1800);
+        };
 
-      const getFocusables = () => {
-        const nodes = Array.from(
-          dialog.querySelectorAll<HTMLElement>(
-            'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
-          )
-        );
-        return nodes.filter((el) => el.offsetParent !== null || el.getClientRects().length > 0);
-      };
+        const getFocusables = () => {
+          const nodes = Array.from(
+            dialog.querySelectorAll<HTMLElement>(
+              'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+            )
+          );
+          return nodes.filter((el) => el.offsetParent !== null || el.getClientRects().length > 0);
+        };
 
-      const setContent = (index: number) => {
-        const safeIndex = ((index % items.length) + items.length) % items.length;
-        const it = items[safeIndex];
-        currentIndex = safeIndex;
+        const setContent = (index: number) => {
+          const safeIndex = ((index % items.length) + items.length) % items.length;
+          const it = items[safeIndex];
+          currentIndex = safeIndex;
 
-        if (img) {
-          img.src = it?.href ?? '';
-          img.alt = it?.alt ?? '';
-        }
-        if (caption) caption.textContent = it?.alt ?? '';
-        if (title) title.textContent = it?.caption ? it.caption : 'Photo preview';
-        if (count) count.textContent = items.length ? `${safeIndex + 1} of ${items.length}` : '';
-      };
-
-      const prefetchNeighbors = () => {
-        if (!items.length) return;
-        const indices = [currentIndex - 1, currentIndex + 1].map(
-          (i) => ((i % items.length) + items.length) % items.length
-        );
-        indices.forEach((i) => {
-          const href = items[i]?.href;
-          if (!href) return;
-          const pre = new Image();
-          pre.decoding = 'async';
-          pre.loading = 'eager';
-          pre.src = href;
-        });
-      };
-
-      const open = (index: number) => {
-        if (!items.length) return;
-        setContent(index);
-        prefetchNeighbors();
-        setScrollLock(true);
-        lastFocused = document.activeElement as HTMLElement | null;
-        if (typeof dialog.showModal === 'function') dialog.showModal();
-        else dialog.setAttribute('open', '');
-        // Move focus into the dialog for keyboard users.
-        (closeBtn ?? getFocusables()[0])?.focus();
-      };
-
-      const close = () => {
-        if (typeof dialog.close === 'function') dialog.close();
-        else dialog.removeAttribute('open');
-        setScrollLock(false);
-        lastFocused?.focus?.();
-        lastFocused = null;
-      };
-
-      const go = (delta: number) => {
-        if (!items.length) return;
-        setContent(currentIndex + delta);
-        prefetchNeighbors();
-      };
-
-      const currentHref = () => {
-        const it = items[currentIndex];
-        return it?.href ?? '';
-      };
-
-      const currentShareTitle = () => {
-        const it = items[currentIndex];
-        return it?.caption ? it.caption : 'Photo';
-      };
-
-      const copyToClipboard = async (text: string) => {
-        try {
-          if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
-            await navigator.clipboard.writeText(text);
-            showToast('Link copied.');
-            return true;
+          if (img) {
+            img.src = it?.href ?? '';
+            img.alt = it?.alt ?? '';
           }
-        } catch {
-          // fall through
-        }
-        // Fallback: no clipboard access. Provide a manual copy affordance.
-        try {
-          window.prompt('Copy this link:', text);
-          showToast('Copy manually.');
-        } catch {
-          showToast('Copy failed.');
-        }
-        return false;
-      };
+          if (caption) caption.textContent = it?.alt ?? '';
+          if (title) title.textContent = it?.caption ? it.caption : 'Photo preview';
+          if (count) count.textContent = items.length ? `${safeIndex + 1} of ${items.length}` : '';
+        };
 
-      // Gesture support (mobile): swipe left/right to navigate.
-      // Scoped to the image area so buttons/chrome remain easy to tap.
-      let touchStartX = 0;
-      let touchStartY = 0;
-      let touchLastX = 0;
-      let touchLastY = 0;
-      let touchMoved = false;
+        const prefetchNeighbors = () => {
+          if (!items.length) return;
+          const indices = [currentIndex - 1, currentIndex + 1].map(
+            (i) => ((i % items.length) + items.length) % items.length
+          );
+          indices.forEach((i) => {
+            const href = items[i]?.href;
+            if (!href) return;
+            const pre = new Image();
+            pre.decoding = 'async';
+            pre.loading = 'eager';
+            pre.src = href;
+          });
+        };
 
-      const onTouchStart = (e: TouchEvent) => {
-        const t = e.touches?.[0];
-        if (!t) return;
-        touchStartX = t.clientX;
-        touchStartY = t.clientY;
-        touchLastX = t.clientX;
-        touchLastY = t.clientY;
-        touchMoved = false;
-      };
+        const open = (index: number) => {
+          if (!items.length) return;
+          setContent(index);
+          prefetchNeighbors();
+          setScrollLock(true);
+          lastFocused = document.activeElement as HTMLElement | null;
+          if (typeof dialog.showModal === 'function') dialog.showModal();
+          else dialog.setAttribute('open', '');
+          // Move focus into the dialog for keyboard users.
+          (closeBtn ?? getFocusables()[0])?.focus();
+        };
 
-      const onTouchMove = (e: TouchEvent) => {
-        const t = e.touches?.[0];
-        if (!t) return;
-        touchLastX = t.clientX;
-        touchLastY = t.clientY;
-        touchMoved = true;
-      };
+        const close = () => {
+          if (typeof dialog.close === 'function') dialog.close();
+          else dialog.removeAttribute('open');
+          setScrollLock(false);
+          lastFocused?.focus?.();
+          lastFocused = null;
+        };
 
-      const onTouchEnd = () => {
-        if (!touchMoved) return;
+        const go = (delta: number) => {
+          if (!items.length) return;
+          setContent(currentIndex + delta);
+          prefetchNeighbors();
+        };
 
-        const dx = touchLastX - touchStartX;
-        const dy = touchLastY - touchStartY;
-        const absDx = Math.abs(dx);
-        const absDy = Math.abs(dy);
+        const currentHref = () => {
+          const it = items[currentIndex];
+          return it?.href ?? '';
+        };
 
-        // Require a clear intent (avoid accidental diagonal scrolls).
-        const horizontalIntent = absDx > 46 && absDx > absDy * 1.2;
-        const verticalIntent = absDy > 140 && absDy > absDx * 1.25;
+        const currentShareTitle = () => {
+          const it = items[currentIndex];
+          return it?.caption ? it.caption : 'Photo';
+        };
 
-        if (horizontalIntent) {
-          if (dx > 0) go(-1);
-          else go(1);
-          return;
-        }
+        const copyToClipboard = async (text: string) => {
+          try {
+            if (navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+              await navigator.clipboard.writeText(text);
+              showToast('Link copied.');
+              return true;
+            }
+          } catch {
+            // fall through
+          }
+          // Fallback: no clipboard access. Provide a manual copy affordance.
+          try {
+            window.prompt('Copy this link:', text);
+            showToast('Copy manually.');
+          } catch {
+            showToast('Copy failed.');
+          }
+          return false;
+        };
 
-        // Optional: swipe down to close (only when scrolled to top).
-        if (verticalIntent && dy > 0) {
-          const atTop = !figure || figure.scrollTop <= 0;
-          if (atTop) close();
-        }
-      };
+        // Gesture support (mobile): swipe left/right to navigate.
+        // Scoped to the image area so buttons/chrome remain easy to tap.
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let touchLastX = 0;
+        let touchLastY = 0;
+        let touchMoved = false;
 
-      const toggleChrome = () => {
-        const next = dialog.getAttribute('data-ui') === 'hidden' ? 'shown' : 'hidden';
-        dialog.setAttribute('data-ui', next);
-        const chromes = dialog.querySelectorAll<HTMLElement>('[data-lightbox-chrome]');
-        chromes.forEach((el) => {
-          el.style.opacity = next === 'hidden' ? '0' : '1';
-          el.style.pointerEvents = next === 'hidden' ? 'none' : '';
-        });
-      };
+        const onTouchStart = (e: TouchEvent) => {
+          const t = e.touches?.[0];
+          if (!t) return;
+          touchStartX = t.clientX;
+          touchStartY = t.clientY;
+          touchLastX = t.clientX;
+          touchLastY = t.clientY;
+          touchMoved = false;
+        };
 
-      links.forEach((a) => {
-        a.addEventListener('click', (e) => {
-          e.preventDefault();
-          const idxStr = a.getAttribute('data-gallery-index');
-          const idx = idxStr ? Number(idxStr) : 0;
-          open(Number.isFinite(idx) ? idx : 0);
-        });
-      });
+        const onTouchMove = (e: TouchEvent) => {
+          const t = e.touches?.[0];
+          if (!t) return;
+          touchLastX = t.clientX;
+          touchLastY = t.clientY;
+          touchMoved = true;
+        };
 
-      closeBtn?.addEventListener('click', close);
-      prevBtn?.addEventListener('click', () => go(-1));
-      nextBtn?.addEventListener('click', () => go(1));
-      shareBtn?.addEventListener('click', async () => {
-        const url = currentHref();
-        if (!url) return;
+        const onTouchEnd = () => {
+          if (!touchMoved) return;
 
-        try {
-          if (navigator.share) {
-            await navigator.share({ title: currentShareTitle(), url });
-            showToast('Shared.');
+          const dx = touchLastX - touchStartX;
+          const dy = touchLastY - touchStartY;
+          const absDx = Math.abs(dx);
+          const absDy = Math.abs(dy);
+
+          // Require a clear intent (avoid accidental diagonal scrolls).
+          const horizontalIntent = absDx > 46 && absDx > absDy * 1.2;
+          const verticalIntent = absDy > 140 && absDy > absDx * 1.25;
+
+          if (horizontalIntent) {
+            if (dx > 0) go(-1);
+            else go(1);
             return;
           }
-        } catch {
-          // share aborted or unavailable
-        }
 
-        await copyToClipboard(url);
-      });
-      copyBtn?.addEventListener('click', async () => {
-        const url = currentHref();
-        if (!url) return;
-        await copyToClipboard(url);
-      });
+          // Optional: swipe down to close (only when scrolled to top).
+          if (verticalIntent && dy > 0) {
+            const atTop = !figure || figure.scrollTop <= 0;
+            if (atTop) close();
+          }
+        };
 
-      // Tap image area to hide/show chrome (nice on mobile).
-      figure?.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement | null;
-        if (target?.tagName?.toLowerCase() === 'button') return;
-        toggleChrome();
-      });
-      dialog.addEventListener('click', (e) => {
-        // Click outside the modal content closes it.
-        if (e.target === dialog) close();
-      });
-      dialog.addEventListener('close', () => setScrollLock(false));
-      figure?.addEventListener('touchstart', onTouchStart, { passive: true });
-      figure?.addEventListener('touchmove', onTouchMove, { passive: true });
-      figure?.addEventListener('touchend', onTouchEnd, { passive: true });
+        const toggleChrome = () => {
+          const next = dialog.getAttribute('data-ui') === 'hidden' ? 'shown' : 'hidden';
+          dialog.setAttribute('data-ui', next);
+          const chromes = dialog.querySelectorAll<HTMLElement>('[data-lightbox-chrome]');
+          chromes.forEach((el) => {
+            el.style.opacity = next === 'hidden' ? '0' : '1';
+            el.style.pointerEvents = next === 'hidden' ? 'none' : '';
+          });
+        };
 
-      document.addEventListener('keydown', (e) => {
-        const isOpen = dialog.open || dialog.hasAttribute('open');
-        if (!isOpen) return;
-        if (e.key === 'Escape') close();
-        if (e.key === 'ArrowLeft') go(-1);
-        if (e.key === 'ArrowRight') go(1);
+        links.forEach((a) => {
+          a.addEventListener('click', (e) => {
+            e.preventDefault();
+            const idxStr = a.getAttribute('data-gallery-index');
+            const idx = idxStr ? Number(idxStr) : 0;
+            open(Number.isFinite(idx) ? idx : 0);
+          });
+        });
 
-        if (e.key === 'Tab') {
-          const focusables = getFocusables();
-          if (!focusables.length) return;
-          const first = focusables[0]!;
-          const last = focusables[focusables.length - 1]!;
-          const active = document.activeElement as HTMLElement | null;
+        closeBtn?.addEventListener('click', close);
+        prevBtn?.addEventListener('click', () => go(-1));
+        nextBtn?.addEventListener('click', () => go(1));
+        shareBtn?.addEventListener('click', async () => {
+          const url = currentHref();
+          if (!url) return;
 
-          if (e.shiftKey) {
-            if (!active || active === first) {
-              e.preventDefault();
-              last.focus();
+          try {
+            if (navigator.share) {
+              await navigator.share({ title: currentShareTitle(), url });
+              showToast('Shared.');
+              return;
             }
-          } else {
-            if (active === last) {
-              e.preventDefault();
-              first.focus();
+          } catch {
+            // share aborted or unavailable
+          }
+
+          await copyToClipboard(url);
+        });
+        copyBtn?.addEventListener('click', async () => {
+          const url = currentHref();
+          if (!url) return;
+          await copyToClipboard(url);
+        });
+
+        // Tap image area to hide/show chrome (nice on mobile).
+        figure?.addEventListener('click', (e) => {
+          const target = e.target as HTMLElement | null;
+          if (target?.tagName?.toLowerCase() === 'button') return;
+          toggleChrome();
+        });
+        dialog.addEventListener('click', (e) => {
+          // Click outside the modal content closes it.
+          if (e.target === dialog) close();
+        });
+        dialog.addEventListener('close', () => setScrollLock(false));
+        figure?.addEventListener('touchstart', onTouchStart, { passive: true });
+        figure?.addEventListener('touchmove', onTouchMove, { passive: true });
+        figure?.addEventListener('touchend', onTouchEnd, { passive: true });
+
+        document.addEventListener('keydown', (e) => {
+          const isOpen = dialog.open || dialog.hasAttribute('open');
+          if (!isOpen) return;
+          if (e.key === 'Escape') close();
+          if (e.key === 'ArrowLeft') go(-1);
+          if (e.key === 'ArrowRight') go(1);
+
+          if (e.key === 'Tab') {
+            const focusables = getFocusables();
+            if (!focusables.length) return;
+            const first = focusables[0]!;
+            const last = focusables[focusables.length - 1]!;
+            const active = document.activeElement as HTMLElement | null;
+
+            if (e.shiftKey) {
+              if (!active || active === first) {
+                e.preventDefault();
+                last.focus();
+              }
+            } else {
+              if (active === last) {
+                e.preventDefault();
+                first.focus();
+              }
             }
           }
-        }
-      });
+        });
+      };
+
+      const doc = document.documentElement;
+      if (doc.dataset.galleryListen !== 'true') {
+        doc.dataset.galleryListen = 'true';
+        document.addEventListener('astro:page-load', init);
+      }
+
+      init();
     })();
   </script>
 </section>

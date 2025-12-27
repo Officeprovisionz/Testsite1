@@ -9,7 +9,8 @@ export async function GET() {
 
   const manifest = {
     name: siteConfig.brand.name,
-    short_name: siteConfig.brand.name,
+    // PWA short_name should be ≤12 chars for optimal display on home screens.
+    short_name: 'OfficeProv',
     description: siteConfig.brand.tagline,
     start_url: base,
     scope: base,

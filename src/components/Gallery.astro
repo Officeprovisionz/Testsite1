@@ -194,17 +194,22 @@ const getImgAttrs = (src: string) => {
         class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
         data-lightbox-chrome
       >
-        <div class="min-w-0">
+        <div class="lightbox-meta min-w-0">
           <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>Preview</p>
           <p class="text-subtle mt-0.5 text-xs" data-lightbox-count></p>
         </div>
-        <div class="flex flex-wrap items-center gap-2">
-          <button type="button" class="btn-secondary px-3 py-2" data-share aria-label="Share photo">
+        <div class="lightbox-actions flex flex-wrap items-center gap-2">
+          <button
+            type="button"
+            class="btn-secondary lightbox-action-btn px-3 py-2"
+            data-share
+            aria-label="Share photo"
+          >
             Share
           </button>
           <button
             type="button"
-            class="btn-secondary px-3 py-2"
+            class="btn-secondary lightbox-action-btn px-3 py-2"
             data-copy
             aria-label="Copy photo link"
           >
@@ -212,16 +217,23 @@ const getImgAttrs = (src: string) => {
           </button>
           <button
             type="button"
-            class="btn-secondary px-3 py-2"
+            class="btn-secondary lightbox-action-btn px-3 py-2"
             data-prev
             aria-label="Previous photo"
           >
             Prev
           </button>
-          <button type="button" class="btn-secondary px-3 py-2" data-next aria-label="Next photo">
+          <button
+            type="button"
+            class="btn-secondary lightbox-action-btn px-3 py-2"
+            data-next
+            aria-label="Next photo"
+          >
             Next
           </button>
-          <button type="button" class="btn-secondary px-3 py-2" data-close>Close</button>
+          <button type="button" class="btn-secondary lightbox-action-btn px-3 py-2" data-close>
+            Close
+          </button>
         </div>
       </div>
       <figure class="grid max-h-[calc(100dvh-9rem)] gap-3 overflow-auto p-5" data-lightbox-figure>
@@ -636,3 +648,23 @@ const getImgAttrs = (src: string) => {
     })();
   </script>
 </section>
+
+<style>
+  @media (max-width: 640px) {
+    .lightbox-meta,
+    .lightbox-actions {
+      flex: 1 1 100%;
+    }
+
+    .lightbox-actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+    }
+
+    .lightbox-action-btn {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>

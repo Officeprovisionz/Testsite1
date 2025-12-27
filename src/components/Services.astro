@@ -59,7 +59,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
     {
       presentation === 'dropdown' ? (
         <details class="glass-panel mt-8 overflow-hidden p-0 lg:mt-12">
-          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-6 py-5 lg:px-8 lg:py-6">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
             <div class="min-w-0">
               <p class="text-strong text-base font-semibold lg:text-lg">View specialty services</p>
               <p class="mt-1 text-sm text-muted lg:text-base">
@@ -75,7 +75,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
             </span>
           </summary>
 
-          <div class="border-t border-white/10 px-6 py-4 lg:px-8 lg:py-6">
+          <div class="border-t border-white/10 px-5 py-4 sm:px-6 lg:px-8 lg:py-6">
             {items.length === 0 ? (
               <p class="text-sm text-muted">No specialty services are listed yet.</p>
             ) : (
@@ -113,7 +113,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
             return (
               <article
                 class:list={[
-                  'glass-card group relative overflow-hidden p-6',
+                  'glass-card group relative overflow-hidden p-5 sm:p-6',
                   isFeatured ? 'md:col-span-2 md:p-8' : '',
                 ]}
               >

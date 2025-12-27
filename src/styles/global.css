@@ -104,6 +104,15 @@
     @apply relative min-h-screen font-sans antialiased;
     background-color: rgb(var(--color-bg));
     color: rgb(var(--color-text));
+    min-height: 100dvh;
+  }
+
+  html {
+    scroll-padding-top: calc(var(--header-sticky, 5rem) + 1rem);
+  }
+
+  [id] {
+    scroll-margin-top: calc(var(--header-sticky, 5rem) + 1rem);
   }
 
   /* Global Background Image - Simplified */
@@ -1078,6 +1087,8 @@
     max-height: calc(100dvh - var(--header-sticky, 5rem) - 1.25rem);
     overflow-y: auto;
     overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: env(safe-area-inset-bottom);
 
     /* Closed: slightly offscreen; Open: on-screen.
        While dragging, JS sets inline `transform` + `opacity` + `transition` overrides. */

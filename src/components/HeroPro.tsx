@@ -152,7 +152,7 @@ export const HeroPro = ({
       {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}
       <Spotlight className="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
 
-      <div className="container-page relative z-10 pb-24 pt-32 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48">
+      <div className="container-page relative z-10 pb-20 pt-24 sm:pb-24 sm:pt-28 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48">
         <div className="mx-auto max-w-4xl text-center lg:max-w-5xl">
           <h1 className="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md lg:text-5xl xl:text-6xl">
             For spaces shaped by ambition and expectation.

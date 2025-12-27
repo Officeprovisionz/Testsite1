@@ -14,8 +14,19 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
-        serif: ['"Fraunces"', 'serif'],
+        sans: [
+          'Inter',
+          'ui-sans-serif',
+          'system-ui',
+          '-apple-system',
+          'Segoe UI',
+          'Roboto',
+          'Helvetica',
+          'Arial',
+          'Noto Sans',
+          'sans-serif',
+        ],
+        serif: ['"Playfair Display"', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
       colors: {
         border: 'hsl(var(--border))',

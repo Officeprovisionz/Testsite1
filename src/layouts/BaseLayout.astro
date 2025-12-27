@@ -253,9 +253,36 @@ const jsonLd = (() => {
         const swUrl = `${base}sw.js`;
 
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register(swUrl, { scope: base }).catch(() => {
-            // ignore
-          });
+          navigator.serviceWorker
+            .register(swUrl, { scope: base })
+            .then((reg) => {
+              // Listen for a new SW waiting to activate (common after deploy).
+              const onStateChange = () => {
+                if (reg.installing?.state === 'installed' && navigator.serviceWorker.controller) {
+                  // A newer SW is ready; tell it to activate immediately.
+                  reg.waiting?.postMessage({ type: 'SKIP_WAITING' });
+                }
+              };
+
+              if (reg.installing) {
+                reg.installing.addEventListener('statechange', onStateChange);
+              }
+
+              reg.addEventListener('updatefound', () => {
+                reg.installing?.addEventListener('statechange', onStateChange);
+              });
+
+              // When the new SW takes over, reload to ensure fresh assets.
+              let refreshing = false;
+              navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (refreshing) return;
+                refreshing = true;
+                window.location.reload();
+              });
+            })
+            .catch(() => {
+              // ignore
+            });
         });
       })();
     </script>

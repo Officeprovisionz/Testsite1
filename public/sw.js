@@ -7,8 +7,17 @@
    - Bump CACHE_VERSION to invalidate.
 */
 
-const CACHE_VERSION = 'v1';
+const CACHE_VERSION = 'v2';
 const CACHE_NAME = `damra-static-${CACHE_VERSION}`;
+
+const isHtmlResponse = (res) => {
+  try {
+    const ct = res.headers.get('content-type') || '';
+    return ct.includes('text/html');
+  } catch {
+    return false;
+  }
+};
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -42,11 +51,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Optional hook: allow the app to request immediate activation after an update.
+// (No UI changes; nothing calls this unless you wire it up in the client.)
+self.addEventListener('message', (event) => {
+  const data = event.data;
+  if (!data) return;
+  if (data && typeof data === 'object' && data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('fetch', (event) => {
   const req = event.request;
 
   // Only handle GET requests.
   if (req.method !== 'GET') return;
+
+  // Don’t interfere with range requests (audio/video seeking, etc.).
+  // Improper caching of partial content can cause broken playback.
+  if (req.headers && req.headers.has('range')) return;
 
   const url = new URL(req.url);
 
@@ -59,8 +82,11 @@ self.addEventListener('fetch', (event) => {
       (async () => {
         try {
           const fresh = await fetch(req);
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(req, fresh.clone());
+          // Only cache HTML navigations.
+          if (fresh && fresh.ok && isHtmlResponse(fresh)) {
+            const cache = await caches.open(CACHE_NAME);
+            cache.put(req, fresh.clone());
+          }
           return fresh;
         } catch {
           const cached = await caches.match(req);
@@ -78,7 +104,8 @@ self.addEventListener('fetch', (event) => {
       const fetchPromise = fetch(req)
         .then(async (res) => {
           // Cache successful, basic responses.
-          if (res && res.ok) {
+          // Avoid caching HTML for asset requests (common when SPAs return index.html for 404s).
+          if (res && res.ok && res.type === 'basic' && !isHtmlResponse(res)) {
             const cache = await caches.open(CACHE_NAME);
             cache.put(req, res.clone());
           }

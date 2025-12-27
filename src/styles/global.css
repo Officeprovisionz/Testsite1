@@ -1033,6 +1033,21 @@
     accent-color: rgb(var(--color-brand-600));
   }
 
+  @media (max-width: 640px) {
+    .input,
+    .select {
+      @apply h-12;
+    }
+
+    .textarea {
+      @apply py-3;
+    }
+
+    .checkbox {
+      @apply h-5 w-5;
+    }
+  }
+
   .checkbox:focus-visible {
     outline: 2px solid theme(colors.brand.500);
     outline-offset: 3px;

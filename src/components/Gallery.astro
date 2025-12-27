@@ -243,7 +243,7 @@ const getImgAttrs = (src: string) => {
   <script>
     (() => {
       const init = () => {
-        const root = document.querySelector('[data-gallery]');
+        const root = document.querySelector('[data-gallery]') as HTMLElement | null;
         if (!root) return;
         if (root.dataset.galleryInit === 'true') return;
         root.dataset.galleryInit = 'true';

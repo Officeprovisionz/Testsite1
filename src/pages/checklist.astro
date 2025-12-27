@@ -117,7 +117,7 @@ const addOns = [
 <script>
   (() => {
     const init = () => {
-      const btn = document.querySelector('[data-print]');
+      const btn = document.querySelector('[data-print]') as HTMLElement | null;
       if (!btn) return;
       if (btn.dataset.printInit === 'true') return;
       btn.dataset.printInit = 'true';

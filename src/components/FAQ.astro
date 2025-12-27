@@ -85,7 +85,7 @@ const faqJsonLd = (() => {
   <script>
     (() => {
       const init = () => {
-        const root = document.querySelector('[data-faq]');
+        const root = document.querySelector('[data-faq]') as HTMLElement | null;
         if (!root) return;
         if (root.dataset.faqInit === 'true') return;
         root.dataset.faqInit = 'true';

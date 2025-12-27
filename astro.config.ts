@@ -49,6 +49,34 @@ export default defineConfig({
         '@': fileURLToPath(new URL('./src', import.meta.url)),
       },
     },
+    build: {
+      // Improve chunk splitting for better caching
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'react-vendor': ['react', 'react-dom'],
+            motion: ['framer-motion'],
+          },
+        },
+      },
+      // Enable CSS code splitting
+      cssCodeSplit: true,
+    },
+  },
+  // Security headers (works with Cloudflare Pages, Netlify, Vercel)
+  server: {
+    headers: {
+      'X-Content-Type-Options': 'nosniff',
+      'X-Frame-Options': 'SAMEORIGIN',
+      'Referrer-Policy': 'strict-origin-when-cross-origin',
+    },
   },
   integrations,
+  // Prefetch links on hover for faster navigation
+  prefetch: {
+    prefetchAll: false,
+    defaultStrategy: 'hover',
+  },
+  // Compress HTML output
+  compressHTML: true,
 });

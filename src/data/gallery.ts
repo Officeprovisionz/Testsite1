@@ -154,13 +154,16 @@ const mulberry32 = (seed: number) => {
   };
 };
 
-const shuffleItems = <T>(items: T[], seed: string) => {
+const shuffleItems = <T>(items: T[], seed: string): T[] => {
   const out = [...items];
   const rand = mulberry32(hashSeed(seed));
 
   for (let i = out.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rand() * (i + 1));
-    [out[i], out[j]] = [out[j], out[i]];
+    // Both indices are guaranteed valid: i is in [1, length-1], j is in [0, i]
+    const temp = out[i]!;
+    out[i] = out[j]!;
+    out[j] = temp;
   }
 
   return out;
@@ -170,13 +173,15 @@ export const getShuffledGalleryItems = (key = 'default') => {
   return shuffleItems(galleryItems, `${DEFAULT_SEED}:${key}`);
 };
 
-export const pickGalleryItems = (key: string, count: number, offset = 0) => {
+export const pickGalleryItems = (key: string, count: number, offset = 0): GalleryItem[] => {
   const pool = getShuffledGalleryItems(key);
   if (!pool.length || count <= 0) return [];
 
   const picks: GalleryItem[] = [];
   for (let i = 0; i < count; i += 1) {
-    picks.push(pool[(offset + i) % pool.length]);
+    // Modulo guarantees index is valid within pool bounds
+    const item = pool[(offset + i) % pool.length];
+    if (item) picks.push(item);
   }
   return picks;
 };

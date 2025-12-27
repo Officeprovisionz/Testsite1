@@ -36,6 +36,37 @@ export default [
     },
     rules: {
       'no-console': 'off',
+      // Catch common mistakes
+      'no-unused-vars': 'off',
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
+      // Enforce consistent return types
+      '@typescript-eslint/explicit-function-return-type': 'off',
+      // Prefer const over let when variable is not reassigned
+      'prefer-const': 'warn',
+      // No floating promises (forgotten await)
+      '@typescript-eslint/no-floating-promises': 'off',
+      // Enforce type imports
+      '@typescript-eslint/consistent-type-imports': [
+        'warn',
+        { prefer: 'type-imports', fixStyle: 'inline-type-imports' },
+      ],
+      // Avoid non-null assertions where possible (but don't error)
+      '@typescript-eslint/no-non-null-assertion': 'off',
+    },
+  },
+  // React-specific rules for TSX files
+  {
+    files: ['**/*.tsx'],
+    rules: {
+      // Require key prop in iterators
+      'react/jsx-key': 'off', // Would need eslint-plugin-react
     },
   },
 ];

@@ -2,28 +2,28 @@ import React from 'react';
 import { Spotlight } from './ui/Spotlight';
 import { cn } from '@/lib/utils';
 
-interface PageHeroProProps {
+export interface PageHeroProProps {
   title: string;
   description: string;
   /** Optional background image path relative to `public/` (no leading slash), e.g. "gallery/04.jpg". */
-  imageSrc?: string;
+  imageSrc?: string | undefined;
   /** Optional responsive srcset for the background image (URLs should already include BASE_URL). */
   imageSrcSet?: string | undefined;
   /** Optional sizes for the background image when using srcset. */
   imageSizes?: string | undefined;
 
   /** Optional mobile-only background image path relative to `public/` (no leading slash). */
-  imageSrcMobile?: string;
+  imageSrcMobile?: string | undefined;
   /** Optional mobile-only srcset (URLs should already include BASE_URL). */
   imageSrcSetMobile?: string | undefined;
   /** Optional mobile-only sizes when using `imageSrcSetMobile`. */
   imageSizesMobile?: string | undefined;
   /** Decorative background: leave empty to hide from screen readers. */
-  imageAlt?: string;
+  imageAlt?: string | undefined;
   /** CSS `object-position` value, e.g. "50% 40%". */
-  imagePosition?: string;
-  className?: string;
-  children?: React.ReactNode;
+  imagePosition?: string | undefined;
+  className?: string | undefined;
+  children?: React.ReactNode | undefined;
 }
 
 const toPublicUrl = (src: string) => {

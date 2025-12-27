@@ -372,6 +372,18 @@ export const siteConfig = {
     description:
       'Office cleaning, supply restocking, and facilities support in San Francisco. Clear checklists, consistent results, and fast quotes.',
     themeColor: 'hsl(190 85% 38%)',
+    /** Open Graph image dimensions for proper social previews */
+    ogImage: {
+      width: 1200,
+      height: 630,
+    },
+    /** Geographic coordinates for local business SEO (San Francisco) */
+    geo: {
+      latitude: '37.7749',
+      longitude: '-122.4194',
+      region: 'US-CA',
+      placename: 'San Francisco',
+    },
   },
   analytics: {
     enabled: false,

@@ -247,17 +247,49 @@ const navItems = [
       summary?.setAttribute('aria-expanded', open ? 'true' : 'false');
     };
 
+    const focusableSelector =
+      'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
+    const togglePanelTabbables = (enable: boolean) => {
+      if (!panel) return;
+      const nodes = Array.from(panel.querySelectorAll<HTMLElement>(focusableSelector));
+      const sentinel = '__unset__';
+
+      nodes.forEach((el) => {
+        if (enable) {
+          const prev = el.dataset.prevTabindex;
+          if (prev === undefined) return;
+
+          if (prev === sentinel) {
+            el.removeAttribute('tabindex');
+          } else {
+            el.setAttribute('tabindex', prev);
+          }
+          delete el.dataset.prevTabindex;
+          return;
+        }
+
+        if (el.dataset.prevTabindex !== undefined) return;
+        el.dataset.prevTabindex = el.getAttribute('tabindex') ?? sentinel;
+        el.setAttribute('tabindex', '-1');
+      });
+    };
+
     const setDialogA11y = (open: boolean) => {
       if (!panel) return;
       if (open) {
         panel.removeAttribute('aria-hidden');
         panel.removeAttribute('inert');
+        // `inert` isn't supported everywhere. Restore tabbables as a fallback.
+        togglePanelTabbables(true);
         return;
       }
       panel.setAttribute('aria-hidden', 'true');
       // Prevent tab focus into a visually-hidden dialog.
       // Supported in modern Chromium/Safari/Firefox; ignored elsewhere.
       panel.setAttribute('inert', '');
+      // Fallback for browsers without `inert`: remove descendants from tab order.
+      togglePanelTabbables(false);
     };
 
     const lockScroll = () => {
@@ -285,11 +317,7 @@ const navItems = [
 
     const getFocusables = () => {
       if (!panel) return [] as HTMLElement[];
-      const nodes = Array.from(
-        panel.querySelectorAll<HTMLElement>(
-          'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
-        )
-      );
+      const nodes = Array.from(panel.querySelectorAll<HTMLElement>(focusableSelector));
       return nodes.filter((el) => el.offsetParent !== null || el.getClientRects().length > 0);
     };
 

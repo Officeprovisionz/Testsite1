@@ -190,8 +190,6 @@ const jsonLd = (() => {
     <script type="application/ld+json" is:inline set:html={jsonLd} />
 
     <script>
-      import Lenis from 'lenis';
-
       const prefersReducedMotion = (() => {
         try {
           return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -214,14 +212,22 @@ const jsonLd = (() => {
       if (prefersReducedMotion || isTouchLike) {
         // Respect OS/user preference: avoid forced smooth scrolling.
       } else {
-        const lenis = new Lenis();
+        // Only load Lenis when we intend to use it.
+        import('lenis')
+          .then((mod) => {
+            const Lenis = (mod as { default: new () => { raf: (t: number) => void } }).default;
+            const lenis = new Lenis();
 
-        function raf(time: number) {
-          lenis.raf(time);
-          requestAnimationFrame(raf);
-        }
+            function raf(time: number) {
+              lenis.raf(time);
+              requestAnimationFrame(raf);
+            }
 
-        requestAnimationFrame(raf);
+            requestAnimationFrame(raf);
+          })
+          .catch(() => {
+            // If Lenis fails to load for any reason, fall back to native scrolling.
+          });
       }
 
       // Track scroll progress for the progress bar

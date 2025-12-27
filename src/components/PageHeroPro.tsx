@@ -69,7 +69,7 @@ export const PageHeroPro = ({
       )}
     >
       {resolvedImageSrc ? (
-        <div aria-hidden="true" className="absolute inset-0">
+        <div className="absolute inset-0">
           {resolvedMobileImageSrc || imageSrcSetMobile ? (
             <picture>
               <source
@@ -79,7 +79,7 @@ export const PageHeroPro = ({
               />
               <img
                 src={resolvedImageSrc}
-                alt={imageAlt}
+                alt={imageAlt || ''}
                 srcSet={imageSrcSet}
                 sizes={imageSrcSet ? imageSizes : undefined}
                 decoding="async"
@@ -95,7 +95,7 @@ export const PageHeroPro = ({
           ) : (
             <img
               src={resolvedImageSrc}
-              alt={imageAlt}
+              alt={imageAlt || ''}
               srcSet={imageSrcSet}
               sizes={imageSrcSet ? imageSizes : undefined}
               decoding="async"

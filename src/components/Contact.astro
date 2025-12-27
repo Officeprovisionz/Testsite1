@@ -423,14 +423,27 @@ const serviceOptions = [
           setBusy(true);
           setStatus('Sending…', 'info');
 
+          const controller =
+            typeof AbortController !== 'undefined' ? new AbortController() : undefined;
+          const timeoutMs = 12_000;
+          const timeoutId = window.setTimeout(() => {
+            try {
+              controller?.abort();
+            } catch {
+              // ignore
+            }
+          }, timeoutMs);
+
           fetch(endpoint, {
             method: 'POST',
             body: fd,
             headers: {
               Accept: 'application/json',
             },
+            signal: controller?.signal,
           })
             .then(async (res) => {
+              window.clearTimeout(timeoutId);
               if (res.ok) return;
 
               // Try to parse a helpful error payload.
@@ -468,16 +481,28 @@ const serviceOptions = [
               }
             })
             .catch((err) => {
+              window.clearTimeout(timeoutId);
+
               const msg = err instanceof Error ? err.message : 'Something went wrong.';
-              setStatus(msg, 'error');
+              const aborted = err instanceof DOMException && err.name === 'AbortError';
+              setStatus(
+                aborted
+                  ? 'Request timed out. Please try again, or call/text for the fastest response.'
+                  : msg,
+                'error'
+              );
 
               track('lead_submit_error', { source, via: 'endpoint', message: String(msg) });
 
-              // Fallback: attempt a normal submit (if endpoint supports it).
-              try {
-                form.submit();
-              } catch {
-                // ignore
+              // Fallback: attempt a normal submit only on network-level fetch failures.
+              // Avoid double-submitting when the server replied with a non-2xx response.
+              const networkError = err instanceof TypeError;
+              if (networkError && !aborted) {
+                try {
+                  form.submit();
+                } catch {
+                  // ignore
+                }
               }
             })
             .finally(() => {

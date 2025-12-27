@@ -6,26 +6,27 @@ import { PageHeroPro } from '@/components/PageHeroPro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 const title = `Office cleaning checklist | ${siteConfig.brand.name}`;
 const description =
   'A practical office cleaning checklist you can use for walkthroughs, vendor comparisons, and ongoing quality checks.';
 
-const heroImage = getPublicResponsiveImage(
-  'gallery/services/restocking-01.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroItems = pickGalleryItems('checklist-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
 
-const heroImageMobile = getPublicResponsiveImage(
-  'gallery/services/restocking-02.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : heroImage;
 
 const core = siteConfig.whatIncluded;
 const addOns = [
@@ -45,9 +46,9 @@ const addOns = [
     client:load
     title="Office cleaning checklist"
     description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
-    imageSrc="gallery/services/restocking-01.jpg"
-    imageSrcMobile="gallery/services/restocking-02.jpg"
-    imageAlt="Cleaning supplies restocking photo"
+    imageSrc={heroPrimary?.src}
+    imageSrcMobile={heroSecondary?.src}
+    imageAlt={heroPrimary?.alt ?? ''}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
     imageSrcSetMobile={heroImageMobile.srcSet}

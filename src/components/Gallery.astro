@@ -1,5 +1,5 @@
 ---
-import { galleryItems } from '@/data/gallery';
+import { getShuffledGalleryItems } from '@/data/gallery';
 import type { GalleryItem } from '@/data/gallery';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
@@ -53,7 +53,8 @@ const resolvedPrimaryLabel = primaryCtaLabel ?? ctaLabel;
 const resolvedSecondaryHref = secondaryCtaHref;
 const resolvedSecondaryLabel = secondaryCtaLabel;
 
-const resolvedItems = Array.isArray(items) && items.length ? items : galleryItems;
+const resolvedItems =
+  Array.isArray(items) && items.length ? items : getShuffledGalleryItems('gallery');
 
 const toPublicUrl = (src: string) => {
   // Allow absolute URLs

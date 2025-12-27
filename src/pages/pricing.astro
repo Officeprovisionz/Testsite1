@@ -10,26 +10,27 @@ import ConversionStrip from '@/components/ConversionStrip.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 const title = `Scope & process | ${siteConfig.brand.name}`;
 const description =
   'How service scope works: walkthrough, checklist, access, frequency, and add-ons. Get a clear scope and a written quote before service.';
 
-const heroImage = getPublicResponsiveImage(
-  'gallery/services/detail-01.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroItems = pickGalleryItems('pricing-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
 
-const heroImageMobile = getPublicResponsiveImage(
-  'gallery/services/detail-02.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : heroImage;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -39,9 +40,9 @@ const heroImageMobile = getPublicResponsiveImage(
     client:load
     title="Scope & process"
     description="We confirm what’s included before service. Share your space and schedule and we’ll send a clear written quote."
-    imageSrc="gallery/services/detail-01.jpg"
-    imageSrcMobile="gallery/services/detail-02.jpg"
-    imageAlt="Cleaning process detail photo"
+    imageSrc={heroPrimary?.src}
+    imageSrcMobile={heroSecondary?.src}
+    imageAlt={heroPrimary?.alt ?? ''}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
     imageSrcSetMobile={heroImageMobile.srcSet}

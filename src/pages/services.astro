@@ -10,6 +10,7 @@ import FAQ from '@/components/FAQ.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getCollection } from 'astro:content';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 const title = `Services | ${siteConfig.brand.name}`;
 const description =
@@ -20,21 +21,21 @@ const specialtyServices = allServices
   .filter((s) => s.data.category === 'specialty')
   .map((s) => s.data);
 
-const heroImage = getPublicResponsiveImage(
-  'gallery/services/janitorial-01.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroItems = pickGalleryItems('services-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
 
-const heroImageMobile = getPublicResponsiveImage(
-  'gallery/services/facilities-01.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : heroImage;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -44,9 +45,9 @@ const heroImageMobile = getPublicResponsiveImage(
     client:load
     title="Services"
     description="Janitorial, detail cleaning, restocking, and light facilities support—delivered with clear scope, consistent checklists, and fast follow-up."
-    imageSrc="gallery/services/janitorial-01.jpg"
-    imageSrcMobile="gallery/services/facilities-01.jpg"
-    imageAlt="Professional janitorial service in progress"
+    imageSrc={heroPrimary?.src}
+    imageSrcMobile={heroSecondary?.src}
+    imageAlt={heroPrimary?.alt ?? ''}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
     imageSrcSetMobile={heroImageMobile.srcSet}

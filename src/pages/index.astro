@@ -8,15 +8,20 @@ import ConversionStrip from '@/components/ConversionStrip.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 // Homepage hero images
-const heroImage = getPublicResponsiveImage('gallery/01.jpg', import.meta.env.BASE_URL, {
-  sizes: '100vw',
-});
+const heroItems = pickGalleryItems('home-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
 
-const heroImageMobile = getPublicResponsiveImage('gallery/02.jpg', import.meta.env.BASE_URL, {
-  sizes: '100vw',
-});
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, { sizes: '100vw' })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, { sizes: '100vw' })
+  : heroImage;
 ---
 
 <BaseLayout>

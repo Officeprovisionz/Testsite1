@@ -7,8 +7,18 @@ const ROOT = process.cwd();
 const OUT_DIR = path.join(ROOT, 'public', 'gallery');
 const OUT_SERVICES_DIR = path.join(OUT_DIR, 'services');
 const ATTRIBUTION_PATH = path.join(OUT_DIR, 'ATTRIBUTION.txt');
+const OPTIONS_DIR = path.join(OUT_DIR, 'options');
+const OPTIONS_SERVICES_DIR = path.join(OPTIONS_DIR, 'services');
+const ATTRIBUTION_OPTIONS_PATH = path.join(OUT_DIR, 'ATTRIBUTION.options.txt');
 
 const RESPONSIVE_WIDTHS = [640, 960, 1280, 1600, 1920, 2560, 3840];
+const OPTIONS_MAX_WIDTH = 1920;
+
+const args = new Set(process.argv.slice(2));
+const optionsOnly = args.has('--options-only');
+const downloadOptions = optionsOnly || args.has('--options');
+const optionsCount = Number(process.env.PEXELS_OPTIONS_COUNT ?? '5') || 5;
+const rejectPeople = String(process.env.PEXELS_NO_PEOPLE ?? 'true').toLowerCase() !== 'false';
 
 function parseDotEnv(contents) {
   const out = {};
@@ -89,7 +99,46 @@ function normalizePhotoText(p) {
   return [p?.alt, p?.url, p?.photographer].filter(Boolean).join(' ').toLowerCase();
 }
 
-function isRejectedPhoto(p) {
+function escapeRegex(value) {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+function hasWord(text, word) {
+  try {
+    return new RegExp(`\\b${escapeRegex(word)}\\b`).test(text);
+  } catch {
+    return false;
+  }
+}
+
+function hasPeople(text) {
+  const words = [
+    'person',
+    'people',
+    'woman',
+    'women',
+    'man',
+    'men',
+    'child',
+    'children',
+    'girl',
+    'boy',
+    'adult',
+    'employee',
+    'staff',
+    'worker',
+    'team',
+    'crew',
+    'portrait',
+    'face',
+    'hand',
+    'hands',
+  ];
+
+  return words.some((word) => hasWord(text, word));
+}
+
+function isRejectedPhoto(p, { rejectPeople: rejectPeopleFlag = false } = {}) {
   const text = normalizePhotoText(p);
 
   // Avoid “PPE / hazmat / COVID-era disinfecting” vibes.
@@ -140,7 +189,9 @@ function isRejectedPhoto(p) {
     'pencil',
   ];
 
-  return [...banned, ...offTheme, ...irrelevant].some((k) => text.includes(k));
+  if ([...banned, ...offTheme, ...irrelevant].some((k) => text.includes(k))) return true;
+  if (rejectPeopleFlag && hasPeople(text)) return true;
+  return false;
 }
 
 function scorePhoto(p) {
@@ -204,6 +255,10 @@ async function main() {
 
   await fs.mkdir(OUT_DIR, { recursive: true });
   await fs.mkdir(OUT_SERVICES_DIR, { recursive: true });
+  if (downloadOptions) {
+    await fs.mkdir(OPTIONS_DIR, { recursive: true });
+    await fs.mkdir(OPTIONS_SERVICES_DIR, { recursive: true });
+  }
 
   // Each slot maps to a specific theme so the site feels intentionally curated.
   // You can tweak these queries anytime and re-run `pnpm gallery:fetch`.
@@ -240,47 +295,135 @@ async function main() {
     },
   ];
 
+  const optionSlotQueries = {
+    '01': [
+      'modern clean office interior workspace',
+      'empty modern office interior',
+      'clean office interior empty',
+    ],
+    '02': [
+      'office cleaning professional janitorial service',
+      'clean empty office interior',
+      'janitorial cart empty office',
+    ],
+    '03': [
+      'office coffee station',
+      'modern office coffee bar interior',
+      'coffee station in office',
+    ],
+    '04': [
+      'office pantry snacks breakroom supplies',
+      'office breakroom pantry',
+      'empty office pantry shelves',
+    ],
+    '05': [
+      'modern corporate lobby reception clean',
+      'empty corporate lobby reception',
+      'office lobby interior',
+    ],
+    '06': [
+      'office supply restocking organized shelves',
+      'organized office supply shelves',
+      'office supplies storage cabinet',
+    ],
+  };
+
   const seenGalleryPhotographers = new Set();
   const attributions = [];
+  const optionsAttributions = [];
 
-  const pickBestForSlot = async ({ query, seen }) => {
-    // Try a couple pages to get variety, but keep it fast.
+  const pickPhotosForQuery = async ({ query, count, seenPhotographers, rejectPeople: noPeople }) => {
     const pools = [];
-    for (const page of [1, 2]) {
+    for (const page of [1, 2, 3]) {
       const data = await searchPexels({ apiKey, query, perPage: 30, page });
       pools.push(...(data?.photos ?? []));
-      if (pools.length >= 40) break;
+      if (pools.length >= Math.max(60, count * 10)) break;
     }
 
     const unique = uniqBy(pools, (p) => String(p?.id));
     const withSrc = unique.filter((p) => p?.src?.original || p?.src?.large2x || p?.src?.large);
 
-    // Prefer on-theme photos and avoid obvious mismatches.
-    const filtered = withSrc.filter((p) => !isRejectedPhoto(p));
+    const filtered = withSrc.filter((p) => !isRejectedPhoto(p, { rejectPeople: noPeople }));
     const candidates = filtered.length ? filtered : withSrc;
     candidates.sort((a, b) => scorePhoto(b) - scorePhoto(a));
 
-    // Prefer results that match at least a couple “on-theme” terms when available.
     const strong = candidates.filter((p) => scorePhoto(p) >= 2);
     const ranked = strong.length ? strong : candidates;
 
-    // Prefer a unique photographer per slot to avoid a “single shoot” feel.
-    if (seen && typeof seen.has === 'function') {
+    const picks = [];
+    const usedIds = new Set();
+    const usedPhotographers = new Set();
+    const seen = seenPhotographers && typeof seenPhotographers.has === 'function';
+
+    const tryAdd = (p, { respectSeen, respectPhotographers }) => {
+      const id = String(p?.id ?? '');
+      if (!id || usedIds.has(id)) return false;
+
+      const name = (p?.photographer ?? '').trim();
+      if (respectPhotographers && name && usedPhotographers.has(name)) return false;
+      if (respectSeen && seen && name && seenPhotographers.has(name)) return false;
+
+      usedIds.add(id);
+      if (name) usedPhotographers.add(name);
+      picks.push(p);
+      return true;
+    };
+
+    for (const p of ranked) {
+      if (picks.length >= count) break;
+      tryAdd(p, { respectSeen: true, respectPhotographers: true });
+    }
+
+    if (picks.length < count) {
       for (const p of ranked) {
-        const name = (p?.photographer ?? '').trim();
-        if (!name) continue;
-        if (seen.has(name)) continue;
-        return p;
+        if (picks.length >= count) break;
+        tryAdd(p, { respectSeen: false, respectPhotographers: false });
       }
     }
 
-    for (const p of ranked) {
-      const name = (p?.photographer ?? '').trim();
-      if (!name) continue;
-      return p;
+    if (seen) {
+      for (const p of picks) {
+        const name = (p?.photographer ?? '').trim();
+        if (name) seenPhotographers.add(name);
+      }
     }
 
-    return ranked[0];
+    return picks;
+  };
+
+  const pickBestForSlot = async ({ query, seen, rejectPeople: noPeople }) => {
+    const picks = await pickPhotosForQuery({
+      query,
+      count: 1,
+      seenPhotographers: seen,
+      rejectPeople: noPeople,
+    });
+    return picks[0];
+  };
+
+  const collectOptions = async ({ queries, count }) => {
+    const picks = [];
+    const usedIds = new Set();
+
+    for (const query of queries) {
+      if (picks.length >= count) break;
+      const batch = await pickPhotosForQuery({
+        query,
+        count,
+        seenPhotographers: new Set(),
+        rejectPeople,
+      });
+
+      for (const photo of batch) {
+        if (picks.length >= count) break;
+        const id = String(photo?.id ?? '');
+        if (!id || usedIds.has(id)) continue;
+        usedIds.add(id);
+        picks.push({ photo, query });
+      }
+    }
+
+    return picks;
   };
 
   const writePhoto = async ({ photo, outPath }) => {
@@ -318,39 +461,58 @@ async function main() {
     }
   };
 
-  for (let i = 0; i < slots.length; i++) {
-    const slot = slots[i];
-    const p = await pickBestForSlot({ query: slot.query, seen: seenGalleryPhotographers });
-    if (!p) throw new Error(`No photos returned from Pexels for query: ${slot.query}`);
+  const writeOptionPhoto = async ({ photo, outPath }) => {
+    const srcUrl = photo?.src?.original || photo?.src?.large2x || photo?.src?.large;
+    if (!srcUrl) throw new Error(`Missing photo src for Pexels id=${photo?.id}`);
 
-    const photographerName = (p?.photographer ?? '').trim();
-    if (photographerName) seenGalleryPhotographers.add(photographerName);
+    const buf = await downloadBuffer(srcUrl);
+    const image = sharp(buf).rotate();
+    const meta = await image.metadata();
+    const maxWidth = meta.width && meta.width > OPTIONS_MAX_WIDTH ? OPTIONS_MAX_WIDTH : meta.width;
+    const base = maxWidth ? image.resize({ width: maxWidth }) : image;
 
-    const n = slot.id;
+    await base.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
+  };
 
-    const outPath = path.join(OUT_DIR, `${n}.jpg`);
+  if (!optionsOnly) {
+    for (let i = 0; i < slots.length; i++) {
+      const slot = slots[i];
+      const p = await pickBestForSlot({
+        query: slot.query,
+        seen: seenGalleryPhotographers,
+        rejectPeople,
+      });
+      if (!p) throw new Error(`No photos returned from Pexels for query: ${slot.query}`);
 
-    await writePhoto({ photo: p, outPath });
+      const photographerName = (p?.photographer ?? '').trim();
+      if (photographerName) seenGalleryPhotographers.add(photographerName);
 
-    const photographer = p?.photographer ?? 'Unknown';
-    const photographerUrl = p?.photographer_url ?? '';
-    const photoUrl = p?.url ?? '';
+      const n = slot.id;
 
-    attributions.push(
-      [
-        `gallery/${n}.jpg`,
-        `Slot: ${slot.label}`,
-        `Query: ${slot.query}`,
-        `Pexels photo by ${photographer}`,
-        photographerUrl ? `Photographer: ${photographerUrl}` : '',
-        photoUrl ? `Photo: ${photoUrl}` : '',
-      ]
-        .filter(Boolean)
-        .join('\n')
-    );
+      const outPath = path.join(OUT_DIR, `${n}.jpg`);
 
-    // Friendly progress line.
-    process.stdout.write(`Downloaded ${i + 1}/${slots.length}: gallery/${n}.jpg\n`);
+      await writePhoto({ photo: p, outPath });
+
+      const photographer = p?.photographer ?? 'Unknown';
+      const photographerUrl = p?.photographer_url ?? '';
+      const photoUrl = p?.url ?? '';
+
+      attributions.push(
+        [
+          `gallery/${n}.jpg`,
+          `Slot: ${slot.label}`,
+          `Query: ${slot.query}`,
+          `Pexels photo by ${photographer}`,
+          photographerUrl ? `Photographer: ${photographerUrl}` : '',
+          photoUrl ? `Photo: ${photoUrl}` : '',
+        ]
+          .filter(Boolean)
+          .join('\n')
+      );
+
+      // Friendly progress line.
+      process.stdout.write(`Downloaded ${i + 1}/${slots.length}: gallery/${n}.jpg\n`);
+    }
   }
 
   // Additional rotating images for the Services cards (3 per card by default).
@@ -397,47 +559,159 @@ async function main() {
     },
   ];
 
+  const optionServiceQueries = {
+    janitorial: [
+      'clean empty office interior',
+      'office cleaning supplies cart',
+      'commercial office floor cleaning',
+    ],
+    detail: [
+      'deep cleaning office interior',
+      'commercial floor cleaning polishing',
+      'clean empty office space interior',
+    ],
+    restocking: [
+      'office supply cabinet organized',
+      'restroom supplies shelves',
+      'organized storage shelves supplies',
+    ],
+    facilities: [
+      'office coffee station',
+      'office breakroom snacks pantry',
+      'office coffee machine counter',
+    ],
+  };
+
   let serviceWritten = 0;
   const serviceTotal = serviceSets.reduce((sum, s) => sum + (s.count ?? 0), 0);
 
-  for (const set of serviceSets) {
-    const seenServicePhotographers = new Set();
-    for (let j = 1; j <= set.count; j++) {
-      const query = Array.isArray(set.queries)
-        ? set.queries[(j - 1) % set.queries.length]
-        : set.query;
+  if (!optionsOnly) {
+    for (const set of serviceSets) {
+      const seenServicePhotographers = new Set();
+      for (let j = 1; j <= set.count; j++) {
+        const query = Array.isArray(set.queries)
+          ? set.queries[(j - 1) % set.queries.length]
+          : set.query;
 
-      const p = await pickBestForSlot({ query, seen: seenServicePhotographers });
-      if (!p) throw new Error(`No photos returned from Pexels for query: ${query}`);
+        const p = await pickBestForSlot({ query, seen: seenServicePhotographers, rejectPeople });
+        if (!p) throw new Error(`No photos returned from Pexels for query: ${query}`);
 
-      const photographerName = (p?.photographer ?? '').trim();
-      if (photographerName) seenServicePhotographers.add(photographerName);
+        const photographerName = (p?.photographer ?? '').trim();
+        if (photographerName) seenServicePhotographers.add(photographerName);
 
-      const idx = String(j).padStart(2, '0');
-      const outRel = `gallery/services/${set.key}-${idx}.jpg`;
-      const outPath = path.join(OUT_SERVICES_DIR, `${set.key}-${idx}.jpg`);
+        const idx = String(j).padStart(2, '0');
+        const outRel = `gallery/services/${set.key}-${idx}.jpg`;
+        const outPath = path.join(OUT_SERVICES_DIR, `${set.key}-${idx}.jpg`);
 
-      await writePhoto({ photo: p, outPath });
+        await writePhoto({ photo: p, outPath });
 
-      const photographer = p?.photographer ?? 'Unknown';
-      const photographerUrl = p?.photographer_url ?? '';
-      const photoUrl = p?.url ?? '';
+        const photographer = p?.photographer ?? 'Unknown';
+        const photographerUrl = p?.photographer_url ?? '';
+        const photoUrl = p?.url ?? '';
 
-      attributions.push(
-        [
-          outRel,
-          `Slot: ${set.label}`,
-          `Query: ${query}`,
-          `Pexels photo by ${photographer}`,
-          photographerUrl ? `Photographer: ${photographerUrl}` : '',
-          photoUrl ? `Photo: ${photoUrl}` : '',
-        ]
-          .filter(Boolean)
-          .join('\n')
-      );
+        attributions.push(
+          [
+            outRel,
+            `Slot: ${set.label}`,
+            `Query: ${query}`,
+            `Pexels photo by ${photographer}`,
+            photographerUrl ? `Photographer: ${photographerUrl}` : '',
+            photoUrl ? `Photo: ${photoUrl}` : '',
+          ]
+            .filter(Boolean)
+            .join('\n')
+        );
 
-      serviceWritten++;
-      process.stdout.write(`Downloaded ${serviceWritten}/${serviceTotal}: ${outRel}\n`);
+        serviceWritten++;
+        process.stdout.write(`Downloaded ${serviceWritten}/${serviceTotal}: ${outRel}\n`);
+      }
+    }
+  }
+
+    if (downloadOptions) {
+    let optionWritten = 0;
+    const optionTotal = slots.length * optionsCount + serviceSets.length * optionsCount;
+
+    for (const slot of slots) {
+      const slotDir = path.join(OPTIONS_DIR, slot.id);
+      await fs.mkdir(slotDir, { recursive: true });
+
+      const slotQueries = optionSlotQueries[slot.id] ?? [slot.query];
+      const picks = await collectOptions({ queries: slotQueries, count: optionsCount });
+
+      for (let i = 0; i < picks.length; i++) {
+        const pick = picks[i];
+        if (!pick) continue;
+        const { photo: p, query } = pick;
+
+        const idx = String(i + 1).padStart(2, '0');
+        const outRel = `gallery/options/${slot.id}/${idx}.jpg`;
+        const outPath = path.join(slotDir, `${idx}.jpg`);
+
+        await writeOptionPhoto({ photo: p, outPath });
+
+        const photographer = p?.photographer ?? 'Unknown';
+        const photographerUrl = p?.photographer_url ?? '';
+        const photoUrl = p?.url ?? '';
+
+        optionsAttributions.push(
+          [
+            outRel,
+            `Slot: ${slot.label} (options)`,
+            `Query: ${query}`,
+            `Pexels photo by ${photographer}`,
+            photographerUrl ? `Photographer: ${photographerUrl}` : '',
+            photoUrl ? `Photo: ${photoUrl}` : '',
+          ]
+            .filter(Boolean)
+            .join('\n')
+        );
+
+        optionWritten++;
+        process.stdout.write(`Downloaded option ${optionWritten}/${optionTotal}: ${outRel}\n`);
+      }
+    }
+
+    for (const set of serviceSets) {
+      const setDir = path.join(OPTIONS_SERVICES_DIR, set.key);
+      await fs.mkdir(setDir, { recursive: true });
+
+      const queries =
+        optionServiceQueries[set.key] ??
+        (Array.isArray(set.queries) ? set.queries : [set.query]);
+      const picks = await collectOptions({ queries, count: optionsCount });
+
+      for (let i = 0; i < picks.length; i++) {
+        const pick = picks[i];
+        if (!pick) continue;
+        const { photo: p, query } = pick;
+
+        const idx = String(i + 1).padStart(2, '0');
+        const outRel = `gallery/options/services/${set.key}/${idx}.jpg`;
+        const outPath = path.join(setDir, `${idx}.jpg`);
+
+        await writeOptionPhoto({ photo: p, outPath });
+
+        const photographer = p?.photographer ?? 'Unknown';
+        const photographerUrl = p?.photographer_url ?? '';
+        const photoUrl = p?.url ?? '';
+
+        optionsAttributions.push(
+          [
+            outRel,
+            `Slot: ${set.label} (options)`,
+            `Query: ${query}`,
+            `Pexels photo by ${photographer}`,
+            photographerUrl ? `Photographer: ${photographerUrl}` : '',
+            photoUrl ? `Photo: ${photoUrl}` : '',
+          ]
+            .filter(Boolean)
+            .join('\n')
+        );
+
+        optionWritten++;
+        process.stdout.write(`Downloaded option ${optionWritten}/${optionTotal}: ${outRel}\n`);
+      }
     }
   }
 
@@ -445,8 +719,19 @@ async function main() {
     'Gallery photos downloaded from Pexels (https://www.pexels.com).\n' +
     'Keep this file for attribution/reference and license tracking.\n\n';
 
-  await fs.writeFile(ATTRIBUTION_PATH, header + attributions.join('\n\n') + '\n', 'utf8');
-  process.stdout.write(`Wrote attribution: public/gallery/ATTRIBUTION.txt\n`);
+  if (!optionsOnly && attributions.length) {
+    await fs.writeFile(ATTRIBUTION_PATH, header + attributions.join('\n\n') + '\n', 'utf8');
+    process.stdout.write(`Wrote attribution: public/gallery/ATTRIBUTION.txt\n`);
+  }
+
+  if (downloadOptions && optionsAttributions.length) {
+    await fs.writeFile(
+      ATTRIBUTION_OPTIONS_PATH,
+      header + optionsAttributions.join('\n\n') + '\n',
+      'utf8'
+    );
+    process.stdout.write(`Wrote attribution: public/gallery/ATTRIBUTION.options.txt\n`);
+  }
 }
 
 main().catch((err) => {

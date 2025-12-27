@@ -61,12 +61,10 @@ export const HeroPro = ({
   // - public/media/hero-cleaning.mp4
   const heroVideoOptIn =
     String(import.meta.env.PUBLIC_ENABLE_HERO_VIDEO ?? '').toLowerCase() === 'true';
-  // Using a high-quality Unsplash image for the Golden Gate Bridge sunset
-  const defaultHeroImg = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2000&auto=format&fit=crop`;
-  const heroFallback = `${base}gallery/services/detail-01.jpg`;
+  const heroFallback = imageSrc ?? imageSrcMobile ?? '';
   // Logo removed as requested
 
-  const heroImg = imageSrc ?? defaultHeroImg;
+  const heroImg = imageSrc ?? imageSrcMobile ?? heroFallback;
 
   const imagePositionClass =
     imagePosition === '50% 40%'
@@ -111,7 +109,9 @@ export const HeroPro = ({
               fetchPriority="high"
               decoding="async"
               onError={(e) => {
-                if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
+                if (heroFallback && e.currentTarget.src !== heroFallback) {
+                  e.currentTarget.src = heroFallback;
+                }
               }}
             />
           </picture>
@@ -126,7 +126,9 @@ export const HeroPro = ({
             fetchPriority="high"
             decoding="async"
             onError={(e) => {
-              if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
+              if (heroFallback && e.currentTarget.src !== heroFallback) {
+                e.currentTarget.src = heroFallback;
+              }
             }}
           />
         )}

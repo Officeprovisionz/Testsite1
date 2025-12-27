@@ -7,6 +7,7 @@ import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 const title = `Resources | ${siteConfig.brand.name}`;
 const description =
@@ -14,21 +15,21 @@ const description =
 
 const href = makeHref(import.meta.env.BASE_URL);
 
-const heroImage = getPublicResponsiveImage(
-  'gallery/services/restocking-02.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroItems = pickGalleryItems('resources-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
 
-const heroImageMobile = getPublicResponsiveImage(
-  'gallery/services/restocking-03.jpg',
-  import.meta.env.BASE_URL,
-  {
-    sizes: '100vw',
-  }
-);
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : heroImage;
 
 const resources = [
   {
@@ -69,9 +70,9 @@ const resources = [
     client:load
     title="Resources"
     description="Print-friendly tools to scope cleaning, set expectations, and keep quality consistent—without extra meetings."
-    imageSrc="gallery/services/restocking-02.jpg"
-    imageSrcMobile="gallery/services/restocking-03.jpg"
-    imageAlt="Restocking and supplies management photo"
+    imageSrc={heroPrimary?.src}
+    imageSrcMobile={heroSecondary?.src}
+    imageAlt={heroPrimary?.alt ?? ''}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}
     imageSrcSetMobile={heroImageMobile.srcSet}

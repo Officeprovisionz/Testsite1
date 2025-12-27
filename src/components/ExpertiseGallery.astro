@@ -5,6 +5,7 @@
  * Mobile-first responsive grid layout
  */
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { getShuffledGalleryItems } from '@/data/gallery';
 
 type ExpertiseItem = {
   src: string;
@@ -59,6 +60,16 @@ const {
 } = Astro.props as Props;
 
 const base = import.meta.env.BASE_URL;
+const imagePool = getShuffledGalleryItems('expertise');
+const resolvedItems = items.map((item, idx) => {
+  if (!imagePool.length) return item;
+  const photo = imagePool[idx % imagePool.length];
+  return {
+    ...item,
+    src: photo?.src ?? item.src,
+    alt: photo?.alt ?? item.alt,
+  };
+});
 
 const getImgAttrs = (src: string) => {
   if (/^https?:\/\//i.test(src)) return { src, srcSet: undefined, sizes: undefined };
@@ -84,7 +95,7 @@ const getImgAttrs = (src: string) => {
     <!-- Grid: 2x2 on desktop, stacked on mobile -->
     <div class="grid gap-5 sm:grid-cols-2 lg:gap-8 xl:gap-10">
       {
-        items.map((item, index) => {
+        resolvedItems.map((item, index) => {
           const attrs = getImgAttrs(item.src);
           return (
             <article

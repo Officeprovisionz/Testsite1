@@ -5,11 +5,29 @@ import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
+import { pickGalleryItems } from '@/data/gallery';
 
 const href = makeHref(import.meta.env.BASE_URL);
 const title = `Page not found | ${siteConfig.brand.name}`;
 const description =
   'The page you’re looking for doesn’t exist (or moved). Use the links below to get back on track.';
+
+const heroItems = pickGalleryItems('404-hero', 2);
+const heroPrimary = heroItems[0];
+const heroSecondary = heroItems[1] ?? heroPrimary;
+
+const heroImage = heroPrimary
+  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : { src: '', srcSet: undefined, sizes: '100vw' };
+
+const heroImageMobile = heroSecondary
+  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
+      sizes: '100vw',
+    })
+  : heroImage;
 
 const quickLinks = [
   { label: 'Home', href: href('') },
@@ -23,7 +41,19 @@ const quickLinks = [
 <BaseLayout title={title} description={description} noIndex>
   <Header slot="header" />
 
-  <PageHeroPro client:load title="404" description={description}>
+  <PageHeroPro
+    client:load
+    title="404"
+    description={description}
+    imageSrc={heroPrimary?.src}
+    imageSrcMobile={heroSecondary?.src}
+    imageAlt={heroPrimary?.alt ?? ''}
+    imageSrcSet={heroImage.srcSet}
+    imageSizes={heroImage.sizes}
+    imageSrcSetMobile={heroImageMobile.srcSet}
+    imageSizesMobile={heroImageMobile.sizes}
+    imagePosition="50% 40%"
+  >
     <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
       <a class="btn-secondary" href={href('')}>Go to homepage</a>
     </div>

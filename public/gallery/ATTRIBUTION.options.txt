@@ -1,0 +1,352 @@
+Gallery photos downloaded from Pexels (https://www.pexels.com).
+Keep this file for attribution/reference and license tracking.
+
+gallery/options/01/01.jpg
+Slot: Modern office interior (options)
+Query: modern clean office interior workspace
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/options/01/02.jpg
+Slot: Modern office interior (options)
+Query: modern clean office interior workspace
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/interior-design-of-an-office-5483233/
+
+gallery/options/01/03.jpg
+Slot: Modern office interior (options)
+Query: modern clean office interior workspace
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/contemporary-office-with-glass-doors-and-new-furniture-7534175/
+
+gallery/options/01/04.jpg
+Slot: Modern office interior (options)
+Query: modern clean office interior workspace
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/black-and-silver-chairs-inside-meeting-room-7750139/
+
+gallery/options/01/05.jpg
+Slot: Modern office interior (options)
+Query: modern clean office interior workspace
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/office-interior-with-table-and-chairs-near-shelves-6899401/
+
+gallery/options/02/01.jpg
+Slot: Office cleaning (options)
+Query: office cleaning professional janitorial service
+Pexels photo by Tahir Xəlfəquliyev
+Photographer: https://www.pexels.com/@tahir-x-lf-quliyev-2153788153
+Photo: https://www.pexels.com/photo/window-cleaner-washing-glass-roof-from-above-34023076/
+
+gallery/options/02/02.jpg
+Slot: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/options/02/03.jpg
+Slot: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/interior-design-of-an-office-5483233/
+
+gallery/options/02/04.jpg
+Slot: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/white-board-in-the-office-9034248/
+
+gallery/options/02/05.jpg
+Slot: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by Gabriel Rosu
+Photographer: https://www.pexels.com/@gabriel-rosu-288173258
+Photo: https://www.pexels.com/photo/tables-and-chairs-in-dark-interior-13141583/
+
+gallery/options/03/01.jpg
+Slot: Specialty coffee (options)
+Query: office coffee station
+Pexels photo by Lum3n
+Photographer: https://www.pexels.com/@lum3n-44775
+Photo: https://www.pexels.com/photo/red-rose-flowers-bouquet-on-white-surface-beside-spring-book-with-click-pen-and-cup-of-cofffee-1410226/
+
+gallery/options/03/02.jpg
+Slot: Specialty coffee (options)
+Query: office coffee station
+Pexels photo by Vlada Karpovich
+Photographer: https://www.pexels.com/@vlada-karpovich
+Photo: https://www.pexels.com/photo/colleagues-looking-at-documents-7433822/
+
+gallery/options/03/03.jpg
+Slot: Specialty coffee (options)
+Query: office coffee station
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/white-ceramic-mug-on-white-table-6069606/
+
+gallery/options/03/04.jpg
+Slot: Specialty coffee (options)
+Query: office coffee station
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/white-printer-paper-on-white-table-3944454/
+
+gallery/options/03/05.jpg
+Slot: Specialty coffee (options)
+Query: office coffee station
+Pexels photo by Tara Winstead
+Photographer: https://www.pexels.com/@tara-winstead
+Photo: https://www.pexels.com/photo/top-view-of-a-weekly-planner-on-a-knitted-surface-6690214/
+
+gallery/options/04/01.jpg
+Slot: Office pantry + snacks (options)
+Query: office pantry snacks breakroom supplies
+Pexels photo by Karola G
+Photographer: https://www.pexels.com/@karola-g
+Photo: https://www.pexels.com/photo/clear-glass-jars-on-wooden-surface-5237716/
+
+gallery/options/04/02.jpg
+Slot: Office pantry + snacks (options)
+Query: office pantry snacks breakroom supplies
+Pexels photo by Luna  Lovegood
+Photographer: https://www.pexels.com/@luna-lovegood
+Photo: https://www.pexels.com/photo/white-offiice-supplies-on-a-white-surface-4087567/
+
+gallery/options/04/03.jpg
+Slot: Office pantry + snacks (options)
+Query: office pantry snacks breakroom supplies
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/office-with-counter-and-chairs-near-open-kitchen-and-shelves-6899398/
+
+gallery/options/04/04.jpg
+Slot: Office pantry + snacks (options)
+Query: office pantry snacks breakroom supplies
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/employees-having-a-christmas-party-6518905/
+
+gallery/options/04/05.jpg
+Slot: Office pantry + snacks (options)
+Query: office pantry snacks breakroom supplies
+Pexels photo by Nataliya Vaitkevich
+Photographer: https://www.pexels.com/@n-voitkevich
+Photo: https://www.pexels.com/photo/brown-leather-wallet-on-beige-surface-8062364/
+
+gallery/options/05/01.jpg
+Slot: Corporate lobby (options)
+Query: modern corporate lobby reception clean
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/options/05/02.jpg
+Slot: Corporate lobby (options)
+Query: modern corporate lobby reception clean
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/colleagues-gathered-around-front-desk-8465063/
+
+gallery/options/05/03.jpg
+Slot: Corporate lobby (options)
+Query: modern corporate lobby reception clean
+Pexels photo by Mike van Schoonderwalt
+Photographer: https://www.pexels.com/@mike-van-schoonderwalt-1884800
+Photo: https://www.pexels.com/photo/modern-office-with-kitchenette-5511086/
+
+gallery/options/05/04.jpg
+Slot: Corporate lobby (options)
+Query: modern corporate lobby reception clean
+Pexels photo by RAJESH KUMAR    VERMA
+Photographer: https://www.pexels.com/@rajeshverma
+Photo: https://www.pexels.com/photo/white-reception-counter-8236022/
+
+gallery/options/05/05.jpg
+Slot: Corporate lobby (options)
+Query: modern corporate lobby reception clean
+Pexels photo by khezez  | خزاز
+Photographer: https://www.pexels.com/@khezez
+Photo: https://www.pexels.com/photo/modern-office-reception-with-artistic-decor-32334270/
+
+gallery/options/06/01.jpg
+Slot: Restocking supplies (options)
+Query: office supply restocking organized shelves
+Pexels photo by PNW Production
+Photographer: https://www.pexels.com/@pnw-prod
+Photo: https://www.pexels.com/photo/mockup-picture-frame-on-wall-above-desk-8490187/
+
+gallery/options/06/02.jpg
+Slot: Restocking supplies (options)
+Query: office supply restocking organized shelves
+Pexels photo by Huy Quang Nguyễn
+Photographer: https://www.pexels.com/@huy-quang-nguy-n-18652822
+Photo: https://www.pexels.com/photo/photo-of-an-office-6670865/
+
+gallery/options/06/03.jpg
+Slot: Restocking supplies (options)
+Query: office supply restocking organized shelves
+Pexels photo by Caleb Oquendo
+Photographer: https://www.pexels.com/@caleboquendo
+Photo: https://www.pexels.com/photo/office-supply-shelf-with-stacked-paper-boxes-34708271/
+
+gallery/options/06/04.jpg
+Slot: Restocking supplies (options)
+Query: office supply restocking organized shelves
+Pexels photo by Sakshi Maheshwari
+Photographer: https://www.pexels.com/@sakshi-maheshwari-1241361003
+Photo: https://www.pexels.com/photo/chairs-at-a-table-with-shelves-with-books-and-figurines-in-the-background-23073436/
+
+gallery/options/06/05.jpg
+Slot: Restocking supplies (options)
+Query: office supply restocking organized shelves
+Pexels photo by Pixabay
+Photographer: https://www.pexels.com/@pixabay
+Photo: https://www.pexels.com/photo/black-study-lamp-on-black-table-159839/
+
+gallery/options/services/janitorial/01.jpg
+Slot: Services: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/options/services/janitorial/02.jpg
+Slot: Services: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/interior-design-of-an-office-5483233/
+
+gallery/options/services/janitorial/03.jpg
+Slot: Services: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/white-board-in-the-office-9034248/
+
+gallery/options/services/janitorial/04.jpg
+Slot: Services: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by Gabriel Rosu
+Photographer: https://www.pexels.com/@gabriel-rosu-288173258
+Photo: https://www.pexels.com/photo/tables-and-chairs-in-dark-interior-13141583/
+
+gallery/options/services/janitorial/05.jpg
+Slot: Services: Office cleaning (options)
+Query: clean empty office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/black-chairs-and-white-tables-7750138/
+
+gallery/options/services/detail/01.jpg
+Slot: Services: Deep cleaning (options)
+Query: deep cleaning office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/open-space-office-with-red-armchairs-6794932/
+
+gallery/options/services/detail/02.jpg
+Slot: Services: Deep cleaning (options)
+Query: deep cleaning office interior
+Pexels photo by Karola G
+Photographer: https://www.pexels.com/@karola-g
+Photo: https://www.pexels.com/photo/carton-boxes-and-stacked-books-on-table-4498124/
+
+gallery/options/services/detail/03.jpg
+Slot: Services: Deep cleaning (options)
+Query: deep cleaning office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/modern-office-with-chairs-and-desks-6794934/
+
+gallery/options/services/detail/04.jpg
+Slot: Services: Deep cleaning (options)
+Query: deep cleaning office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/office-interior-with-table-and-chairs-near-shelves-6899401/
+
+gallery/options/services/detail/05.jpg
+Slot: Services: Deep cleaning (options)
+Query: deep cleaning office interior
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/office-interior-with-table-and-chairs-near-window-6899393/
+
+gallery/options/services/restocking/01.jpg
+Slot: Services: Restocking & supplies (options)
+Query: office supply cabinet organized
+Pexels photo by Max Vakhtbovycn
+Photographer: https://www.pexels.com/@heyho
+Photo: https://www.pexels.com/photo/interior-of-office-with-corridor-and-kitchen-7534220/
+
+gallery/options/services/restocking/02.jpg
+Slot: Services: Restocking & supplies (options)
+Query: office supply cabinet organized
+Pexels photo by MART  PRODUCTION
+Photographer: https://www.pexels.com/@mart-production
+Photo: https://www.pexels.com/photo/a-typewriter-on-a-wooden-desk-8872588/
+
+gallery/options/services/restocking/03.jpg
+Slot: Services: Restocking & supplies (options)
+Query: office supply cabinet organized
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/clear-glass-jars-on-white-wooden-shelf-8580793/
+
+gallery/options/services/restocking/04.jpg
+Slot: Services: Restocking & supplies (options)
+Query: office supply cabinet organized
+Pexels photo by Leeloo The First
+Photographer: https://www.pexels.com/@leeloothefirst
+Photo: https://www.pexels.com/photo/position-your-brand-instruction-on-office-desk-8970684/
+
+gallery/options/services/restocking/05.jpg
+Slot: Services: Restocking & supplies (options)
+Query: office supply cabinet organized
+Pexels photo by Luna  Lovegood
+Photographer: https://www.pexels.com/@luna-lovegood
+Photo: https://www.pexels.com/photo/white-offiice-supplies-on-a-white-surface-4087567/
+
+gallery/options/services/facilities/01.jpg
+Slot: Services: Coffee & snacks (options)
+Query: office coffee station
+Pexels photo by Lum3n
+Photographer: https://www.pexels.com/@lum3n-44775
+Photo: https://www.pexels.com/photo/red-rose-flowers-bouquet-on-white-surface-beside-spring-book-with-click-pen-and-cup-of-cofffee-1410226/
+
+gallery/options/services/facilities/02.jpg
+Slot: Services: Coffee & snacks (options)
+Query: office coffee station
+Pexels photo by Vlada Karpovich
+Photographer: https://www.pexels.com/@vlada-karpovich
+Photo: https://www.pexels.com/photo/colleagues-looking-at-documents-7433822/
+
+gallery/options/services/facilities/03.jpg
+Slot: Services: Coffee & snacks (options)
+Query: office coffee station
+Pexels photo by RDNE Stock project
+Photographer: https://www.pexels.com/@rdne
+Photo: https://www.pexels.com/photo/white-ceramic-mug-on-white-table-6069606/
+
+gallery/options/services/facilities/04.jpg
+Slot: Services: Coffee & snacks (options)
+Query: office coffee station
+Pexels photo by cottonbro studio
+Photographer: https://www.pexels.com/@cottonbro
+Photo: https://www.pexels.com/photo/white-printer-paper-on-white-table-3944454/
+
+gallery/options/services/facilities/05.jpg
+Slot: Services: Coffee & snacks (options)
+Query: office coffee station
+Pexels photo by Tara Winstead
+Photographer: https://www.pexels.com/@tara-winstead
+Photo: https://www.pexels.com/photo/top-view-of-a-weekly-planner-on-a-knitted-surface-6690214/

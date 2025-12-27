@@ -122,6 +122,15 @@ This project includes `@astrojs/sitemap`, but it is **only enabled when `SITE_UR
 - GitHub Pages: see the **Deploy to GitHub Pages** section below.
 - Azure Static Web Apps: see **Deploy to Azure Static Web Apps**.
 
+### Security headers note (important)
+
+This repo includes a `public/_headers` file with recommended security/caching headers.
+
+- ✅ Applied automatically on hosts that support `_headers` (for example Cloudflare Pages and Netlify).
+- ❌ **Not applied on GitHub Pages** (GitHub Pages does not let you configure custom response headers for static content).
+
+If you deploy on GitHub Pages and want these headers in production, put a CDN/proxy in front (Cloudflare is the common choice) or deploy the same static output (`dist/`) to a host that supports custom headers.
+
 ---
 
 ## Deploy to GitHub Pages

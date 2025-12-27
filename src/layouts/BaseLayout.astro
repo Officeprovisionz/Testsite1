@@ -80,16 +80,7 @@ const jsonLd = (() => {
     <link
       href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
     />
-    {/* Fallback for browsers with JS disabled */}
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
     <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <meta
@@ -181,11 +172,12 @@ const jsonLd = (() => {
             if (getMode() !== 'auto') return;
             apply();
           };
-          if ('addEventListener' in mq) {
+          if (typeof mq.addEventListener === 'function') {
             mq.addEventListener('change', onChange);
           } else {
-            // Safari < 14 legacy API
-            mq.addListener(onChange);
+            // Legacy fallback (e.g. older Safari) without using deprecated addListener.
+            // `onchange` is widely supported and avoids deprecation warnings in typechecking.
+            mq.onchange = onChange;
           }
         } catch {
           // ignore

@@ -17,7 +17,7 @@ type Props = {
   variant?: 'default' | 'accent';
 };
 
-const { heading, description, variant = 'default' } = Astro.props;
+const { heading, description, variant = 'default' } = Astro.props as Props;
 ---
 
 <CTASection layout="centered" background={variant} heading={heading} description={description} />

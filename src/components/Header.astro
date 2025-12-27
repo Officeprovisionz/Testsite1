@@ -393,7 +393,10 @@ const navItems = [
       mq.addEventListener('change', handleMQ);
     } else {
       // Safari < 14 legacy API
-      (mq as MediaQueryListLegacy).addListener(handleMQ);
+      const legacy = mq as unknown as {
+        addListener?: (callback: (this: MediaQueryList, ev: MediaQueryListEvent) => void) => void;
+      };
+      legacy.addListener?.(handleMQ);
     }
 
     // Initialize state.

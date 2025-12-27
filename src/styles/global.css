@@ -1077,7 +1077,6 @@
     top: calc(var(--header-sticky, 5rem) - 0.25rem);
     max-height: calc(100dvh - var(--header-sticky, 5rem) - 1.25rem);
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
     overscroll-behavior: contain;
 
     /* Closed: slightly offscreen; Open: on-screen.

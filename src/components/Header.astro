@@ -247,6 +247,19 @@ const navItems = [
       summary?.setAttribute('aria-expanded', open ? 'true' : 'false');
     };
 
+    const setDialogA11y = (open: boolean) => {
+      if (!panel) return;
+      if (open) {
+        panel.removeAttribute('aria-hidden');
+        panel.removeAttribute('inert');
+        return;
+      }
+      panel.setAttribute('aria-hidden', 'true');
+      // Prevent tab focus into a visually-hidden dialog.
+      // Supported in modern Chromium/Safari/Firefox; ignored elsewhere.
+      panel.setAttribute('inert', '');
+    };
+
     const lockScroll = () => {
       if (locked) return;
       locked = true;
@@ -291,6 +304,7 @@ const navItems = [
 
     menu.addEventListener('toggle', () => {
       setExpanded(menu.open);
+      setDialogA11y(menu.open);
 
       if (menu.open) {
         lastFocused = (document.activeElement as HTMLElement | null) ?? summary;
@@ -344,6 +358,7 @@ const navItems = [
 
     // Initialize state.
     setExpanded(menu.open);
+    setDialogA11y(menu.open);
 
     // --- Swipe to close (touch devices) ---
     // Drag the panel to the right to dismiss. Keeps it subtle and doesn't break scrolling.

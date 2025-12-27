@@ -55,6 +55,12 @@ export const HeroPro = ({
   imagePosition = '50% 50%',
 }: HeroProProps) => {
   const base = import.meta.env.BASE_URL;
+  // Opt-in only: avoids 404 network requests when the optional hero videos are not present.
+  // To enable, set PUBLIC_ENABLE_HERO_VIDEO=true and add:
+  // - public/media/hero-cleaning.webm
+  // - public/media/hero-cleaning.mp4
+  const heroVideoOptIn =
+    String(import.meta.env.PUBLIC_ENABLE_HERO_VIDEO ?? '').toLowerCase() === 'true';
   // Using a high-quality Unsplash image for the Golden Gate Bridge sunset
   const defaultHeroImg = `https://images.unsplash.com/photo-1501594907352-04cda38ebc29?q=80&w=2000&auto=format&fit=crop`;
   const heroFallback = `${base}gallery/services/detail-01.jpg`;
@@ -62,12 +68,25 @@ export const HeroPro = ({
 
   const heroImg = imageSrc ?? defaultHeroImg;
 
+  const imagePositionClass =
+    imagePosition === '50% 40%'
+      ? 'object-[50%_40%]'
+      : imagePosition === '50% 45%'
+        ? 'object-[50%_45%]'
+        : imagePosition === '50% 50%'
+          ? 'object-center'
+          : 'object-center';
+
   const heroVideoWebm = `${base}media/hero-cleaning.webm`;
   const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
 
   const [videoEnabled, setVideoEnabled] = useState(false);
 
   useEffect(() => {
+    if (!heroVideoOptIn) {
+      setVideoEnabled(false);
+      return;
+    }
     setVideoEnabled(shouldEnableVideo());
   }, []);
 
@@ -87,11 +106,10 @@ export const HeroPro = ({
               alt=""
               srcSet={imageSrcSet}
               sizes={imageSrcSet ? imageSizes : undefined}
-              className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
+              className={`h-full w-full object-cover ${imagePositionClass} opacity-[0.62] sm:opacity-[0.72]`}
               loading="eager"
               fetchPriority="high"
               decoding="async"
-              style={{ objectPosition: imagePosition }}
               onError={(e) => {
                 if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
               }}
@@ -103,11 +121,10 @@ export const HeroPro = ({
             alt=""
             srcSet={imageSrcSet}
             sizes={imageSrcSet ? imageSizes : undefined}
-            className="h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]"
+            className={`h-full w-full object-cover ${imagePositionClass} opacity-[0.62] sm:opacity-[0.72]`}
             loading="eager"
             fetchPriority="high"
             decoding="async"
-            style={{ objectPosition: imagePosition }}
             onError={(e) => {
               if (e.currentTarget.src !== heroFallback) e.currentTarget.src = heroFallback;
             }}

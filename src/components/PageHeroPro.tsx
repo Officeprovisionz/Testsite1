@@ -52,6 +52,15 @@ export const PageHeroPro = ({
   const resolvedMobileImageSrc = imageSrcMobile ? toPublicUrl(imageSrcMobile) : undefined;
   const fallbackImageSrc = toPublicUrl('gallery/services/detail-01.jpg');
 
+  const imagePositionClass =
+    imagePosition === '50% 40%'
+      ? 'object-[50%_40%]'
+      : imagePosition === '50% 45%'
+        ? 'object-[50%_45%]'
+        : imagePosition === '50% 50%'
+          ? 'object-center'
+          : 'object-center';
+
   return (
     <div
       className={cn(
@@ -76,8 +85,7 @@ export const PageHeroPro = ({
                 decoding="async"
                 fetchPriority="high"
                 loading="eager"
-                className={cn('damra-fade-in h-full w-full object-cover')}
-                style={{ objectPosition: imagePosition }}
+                className={cn('damra-fade-in h-full w-full object-cover', imagePositionClass)}
                 onError={(e) => {
                   const el = e.currentTarget;
                   if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;
@@ -93,8 +101,7 @@ export const PageHeroPro = ({
               decoding="async"
               fetchPriority="high"
               loading="eager"
-              className="damra-fade-in h-full w-full object-cover"
-              style={{ objectPosition: imagePosition }}
+              className={cn('damra-fade-in h-full w-full object-cover', imagePositionClass)}
               onError={(e) => {
                 const el = e.currentTarget;
                 if (el.src !== fallbackImageSrc) el.src = fallbackImageSrc;

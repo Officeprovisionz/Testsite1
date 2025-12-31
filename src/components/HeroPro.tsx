@@ -95,7 +95,7 @@ export const HeroPro = ({
             />
             <img
               src={heroImg}
-              alt=""
+              alt="Professional cleaning services showcase"
               srcSet={imageSrcSet}
               sizes={imageSrcSet ? imageSizes : undefined}
               className={`h-full w-full object-cover ${imagePositionClass} opacity-[0.62] sm:opacity-[0.72]`}
@@ -112,7 +112,7 @@ export const HeroPro = ({
         ) : (
           <img
             src={heroImg}
-            alt=""
+            alt="Professional cleaning services showcase"
             srcSet={imageSrcSet}
             sizes={imageSrcSet ? imageSizes : undefined}
             className={`h-full w-full object-cover ${imagePositionClass} opacity-[0.62] sm:opacity-[0.72]`}

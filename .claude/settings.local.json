@@ -6,7 +6,11 @@
       "Bash(ls:*)",
       "Bash(npm install:*)",
       "Bash(pnpm add:*)",
-      "Bash(pnpm run build:*)"
+      "Bash(pnpm run build:*)",
+      "Bash(dir:*)",
+      "Bash(pnpm exec tsc:*)",
+      "Bash(pnpm run typecheck:*)",
+      "Bash(git add:*)"
     ]
   }
 }

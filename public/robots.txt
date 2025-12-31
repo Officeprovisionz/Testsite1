@@ -1,0 +1,35 @@
+# robots.txt for Professional Cleaning Services
+# https://developers.google.com/search/docs/crawling-indexing/robots/intro
+
+User-agent: *
+Allow: /
+
+# Sitemap location (update with your actual domain)
+# Sitemap: https://yourdomain.com/sitemap-index.xml
+
+# Disallow crawling of dev/testing pages
+Disallow: /dev/
+
+# Disallow crawling of thank you pages (prevent indexing)
+Disallow: /thanks/
+
+# Crawl-delay for polite crawlers (optional, in seconds)
+# Crawl-delay: 1
+
+# Google-specific directives
+User-agent: Googlebot
+Allow: /
+
+# Bing-specific directives
+User-agent: Bingbot
+Allow: /
+
+# Block bad bots (optional - uncomment if needed)
+# User-agent: AhrefsBot
+# Disallow: /
+
+# User-agent: MJ12bot
+# Disallow: /
+
+# User-agent: SemrushBot
+# Disallow: /

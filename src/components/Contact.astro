@@ -208,6 +208,43 @@ const serviceOptions = [
 
         type StatusKind = 'info' | 'success' | 'error';
 
+        // Toast notification helper
+        const showToast = (message: string, kind: StatusKind = 'info') => {
+          if (
+            typeof window !== 'undefined' &&
+            (
+              window as Window & {
+                sonner?: {
+                  toast: {
+                    success: (msg: string) => void;
+                    error: (msg: string) => void;
+                    (msg: string): void;
+                  };
+                };
+              }
+            ).sonner
+          ) {
+            const toast = (
+              window as Window & {
+                sonner: {
+                  toast: {
+                    success: (msg: string) => void;
+                    error: (msg: string) => void;
+                    (msg: string): void;
+                  };
+                };
+              }
+            ).sonner.toast;
+            if (kind === 'success') {
+              toast.success(message);
+            } else if (kind === 'error') {
+              toast.error(message);
+            } else {
+              toast(message);
+            }
+          }
+        };
+
         const escapeName = (value: string) => {
           try {
             if (window.CSS && typeof CSS.escape === 'function') return CSS.escape(String(value));
@@ -245,6 +282,9 @@ const serviceOptions = [
           } else {
             status.classList.add('surface', 'border-app', 'text-muted');
           }
+
+          // Also show toast notification for better visibility (especially on mobile)
+          showToast(message, kind);
         };
 
         const setBusy = (busy: boolean) => {

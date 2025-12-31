@@ -36,8 +36,6 @@ export function Toaster() {
           fontFamily: 'var(--font-sans, system-ui, sans-serif)',
         },
       }}
-      // Respect user preferences
-      pauseWhenPageIsHidden
       // Mobile optimizations
       gap={8}
       visibleToasts={3}

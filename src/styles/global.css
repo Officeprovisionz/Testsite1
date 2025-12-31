@@ -812,6 +812,26 @@
     animation: damraFadeIn 520ms ease-out;
   }
 
+  /* Shimmer animation for skeleton loaders */
+  @keyframes shimmer {
+    0% {
+      background-position: -1000px 0;
+    }
+    100% {
+      background-position: 1000px 0;
+    }
+  }
+
+  .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(var(--color-brand-200), 0.3), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite linear;
+  }
+
+  :root[data-mode='dark'] .shimmer {
+    background: linear-gradient(90deg, transparent, rgba(var(--color-brand-700), 0.2), transparent);
+  }
+
   .btn {
     @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold transition-all duration-200;
     border-radius: var(--radius-control);

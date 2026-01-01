@@ -68,18 +68,18 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
               </p>
             </div>
             <span
-              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-900 text-white shadow-md shadow-brand-900/15 lg:h-12 lg:w-12"
+              class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl bg-brand-600 text-white shadow-md shadow-brand-600/15 lg:h-12 lg:w-12"
               aria-hidden="true"
             >
               ▾
             </span>
           </summary>
 
-          <div class="border-t border-white/10 px-5 py-4 sm:px-6 lg:px-8 lg:py-6">
+          <div class="border-app border-t px-5 py-4 sm:px-6 lg:px-8 lg:py-6">
             {items.length === 0 ? (
               <p class="text-sm text-muted">No specialty services are listed yet.</p>
             ) : (
-              <div class="divide-y divide-white/10">
+              <div class="border-app divide-y">
                 {items.map((s) => (
                   <div class="py-4 lg:py-5">
                     <p class="text-strong font-semibold lg:text-lg">{s.title}</p>
@@ -119,12 +119,12 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
               >
                 <div
                   aria-hidden="true"
-                  class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/5 via-transparent to-yellow-500/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-brand-300/5 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                 />
                 <div class="relative">
                   <div class="flex items-start gap-4">
                     <span
-                      class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-gradient-to-br from-brand-600 to-brand-800 text-white shadow-lg shadow-brand-900/20 ring-1 ring-white/10 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110"
+                      class="inline-flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-brand-600 text-white shadow-lg shadow-brand-900/20 ring-1 ring-white/10 transition-transform duration-300 group-hover:rotate-3 group-hover:scale-110"
                       aria-hidden="true"
                     >
                       {iconType === 'sparkle' && (

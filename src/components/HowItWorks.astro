@@ -2,6 +2,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Eyebrow from './ui/Eyebrow.astro';
 
 const {
   id,
@@ -15,7 +16,7 @@ const safeWaveTone =
   waveTone === 'surface' || waveTone === 'surface-muted' || waveTone === 'bg' ? waveTone : 'bg';
 ---
 
-<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0 lg:pt-28">
+<section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
   <div class="container-page relative lg:max-w-6xl">
     <SectionHeader heading={heading} description={description} />
 
@@ -30,7 +31,7 @@ const safeWaveTone =
             <div class="relative">
               <div class="flex items-center gap-3">
                 <span
-                  class="grid h-10 w-10 place-items-center rounded-2xl bg-brand-900 text-sm font-semibold text-white shadow-md shadow-brand-900/15 lg:h-12 lg:w-12 lg:text-base"
+                  class="grid h-10 w-10 place-items-center rounded-2xl bg-brand-600 text-sm font-semibold text-white shadow-md shadow-brand-600/15 lg:h-12 lg:w-12 lg:text-base"
                   aria-hidden="true"
                 >
                   {idx + 1}
@@ -49,7 +50,7 @@ const safeWaveTone =
     <div class="glass-card mt-10 overflow-hidden p-6 sm:p-8 lg:mt-14 lg:p-10">
       <div class="grid gap-6 md:grid-cols-2 md:items-center lg:gap-10">
         <div>
-          <p class="eyebrow">Quality assurance</p>
+          <Eyebrow>Quality assurance</Eyebrow>
           <p class="text-strong mt-2 text-lg font-bold lg:text-xl">
             Checklist-based scope. Fast fixes.
           </p>

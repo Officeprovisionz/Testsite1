@@ -36,7 +36,7 @@ export const ProcessStepsPro = () => {
             className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
           <div className="relative z-10">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500 to-brand-700 text-xl font-bold text-white shadow-lg shadow-brand-600/25 lg:h-14 lg:w-14 lg:text-2xl">
+            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-xl font-bold text-white shadow-lg shadow-brand-600/25 lg:h-14 lg:w-14 lg:text-2xl">
               {step.number}
             </span>
             <h3 className="text-strong mt-5 text-xl font-bold lg:text-2xl">{step.title}</h3>

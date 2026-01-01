@@ -84,10 +84,10 @@ export const Card = ({
   return (
     <div
       className={cn(
-        'relative z-20 h-full w-full overflow-hidden rounded-2xl border bg-white/85 p-6 backdrop-blur-sm transition-all duration-300 dark:bg-slate-900/65 lg:p-8',
+        'border-app relative z-20 h-full w-full overflow-hidden rounded-2xl border bg-surface/85 p-6 backdrop-blur-sm transition-all duration-300 lg:p-8',
         isHovered
           ? 'shadow-brand-500/8 border-brand-300 shadow-xl dark:border-brand-600/60'
-          : 'border-brand-100/60 shadow-md dark:border-brand-800/30',
+          : 'shadow-md',
         className
       )}
     >

@@ -1,4 +1,6 @@
 ---
+import Eyebrow from './Eyebrow.astro';
+
 export type Props = {
   eyebrow?: string;
   heading: string;
@@ -36,13 +38,7 @@ const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'he
   ]}
 >
   <div class:list={[align === 'center' ? 'mx-auto max-w-2xl lg:max-w-3xl' : '']}>
-    {
-      eyebrow ? (
-        <div class="mb-4 inline-flex items-center rounded-full border border-brand-200/60 bg-white/60 px-4 py-1.5 text-sm font-medium text-brand-700 shadow-sm backdrop-blur-sm dark:border-brand-700/40 dark:bg-brand-950/60 dark:text-brand-200 lg:px-5 lg:py-2 lg:text-base">
-          {eyebrow}
-        </div>
-      ) : null
-    }
+    {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
     <HeadingTag class={headingClass}>{heading}</HeadingTag>
     {description ? <p class="lede mt-4 lg:mt-5 lg:text-lg">{description}</p> : null}
   </div>

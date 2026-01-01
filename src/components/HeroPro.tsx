@@ -84,6 +84,11 @@ export const HeroPro = ({
 
   return (
     <section className="hero-splash hero-photo relative w-full overflow-hidden antialiased">
+      {/* Top-down gradient overlay for header readability */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-black/40 to-transparent opacity-60"
+      />
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
         {/* Always render a lightweight image base (also acts as the video poster / fallback). */}
         {imageSrcMobile || imageSrcSetMobile ? (
@@ -145,8 +150,8 @@ export const HeroPro = ({
           </video>
         ) : null}
 
-        {/* Mobile-first readability veil with brand-tinted overlay (not pure black). */}
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/60 via-slate-900/30 via-60% to-teal-900/20 dark:from-slate-950/70 dark:via-slate-950/40 sm:from-slate-900/45 sm:via-slate-900/20" />
+        {/* Mobile-first readability veil with brand-tinted overlay (token-based for consistency). */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.6] via-[rgb(var(--color-text))/0.32] to-[rgb(var(--color-brand-900))/0.18] dark:from-[rgb(var(--color-text))/0.72] dark:via-[rgb(var(--color-text-subtle))/0.36] sm:from-[rgb(var(--color-text))/0.45] sm:via-[rgb(var(--color-text))/0.2]" />
       </div>
 
       {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}

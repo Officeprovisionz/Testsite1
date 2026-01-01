@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -102,9 +103,7 @@ const resources = [
                 class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
               />
               <div class="relative">
-                <p class="text-xs font-semibold uppercase tracking-wider text-brand-600 dark:text-brand-400">
-                  {r.eyebrow}
-                </p>
+                <Eyebrow>{r.eyebrow}</Eyebrow>
                 <h2 class="text-strong mt-2 text-xl font-semibold tracking-tight">{r.title}</h2>
                 <p class="mt-2 text-sm leading-relaxed text-muted">{r.desc}</p>
                 <div class="mt-5">

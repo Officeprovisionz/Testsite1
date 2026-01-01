@@ -15,15 +15,15 @@ export function Toaster() {
         unstyled: false,
         classNames: {
           toast:
-            'rounded-xl shadow-lg border backdrop-blur-sm bg-white/95 dark:bg-slate-900/95 border-brand-100/60 dark:border-brand-800/40',
+            'rounded-xl shadow-lg border backdrop-blur-sm bg-surface/95 border-brand-100/60 dark:border-brand-800/40',
           title: 'text-sm font-semibold text-strong',
           description: 'text-sm text-muted',
           actionButton:
             'bg-brand-600 hover:bg-brand-700 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-colors',
           cancelButton:
-            'bg-white/80 hover:bg-white dark:bg-slate-800/80 dark:hover:bg-slate-800 text-muted hover:text-strong px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-brand-100/40 dark:border-brand-800/40',
+            'bg-surface/80 hover:bg-surface text-muted hover:text-strong px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-brand-100/40 dark:border-brand-800/40',
           closeButton:
-            'bg-white/80 hover:bg-white dark:bg-slate-800/80 dark:hover:bg-slate-800 border border-brand-100/40 dark:border-brand-800/40 text-muted hover:text-strong transition-colors',
+            'bg-surface/80 hover:bg-surface border border-brand-100/40 dark:border-brand-800/40 text-muted hover:text-strong transition-colors',
           success:
             'border-green-200/60 dark:border-green-800/40 bg-gradient-to-br from-green-50/90 to-white/90 dark:from-green-950/50 dark:to-slate-900/90',
           error:

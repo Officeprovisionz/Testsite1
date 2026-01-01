@@ -5,6 +5,7 @@ import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -55,7 +56,7 @@ const heroImageMobile = heroSecondary
 
   <section
     id="quote"
-    class="section section-muted section-creative scroll-mt-20 lg:py-28"
+    class="section section-muted section-creative scroll-mt-20"
     aria-label="Request a quote"
   >
     <div class="container-page lg:max-w-5xl">
@@ -67,7 +68,7 @@ const heroImageMobile = heroSecondary
         </div>
         <div class="relative grid gap-6 md:grid-cols-2 md:items-center lg:gap-10">
           <div>
-            <p class="eyebrow">Next step</p>
+            <Eyebrow>Next step</Eyebrow>
             <h2 class="heading-2 mt-2 lg:text-4xl">Request a quote</h2>
             <p class="lede lg:text-lg">
               Tell us your industry, services needed, and frequency. We’ll confirm scope and send a

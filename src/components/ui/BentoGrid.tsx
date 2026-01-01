@@ -56,7 +56,7 @@ export const BentoGridItem = ({
               {title}
             </div>
           </div>
-          <div className="line-clamp-3 text-[0.98rem] leading-relaxed text-slate-600 dark:text-slate-300">
+          <div className="line-clamp-3 text-[0.98rem] leading-relaxed text-muted">
             {description}
           </div>
         </div>

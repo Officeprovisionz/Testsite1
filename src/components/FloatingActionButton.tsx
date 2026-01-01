@@ -72,7 +72,7 @@ export function FloatingActionButton() {
         <a
           href="tel:+15105551234"
           onClick={() => handleActionClick('call')}
-          className="flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border border-brand-100/60 bg-white py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95 dark:border-brand-800/40 dark:bg-slate-800"
+          className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Call now"
         >
           <Phone className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
@@ -83,7 +83,7 @@ export function FloatingActionButton() {
         <a
           href="mailto:info@damra.com"
           onClick={() => handleActionClick('email')}
-          className="flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border border-brand-100/60 bg-white py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95 dark:border-brand-800/40 dark:bg-slate-800"
+          className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Email us"
         >
           <Mail className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />

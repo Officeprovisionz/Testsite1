@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { makeMailtoHref } from '@/lib/links';
@@ -27,7 +28,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
         </div>
 
         <div class="relative">
-          <p class="eyebrow">Request received</p>
+          <Eyebrow>Request received</Eyebrow>
           <h1 class="heading-2 mt-2">Thanks — we’ve got it.</h1>
           <p class="lede">
             We’ll reply within <span class="text-strong font-semibold">1 business day</span> to confirm

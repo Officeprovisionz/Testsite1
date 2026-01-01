@@ -11,7 +11,9 @@
       "Bash(pnpm exec tsc:*)",
       "Bash(pnpm run typecheck:*)",
       "Bash(git add:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "Bash(git push:*)",
+      "Bash(cat:*)"
     ]
   }
 }

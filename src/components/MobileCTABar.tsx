@@ -78,7 +78,7 @@ export function MobileCTABar() {
         paddingBottom: 'env(safe-area-inset-bottom)',
       }}
     >
-      <div className="border-t border-brand-100/60 bg-gradient-to-b from-white/95 to-white/90 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur-lg dark:border-brand-800/40 dark:from-slate-900/95 dark:to-slate-900/90 dark:shadow-[0_-4px_12px_rgba(0,0,0,0.24)]">
+      <div className="border-app border-t bg-surface/95 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur-lg dark:shadow-[0_-4px_12px_rgba(0,0,0,0.24)]">
         <div className="container-page py-3">
           <div className="flex gap-3">
             {/* Call Now Button */}

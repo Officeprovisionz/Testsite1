@@ -8,6 +8,7 @@ import AreasServed from '@/components/AreasServed.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import Gallery from '@/components/Gallery.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
@@ -96,7 +97,7 @@ const heroImageMobile = heroSecondary
           >
           </div>
           <div class="relative">
-            <p class="eyebrow">Our commitments</p>
+            <Eyebrow>Our commitments</Eyebrow>
             <h3 class="heading-3 mt-2">Consistency you can count on</h3>
             <p class="mt-3 text-sm text-muted">
               The details vary by space, but our process stays the same—clear scope, checklist

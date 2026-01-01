@@ -2,6 +2,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { makeMailtoHref, makeTelHref } from '@/lib/links';
+import Eyebrow from './ui/Eyebrow.astro';
 
 type Props = {
   /**
@@ -59,9 +60,9 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
   layout === 'centered' ? (
     <section
       class:list={[
-        'section section-creative border-y py-16 lg:py-24',
+        'section section-creative border-y',
         background === 'accent'
-          ? 'border-white/10 bg-slate-950 text-white'
+          ? 'border-white/10 bg-brand-950 text-white'
           : 'border-app section-muted',
       ]}
     >
@@ -69,9 +70,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
         <div
           class:list={[
             'glass-card relative mx-auto max-w-3xl overflow-hidden rounded-2xl px-6 py-10 text-center sm:px-12 sm:py-12 lg:max-w-4xl lg:px-16 lg:py-16',
-            background === 'accent'
-              ? 'border-white/10 bg-slate-900/80'
-              : 'bg-white/60 dark:bg-slate-900/60',
+            background === 'accent' ? 'border-white/10 bg-brand-900/80' : 'bg-surface/60',
           ]}
         >
           {/* Decorative gradient blob */}
@@ -90,7 +89,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             <p
               class:list={[
                 'mx-auto mt-6 max-w-xl text-lg leading-relaxed lg:mt-8 lg:text-xl',
-                background === 'accent' ? 'text-slate-300' : 'text-muted',
+                background === 'accent' ? 'text-white/80' : 'text-muted',
               ]}
             >
               {description ?? "Request a quote and we'll confirm scope, then send clear pricing."}
@@ -129,7 +128,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
     <section
       id={id}
       class:list={[
-        'section section-creative scroll-mt-20 lg:py-28',
+        'section section-creative scroll-mt-20',
         tone === 'muted' ? 'section-muted' : '',
       ]}
       aria-label="Get started"
@@ -138,7 +137,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
         <div class="card relative overflow-hidden p-6 sm:p-8 lg:p-14">
           <div class="relative grid gap-8 md:grid-cols-2 md:items-center lg:gap-12">
             <div>
-              <p class="eyebrow">{eyebrow ?? 'Next step'}</p>
+              <Eyebrow>{eyebrow ?? 'Next step'}</Eyebrow>
               <h2 class="heading-2 mt-2 lg:text-4xl">{heading ?? 'Ready to scope your space?'}</h2>
               <p class="lede lg:text-lg">
                 {description ??

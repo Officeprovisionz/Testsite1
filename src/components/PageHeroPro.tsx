@@ -61,6 +61,11 @@ export const PageHeroPro = ({
         className
       )}
     >
+      {/* Top-down gradient overlay for header readability */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-black/40 to-transparent opacity-60"
+      />
       {resolvedImageSrc ? (
         <div className="absolute inset-0">
           {resolvedMobileImageSrc || imageSrcSetMobile ? (

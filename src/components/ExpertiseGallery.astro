@@ -6,6 +6,7 @@
  */
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { getShuffledGalleryItems } from '@/data/gallery';
+import Eyebrow from './ui/Eyebrow.astro';
 
 type ExpertiseItem = {
   src: string;
@@ -83,11 +84,11 @@ const getImgAttrs = (src: string) => {
 };
 ---
 
-<section id={id} class="section py-16 md:py-24 lg:py-28">
+<section id={id} class="section">
   <div class="container-page">
     <!-- Header -->
     <div class="mb-12 text-center md:mb-16 lg:mb-20">
-      {eyebrow && <span class="eyebrow mb-4 inline-block">{eyebrow}</span>}
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
       <h2 class="heading-2">{heading}</h2>
       {subheading && <p class="lede mx-auto mt-5 max-w-2xl lg:text-lg">{subheading}</p>}
     </div>

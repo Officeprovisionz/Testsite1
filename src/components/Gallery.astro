@@ -11,6 +11,10 @@ type Props = {
   heading?: string;
   description?: string;
   showTip?: boolean;
+  /** When false, render photos only (no visible caption/alt text blocks in the grid). */
+  showItemText?: boolean;
+  /** When false, hide lightbox title/caption/count text (buttons still visible). */
+  showLightboxText?: boolean;
   /** Optional auto-advance interval (ms) for mobile horizontal gallery browsing. */
   autoAdvanceMs?: number;
   /** Override the default placeholder gallery items. */
@@ -35,6 +39,8 @@ const {
   heading = 'Gallery',
   description = 'A quick look at the spaces we support. Replace these placeholders with your own photos.',
   showTip = true,
+  showItemText = true,
+  showLightboxText = true,
   autoAdvanceMs,
   items,
   variant = 'below',
@@ -152,7 +158,7 @@ const getImgAttrs = (src: string) => {
                   class="gallery-hover-zoom h-full w-full object-cover transition-transform duration-700"
                 />
 
-                {variant === 'overlay' ? (
+                {variant === 'overlay' && showItemText ? (
                   <>
                     <div
                       aria-hidden="true"
@@ -169,7 +175,7 @@ const getImgAttrs = (src: string) => {
                   </>
                 ) : null}
               </div>
-              {variant === 'below' ? (
+              {variant === 'below' && showItemText ? (
                 <div class="p-5 lg:p-6">
                   <p class="text-strong text-sm font-semibold lg:text-base">
                     {it.caption ?? 'Project photo'}
@@ -194,10 +200,16 @@ const getImgAttrs = (src: string) => {
         class="border-app flex flex-wrap items-center justify-between gap-3 border-b px-5 py-4"
         data-lightbox-chrome
       >
-        <div class="lightbox-meta min-w-0">
-          <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>Preview</p>
-          <p class="text-subtle mt-0.5 text-xs" data-lightbox-count></p>
-        </div>
+        {
+          showLightboxText ? (
+            <div class="lightbox-meta min-w-0">
+              <p class="text-strong truncate text-sm font-semibold" data-lightbox-title>
+                Preview
+              </p>
+              <p class="text-subtle mt-0.5 text-xs" data-lightbox-count />
+            </div>
+          ) : null
+        }
         <div class="lightbox-actions flex flex-wrap items-center gap-2">
           <button
             type="button"
@@ -242,8 +254,15 @@ const getImgAttrs = (src: string) => {
           alt=""
           class="border-app surface-muted mx-auto h-auto max-h-[min(68dvh,720px)] w-auto max-w-full rounded-xl border object-contain"
         />
-        <figcaption class="text-sm text-muted" data-lightbox-caption data-lightbox-chrome>
-        </figcaption>
+        {
+          showLightboxText ? (
+            <figcaption
+              class="text-sm text-muted"
+              data-lightbox-caption
+              data-lightbox-chrome
+            ></figcaption>
+          ) : null
+        }
         <p class="sr-only" aria-live="polite" data-lightbox-toast></p>
       </figure>
     </dialog>

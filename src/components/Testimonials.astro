@@ -23,10 +23,10 @@ const testimonials = siteConfig.testimonials;
     <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8">
       {
         testimonials.map((t) => (
-          <figure class="glass-card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8">
+          <figure class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8">
             <div
               aria-hidden="true"
-              class="from-brand-200/12 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+              class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
             />
             <div class="relative">
               <blockquote class="text-sm leading-relaxed text-muted lg:text-base lg:leading-relaxed">
@@ -45,7 +45,7 @@ const testimonials = siteConfig.testimonials;
                   <p class="text-subtle text-xs">{t.location}</p>
                 </div>
                 <span
-                  class="inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl bg-surface/60 text-sm font-semibold text-brand-700 ring-1 ring-brand-100/50 dark:text-brand-200 dark:ring-brand-800/30"
+                  class="bg-brand/10 text-brand ring-brand/20 inline-flex h-9 w-9 flex-none items-center justify-center rounded-xl text-sm font-semibold ring-1"
                   aria-hidden="true"
                   title="Verified"
                 >

@@ -75,7 +75,7 @@ export function FloatingActionButton() {
           className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Call now"
         >
-          <Phone className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
+          <Phone className="text-brand h-4 w-4" aria-hidden="true" />
           <span>Call Now</span>
         </a>
 
@@ -86,7 +86,7 @@ export function FloatingActionButton() {
           className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Email us"
         >
-          <Mail className="h-4 w-4 text-brand-600 dark:text-brand-400" aria-hidden="true" />
+          <Mail className="text-brand h-4 w-4" aria-hidden="true" />
           <span>Email Us</span>
         </a>
 
@@ -94,7 +94,7 @@ export function FloatingActionButton() {
         <a
           href="/contact"
           onClick={() => handleActionClick('quote')}
-          className="flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full bg-gradient-to-r from-brand-600 to-brand-500 py-3 pl-4 pr-5 text-sm font-medium text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-105 hover:shadow-xl hover:shadow-brand-600/40 active:scale-95 dark:from-brand-500 dark:to-brand-600"
+          className="bg-brand shadow-brand/30 hover:shadow-brand/40 flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full py-3 pl-4 pr-5 text-sm font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Get a free quote"
         >
           <FileText className="h-4 w-4" aria-hidden="true" />
@@ -105,7 +105,7 @@ export function FloatingActionButton() {
       {/* Main FAB Button */}
       <button
         onClick={handleToggle}
-        className={`flex h-14 w-14 touch-manipulation items-center justify-center rounded-full bg-gradient-to-br from-brand-600 to-brand-500 text-white shadow-lg shadow-brand-600/30 transition-all hover:scale-110 hover:shadow-xl hover:shadow-brand-600/40 active:scale-95 dark:from-brand-500 dark:to-brand-600 ${isExpanded ? 'rotate-90' : 'rotate-0'} `}
+        className={`bg-brand shadow-brand/30 hover:shadow-brand/40 flex h-14 w-14 touch-manipulation items-center justify-center rounded-full text-white shadow-lg transition-all hover:scale-110 hover:shadow-xl active:scale-95 ${isExpanded ? 'rotate-90' : 'rotate-0'} `}
         aria-label={isExpanded ? 'Close menu' : 'Quick actions'}
         aria-expanded={isExpanded}
       >
@@ -119,7 +119,7 @@ export function FloatingActionButton() {
       {/* Ripple effect on mount */}
       {isVisible && (
         <div
-          className="pointer-events-none absolute inset-0 animate-ping rounded-full bg-brand-500 opacity-20"
+          className="bg-brand pointer-events-none absolute inset-0 animate-ping rounded-full opacity-20"
           style={{ animationDuration: '1.5s', animationIterationCount: '1' }}
         />
       )}

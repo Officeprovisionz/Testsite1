@@ -30,7 +30,7 @@ export const HoverEffect = ({
           <AnimatePresence>
             {hoveredIndex === idx && (
               <motion.span
-                className="bg-brand-500/8 absolute inset-0 block h-full w-full rounded-2xl"
+                className="bg-brand/10 absolute inset-0 block h-full w-full rounded-2xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -48,13 +48,13 @@ export const HoverEffect = ({
           {item.link ? (
             <a
               href={item.link}
-              className="relative z-20 block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
+              className="focus-visible:ring-brand relative z-20 block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
               aria-label={item.title}
             >
               <Card isHovered={hoveredIndex === idx}>
                 <CardTitle>{item.title}</CardTitle>
                 <CardDescription>{item.description}</CardDescription>
-                <div className="mt-4 flex items-center text-sm font-medium text-brand-600 transition-colors group-hover:text-brand-700 dark:text-brand-400">
+                <div className="text-brand group-hover:text-brand mt-4 flex items-center text-sm font-medium transition-colors">
                   <span>Learn more about {item.title}</span>
                   <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
                 </div>
@@ -84,10 +84,8 @@ export const Card = ({
   return (
     <div
       className={cn(
-        'border-app relative z-20 h-full w-full overflow-hidden rounded-2xl border bg-surface/85 p-6 backdrop-blur-sm transition-all duration-300 lg:p-8',
-        isHovered
-          ? 'shadow-brand-500/8 border-brand-300 shadow-xl dark:border-brand-600/60'
-          : 'shadow-md',
+        'card relative z-20 h-full w-full overflow-hidden p-6 transition-all duration-300 lg:p-8',
+        isHovered ? 'border-brand/40 shadow-brand/10 shadow-xl' : 'shadow-md',
         className
       )}
     >

@@ -23,15 +23,15 @@ const safeWaveTone =
     <ol class="mt-10 grid gap-6 lg:mt-14 lg:grid-cols-4 lg:gap-8">
       {
         siteConfig.processSteps.map((s, idx) => (
-          <li class="glass-panel relative overflow-hidden p-5 sm:p-6 lg:p-8">
+          <li class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8">
             <div
               aria-hidden="true"
-              class="from-brand-200/14 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-brand-300/10"
+              class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
             />
             <div class="relative">
               <div class="flex items-center gap-3">
                 <span
-                  class="grid h-10 w-10 place-items-center rounded-2xl bg-brand-600 text-sm font-semibold text-white shadow-md shadow-brand-600/15 lg:h-12 lg:w-12 lg:text-base"
+                  class="bg-brand shadow-brand/15 grid h-10 w-10 place-items-center rounded-2xl text-sm font-semibold text-white shadow-md lg:h-12 lg:w-12 lg:text-base"
                   aria-hidden="true"
                 >
                   {idx + 1}
@@ -47,7 +47,7 @@ const safeWaveTone =
       }
     </ol>
 
-    <div class="glass-card mt-10 overflow-hidden p-6 sm:p-8 lg:mt-14 lg:p-10">
+    <div class="card mt-10 overflow-hidden p-6 sm:p-8 lg:mt-14 lg:p-10">
       <div class="grid gap-6 md:grid-cols-2 md:items-center lg:gap-10">
         <div>
           <Eyebrow>Quality assurance</Eyebrow>

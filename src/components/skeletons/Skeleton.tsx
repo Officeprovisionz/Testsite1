@@ -14,7 +14,7 @@ export function Skeleton({ className, children }: SkeletonProps) {
   return (
     <div
       className={cn(
-        'animate-pulse rounded-lg bg-brand-100/30 dark:bg-brand-900/20',
+        'bg-brand/10 dark:bg-brand/10 animate-pulse rounded-lg',
         'relative overflow-hidden',
         className
       )}
@@ -25,7 +25,7 @@ export function Skeleton({ className, children }: SkeletonProps) {
         className="shimmer absolute inset-0"
         style={{
           backgroundImage:
-            'linear-gradient(90deg, transparent, rgba(var(--color-brand-200), 0.3), transparent)',
+            'linear-gradient(90deg, transparent, rgba(var(--color-brand), 0.2), transparent)',
           backgroundSize: '200% 100%',
           animation: 'shimmer 2s infinite',
         }}

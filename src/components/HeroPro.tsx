@@ -151,7 +151,7 @@ export const HeroPro = ({
         ) : null}
 
         {/* Mobile-first readability veil with brand-tinted overlay (token-based for consistency). */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.6] via-[rgb(var(--color-text))/0.32] to-[rgb(var(--color-brand-900))/0.18] dark:from-[rgb(var(--color-text))/0.72] dark:via-[rgb(var(--color-text-subtle))/0.36] sm:from-[rgb(var(--color-text))/0.45] sm:via-[rgb(var(--color-text))/0.2]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.6] via-[rgb(var(--color-text))/0.32] to-[rgb(var(--color-brand))/0.1] dark:from-[rgb(var(--color-text))/0.72] dark:via-[rgb(var(--color-text-subtle))/0.36] sm:from-[rgb(var(--color-text))/0.45] sm:via-[rgb(var(--color-text))/0.2]" />
       </div>
 
       {/* Match the inner-page hero corner accent (used on Services) for visual consistency. */}

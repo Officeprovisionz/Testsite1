@@ -33,21 +33,21 @@ const servicesErrorId = `${servicesHelpId}-error`;
 <div>
   {
     !formEndpoint && (
-      <div class="mb-4 rounded-[var(--radius-card)] border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+      <div class="panel panel-muted mb-4 p-4 text-sm">
         {isDev ? (
           <>
-            <p class="font-semibold">Form endpoint not configured</p>
-            <p class="mt-1">
-              Set <code class="rounded bg-white px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
-              <code class="rounded bg-white px-1.5 py-0.5">.env</code> (see
-              <code class="rounded bg-white px-1.5 py-0.5">.env.example</code>) to enable
+            <p class="text-strong font-semibold">Form endpoint not configured</p>
+            <p class="mt-1 text-muted">
+              Set <code class="rounded bg-surface px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
+              <code class="rounded bg-surface px-1.5 py-0.5">.env</code> (see
+              <code class="rounded bg-surface px-1.5 py-0.5">.env.example</code>) to enable
               submissions. For now, this form will open your email app with the details filled in.
             </p>
           </>
         ) : (
           <>
-            <p class="font-semibold">We’ll reply fast</p>
-            <p class="mt-1">
+            <p class="text-strong font-semibold">We’ll reply fast</p>
+            <p class="mt-1 text-muted">
               When you submit, this form will open your email app with the message filled in. If you
               prefer, call/text us instead.
             </p>

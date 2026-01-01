@@ -107,7 +107,7 @@ export const PageHeroPro = ({
             />
           )}
           <div
-            className="absolute inset-0 bg-gradient-to-b from-slate-900/55 via-slate-900/50 via-60% to-teal-900/40 dark:from-slate-950/65 dark:via-slate-950/55 dark:to-slate-950/70"
+            className="to-brand/40 absolute inset-0 bg-gradient-to-b from-black/55 via-black/50 via-60% dark:from-black/65 dark:via-black/55 dark:to-black/70"
             aria-hidden="true"
           />
         </div>

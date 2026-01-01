@@ -29,14 +29,14 @@ export const ProcessStepsPro = () => {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.2, duration: 0.5 }}
           viewport={{ once: true }}
-          className="glass-panel card-hover group relative overflow-hidden p-5 sm:p-6 lg:p-8"
+          className="card card-hover group relative overflow-hidden p-5 sm:p-6 lg:p-8"
         >
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-br from-brand-500/10 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            className="from-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
           />
           <div className="relative z-10">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-600 text-xl font-bold text-white shadow-lg shadow-brand-600/25 lg:h-14 lg:w-14 lg:text-2xl">
+            <span className="bg-brand shadow-brand/25 inline-flex h-12 w-12 items-center justify-center rounded-2xl text-xl font-bold text-white shadow-lg lg:h-14 lg:w-14 lg:text-2xl">
               {step.number}
             </span>
             <h3 className="text-strong mt-5 text-xl font-bold lg:text-2xl">{step.title}</h3>

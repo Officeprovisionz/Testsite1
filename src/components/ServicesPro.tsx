@@ -2,22 +2,25 @@ import React from 'react';
 import { siteConfig } from '@/data/siteConfig';
 import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
 import { Sparkles, Building, Coffee, Wrench } from 'lucide-react';
+import { Eyebrow } from './ui/Eyebrow';
 
 export function ServicesPro() {
   const icons: Record<string, React.ReactNode> = {
-    'Office Cleaning': <Sparkles className="h-6 w-6 text-brand-500" />,
-    'Professional Janitorial': <Building className="h-6 w-6 text-brand-500" />,
-    'Coffee, Snacks & Restocking': <Coffee className="h-6 w-6 text-brand-500" />,
-    'Facilities Support': <Wrench className="h-6 w-6 text-brand-500" />,
+    'Office Cleaning': <Sparkles className="text-brand h-6 w-6" />,
+    'Professional Janitorial': <Building className="text-brand h-6 w-6" />,
+    'Coffee, Snacks & Restocking': <Coffee className="text-brand h-6 w-6" />,
+    'Facilities Support': <Wrench className="text-brand h-6 w-6" />,
   };
 
   return (
     <section className="section" id="services">
       <div className="container-page">
         <div className="mb-12 text-center">
-          <h2 className="heading-2">Our Expertise</h2>
+          <Eyebrow className="mx-auto">Our Expertise</Eyebrow>
+          <h2 className="heading-2 mt-4">Comprehensive Facility Solutions</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted">
-            Comprehensive facility solutions tailored to your standards.
+            Tailored cleaning and support services designed to meet the highest standards of
+            professionalism and hygiene.
           </p>
         </div>
 
@@ -29,7 +32,7 @@ export function ServicesPro() {
                 title={family.title}
                 description={family.description}
                 icon={
-                  <div className="w-fit rounded-lg border border-brand-100 bg-brand-50/70 p-2 dark:border-brand-800/40 dark:bg-brand-950/25">
+                  <div className="border-brand/20 bg-brand/10 flex h-10 w-10 items-center justify-center rounded-lg border">
                     {icons[family.title]}
                   </div>
                 }

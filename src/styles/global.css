@@ -1036,7 +1036,7 @@
     background-color: rgb(var(--color-surface));
     color: rgb(var(--color-text));
     --tw-ring-offset-color: rgb(var(--color-surface));
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2;
+    @apply focus-visible:ring-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
     @apply transition-colors;
   }
 

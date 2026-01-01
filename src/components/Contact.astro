@@ -226,7 +226,7 @@ const serviceOptions = [
           ) {
             const toast = (
               window as Window & {
-                sonner: {
+                sonner?: {
                   toast: {
                     success: (msg: string) => void;
                     error: (msg: string) => void;
@@ -234,7 +234,7 @@ const serviceOptions = [
                   };
                 };
               }
-            ).sonner.toast;
+            ).sonner!.toast;
             if (kind === 'success') {
               toast.success(message);
             } else if (kind === 'error') {

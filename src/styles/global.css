@@ -448,7 +448,11 @@
 
   /* Links with underline-offset and smooth transitions */
   .link-underline {
-    @apply decoration-brand/40 hover:decoration-brand underline underline-offset-4 transition-colors;
+    @apply underline decoration-brand-500/40 underline-offset-4 transition-colors;
+  }
+
+  .link-underline:hover {
+    @apply decoration-brand-500;
   }
 
   /* Text shadow utility for hero text on images */
@@ -601,7 +605,7 @@
   }
 
   .link:focus-visible {
-    @apply ring-brand outline-none ring-2 ring-offset-2;
+    @apply outline-none ring-2 ring-[rgb(var(--color-brand))] ring-offset-2;
   }
 
   .link-muted {
@@ -711,7 +715,12 @@
 
   @media (hover: hover) and (pointer: fine) {
     .card-hover {
-      @apply hover:border-brand/40 hover:shadow-brand/10 hover:-translate-y-1 hover:shadow-lg;
+      /* Tailwind doesn't support variant utilities (e.g. hover:) inside @apply reliably.
+         Apply hover styles via selector instead. */
+    }
+
+    .card-hover:hover {
+      @apply -translate-y-1 border-brand-500/40 shadow-lg shadow-brand-500/10;
     }
 
     .gallery-hover-zoom {
@@ -948,7 +957,7 @@
     background-color: rgb(var(--color-surface));
     color: rgb(var(--color-text));
     --tw-ring-offset-color: rgb(var(--color-surface));
-    @apply focus-visible:ring-brand focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2;
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2;
     @apply transition-colors;
   }
 

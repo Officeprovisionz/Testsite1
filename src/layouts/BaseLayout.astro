@@ -7,6 +7,8 @@ import '@fontsource/inter/700.css';
 import '@fontsource/playfair-display/600.css';
 import '@fontsource/playfair-display/700.css';
 import '@fontsource/playfair-display/800.css';
+import inter600Url from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
+import inter700Url from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
@@ -81,20 +83,8 @@ const jsonLd = (() => {
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
     {/* Preload critical fonts to reduce FOUT */}
-    <link
-      rel="preload"
-      href="/node_modules/@fontsource/inter/files/inter-latin-600-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/node_modules/@fontsource/inter/files/inter-latin-700-normal.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="preload" href={inter600Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={inter700Url} as="font" type="font/woff2" crossorigin />
 
     {
       /* Fonts are self-hosted via @fontsource imports (see frontmatter) to avoid third-party requests. */

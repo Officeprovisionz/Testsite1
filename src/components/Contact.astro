@@ -374,6 +374,88 @@ const serviceOptions = [
           }
         };
 
+        const applyAttributionToForm = () => {
+          const keys = [
+            'utm_source',
+            'utm_medium',
+            'utm_campaign',
+            'utm_content',
+            'utm_term',
+            'gclid',
+            'fbclid',
+            'msclkid',
+          ] as const;
+
+          type Key = (typeof keys)[number];
+
+          const readStored = (): Partial<Record<Key, string>> => {
+            try {
+              const raw = window.sessionStorage?.getItem('damra_campaign');
+              if (!raw) return {};
+              const parsed = JSON.parse(raw) as unknown;
+              if (!parsed || typeof parsed !== 'object') return {};
+              const out: Partial<Record<Key, string>> = {};
+              keys.forEach((k) => {
+                const v = (parsed as Record<string, unknown>)[k];
+                if (typeof v === 'string' && v.trim()) out[k] = v;
+              });
+              return out;
+            } catch {
+              return {};
+            }
+          };
+
+          const writeStored = (data: Partial<Record<Key, string>>) => {
+            try {
+              if (!window.sessionStorage) return;
+              window.sessionStorage.setItem('damra_campaign', JSON.stringify(data));
+            } catch {
+              // ignore
+            }
+          };
+
+          const params = getParams();
+          const stored = readStored();
+          const merged: Partial<Record<Key, string>> = { ...stored };
+
+          keys.forEach((k) => {
+            const v = params.get(k);
+            if (v && v.trim()) merged[k] = v.trim();
+          });
+
+          if (Object.keys(merged).length) writeStored(merged);
+
+          const setHidden = (name: string, value: string) => {
+            const el = form.querySelector<HTMLInputElement>(
+              `input[type="hidden"][name="${escapeName(name)}"]`
+            );
+            if (!el) return;
+            el.value = value;
+          };
+
+          keys.forEach((k) => setHidden(k, merged[k] ?? ''));
+
+          // Referrer / landing page (useful even without UTMs)
+          const referrer = (() => {
+            try {
+              return document.referrer || '';
+            } catch {
+              return '';
+            }
+          })();
+          const landing = (() => {
+            try {
+              return window.location.href.split('#')[0] || '';
+            } catch {
+              return '';
+            }
+          })();
+
+          setHidden('referrer', referrer);
+          setHidden('landing', landing);
+        };
+
+        applyAttributionToForm();
         prefillFromQuery();
         clearInvalidOnInput();
 
@@ -405,6 +487,10 @@ const serviceOptions = [
           const message = String(fd.get('message') ?? '').trim();
           const honeypot = String(fd.get('website') ?? '').trim();
 
+          const utmSource = String(fd.get('utm_source') ?? '').trim();
+          const utmMedium = String(fd.get('utm_medium') ?? '').trim();
+          const utmCampaign = String(fd.get('utm_campaign') ?? '').trim();
+
           track('lead_submit', {
             source,
             industry,
@@ -412,6 +498,9 @@ const serviceOptions = [
             hasPhone: Boolean(phone),
             servicesCount: servicesNeeded.length,
             via: endpoint ? 'endpoint' : 'mailto',
+            utmSource: utmSource || undefined,
+            utmMedium: utmMedium || undefined,
+            utmCampaign: utmCampaign || undefined,
           });
 
           // Simple bot check: if honeypot is filled, do nothing.
@@ -510,6 +599,9 @@ const serviceOptions = [
                 setStatus("Quote request received - we'll reply within 1 business day.", 'success');
                 form.reset();
 
+                // Preserve attribution fields after reset (many providers clear them).
+                applyAttributionToForm();
+
                 track('lead_submit_success', { source, via: 'endpoint' });
 
                 const redirect = form.dataset.successRedirect || '';
@@ -558,6 +650,30 @@ const serviceOptions = [
           const subject = `Quote request - ${companyName || name}`;
           const body = [
             source ? `Page: ${source}` : undefined,
+            utmSource ? `UTM source: ${utmSource}` : undefined,
+            utmMedium ? `UTM medium: ${utmMedium}` : undefined,
+            utmCampaign ? `UTM campaign: ${utmCampaign}` : undefined,
+            String(fd.get('utm_content') ?? '').trim()
+              ? `UTM content: ${String(fd.get('utm_content') ?? '').trim()}`
+              : undefined,
+            String(fd.get('utm_term') ?? '').trim()
+              ? `UTM term: ${String(fd.get('utm_term') ?? '').trim()}`
+              : undefined,
+            String(fd.get('gclid') ?? '').trim()
+              ? `gclid: ${String(fd.get('gclid') ?? '').trim()}`
+              : undefined,
+            String(fd.get('fbclid') ?? '').trim()
+              ? `fbclid: ${String(fd.get('fbclid') ?? '').trim()}`
+              : undefined,
+            String(fd.get('msclkid') ?? '').trim()
+              ? `msclkid: ${String(fd.get('msclkid') ?? '').trim()}`
+              : undefined,
+            String(fd.get('referrer') ?? '').trim()
+              ? `Referrer: ${String(fd.get('referrer') ?? '').trim()}`
+              : undefined,
+            String(fd.get('landing') ?? '').trim()
+              ? `Landing: ${String(fd.get('landing') ?? '').trim()}`
+              : undefined,
             companyName ? `Company: ${companyName}` : undefined,
             `Name: ${name}`,
             `Email: ${email}`,

@@ -70,6 +70,18 @@ const servicesErrorId = `${servicesHelpId}-error`;
   >
     <input type="hidden" name="source" value={sourcePath} />
 
+    <!-- Attribution / campaign fields (populated client-side; safe to leave blank) -->
+    <input type="hidden" name="utm_source" value="" />
+    <input type="hidden" name="utm_medium" value="" />
+    <input type="hidden" name="utm_campaign" value="" />
+    <input type="hidden" name="utm_content" value="" />
+    <input type="hidden" name="utm_term" value="" />
+    <input type="hidden" name="gclid" value="" />
+    <input type="hidden" name="fbclid" value="" />
+    <input type="hidden" name="msclkid" value="" />
+    <input type="hidden" name="referrer" value="" />
+    <input type="hidden" name="landing" value="" />
+
     <p id={helpId} class="text-sm text-muted">
       Fields marked with <span class="font-semibold">*</span> are required.
     </p>

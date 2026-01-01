@@ -48,7 +48,7 @@ export const HoverEffect = ({
           {item.link ? (
             <a
               href={item.link}
-              className="focus-visible:ring-brand relative z-20 block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
+              className="relative z-20 block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
               aria-label={item.title}
             >
               <Card isHovered={hoveredIndex === idx}>

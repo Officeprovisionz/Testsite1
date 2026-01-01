@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { MessageCircle, X, Phone, Mail, FileText } from 'lucide-react';
+import { siteConfig } from '@/data/siteConfig';
+import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
 /**
  * Floating Action Button (FAB)
@@ -9,6 +11,11 @@ import { MessageCircle, X, Phone, Mail, FileText } from 'lucide-react';
 export function FloatingActionButton() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
+
+  const base = import.meta.env.BASE_URL;
+  const contactHref = `${base}contact/`;
+  const telHref = makeTelHref(siteConfig.contact.phoneE164);
+  const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,7 +77,7 @@ export function FloatingActionButton() {
       >
         {/* Call Action */}
         <a
-          href="tel:+15105551234"
+          href={telHref}
           onClick={() => handleActionClick('call')}
           className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Call now"
@@ -81,7 +88,7 @@ export function FloatingActionButton() {
 
         {/* Email Action */}
         <a
-          href="mailto:info@damra.com"
+          href={mailtoHref}
           onClick={() => handleActionClick('email')}
           className="border-app flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full border bg-surface py-3 pl-4 pr-5 text-sm font-medium shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Email us"
@@ -92,7 +99,7 @@ export function FloatingActionButton() {
 
         {/* Get Quote Action */}
         <a
-          href="/contact"
+          href={contactHref}
           onClick={() => handleActionClick('quote')}
           className="bg-brand shadow-brand/30 hover:shadow-brand/40 flex touch-manipulation items-center gap-3 whitespace-nowrap rounded-full py-3 pl-4 pr-5 text-sm font-medium text-white shadow-lg transition-all hover:scale-105 hover:shadow-xl active:scale-95"
           aria-label="Get a free quote"
@@ -118,10 +125,7 @@ export function FloatingActionButton() {
 
       {/* Ripple effect on mount */}
       {isVisible && (
-        <div
-          className="bg-brand pointer-events-none absolute inset-0 animate-ping rounded-full opacity-20"
-          style={{ animationDuration: '1.5s', animationIterationCount: '1' }}
-        />
+        <div className="bg-brand pointer-events-none absolute inset-0 animate-ping rounded-full opacity-20 [animation-duration:1.5s] [animation-iteration-count:1]" />
       )}
     </div>
   );

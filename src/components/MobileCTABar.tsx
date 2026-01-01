@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Phone, FileText } from 'lucide-react';
+import { siteConfig } from '@/data/siteConfig';
+import { makeTelHref } from '@/lib/links';
 
 /**
  * Bottom-sticky mobile CTA bar
@@ -10,11 +12,22 @@ export function MobileCTABar() {
   const [isVisible, setIsVisible] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
+  const base = import.meta.env.BASE_URL;
+  const contactHref = `${base}contact/`;
+  const telHref = makeTelHref(siteConfig.contact.phoneE164);
+
   useEffect(() => {
     // Hide on specific pages
-    const hiddenPaths = ['/contact', '/thanks'];
-    const currentPath = window.location.pathname;
-    const shouldHidePage = hiddenPaths.some((path) => currentPath.includes(path));
+    const hiddenPaths = ['/contact/', '/thanks/'];
+    const pathname = window.location.pathname;
+    const normalizedPath = (() => {
+      const raw = pathname || '/';
+      const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
+      const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
+      return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+    })();
+
+    const shouldHidePage = hiddenPaths.some((p) => normalizedPath.startsWith(p));
 
     if (shouldHidePage) {
       setIsVisible(false);
@@ -62,7 +75,7 @@ export function MobileCTABar() {
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [lastScrollY, isVisible]);
+  }, [base, lastScrollY, isVisible]);
 
   // Track CTA clicks
   const handleCTAClick = (action: 'call' | 'quote') => {
@@ -73,17 +86,14 @@ export function MobileCTABar() {
 
   return (
     <div
-      className={`fixed bottom-0 left-0 right-0 z-40 transition-transform duration-300 ease-out md:hidden ${isVisible ? 'translate-y-0' : 'translate-y-full'} `}
-      style={{
-        paddingBottom: 'env(safe-area-inset-bottom)',
-      }}
+      className={`fixed bottom-0 left-0 right-0 z-40 pb-[env(safe-area-inset-bottom)] transition-transform duration-300 ease-out md:hidden ${isVisible ? 'translate-y-0' : 'translate-y-full'} `}
     >
       <div className="border-app border-t bg-surface/95 shadow-[0_-4px_12px_rgba(0,0,0,0.08)] backdrop-blur-lg dark:shadow-[0_-4px_12px_rgba(0,0,0,0.24)]">
         <div className="container-page py-3">
           <div className="flex gap-3">
             {/* Call Now Button */}
             <a
-              href="tel:+15105551234"
+              href={telHref}
               onClick={() => handleCTAClick('call')}
               className="btn-primary flex flex-1 touch-manipulation items-center justify-center gap-2 transition-transform active:scale-[0.97]"
               aria-label="Call now for a free quote"
@@ -94,7 +104,7 @@ export function MobileCTABar() {
 
             {/* Get Quote Button */}
             <a
-              href="/contact"
+              href={contactHref}
               onClick={() => handleCTAClick('quote')}
               className="btn-accent flex flex-1 touch-manipulation items-center justify-center gap-2 transition-transform active:scale-[0.97]"
               aria-label="Get a free quote"

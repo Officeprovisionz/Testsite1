@@ -58,7 +58,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
     {
       presentation === 'dropdown' ? (
-        <details class="glass-panel mt-8 overflow-hidden p-0 lg:mt-12">
+        <details class="card mt-8 overflow-hidden p-0 lg:mt-12">
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
             <div class="min-w-0">
               <p class="text-strong text-base font-semibold lg:text-lg">View specialty services</p>
@@ -113,7 +113,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
             return (
               <article
                 class:list={[
-                  'glass-card group relative overflow-hidden p-5 sm:p-6',
+                  'card group relative overflow-hidden p-5 sm:p-6',
                   isFeatured ? 'md:col-span-2 md:p-8' : '',
                 ]}
               >

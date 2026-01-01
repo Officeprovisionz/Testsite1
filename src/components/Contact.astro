@@ -265,17 +265,14 @@ const serviceOptions = [
             'bg-brand/10',
             'border-brand/20',
             'text-strong',
-            'bg-rose-50',
-            'border-rose-200',
-            'text-rose-900',
-            'bg-rose-500/10',
-            'border-rose-500/20'
+            'bg-destructive/10',
+            'border-destructive/20'
           );
 
           if (kind === 'success') {
             status.classList.add('bg-brand/10', 'border-brand/20', 'text-strong');
           } else if (kind === 'error') {
-            status.classList.add('bg-rose-500/10', 'border-rose-500/20', 'text-strong');
+            status.classList.add('bg-destructive/10', 'border-destructive/20', 'text-strong');
           } else {
             status.classList.add('surface', 'border-app', 'text-muted');
           }

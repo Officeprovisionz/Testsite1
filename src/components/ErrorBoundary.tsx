@@ -57,11 +57,8 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex min-h-[400px] items-center justify-center p-6">
           <div className="max-w-md text-center">
-            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-red-50 dark:bg-red-950/30">
-              <AlertTriangle
-                className="h-8 w-8 text-red-600 dark:text-red-400"
-                aria-hidden="true"
-              />
+            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
+              <AlertTriangle className="h-8 w-8 text-destructive" aria-hidden="true" />
             </div>
 
             <h2 className="heading-3 mb-2">Something went wrong</h2>
@@ -76,7 +73,7 @@ export class ErrorBoundary extends Component<Props, State> {
                 <summary className="hover:text-strong cursor-pointer text-sm text-muted">
                   Error details (dev only)
                 </summary>
-                <pre className="mt-2 overflow-auto rounded-lg bg-red-50 p-4 text-xs dark:bg-red-950/20">
+                <pre className="mt-2 overflow-auto rounded-lg bg-destructive/5 p-4 text-xs">
                   {this.state.error.toString()}
                   {'\n\n'}
                   {this.state.error.stack}

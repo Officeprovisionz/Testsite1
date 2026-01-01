@@ -24,13 +24,10 @@ export function Toaster() {
             'bg-surface/80 hover:bg-surface text-muted hover:text-strong px-3 py-1.5 rounded-lg text-sm font-medium transition-colors border border-brand/20 dark:border-brand/20',
           closeButton:
             'bg-surface/80 hover:bg-surface border border-brand/20 dark:border-brand/20 text-muted hover:text-strong transition-colors',
-          success:
-            'border-green-200/60 dark:border-green-800/40 bg-gradient-to-br from-green-50/90 to-white/90 dark:from-green-950/50 dark:to-surface/90',
-          error:
-            'border-red-200/60 dark:border-red-800/40 bg-gradient-to-br from-red-50/90 to-white/90 dark:from-red-950/50 dark:to-surface/90',
-          warning:
-            'border-amber-200/60 dark:border-amber-800/40 bg-gradient-to-br from-amber-50/90 to-white/90 dark:from-amber-950/50 dark:to-surface/90',
-          info: 'border-blue-200/60 dark:border-blue-800/40 bg-gradient-to-br from-blue-50/90 to-white/90 dark:from-blue-950/50 dark:to-surface/90',
+          success: 'border-brand/20 bg-gradient-to-br from-brand/10 to-surface/90',
+          error: 'border-destructive/20 bg-gradient-to-br from-destructive/10 to-surface/90',
+          warning: 'border-amber-500/20 bg-gradient-to-br from-amber-500/10 to-surface/90',
+          info: 'border-brand/20 bg-gradient-to-br from-brand/10 to-surface/90',
         },
         style: {
           fontFamily: 'var(--font-sans, system-ui, sans-serif)',

@@ -54,14 +54,9 @@
     --radius-control: 0.625rem;
     --shadow-soft: 0 10px 26px -18px rgba(2, 6, 23, 0.18);
 
-    /* Glass system tokens — refined with perceptual transparency and depth cues */
-    --glass-blur: 14px;
-    --glass-border: rgba(255, 255, 255, 0.18); /* +3% for better definition */
-    --glass-border-hover: rgba(255, 255, 255, 0.35); /* Enhanced affordance */
-    --glass-bg-a: rgba(255, 255, 255, 0.04); /* Slightly more opaque for clarity */
-    --glass-bg-b: rgba(255, 255, 255, 0.1); /* Improved depth gradient */
-    --glass-shadow: 0 10px 30px -22px rgba(2, 6, 23, 0.2); /* Warmer shadow */
-    --glass-shadow-strong: 0 14px 44px -26px rgba(2, 6, 23, 0.25); /* Enhanced depth */
+    /* Semantic Brand Tokens */
+    --color-brand: var(--color-brand-500);
+    --color-accent: var(--color-accent-500);
 
     /* Semantic surfaces (light) — cream base + strong contrast */
     --color-bg: 255 255 255;
@@ -134,9 +129,9 @@
     z-index: -1;
     /* Clean, premium gradients (subtle depth, no busy imagery) */
     background:
-      radial-gradient(900px 520px at 20% 0%, rgba(var(--color-brand-400), 0.1), transparent 62%),
-      radial-gradient(820px 520px at 85% 15%, rgba(var(--color-accent-400), 0.08), transparent 68%),
-      radial-gradient(980px 640px at 50% 100%, rgba(var(--color-brand-500), 0.07), transparent 70%);
+      radial-gradient(900px 520px at 20% 0%, rgb(var(--color-brand) / 0.1), transparent 62%),
+      radial-gradient(820px 520px at 85% 15%, rgb(var(--color-brand) / 0.08), transparent 68%),
+      radial-gradient(980px 640px at 50% 100%, rgb(var(--color-brand) / 0.07), transparent 70%);
     pointer-events: none;
   }
 
@@ -150,7 +145,7 @@
 
   /* Sticky header needs blur */
   header.sticky {
-    @apply bg-white/80 backdrop-blur-md dark:bg-slate-950/80;
+    @apply bg-surface/80 backdrop-blur-md dark:bg-surface/80;
   }
   /* Forced dark mode — Helmholtz-Kohlrausch effect compensation applied */
   :root[data-mode='dark'] {
@@ -164,13 +159,6 @@
     --color-text-muted: 215 215 215; /* #D7D7D7 - Enhanced readability */
     --color-text-subtle: 168 168 168; /* #A8A8A8 - Better contrast */
     --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.75); /* Deeper shadows */
-
-    --glass-border: rgba(255, 255, 255, 0.12); /* +2% for dark mode clarity */
-    --glass-border-hover: rgba(255, 255, 255, 0.24); /* Enhanced interaction */
-    --glass-bg-a: rgba(15, 23, 42, 0.65); /* More opaque for depth */
-    --glass-bg-b: rgba(15, 23, 42, 0.85); /* Stronger gradient stop */
-    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6); /* Refined depth */
-    --glass-shadow-strong: 0 35px 60px -15px rgba(0, 0, 0, 0.8); /* Premium shadows */
 
     /* Shadcn Dark Mode */
     --background: 222.2 84% 4.9%;
@@ -207,13 +195,6 @@
       --color-text-muted: 212 212 212;
       --color-text-subtle: 163 163 163;
       --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
-
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-border-hover: rgba(255, 255, 255, 0.16);
-      --glass-bg-a: rgb(var(--color-surface) / 0.22);
-      --glass-bg-b: rgb(var(--color-surface) / 0.42);
-      --glass-shadow: 0 22px 70px -36px rgb(0 0 0 / 0.75);
-      --glass-shadow-strong: 0 36px 100px -56px rgb(0 0 0 / 0.85);
 
       /* Shadcn vars MUST also follow auto-dark; otherwise `text-muted-foreground` etc. stay light. */
       --background: 222.2 84% 4.9%;
@@ -385,12 +366,12 @@
   }
 
   ::selection {
-    background: rgb(var(--color-brand-500) / 0.22);
+    background: rgb(var(--color-brand) / 0.22);
   }
 
   /* Enhanced focus indicators for accessibility - visible, consistent, WCAG compliant */
   :focus-visible {
-    outline: 2px solid rgb(var(--color-brand-500));
+    outline: 2px solid rgb(var(--color-brand));
     outline-offset: 3px;
     transition: outline-offset 120ms cubic-bezier(0.4, 0, 0.2, 1);
   }
@@ -400,7 +381,7 @@
   a:focus-visible,
   [role='button']:focus-visible,
   summary:focus-visible {
-    outline: 2px solid rgb(var(--color-brand-600));
+    outline: 2px solid rgb(var(--color-brand));
     outline-offset: 3px;
   }
 
@@ -411,7 +392,7 @@
     outline: none;
     box-shadow:
       0 0 0 2px rgb(var(--color-surface)),
-      0 0 0 4px rgb(var(--color-brand-500));
+      0 0 0 4px rgb(var(--color-brand));
   }
 
   main#main-content {
@@ -459,7 +440,7 @@
     z-index: 9999;
     background: linear-gradient(
       to right,
-      rgb(var(--color-brand-500)) var(--scroll-progress, 0%),
+      rgb(var(--color-brand)) var(--scroll-progress, 0%),
       transparent var(--scroll-progress, 0%)
     );
     pointer-events: none;
@@ -467,7 +448,7 @@
 
   /* Links with underline-offset and smooth transitions */
   .link-underline {
-    @apply underline decoration-brand-400/40 underline-offset-4 transition-colors hover:decoration-brand-500;
+    @apply decoration-brand/40 hover:decoration-brand underline underline-offset-4 transition-colors;
   }
 
   /* Text shadow utility for hero text on images */
@@ -558,7 +539,7 @@
     pointer-events: none;
     background: radial-gradient(
       50% 50% at 50% 30%,
-      rgb(var(--color-brand-400) / 0.04),
+      rgb(var(--color-brand) / 0.04),
       transparent 70%
     );
     /* Simplified to a single subtle center-top glow */
@@ -606,7 +587,7 @@
 
   .link {
     @apply underline underline-offset-[5px];
-    text-decoration-color: rgb(var(--color-brand-400) / 0.5);
+    text-decoration-color: rgb(var(--color-brand) / 0.5);
     text-decoration-thickness: 1.5px;
     text-decoration-skip-ink: auto;
     transition:
@@ -615,12 +596,12 @@
   }
 
   .link:hover {
-    text-decoration-color: rgb(var(--color-brand-500));
-    color: rgb(var(--color-brand-600));
+    text-decoration-color: rgb(var(--color-brand));
+    color: rgb(var(--color-brand));
   }
 
   .link:focus-visible {
-    @apply outline-none ring-2 ring-brand-400 ring-offset-2;
+    @apply ring-brand outline-none ring-2 ring-offset-2;
   }
 
   .link-muted {
@@ -662,62 +643,6 @@
     transform: scaleY(-1);
   }
 
-  .glass {
-    background:
-      radial-gradient(900px 300px at 20% 0%, rgb(var(--color-brand-500) / 0.14), transparent 62%),
-      linear-gradient(180deg, var(--glass-bg-a), var(--glass-bg-b));
-    border-color: var(--glass-border);
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    backdrop-filter: blur(var(--glass-blur));
-  }
-
-  :root[data-mode='dark'] .glass {
-    background: linear-gradient(
-      180deg,
-      rgb(var(--color-surface) / 0.55),
-      rgb(var(--color-surface) / 0.35)
-    );
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-mode='light']) .glass {
-      background: linear-gradient(
-        180deg,
-        rgb(var(--color-surface) / 0.55),
-        rgb(var(--color-surface) / 0.35)
-      );
-    }
-  }
-
-  .glass-card {
-    @apply border;
-    border-color: var(--glass-border);
-    border-radius: var(--radius-card);
-    box-shadow: var(--glass-shadow-strong);
-    -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 2px));
-    backdrop-filter: blur(calc(var(--glass-blur) + 2px));
-    transition:
-      border-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 220ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(180deg, var(--glass-bg-a), var(--glass-bg-b));
-  }
-
-  /* A quieter glass panel: less shadow, more "sheet" feel. */
-  .glass-panel {
-    @apply border;
-    border-color: var(--glass-border);
-    border-radius: var(--radius-card);
-    box-shadow: var(--glass-shadow);
-    -webkit-backdrop-filter: blur(var(--glass-blur));
-    backdrop-filter: blur(var(--glass-blur));
-    transition:
-      border-color 300ms cubic-bezier(0.4, 0, 0.2, 1),
-      box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
-    background: linear-gradient(145deg, var(--glass-bg-a), var(--glass-bg-b));
-  }
-
   .hero-splash {
     position: relative;
     overflow: hidden;
@@ -742,8 +667,8 @@
     inset: -20% -10% -35%;
     pointer-events: none;
     background:
-      radial-gradient(60% 55% at 25% 25%, rgb(var(--color-brand-400) / 0.06), transparent 60%),
-      radial-gradient(55% 50% at 80% 10%, rgb(var(--color-brand-500) / 0.07), transparent 62%);
+      radial-gradient(60% 55% at 25% 25%, rgb(var(--color-brand) / 0.06), transparent 60%),
+      radial-gradient(55% 50% at 80% 10%, rgb(var(--color-brand) / 0.07), transparent 62%);
     transform: rotate(-3deg);
     opacity: 0.55;
   }
@@ -770,36 +695,23 @@
 
   :root[data-mode='dark'] .hero-panel {
     background:
-      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand-500) / 0.18), transparent 55%),
-      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
-      linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-surface)) 65%);
+      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.18), transparent 55%),
+      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand) / 0.14), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-surface)) 65%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .hero-panel {
       background:
-        radial-gradient(
-          800px 380px at 15% 10%,
-          rgb(var(--color-brand-500) / 0.18),
-          transparent 55%
-        ),
-        radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
-        linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-surface)) 65%);
+        radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.18), transparent 55%),
+        radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand) / 0.14), transparent 60%),
+        linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-surface)) 65%);
     }
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .glass-card:hover,
-    .glass-panel:hover {
-      border-color: var(--glass-border-hover);
-    }
-
-    .glass-panel:hover {
-      box-shadow: var(--glass-shadow-strong);
-    }
-
     .card-hover {
-      @apply hover:-translate-y-1 hover:border-brand-100 hover:shadow-lg hover:shadow-brand-900/5;
+      @apply hover:border-brand/40 hover:shadow-brand/10 hover:-translate-y-1 hover:shadow-lg;
     }
 
     .gallery-hover-zoom {
@@ -1049,13 +961,13 @@
   .input[aria-invalid='true'],
   .select[aria-invalid='true'],
   .textarea[aria-invalid='true'] {
-    border-color: rgb(239 68 68 / 0.65); /* red-500 */
+    border-color: hsl(var(--destructive) / 0.65);
   }
 
   /* Group-level invalid styling (used for checkbox groups). */
   [data-services-box][aria-invalid='true'] {
-    border-color: rgb(239 68 68 / 0.6);
-    background-color: rgb(239 68 68 / 0.04);
+    border-color: hsl(var(--destructive) / 0.6);
+    background-color: hsl(var(--destructive) / 0.04);
   }
 
   .input::placeholder,
@@ -1324,8 +1236,8 @@
   .page-header {
     border-color: rgb(var(--color-border));
     background:
-      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand-500) / 0.12), transparent 60%),
-      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand-400) / 0.1), transparent 60%),
+      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.12), transparent 60%),
+      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.1), transparent 60%),
       linear-gradient(180deg, rgb(var(--color-brand-50) / 0.55), rgb(var(--color-bg) / 0) 70%),
       rgb(var(--color-bg));
   }
@@ -1351,26 +1263,18 @@
 
   :root[data-mode='dark'] .page-header {
     background:
-      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand-500) / 0.18), transparent 60%),
-      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand-400) / 0.14), transparent 60%),
-      linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-bg) / 0) 70%),
+      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.18), transparent 60%),
+      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.14), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-bg) / 0) 70%),
       rgb(var(--color-bg));
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .page-header {
       background:
-        radial-gradient(
-          900px 420px at 10% 10%,
-          rgb(var(--color-brand-500) / 0.18),
-          transparent 60%
-        ),
-        radial-gradient(
-          900px 420px at 90% 12%,
-          rgb(var(--color-brand-400) / 0.14),
-          transparent 60%
-        ),
-        linear-gradient(180deg, rgb(var(--color-brand-900) / 0.35), rgb(var(--color-bg) / 0) 70%),
+        radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.18), transparent 60%),
+        radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.14), transparent 60%),
+        linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-bg) / 0) 70%),
         rgb(var(--color-bg));
     }
   }
@@ -1573,8 +1477,7 @@
   blockquote,
   pre,
   figure,
-  .glass-card,
-  .glass-panel,
+  .card,
   .panel {
     page-break-inside: avoid;
     page-break-after: avoid;

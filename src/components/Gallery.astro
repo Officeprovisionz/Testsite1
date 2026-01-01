@@ -256,11 +256,7 @@ const getImgAttrs = (src: string) => {
         />
         {
           showLightboxText ? (
-            <figcaption
-              class="text-sm text-muted"
-              data-lightbox-caption
-              data-lightbox-chrome
-            ></figcaption>
+            <figcaption class="text-sm text-muted" data-lightbox-caption data-lightbox-chrome />
           ) : null
         }
         <p class="sr-only" aria-live="polite" data-lightbox-toast></p>

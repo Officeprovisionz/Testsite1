@@ -16,6 +16,13 @@
     "simulate:pages": "node scripts/simulate-pages.mjs",
     "gallery:fetch": "node scripts/fetch-gallery.mjs",
     "check:copy": "node scripts/check-mojibake.mjs",
+    "test": "pnpm test:unit",
+    "test:unit": "vitest run",
+    "test:unit:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:update": "playwright test --update-snapshots",
+    "test:a11y": "playwright test a11y.spec.ts",
     "typecheck": "astro check",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
@@ -45,10 +52,13 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
     "@eslint/js": "9.39.2",
+    "@playwright/test": "^1.57.0",
     "@types/node": "25.0.3",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
+    "@vitest/ui": "^4.0.16",
     "astro-eslint-parser": "^1.2.2",
     "autoprefixer": "10.4.23",
     "eslint": "9.39.2",
@@ -67,7 +77,9 @@
     "tailwindcss": "^3.4.17",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "5.9.3",
-    "typescript-eslint": "8.50.1"
+    "typescript-eslint": "8.50.1",
+    "vite-tsconfig-paths": "^6.0.3",
+    "vitest": "^4.0.16"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,astro,json,md,mdx,yml,yaml,css}": [

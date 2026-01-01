@@ -5,3 +5,10 @@ dist/
 .env.*
 !.env.example
 .DS_Store
+
+# Playwright (generated)
+test-results/
+playwright-report/
+
+# OS
+Thumbs.db

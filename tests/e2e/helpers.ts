@@ -1,0 +1,14 @@
+import type { Page } from '@playwright/test';
+
+export async function disableAnimations(page: Page): Promise<void> {
+  await page.addStyleTag({
+    content: `
+      *, *::before, *::after {
+        animation-duration: 0.001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.001ms !important;
+        scroll-behavior: auto !important;
+      }
+    `,
+  });
+}

@@ -10,7 +10,8 @@
       "Bash(dir:*)",
       "Bash(pnpm exec tsc:*)",
       "Bash(pnpm run typecheck:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(grep:*)"
     ]
   }
 }

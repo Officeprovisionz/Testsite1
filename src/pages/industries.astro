@@ -9,16 +9,21 @@ import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
-import { pickGalleryItems } from '@/data/gallery';
+import type { GalleryItem } from '@/data/gallery';
 
 const title = `Industries | ${siteConfig.brand.name}`;
 const description =
   'Commercial cleaning for offices, property management, and customer spaces—scoped clearly with checklist-based delivery.';
 const href = makeHref(import.meta.env.BASE_URL);
 
-const heroItems = pickGalleryItems('industries-hero', 2);
-const heroPrimary = heroItems[0];
-const heroSecondary = heroItems[1] ?? heroPrimary;
+// Industries hero image
+// (Pinned so the page header photo is stable and not affected by gallery shuffle / item ordering.)
+const heroPrimary: GalleryItem = {
+  src: 'gallery/facilities-02.jpg',
+  alt: 'Commercial facility interior',
+  caption: 'Commercial facility interior',
+};
+const heroSecondary: GalleryItem = heroPrimary;
 
 const heroImage = heroPrimary
   ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {

@@ -1290,6 +1290,26 @@
 }
 
 @layer utilities {
+  /*
+    IMPORTANT: `.text-muted` collides with Tailwind's generated `text-muted` utility
+    because shadcn defines a `muted` color token.
+
+    This project uses `.text-muted` / `.text-subtle` / `.text-strong` as semantic
+    typography helpers (mapped to our RGB design tokens). These must win in the
+    cascade to keep body/description/footer text readable, especially in dark mode.
+  */
+  .text-strong {
+    color: rgb(var(--color-text));
+  }
+
+  .text-muted {
+    color: rgb(var(--color-text-muted));
+  }
+
+  .text-subtle {
+    color: rgb(var(--color-text-subtle));
+  }
+
   .bg-grid-black\/\[0\.05\] {
     background-size: 40px 40px;
     background-image:

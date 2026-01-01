@@ -50,6 +50,10 @@ export const HoverEffect = ({
               href={item.link}
               className="relative z-20 block h-full focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
               aria-label={item.title}
+              data-track="cta_click"
+              data-location="industries_cards"
+              data-action="select_industry"
+              data-label={item.title}
             >
               <Card isHovered={hoveredIndex === idx}>
                 <CardTitle>{item.title}</CardTitle>

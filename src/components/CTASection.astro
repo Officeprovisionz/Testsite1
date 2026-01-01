@@ -96,7 +96,14 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             </p>
 
             <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a href={href('contact/')} class="btn-accent w-full sm:w-auto">
+              <a
+                href={href('contact/')}
+                class="btn-accent w-full sm:w-auto"
+                data-track="cta_click"
+                data-location="cta_section_centered"
+                data-action="quote"
+                data-label="cta_centered_quote"
+              >
                 Get a Free Quote
               </a>
               <a
@@ -107,6 +114,10 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
                     ? 'text-white/85 hover:text-white'
                     : 'hover:text-brand text-muted',
                 ]}
+                data-track="cta_click"
+                data-location="cta_section_centered"
+                data-action="call"
+                data-label="cta_centered_call"
               >
                 Or call us directly: {siteConfig.contact.phoneDisplay}
               </a>
@@ -177,6 +188,10 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
                 <a
                   class="btn-secondary w-full sm:w-auto md:justify-self-end"
                   href={href('checklist/')}
+                  data-track="cta_click"
+                  data-location="cta_section_split"
+                  data-action="checklist"
+                  data-label="cta_split_checklist"
                 >
                   Preview checklist
                 </a>
@@ -184,7 +199,14 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 
               {showEmail ? (
                 <div class="text-subtle mt-1 text-xs">
-                  <a class="link link-muted" href={mailtoHref}>
+                  <a
+                    class="link link-muted"
+                    href={mailtoHref}
+                    data-track="cta_click"
+                    data-location="cta_section_split"
+                    data-action="email"
+                    data-label="cta_split_email"
+                  >
                     Email
                   </a>
                 </div>

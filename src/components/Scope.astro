@@ -30,10 +30,26 @@ const featuredIndex = levels.length >= 3 ? 1 : 0;
 <section id={id} class="section section-muted section-creative scroll-mt-20 pb-0">
   <div class="container-page lg:max-w-6xl">
     <SectionHeader heading={heading} description={description}>
-      <a slot="actions" class="btn-secondary w-full sm:w-auto" href={href('checklist/')}>
+      <a
+        slot="actions"
+        class="btn-secondary w-full sm:w-auto"
+        href={href('checklist/')}
+        data-track="cta_click"
+        data-location="scope_section"
+        data-action="preview_checklist"
+        data-label="Preview the checklist"
+      >
         Preview the checklist
       </a>
-      <a slot="actions" class="btn-primary w-full sm:w-auto" href={cta}>
+      <a
+        slot="actions"
+        class="btn-primary w-full sm:w-auto"
+        href={cta}
+        data-track="cta_click"
+        data-location="scope_section"
+        data-action="request_quote"
+        data-label={ctaLabel}
+      >
         {ctaLabel}
       </a>
     </SectionHeader>

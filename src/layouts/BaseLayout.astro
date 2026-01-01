@@ -64,6 +64,71 @@ const jsonLd = (() => {
   // Prevent accidental "</script>" injection via safe escaping.
   return JSON.stringify(data).replace(/</g, '\\u003c');
 })();
+
+const breadcrumbJsonLd = (() => {
+  const site = Astro.site;
+  const pathname = Astro.url.pathname;
+
+  const basePath = import.meta.env.BASE_URL;
+  const relative = pathname.startsWith(basePath)
+    ? pathname.slice(basePath.length)
+    : pathname.replace(/^\/+/, '');
+
+  const segments = relative.split('/').filter(Boolean);
+
+  const labelMap: Record<string, string> = {
+    about: 'About',
+    services: 'Services',
+    industries: 'Industries',
+    resources: 'Resources',
+    pricing: 'Scope & Pricing',
+    checklist: 'Checklist',
+    results: 'Results',
+    contact: 'Contact',
+    thanks: 'Thanks',
+  };
+
+  const defaultLabel = (seg: string) => {
+    try {
+      const decoded = decodeURIComponent(seg);
+      return decoded
+        .replace(/[-_]+/g, ' ')
+        .replace(/\b\w/g, (m) => m.toUpperCase())
+        .slice(0, 80);
+    } catch {
+      return seg.slice(0, 80);
+    }
+  };
+
+  const crumbs = [
+    { name: 'Home', path: '' },
+    ...segments.map((seg, idx) => ({
+      name: labelMap[seg] ?? defaultLabel(seg),
+      path: `${segments.slice(0, idx + 1).join('/')}/`,
+    })),
+  ];
+
+  const itemListElement = crumbs.map((c, idx) => {
+    const rel = `${basePath}${c.path}`;
+    const item = site ? new URL(rel, site).toString() : rel;
+
+    return {
+      '@type': 'ListItem',
+      position: idx + 1,
+      name: c.name,
+      item,
+    };
+  });
+
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement,
+  };
+
+  // Prevent accidental "</script>" injection via safe escaping.
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+})();
 ---
 
 <!doctype html>
@@ -121,6 +186,87 @@ const jsonLd = (() => {
             // ignore
           }
         };
+      })();
+    </script>
+
+    <script is:inline>
+      (() => {
+        // Lightweight click tracking for core CTAs.
+        // Opt-in via `data-track` on links/buttons.
+        if (typeof window === 'undefined') return;
+
+        const root = document.documentElement;
+        if (root.dataset.trackInit === 'true') return;
+        root.dataset.trackInit = 'true';
+
+        /** @param {Element} el */
+        const safeText = (el) => {
+          try {
+            const ds = /** @type {any} */ (el).dataset;
+            return String(ds?.label ?? el.textContent ?? '')
+              .trim()
+              .slice(0, 120);
+          } catch {
+            return '';
+          }
+        };
+
+        /** @param {Element} el */
+        const safeHref = (el) => {
+          try {
+            const ds = /** @type {any} */ (el).dataset;
+            const explicit = ds?.href;
+            if (explicit) return explicit;
+
+            if (el instanceof HTMLAnchorElement) {
+              // Prefer attribute value for tel/mailto and relative links.
+              return el.getAttribute('href') || el.href || '';
+            }
+
+            const a = el.querySelector('a[href]');
+            if (a instanceof HTMLAnchorElement) {
+              return a.getAttribute('href') || a.href || '';
+            }
+            return '';
+          } catch {
+            return '';
+          }
+        };
+
+        document.addEventListener(
+          'click',
+          (e) => {
+            const target = e.target instanceof Element ? e.target : null;
+            if (!target) return;
+
+            const el = target.closest('[data-track]');
+            if (!el) return;
+
+            const ds = /** @type {any} */ (el).dataset;
+
+            const event = String(ds?.track ?? 'cta_click').trim() || 'cta_click';
+            const props = {
+              location: ds?.location || undefined,
+              action: ds?.action || undefined,
+              label: safeText(el) || undefined,
+              href: safeHref(el) || undefined,
+              page: (() => {
+                try {
+                  return window.location.pathname;
+                } catch {
+                  return undefined;
+                }
+              })(),
+            };
+
+            try {
+              window.damraTrack?.(event, props);
+            } catch {
+              // ignore
+            }
+          },
+          { capture: true }
+        );
       })();
     </script>
 
@@ -229,6 +375,8 @@ const jsonLd = (() => {
     <meta name="ICBM" content={`${siteConfig.seo.geo.latitude}, ${siteConfig.seo.geo.longitude}`} />
 
     <script type="application/ld+json" is:inline set:html={jsonLd} />
+
+    <script type="application/ld+json" is:inline set:html={breadcrumbJsonLd} />
 
     <script>
       const root = document.documentElement;

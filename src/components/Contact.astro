@@ -198,6 +198,14 @@ const serviceOptions = [
         form.dataset.contactInit = 'true';
         const endpoint = form.dataset.formEndpoint || '';
 
+        // Lightweight spam mitigation (no CAPTCHA, no UI changes):
+        // - record when the form became interactive
+        // - enforce a minimal time-to-submit
+        // - basic session-based rate limiting
+        if (!form.dataset.contactStartedAt) {
+          form.dataset.contactStartedAt = String(Date.now());
+        }
+
         const status = form.querySelector<HTMLElement>('[data-contact-status]');
         const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
         const servicesBox = form.querySelector<HTMLElement>('[data-services-box]');
@@ -470,6 +478,37 @@ const serviceOptions = [
 
           const fd = new FormData(form);
           const source = String(fd.get('source') ?? '').trim();
+
+          const startedAt = Number(form.dataset.contactStartedAt || '0') || 0;
+          const timeToSubmitMs = startedAt ? Math.max(0, Date.now() - startedAt) : undefined;
+
+          const enforceRateLimit = () => {
+            try {
+              if (!window.sessionStorage) return { blocked: false } as const;
+              const key = 'damra_lead_submit_ts';
+              const now = Date.now();
+              const windowMs = 10 * 60 * 1000; // 10 minutes
+              const maxInWindow = 3;
+
+              const raw = window.sessionStorage.getItem(key);
+              const parsed = raw ? (JSON.parse(raw) as unknown) : [];
+              const arr = Array.isArray(parsed)
+                ? parsed.map((v) => Number(v)).filter((n) => Number.isFinite(n))
+                : [];
+
+              const kept = arr.filter((t) => now - t < windowMs);
+              if (kept.length >= maxInWindow) {
+                window.sessionStorage.setItem(key, JSON.stringify(kept));
+                return { blocked: true, reason: 'rate_limit' } as const;
+              }
+
+              kept.push(now);
+              window.sessionStorage.setItem(key, JSON.stringify(kept));
+              return { blocked: false } as const;
+            } catch {
+              return { blocked: false } as const;
+            }
+          };
           const companyName = String(fd.get('companyName') ?? '').trim();
           const name = String(fd.get('name') ?? '').trim();
           const email = String(fd.get('email') ?? '').trim();
@@ -501,11 +540,31 @@ const serviceOptions = [
             utmSource: utmSource || undefined,
             utmMedium: utmMedium || undefined,
             utmCampaign: utmCampaign || undefined,
+            timeToSubmitMs,
           });
 
           // Simple bot check: if honeypot is filled, do nothing.
           if (honeypot) {
             setStatus('Thanks!', 'success');
+            return;
+          }
+
+          // Time-to-submit check: blocks ultra-fast submissions (typical of bots).
+          // Keep threshold low to avoid impacting real users.
+          if (typeof timeToSubmitMs === 'number' && timeToSubmitMs < 900) {
+            setStatus('Please take a moment to review the form, then submit again.', 'error');
+            track('lead_submit_blocked', { source, reason: 'fast_submit', timeToSubmitMs });
+            return;
+          }
+
+          // Session rate limiting: prevents repeated rapid submissions.
+          const rate = enforceRateLimit();
+          if (rate.blocked) {
+            setStatus(
+              'Too many requests in a short time. Please wait a few minutes, or call/text for the fastest response.',
+              'error'
+            );
+            track('lead_submit_blocked', { source, reason: 'rate_limit' });
             return;
           }
 

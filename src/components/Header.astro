@@ -34,6 +34,10 @@ const navItems = [
 >
   <div class="header-inner container-page flex items-center justify-between">
     <a
+      data-track="cta_click"
+      data-location="header"
+      data-action="call"
+      data-label="header_call"
       href={href('')}
       class="flex items-center gap-3 text-xl font-bold tracking-tight"
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
@@ -41,6 +45,10 @@ const navItems = [
       <img
         src={logoOrbSrc}
         alt=""
+        data-track="cta_click"
+        data-location="header"
+        data-action="call"
+        data-label="header_call_icon"
         width="28"
         height="28"
         loading="eager"
@@ -116,7 +124,14 @@ const navItems = [
         </svg>
       </a>
 
-      <a class="btn-primary px-3 sm:px-6" href={href('contact/')}>
+      <a
+        class="btn-primary px-3 sm:px-6"
+        href={href('contact/')}
+        data-track="cta_click"
+        data-location="header"
+        data-action="quote"
+        data-label="header_quote"
+      >
         <span class="sm:hidden">Quote</span>
         <span class="hidden sm:inline">Request a quote</span>
       </a>

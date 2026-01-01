@@ -81,6 +81,11 @@ export function MobileCTABar() {
   const handleCTAClick = (action: 'call' | 'quote') => {
     if (typeof window !== 'undefined' && window.damraTrack) {
       window.damraTrack('mobile_cta_click', { action });
+      window.damraTrack('cta_click', {
+        location: 'mobile_cta_bar',
+        action,
+        href: action === 'call' ? telHref : contactHref,
+      });
     }
   };
 

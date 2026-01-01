@@ -51,7 +51,15 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 <section id={id} class="section section-creative scroll-mt-20">
   <div class="container-page">
     <SectionHeader heading={heading} description={description}>
-      <a slot="actions" class="btn-secondary hidden sm:inline-flex" href={cta}>
+      <a
+        slot="actions"
+        class="btn-secondary hidden sm:inline-flex"
+        href={cta}
+        data-track="cta_click"
+        data-location="services_section"
+        data-action="request_quote"
+        data-label={ctaLabel}
+      >
         {ctaLabel}
       </a>
     </SectionHeader>
@@ -90,7 +98,14 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
             )}
 
             <div class="mt-5 flex flex-col gap-3 sm:flex-row">
-              <a class="btn-secondary w-full sm:w-auto" href={cta}>
+              <a
+                class="btn-secondary w-full sm:w-auto"
+                href={cta}
+                data-track="cta_click"
+                data-location="services_section"
+                data-action="request_quote"
+                data-label={ctaLabel}
+              >
                 {ctaLabel}
               </a>
               <p class="text-xs text-muted sm:self-center">

@@ -63,6 +63,18 @@ export function FloatingActionButton() {
   const handleActionClick = (action: string) => {
     if (typeof window !== 'undefined' && window.damraTrack) {
       window.damraTrack('fab_action', { action });
+      window.damraTrack('cta_click', {
+        location: 'fab',
+        action,
+        href:
+          action === 'call'
+            ? telHref
+            : action === 'email'
+              ? mailtoHref
+              : action === 'quote'
+                ? contactHref
+                : undefined,
+      });
     }
     setIsExpanded(false);
   };

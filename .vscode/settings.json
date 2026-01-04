@@ -13,5 +13,27 @@
   },
   "files.associations": {
     "*.astro": "astro"
+  },
+
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.astro": true,
+    "**/playwright-report": true,
+    "**/test-results": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.astro": true,
+    "**/playwright-report": true,
+    "**/test-results": true
+  },
+  "files.watcherExclude": {
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/.astro/**": true,
+    "**/playwright-report/**": true,
+    "**/test-results/**": true
   }
 }

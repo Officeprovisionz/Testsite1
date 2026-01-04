@@ -430,6 +430,50 @@
     background: rgb(2 6 23 / 0.65);
   }
 
+  /*
+    Cross-browser <dialog> normalization
+    Safari/iOS differs from Chromium/Firefox in default dialog centering/margins.
+    We keep the design the same by only normalizing the UA defaults.
+  */
+  dialog {
+    border: 0;
+    padding: 0;
+    background: transparent;
+    color: inherit;
+  }
+
+  /* Ensure open dialogs render even when `showModal()` isn't available and we set [open]. */
+  dialog[open] {
+    display: block;
+  }
+
+  /* Lightbox dialog: force consistent centering across browsers. */
+  dialog[data-lightbox] {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0;
+  }
+
+  /*
+    iOS Safari polish
+    Keep the appearance consistent by reducing known iOS rendering/jank differences.
+  */
+  @supports (-webkit-touch-callout: none) {
+    /* iOS Safari doesn't reliably support background-attachment: fixed (jank / visual differences). */
+    body::before {
+      background-attachment: scroll;
+    }
+
+    /* Sticky + backdrop-filter can shimmer on iOS without compositing hints. */
+    header[data-site-header] {
+      -webkit-backface-visibility: hidden;
+      backface-visibility: hidden;
+      will-change: backdrop-filter;
+    }
+  }
+
   /* Scroll Progress Indicator — CSS-only, fixed at top */
   .scroll-progress {
     position: fixed;
@@ -1486,6 +1530,7 @@
   .btn-secondary,
   .btn-accent,
   .btn-invert,
+  dialog[data-lightbox],
   [data-lightbox-dialog] {
     display: none !important;
   }

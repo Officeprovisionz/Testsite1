@@ -4,6 +4,12 @@ import type { GalleryItem } from '@/data/gallery';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import galleryMetadataRaw from '@/data/gallery-metadata.json';
+
+const galleryMetadata = galleryMetadataRaw as Record<
+  string,
+  { dominant: string; lqip: string } | undefined
+>;
 
 type Props = {
   id?: string;
@@ -71,6 +77,9 @@ const toPublicUrl = (src: string) => {
 };
 
 const getImgAttrs = (src: string) => {
+  const fileName = src.split('/').pop() || '';
+  const meta = galleryMetadata[fileName];
+
   // Allow absolute URLs
   if (/^https?:\/\//i.test(src))
     return {
@@ -79,21 +88,27 @@ const getImgAttrs = (src: string) => {
       avifSrcSet: undefined,
       webpSrcSet: undefined,
       sizes: undefined,
+      lqip: undefined,
+      dominant: undefined,
     };
 
   const cleaned = src.replace(/^\/+/, '');
-  if (/\.jpe?g$/i.test(cleaned)) {
-    return getPublicResponsiveImage(cleaned, base, {
-      sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
-    });
-  }
+  const baseAttrs = /\.jpe?g$/i.test(cleaned)
+    ? getPublicResponsiveImage(cleaned, base, {
+        sizes: '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw',
+      })
+    : {
+        src: `${base}${cleaned}`,
+        srcSet: undefined,
+        avifSrcSet: undefined,
+        webpSrcSet: undefined,
+        sizes: undefined,
+      };
 
   return {
-    src: `${base}${cleaned}`,
-    srcSet: undefined,
-    avifSrcSet: undefined,
-    webpSrcSet: undefined,
-    sizes: undefined,
+    ...baseAttrs,
+    lqip: meta?.lqip,
+    dominant: meta?.dominant,
   };
 };
 ---
@@ -155,7 +170,16 @@ const getImgAttrs = (src: string) => {
               data-gallery-item
               data-gallery-index={String(idx)}
             >
-              <div class="relative aspect-[4/3] overflow-hidden">
+              <div
+                class="relative aspect-[4/3] overflow-hidden"
+                style={
+                  attrs.lqip
+                    ? `background-image: url(${attrs.lqip}); background-size: cover; background-position: center;`
+                    : attrs.dominant
+                      ? `background-color: ${attrs.dominant};`
+                      : undefined
+                }
+              >
                 <picture>
                   {attrs.avifSrcSet && (
                     <source type="image/avif" srcset={attrs.avifSrcSet} sizes={attrs.sizes} />

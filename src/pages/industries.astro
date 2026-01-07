@@ -5,6 +5,7 @@ import Footer from '@/components/Footer.astro';
 import { PageHeroPro } from '@/components/PageHeroPro';
 import { IndustriesPro } from '@/components/IndustriesPro';
 import HowItWorks from '@/components/HowItWorks.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
@@ -14,7 +15,7 @@ import type { GalleryItem } from '@/data/gallery';
 const title = `Industries | ${siteConfig.brand.name}`;
 const description =
   'Commercial cleaning for offices, property management, and customer spaces—scoped clearly with checklist-based delivery.';
-const href = makeHref(import.meta.env.BASE_URL);
+const hrefNav = makeHref(import.meta.env.BASE_URL);
 
 // Industries hero image
 // (Pinned so the page header photo is stable and not affected by gallery shuffle / item ordering.)
@@ -59,6 +60,27 @@ const heroImageMobile = heroSecondary
 
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 
+  <RelatedLinks
+    heading="Cleaning services"
+    items={[
+      {
+        title: 'Office Cleaning',
+        description: 'Routine cleaning to keep your workspace client-ready and team-friendly.',
+        href: hrefNav('services/#office'),
+      },
+      {
+        title: 'Janitorial Service',
+        description: 'Scheduled service for consistent upkeep—ideal for busy offices.',
+        href: hrefNav('services/#janitorial'),
+      },
+      {
+        title: 'Supplies & Restocking',
+        description: 'We manage inventory and restocking so you never run out of essentials.',
+        href: hrefNav('services/#supplies'),
+      },
+    ]}
+  />
+
   <section
     id="quote"
     class="section section-muted section-creative scroll-mt-20"
@@ -81,7 +103,7 @@ const heroImageMobile = heroSecondary
             </p>
           </div>
           <div class="flex flex-col gap-3 md:justify-self-end">
-            <a class="btn-secondary w-full sm:w-auto" href={href('checklist/')}>
+            <a class="btn-secondary w-full sm:w-auto" href={hrefNav('checklist/')}>
               Preview checklist
             </a>
           </div>

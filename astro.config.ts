@@ -1,7 +1,8 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
+import partytown from '@astrojs/partytown';
 import { fileURLToPath } from 'node:url';
 
 function normalizeBase(input: string | undefined): string {
@@ -33,6 +34,12 @@ const site = process.env.SITE_URL;
 const integrations = [
   tailwind({ applyBaseStyles: false }),
   react(),
+  partytown({
+    // Adds dataLayer.push as a forwarded-event.
+    config: {
+      forward: ['plausible', 'damraTrack', 'dataLayer.push'],
+    },
+  }),
   // Only generate sitemap when a canonical site URL is configured.
   // This avoids build warnings and prevents producing a sitemap with an incorrect hostname.
   ...(site ? [sitemap({})] : []),
@@ -91,7 +98,7 @@ export default defineConfig({
         "font-src 'self' data:; " +
         "img-src 'self' data: https:; " +
         "media-src 'self' https:; " +
-        "connect-src 'self' https://formspree.io https://plausible.io; " +
+        "connect-src 'self' https://formspree.io https://plausible.io https://*.ingest.sentry.io; " +
         'upgrade-insecure-requests',
     },
   },
@@ -100,6 +107,26 @@ export default defineConfig({
   prefetch: {
     prefetchAll: false,
     defaultStrategy: 'hover',
+  },
+  // Type-safe environment variables
+  env: {
+    schema: {
+      PUBLIC_PLAUSIBLE_DOMAIN: envField.string({
+        context: 'client',
+        access: 'public',
+        default: 'officeprovisionz.com',
+      }),
+      PUBLIC_PLAUSIBLE_SRC: envField.string({
+        context: 'client',
+        access: 'public',
+        default: 'https://plausible.io/js/script.js',
+      }),
+      PUBLIC_SENTRY_DSN: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
+    },
   },
   // Compress HTML output
   compressHTML: true,

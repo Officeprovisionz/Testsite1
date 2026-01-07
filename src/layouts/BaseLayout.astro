@@ -13,8 +13,9 @@ import playfair600Url from '@fontsource/playfair-display/files/playfair-display-
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
-import { MobileCTABar } from '@/components/MobileCTABar';
-import { FloatingActionButton } from '@/components/FloatingActionButton';
+import MobileCTABar from '@/components/MobileCTABar.astro';
+import FloatingActionButton from '@/components/FloatingActionButton.astro';
+import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
 type Props = {
   title?: string;
@@ -39,13 +40,9 @@ const manifestHref = `${base}site.webmanifest`;
 
 const assetNoise = `${base}noise.svg`;
 
-const plausibleDomain =
-  (import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined) ?? 'officeprovisionz.com';
-const plausibleSrc =
-  (import.meta.env.PUBLIC_PLAUSIBLE_SRC as string | undefined) ??
-  'https://plausible.io/js/script.js';
-
-const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN as string | undefined;
+const plausibleDomain = PUBLIC_PLAUSIBLE_DOMAIN;
+const plausibleSrc = PUBLIC_PLAUSIBLE_SRC;
+const sentryDsn = PUBLIC_SENTRY_DSN;
 
 const analyticsEnabled = siteConfig.analytics.enabled;
 
@@ -61,6 +58,7 @@ const jsonLd = (() => {
     name: siteConfig.brand.name,
     description: siteConfig.seo.description,
     url,
+    image: url ? `${url}og-image.png` : undefined,
     telephone: siteConfig.contact.phoneE164,
     email: siteConfig.contact.email,
     address: {
@@ -69,7 +67,23 @@ const jsonLd = (() => {
       addressRegion,
       addressCountry: 'US',
     },
-    areaServed: siteConfig.areasServed.items,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: 37.7749,
+      longitude: -122.4194,
+    },
+    openingHoursSpecification: siteConfig.hours.structured.map((h) => ({
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: h.day,
+      opens: h.opens,
+      closes: h.closes,
+    })),
+    sameAs: Object.values(siteConfig.social),
+    priceRange: '$$',
+    areaServed: siteConfig.areasServed.items.map((item) => ({
+      '@type': 'City',
+      name: item,
+    })),
   };
 
   // Prevent accidental "</script>" injection via safe escaping.
@@ -177,6 +191,7 @@ const breadcrumbJsonLd = (() => {
     {/* Resource hints for faster loading */}
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+    <link rel="preconnect" href="https://formspree.io" crossorigin />
 
     {analyticsEnabled ? <link rel="dns-prefetch" href="https://plausible.io" /> : null}
     {analyticsEnabled ? <link rel="preconnect" href="https://plausible.io" crossorigin /> : null}
@@ -662,13 +677,13 @@ const breadcrumbJsonLd = (() => {
     <slot name="footer" />
 
     <!-- Toast Notification System -->
-    <Toaster client:load />
+    <Toaster client:load transition:persist />
 
     <!-- Mobile CTA Bar (bottom-sticky on mobile) -->
-    <MobileCTABar client:load />
+    <MobileCTABar />
 
     <!-- Floating Action Button (mobile speed dial) -->
-    <FloatingActionButton client:load />
+    <FloatingActionButton />
 
     <script>
       import { initScrollTracking, captureUTMs } from '@/lib/tracking';

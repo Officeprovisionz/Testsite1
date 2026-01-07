@@ -7,6 +7,12 @@
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { getShuffledGalleryItems } from '@/data/gallery';
 import Eyebrow from './ui/Eyebrow.astro';
+import galleryMetadataRaw from '@/data/gallery-metadata.json';
+
+const galleryMetadata = galleryMetadataRaw as Record<
+  string,
+  { dominant: string; lqip: string } | undefined
+>;
 
 type ExpertiseItem = {
   src: string;
@@ -73,6 +79,9 @@ const resolvedItems = items.map((item, idx) => {
 });
 
 const getImgAttrs = (src: string) => {
+  const fileName = src.split('/').pop() || '';
+  const meta = galleryMetadata[fileName];
+
   if (/^https?:\/\//i.test(src))
     return {
       src,
@@ -80,19 +89,27 @@ const getImgAttrs = (src: string) => {
       avifSrcSet: undefined,
       webpSrcSet: undefined,
       sizes: undefined,
+      lqip: undefined,
+      dominant: undefined,
     };
+
   const cleaned = src.replace(/^\/+/, '');
-  if (/\.jpe?g$/i.test(cleaned)) {
-    return getPublicResponsiveImage(cleaned, base, {
-      sizes: '(min-width: 1024px) 50vw, 100vw',
-    });
-  }
+  const baseAttrs = /\.jpe?g$/i.test(cleaned)
+    ? getPublicResponsiveImage(cleaned, base, {
+        sizes: '(min-width: 1024px) 50vw, 100vw',
+      })
+    : {
+        src: `${base}${cleaned}`,
+        srcSet: undefined,
+        avifSrcSet: undefined,
+        webpSrcSet: undefined,
+        sizes: undefined,
+      };
+
   return {
-    src: `${base}${cleaned}`,
-    srcSet: undefined,
-    avifSrcSet: undefined,
-    webpSrcSet: undefined,
-    sizes: undefined,
+    ...baseAttrs,
+    lqip: meta?.lqip,
+    dominant: meta?.dominant,
   };
 };
 ---
@@ -116,7 +133,16 @@ const getImgAttrs = (src: string) => {
               class="expertise-card ring-border-app group relative overflow-hidden rounded-2xl bg-surface shadow-lg ring-1 transition-all duration-500 hover:shadow-2xl hover:ring-[rgb(var(--color-brand)/0.4)]"
               style={`animation-delay: ${index * 120}ms`}
             >
-              <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:aspect-[16/10]">
+              <div
+                class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:aspect-[16/10]"
+                style={
+                  attrs.lqip
+                    ? `background-image: url(${attrs.lqip}); background-size: cover; background-position: center;`
+                    : attrs.dominant
+                      ? `background-color: ${attrs.dominant};`
+                      : undefined
+                }
+              >
                 <picture>
                   {attrs.avifSrcSet && (
                     <source type="image/avif" srcset={attrs.avifSrcSet} sizes={attrs.sizes} />

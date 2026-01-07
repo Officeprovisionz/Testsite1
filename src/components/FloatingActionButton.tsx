@@ -3,6 +3,9 @@ import { MessageCircle, X, Phone, Mail, FileText } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 import { makeMailtoHref, makeTelHref } from '@/lib/links';
 
+const SHOW_THRESHOLD = 100;
+const HIDE_FOOTER_OFFSET = 200;
+
 /**
  * Floating Action Button (FAB)
  * Provides quick access to primary actions on mobile
@@ -22,8 +25,8 @@ export function FloatingActionButton() {
       const scrollY = window.scrollY;
       const docHeight = document.body.scrollHeight - window.innerHeight;
 
-      // Show when scrolled past 100px but not near bottom (where CTA bar shows)
-      const shouldShow = scrollY > 100 && scrollY < docHeight - 200;
+      // Show when scrolled past threshold but not near bottom (where CTA bar shows)
+      const shouldShow = scrollY > SHOW_THRESHOLD && scrollY < docHeight - HIDE_FOOTER_OFFSET;
 
       setIsVisible(shouldShow);
 

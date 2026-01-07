@@ -3,6 +3,9 @@ import { Phone, FileText } from 'lucide-react';
 import { siteConfig } from '@/data/siteConfig';
 import { makeTelHref } from '@/lib/links';
 
+const SHOW_THRESHOLD = 100;
+const HIDE_FOOTER_OFFSET = 200;
+
 /**
  * Bottom-sticky mobile CTA bar
  * Provides always-accessible conversion actions on mobile devices
@@ -36,17 +39,16 @@ export function MobileCTABar() {
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const scrollThreshold = 100; // Show after scrolling 100px
 
       // Hide when at very top of page
-      if (currentScrollY < scrollThreshold) {
+      if (currentScrollY < SHOW_THRESHOLD) {
         setIsVisible(false);
         setLastScrollY(currentScrollY);
         return;
       }
 
       // Hide when near bottom (footer area)
-      const bottomThreshold = document.body.scrollHeight - window.innerHeight - 200;
+      const bottomThreshold = document.body.scrollHeight - window.innerHeight - HIDE_FOOTER_OFFSET;
       if (currentScrollY > bottomThreshold) {
         setIsVisible(false);
         setLastScrollY(currentScrollY);

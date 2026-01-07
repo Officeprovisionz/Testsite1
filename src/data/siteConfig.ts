@@ -55,6 +55,18 @@ export const siteConfig = {
   },
   hours: {
     lines: ['Mon–Fri: 8am–6pm', 'Sat: 9am–2pm', 'Sun: Closed'],
+    structured: [
+      { day: 'Monday', opens: '08:00', closes: '18:00' },
+      { day: 'Tuesday', opens: '08:00', closes: '18:00' },
+      { day: 'Wednesday', opens: '08:00', closes: '18:00' },
+      { day: 'Thursday', opens: '08:00', closes: '18:00' },
+      { day: 'Friday', opens: '08:00', closes: '18:00' },
+      { day: 'Saturday', opens: '09:00', closes: '14:00' },
+    ],
+  },
+  social: {
+    facebook: 'https://facebook.com/officeprovisionz',
+    linkedin: 'https://linkedin.com/company/office-provisionz',
   },
 
   industries: [

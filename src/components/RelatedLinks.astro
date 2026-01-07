@@ -1,0 +1,42 @@
+---
+import { makeHref } from '@/lib/nav';
+import { ArrowRight } from 'lucide-react';
+
+type LinkItem = {
+  title: string;
+  description: string;
+  href: string;
+};
+
+type Props = {
+  heading: string;
+  items: LinkItem[];
+};
+
+const { heading, items } = Astro.props;
+const href = makeHref(import.meta.env.BASE_URL);
+---
+
+<section class="section border-app border-t">
+  <div class="container-page">
+    <h2 class="heading-2 mb-8">{heading}</h2>
+    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        items.map((item) => (
+          <a
+            href={item.href}
+            class="border-app hover:border-brand/40 hover:bg-brand/[0.02] group flex flex-col rounded-2xl border bg-surface p-6 shadow-sm transition-all hover:shadow-md"
+          >
+            <div class="flex items-center justify-between">
+              <h3 class="text-strong group-hover:text-brand font-serif text-xl font-semibold transition-colors">
+                {item.title}
+              </h3>
+              <ArrowRight className="text-muted h-5 w-5 transition-transform group-hover:translate-x-1 group-hover:text-brand" />
+            </div>
+            <p class="mt-3 text-sm leading-relaxed text-muted">{item.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

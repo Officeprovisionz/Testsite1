@@ -7,14 +7,18 @@ import { ServicesPro } from '@/components/ServicesPro';
 import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
+import RelatedLinks from '@/components/RelatedLinks.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getCollection } from 'astro:content';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
+import { makeHref } from '@/lib/nav';
 
 const title = `Services | ${siteConfig.brand.name}`;
 const description =
   'Office cleaning, janitorial services, supplies/restocking, and facilities support—built for busy teams in San Francisco.';
+
+const hrefNav = makeHref(import.meta.env.BASE_URL);
 
 const allServices = await getCollection('services');
 const specialtyServices = allServices
@@ -91,6 +95,27 @@ const heroImageMobile = heroSecondary
   />
 
   <AreasServed />
+
+  <RelatedLinks
+    heading="Industries we serve"
+    items={[
+      {
+        title: 'Offices & Suites',
+        description: 'Recurring cleaning for focused workspaces and client-facing areas.',
+        href: hrefNav('industries/#offices'),
+      },
+      {
+        title: 'Medical & Dental',
+        description: 'Detail-oriented cleaning for reception, restrooms, and breakrooms.',
+        href: hrefNav('industries/#medical'),
+      },
+      {
+        title: 'Property Management',
+        description: 'Common-area upkeep and turnover support for building managers.',
+        href: hrefNav('industries/#property'),
+      },
+    ]}
+  />
 
   <FAQ showWave={false} />
 

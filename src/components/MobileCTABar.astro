@@ -1,0 +1,100 @@
+---
+import { Phone, FileText } from 'lucide-react';
+import { siteConfig } from '@/data/siteConfig';
+import { makeTelHref } from '@/lib/links';
+import { makeHref } from '@/lib/nav';
+
+const base = import.meta.env.BASE_URL;
+const contactHref = makeHref(base)('contact/');
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+---
+
+<div
+  id="mobile-cta-bar"
+  class="fixed inset-x-0 bottom-0 z-40 translate-y-full transition-transform duration-300 md:hidden"
+>
+  <div
+    class="border-app flex items-center border-t bg-surface/90 shadow-[0_-4px_12px_rgba(0,0,0,0.05)] backdrop-blur-md"
+  >
+    <a
+      href={telHref}
+      id="cta-bar-call"
+      class="border-app text-strong flex h-16 flex-1 items-center justify-center gap-2 border-r px-4 font-semibold transition-colors active:bg-muted"
+    >
+      <Phone className="text-brand h-5 w-5" />
+      <span>Call Now</span>
+    </a>
+    <a
+      href={contactHref}
+      id="cta-bar-quote"
+      class="bg-brand active:bg-brand-dark flex h-16 flex-[1.2] items-center justify-center gap-2 px-4 font-bold text-white transition-colors"
+    >
+      <FileText className="h-5 w-5" />
+      <span>Get a Quote</span>
+    </a>
+  </div>
+</div>
+
+<script define:vars={{ base }}>
+  const SHOW_THRESHOLD = 100;
+  const HIDE_FOOTER_OFFSET = 200;
+
+  function initMobileCTABar() {
+    const bar = document.getElementById('mobile-cta-bar');
+    if (!bar) return;
+
+    // Hide on specific pages
+    const hiddenPaths = ['/contact/', '/thanks/'];
+    const pathname = window.location.pathname;
+    const normalizedPath = (() => {
+      const raw = pathname || '/';
+      const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
+      const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
+      return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+    })();
+
+    const shouldHidePage = hiddenPaths.some((p) => normalizedPath.startsWith(p));
+    if (shouldHidePage) {
+      bar.classList.add('translate-y-full');
+      return;
+    }
+
+    let lastScrollY = window.scrollY;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      // Hide when at very top of page
+      if (currentScrollY < SHOW_THRESHOLD) {
+        bar.classList.add('translate-y-full');
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      // Hide when near bottom (footer area)
+      const bottomThreshold = document.body.scrollHeight - window.innerHeight - HIDE_FOOTER_OFFSET;
+      if (currentScrollY > bottomThreshold) {
+        bar.classList.add('translate-y-full');
+        lastScrollY = currentScrollY;
+        return;
+      }
+
+      // Show when scrolling up, hide when scrolling down
+      if (currentScrollY < lastScrollY) {
+        // Scrolling UP
+        bar.classList.remove('translate-y-full');
+      } else {
+        // Scrolling DOWN
+        bar.classList.add('translate-y-full');
+      }
+
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+
+  document.addEventListener('astro:page-load', initMobileCTABar);
+  initMobileCTABar();
+</script>

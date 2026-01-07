@@ -1,0 +1,53 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import { Sparkles, Building, Coffee, Wrench } from 'lucide-react';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+
+const icons = {
+  'Office Cleaning': Sparkles,
+  'Professional Janitorial': Building,
+  'Coffee, Snacks & Restocking': Coffee,
+  'Facilities Support': Wrench,
+};
+---
+
+<section class="section" id="services">
+  <div class="container-page">
+    <div class="mb-12 text-center">
+      <Eyebrow class="mx-auto">Our Expertise</Eyebrow>
+      <h2 class="heading-2 mt-4">Comprehensive Facility Solutions</h2>
+      <p class="mx-auto mt-4 max-w-2xl text-lg text-muted">
+        Tailored cleaning and support services designed to meet the highest standards of
+        professionalism and hygiene.
+      </p>
+    </div>
+
+    {/* Bento Grid Layout - Hand-rolled to remove React dependency */}
+    <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:auto-rows-[16.5rem] md:grid-cols-2">
+      {
+        siteConfig.serviceFamilies.map((family) => {
+          const Icon = icons[family.title as keyof typeof icons] || Sparkles;
+
+          return (
+            <div class="group/bento card card-hover relative row-span-1 flex flex-col justify-between overflow-hidden p-5 sm:p-6">
+              <div class="flex h-full flex-col">
+                <div class="border-brand/20 bg-brand/10 mb-4 flex h-10 w-10 items-center justify-center rounded-lg border">
+                  <Icon className="text-brand h-6 w-6" />
+                </div>
+
+                <div class="mt-auto transition-all duration-300 group-hover/bento:translate-x-1">
+                  <h3 class="text-strong mb-2 text-lg font-semibold leading-tight tracking-tight">
+                    {family.title}
+                  </h3>
+                  <div class="line-clamp-3 text-[0.98rem] leading-relaxed text-muted">
+                    {family.description}
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

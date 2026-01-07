@@ -8,7 +8,7 @@ import galleryMetadataRaw from '@/data/gallery-metadata.json';
 
 const galleryMetadata = galleryMetadataRaw as Record<
   string,
-  { dominant: string; lqip: string } | undefined
+  { dominant: string; lqip: string; width?: number; height?: number } | undefined
 >;
 
 type Props = {
@@ -90,6 +90,8 @@ const getImgAttrs = (src: string) => {
       sizes: undefined,
       lqip: undefined,
       dominant: undefined,
+      width: meta?.width,
+      height: meta?.height,
     };
 
   const cleaned = src.replace(/^\/+/, '');
@@ -109,6 +111,8 @@ const getImgAttrs = (src: string) => {
     ...baseAttrs,
     lqip: meta?.lqip,
     dominant: meta?.dominant,
+    width: meta?.width,
+    height: meta?.height,
   };
 };
 ---
@@ -190,6 +194,8 @@ const getImgAttrs = (src: string) => {
                   <img
                     src={attrs.src}
                     srcset={attrs.srcSet}
+                    width={attrs.width}
+                    height={attrs.height}
                     alt={it.alt}
                     loading="lazy"
                     decoding="async"

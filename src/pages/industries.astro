@@ -2,8 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
-import { IndustriesPro } from '@/components/IndustriesPro';
+import PageHero from '@/components/PageHero.astro';
+import IndustriesGrid from '@/components/IndustriesGrid.astro';
 import HowItWorks from '@/components/HowItWorks.astro';
 import RelatedLinks from '@/components/RelatedLinks.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
@@ -42,8 +42,7 @@ const heroImageMobile = heroSecondary
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="Industries we serve"
     description="Built for real workplaces. Clear scope, consistent checklists, and fast communication—so cleaning stays off your plate."
     imageSrc={heroPrimary?.src}
@@ -56,7 +55,7 @@ const heroImageMobile = heroSecondary
     imagePosition="50% 40%"
   />
 
-  <IndustriesPro client:visible />
+  <IndustriesGrid />
 
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 

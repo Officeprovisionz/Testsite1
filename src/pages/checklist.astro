@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
+import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -42,8 +42,7 @@ const addOns = [
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="Office cleaning checklist"
     description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
     imageSrc={heroPrimary?.src}

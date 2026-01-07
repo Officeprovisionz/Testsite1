@@ -1,0 +1,41 @@
+---
+const plans = [
+  {
+    title: 'What affects the scope',
+    features: [
+      'Square footage + layout complexity',
+      'Frequency (one-time vs recurring)',
+      'Access window (after-hours/weekends)',
+      'Add-ons (restocking, floor care, windows)',
+    ],
+  },
+  {
+    title: 'What you get',
+    features: [
+      'Checklist-based scope (no guesswork)',
+      'Simple add-ons you can request anytime',
+      'Follow-up support if anything needs attention',
+    ],
+  },
+];
+---
+
+<div class="mx-auto grid max-w-5xl gap-8 md:grid-cols-2 lg:gap-10">
+  {
+    plans.map((plan) => (
+      <div class="card card-hover relative overflow-hidden p-6 sm:p-8 lg:p-10">
+        <h3 class="heading-3 lg:text-2xl">{plan.title}</h3>
+        <ul class="mt-5 space-y-3 sm:mt-6 sm:space-y-4 lg:mt-8 lg:space-y-5">
+          {plan.features.map((feature) => (
+            <li class="flex items-start gap-3">
+              <span class="check-icon check-icon--sm text-brand font-bold" aria-hidden="true">
+                ✓
+              </span>
+              <span class="text-muted lg:text-base">{feature}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>

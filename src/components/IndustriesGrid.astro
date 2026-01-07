@@ -1,0 +1,50 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import { makeContactHref } from '@/lib/routes';
+import Eyebrow from '@/components/ui/Eyebrow.astro';
+import { ArrowRight } from 'lucide-react';
+
+const contactHref = makeContactHref(import.meta.env.BASE_URL);
+
+const items = siteConfig.industries.map((industry) => ({
+  title: industry.title,
+  description: industry.description,
+  link: contactHref({ industry: industry.title }),
+}));
+---
+
+<section class="section" id="industries">
+  <div class="container-page">
+    <div class="mb-10 text-center lg:mb-14">
+      <Eyebrow>Industries</Eyebrow>
+      <h2 class="heading-2 lg:text-4xl">Who we serve</h2>
+      <p class="lede mx-auto mt-4 max-w-2xl lg:mt-5 lg:text-lg">
+        Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.
+      </p>
+    </div>
+
+    <div class="mx-auto max-w-5xl">
+      <div class="grid grid-cols-1 gap-5 py-8 md:grid-cols-2 lg:gap-6">
+        {
+          items.map((item) => (
+            <a
+              href={item.link}
+              class="hover:border-brand/10 hover:bg-brand/5 group relative block h-full w-full rounded-2xl border border-transparent p-2 transition-all duration-300 sm:p-4"
+            >
+              <div class="relative z-10 flex h-full flex-col p-4">
+                <h3 class="text-strong text-xl font-bold tracking-wide">{item.title}</h3>
+                <p class="mt-4 flex-grow text-sm leading-relaxed tracking-wide text-muted">
+                  {item.description}
+                </p>
+
+                <div class="text-brand mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                  Get a quote <ArrowRight className="ml-1 w-4 h-4" />
+                </div>
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

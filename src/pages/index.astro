@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
-import { HeroPro } from '@/components/HeroPro';
+import Hero from '@/components/Hero.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
@@ -62,8 +62,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
       },
     ])}
   />
-  <HeroPro
-    client:load
+  <Hero
     imageSrc={heroImage.src}
     imageSrcSet={heroImage.srcSet}
     imageSizes={heroImage.sizes}

@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
+import PageHero from '@/components/PageHero.astro';
 import ContactSection from '@/components/Contact.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
@@ -38,8 +38,7 @@ const heroImageMobile = heroSecondary
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="Contact"
     description="Request a quote or ask a question. We’ll confirm scope + access details and send a clear written quote before service."
     imageSrc={heroPrimary?.src}

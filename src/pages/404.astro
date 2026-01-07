@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
+import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -41,8 +41,7 @@ const quickLinks = [
 <BaseLayout title={title} description={description} noIndex>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="404"
     description={description}
     imageSrc={heroPrimary?.src}
@@ -57,7 +56,7 @@ const quickLinks = [
     <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
       <a class="btn-secondary w-full sm:w-auto" href={href('')}>Go to homepage</a>
     </div>
-  </PageHeroPro>
+  </PageHero>
 
   <section class="section">
     <div class="container-narrow">

@@ -2,8 +2,8 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
-import { ProcessStepsPro } from '@/components/ProcessStepsPro';
+import PageHero from '@/components/PageHero.astro';
+import ProcessStepsGrid from '@/components/ProcessStepsGrid.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import Gallery from '@/components/Gallery.astro';
@@ -37,8 +37,7 @@ const heroImageMobile = heroSecondary
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="A cleaner workspace, a simpler workday"
     description="Built for reliability: clear communication, consistent checklists, and a team that respects your space and schedule."
     imageSrc={heroPrimary?.src}
@@ -62,7 +61,7 @@ const heroImageMobile = heroSecondary
         />
       </div>
 
-      <ProcessStepsPro client:visible />
+      <ProcessStepsGrid />
     </div>
   </section>
 

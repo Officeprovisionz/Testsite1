@@ -27,8 +27,10 @@ async function generateMetadata() {
 
     try {
       const image = sharp(filePath);
+      const meta = await image.metadata();
       const stats = await image.stats();
       const { dominant } = stats;
+      const { width, height } = meta;
 
       // Generate a tiny base64 blur placeholder
       const blurBuffer = await image.resize(20, 20, { fit: 'inside' }).blur(1).toBuffer();
@@ -38,9 +40,11 @@ async function generateMetadata() {
       metadata[entry.name] = {
         dominant: `rgb(${dominant.r}, ${dominant.g}, ${dominant.b})`,
         lqip,
+        width,
+        height,
       };
 
-      console.log(`✓ ${entry.name}`);
+      console.log(`✓ ${entry.name} (${width}x${height})`);
     } catch (err) {
       console.error(`✗ ${entry.name}: ${err.message}`);
     }

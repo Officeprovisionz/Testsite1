@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
-import { PageHeroPro } from '@/components/PageHeroPro';
+import PageHero from '@/components/PageHero.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
@@ -67,8 +67,7 @@ const resources = [
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
-  <PageHeroPro
-    client:load
+  <PageHero
     title="Resources"
     description="Print-friendly tools to scope cleaning, set expectations, and keep quality consistent—without extra meetings."
     imageSrc={heroPrimary?.src}

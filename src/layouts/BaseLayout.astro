@@ -1,15 +1,9 @@
 ---
 import '@/styles/global.css';
-import '@fontsource/inter/latin-400.css';
-import '@fontsource/inter/latin-500.css';
-import '@fontsource/inter/latin-600.css';
-import '@fontsource/inter/latin-700.css';
-import '@fontsource/playfair-display/latin-600.css';
-import '@fontsource/playfair-display/latin-700.css';
-import '@fontsource/playfair-display/latin-800.css';
-import inter600Url from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
-import inter700Url from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
-import playfair600Url from '@fontsource/playfair-display/files/playfair-display-latin-600-normal.woff2?url';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/playfair-display';
+import interVariableUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import playfairVariableUrl from '@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
@@ -197,9 +191,8 @@ const breadcrumbJsonLd = (() => {
     {analyticsEnabled ? <link rel="preconnect" href="https://plausible.io" crossorigin /> : null}
 
     {/* Preload critical fonts to reduce FOUT */}
-    <link rel="preload" href={inter600Url} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={inter700Url} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={playfair600Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interVariableUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={playfairVariableUrl} as="font" type="font/woff2" crossorigin />
 
     {
       /* Fonts are self-hosted via @fontsource imports (see frontmatter) to avoid third-party requests. */
@@ -243,11 +236,16 @@ const breadcrumbJsonLd = (() => {
 
     <script is:inline define:vars={{ sentryDsn, isProd: import.meta.env.PROD }}>
       (() => {
+        // @ts-expect-error - injected by define:vars
+        const dsn = sentryDsn;
+        // @ts-expect-error - injected by define:vars
+        const prod = isProd;
+
         // Client-side error tracking (optional).
         // Only runs when PUBLIC_SENTRY_DSN is configured.
         if (typeof window === 'undefined') return;
-        if (!isProd) return;
-        if (!sentryDsn) return;
+        if (!prod) return;
+        if (!dsn) return;
 
         const root = document.documentElement;
         if (root.dataset.sentryInit === 'true') return;
@@ -256,7 +254,7 @@ const breadcrumbJsonLd = (() => {
         import('@sentry/browser')
           .then((Sentry) => {
             Sentry.init({
-              dsn: sentryDsn,
+              dsn: dsn,
               // Keep performance overhead low by default.
               tracesSampleRate: 0,
             });
@@ -656,7 +654,17 @@ const breadcrumbJsonLd = (() => {
     </script>
 
     {/* Analytics provider script (Plausible) */}
-    {analyticsEnabled ? <script defer data-domain={plausibleDomain} src={plausibleSrc} /> : null}
+    {
+      analyticsEnabled ? (
+        <script
+          is:inline
+          type="text/partytown"
+          defer
+          data-domain={plausibleDomain}
+          src={plausibleSrc}
+        />
+      ) : null
+    }
   </head>
   <body id="top">
     <div class="scroll-progress" aria-hidden="true"></div>

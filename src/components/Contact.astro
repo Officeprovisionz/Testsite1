@@ -515,6 +515,14 @@ const serviceOptions = [
           }
 
           const fd = new FormData(form);
+
+          // Simple honeypot check
+          if (fd.get('website_url') || fd.get('website')) {
+            console.warn('Honeypot filled; likely bot.');
+            setStatus('Thank you for your message.', 'success');
+            return;
+          }
+
           const source = String(fd.get('source') ?? '').trim();
 
           const startedAt = Number(form.dataset.contactStartedAt || '0') || 0;

@@ -3,6 +3,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
+import icon from 'astro-icon';
 import { fileURLToPath } from 'node:url';
 
 function normalizeBase(input: string | undefined): string {
@@ -40,6 +41,7 @@ const integrations = [
       forward: ['plausible', 'damraTrack', 'dataLayer.push'],
     },
   }),
+  icon(),
   // Only generate sitemap when a canonical site URL is configured.
   // This avoids build warnings and prevents producing a sitemap with an incorrect hostname.
   ...(site ? [sitemap({})] : []),

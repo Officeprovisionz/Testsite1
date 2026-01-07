@@ -32,6 +32,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
 <BaseLayout>
   <Header slot="header" transparent={true} />
   <script
+    is:inline
     type="application/ld+json"
     set:html={JSON.stringify([
       {

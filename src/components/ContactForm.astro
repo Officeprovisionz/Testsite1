@@ -82,6 +82,18 @@ const servicesErrorId = `${servicesHelpId}-error`;
     <input type="hidden" name="referrer" value="" />
     <input type="hidden" name="landing" value="" />
 
+    {/* Honeypot field to catch simple bots. Label is hidden visually. */}
+    <div class="sr-only" aria-hidden="true">
+      <label for="website_url_field">Website URL (leave blank)</label>
+      <input
+        type="text"
+        id="website_url_field"
+        name="website_url"
+        tabindex="-1"
+        autocomplete="off"
+      />
+    </div>
+
     <p id={helpId} class="text-sm text-muted">
       Fields marked with <span class="font-semibold">*</span> are required.
     </p>

@@ -1,5 +1,5 @@
 ---
-import { Phone, FileText } from 'lucide-react';
+import { Icon } from 'astro-icon/components';
 import { siteConfig } from '@/data/siteConfig';
 import { makeTelHref } from '@/lib/links';
 import { makeHref } from '@/lib/nav';
@@ -21,7 +21,7 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
       id="cta-bar-call"
       class="border-app text-strong flex h-16 flex-1 items-center justify-center gap-2 border-r px-4 font-semibold transition-colors active:bg-muted"
     >
-      <Phone className="text-brand h-5 w-5" />
+      <Icon name="lucide:phone" class="text-brand h-5 w-5" />
       <span>Call Now</span>
     </a>
     <a
@@ -29,13 +29,13 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
       id="cta-bar-quote"
       class="bg-brand active:bg-brand-dark flex h-16 flex-[1.2] items-center justify-center gap-2 px-4 font-bold text-white transition-colors"
     >
-      <FileText className="h-5 w-5" />
+      <Icon name="lucide:file-text" class="h-5 w-5" />
       <span>Get a Quote</span>
     </a>
   </div>
 </div>
 
-<script define:vars={{ base }}>
+<script is:inline define:vars={{ base }}>
   const SHOW_THRESHOLD = 100;
   const HIDE_FOOTER_OFFSET = 200;
 

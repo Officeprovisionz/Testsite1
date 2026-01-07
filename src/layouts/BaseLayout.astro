@@ -1,14 +1,15 @@
 ---
 import '@/styles/global.css';
-import '@fontsource/inter/400.css';
-import '@fontsource/inter/500.css';
-import '@fontsource/inter/600.css';
-import '@fontsource/inter/700.css';
-import '@fontsource/playfair-display/600.css';
-import '@fontsource/playfair-display/700.css';
-import '@fontsource/playfair-display/800.css';
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '@fontsource/playfair-display/latin-600.css';
+import '@fontsource/playfair-display/latin-700.css';
+import '@fontsource/playfair-display/latin-800.css';
 import inter600Url from '@fontsource/inter/files/inter-latin-600-normal.woff2?url';
 import inter700Url from '@fontsource/inter/files/inter-latin-700-normal.woff2?url';
+import playfair600Url from '@fontsource/playfair-display/files/playfair-display-latin-600-normal.woff2?url';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
@@ -31,7 +32,7 @@ const {
 const base = import.meta.env.BASE_URL;
 
 const canonicalUrl = Astro.site ? new URL(Astro.url.pathname, Astro.site).toString() : undefined;
-const ogPath = `${base}og-image.svg`;
+const ogPath = `${base}og-image.png`;
 const ogUrl = Astro.site ? new URL(ogPath, Astro.site).toString() : ogPath;
 const faviconHref = `${base}favicon.svg`;
 const manifestHref = `${base}site.webmanifest`;
@@ -43,6 +44,8 @@ const plausibleDomain =
 const plausibleSrc =
   (import.meta.env.PUBLIC_PLAUSIBLE_SRC as string | undefined) ??
   'https://plausible.io/js/script.js';
+
+const sentryDsn = import.meta.env.PUBLIC_SENTRY_DSN as string | undefined;
 
 const analyticsEnabled = siteConfig.analytics.enabled;
 
@@ -181,6 +184,7 @@ const breadcrumbJsonLd = (() => {
     {/* Preload critical fonts to reduce FOUT */}
     <link rel="preload" href={inter600Url} as="font" type="font/woff2" crossorigin />
     <link rel="preload" href={inter700Url} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={playfair600Url} as="font" type="font/woff2" crossorigin />
 
     {
       /* Fonts are self-hosted via @fontsource imports (see frontmatter) to avoid third-party requests. */
@@ -219,6 +223,32 @@ const breadcrumbJsonLd = (() => {
         };
 
         // Web Vitals tracking (handled in non-inline script below)
+      })();
+    </script>
+
+    <script is:inline define:vars={{ sentryDsn, isProd: import.meta.env.PROD }}>
+      (() => {
+        // Client-side error tracking (optional).
+        // Only runs when PUBLIC_SENTRY_DSN is configured.
+        if (typeof window === 'undefined') return;
+        if (!isProd) return;
+        if (!sentryDsn) return;
+
+        const root = document.documentElement;
+        if (root.dataset.sentryInit === 'true') return;
+        root.dataset.sentryInit = 'true';
+
+        import('@sentry/browser')
+          .then((Sentry) => {
+            Sentry.init({
+              dsn: sentryDsn,
+              // Keep performance overhead low by default.
+              tracesSampleRate: 0,
+            });
+          })
+          .catch(() => {
+            // ignore
+          });
       })();
     </script>
 
@@ -321,6 +351,65 @@ const breadcrumbJsonLd = (() => {
           },
           { capture: true }
         );
+      })();
+    </script>
+
+    <script is:inline>
+      (() => {
+        // Scroll depth milestones (25/50/75/100) for engagement tracking.
+        // Safe no-op if analytics isn't configured.
+        if (typeof window === 'undefined') return;
+
+        const root = document.documentElement;
+        if (root.dataset.scrollDepthInit === 'true') return;
+        root.dataset.scrollDepthInit = 'true';
+
+        const thresholds = [25, 50, 75, 100];
+        /** @type {Set<number>} */
+        let hit = new Set();
+
+        const resetForPage = () => {
+          hit = new Set();
+          // Fire the 0% marker for debugging/segmentation if desired (kept off by default).
+        };
+
+        const getPercent = () => {
+          const doc = document.documentElement;
+          const max = (doc.scrollHeight || 0) - window.innerHeight;
+          if (max <= 0) return 100;
+          return Math.max(0, Math.min(100, (window.scrollY / max) * 100));
+        };
+
+        let raf = 0;
+        const onScroll = () => {
+          if (raf) return;
+          raf = window.requestAnimationFrame(() => {
+            raf = 0;
+            const pct = getPercent();
+            thresholds.forEach((t) => {
+              if (pct >= t && !hit.has(t)) {
+                hit.add(t);
+                try {
+                  window.damraTrack?.('scroll_depth', {
+                    depth: t,
+                    page: window.location.pathname,
+                  });
+                } catch {
+                  // ignore
+                }
+              }
+            });
+          });
+        };
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        document.addEventListener('astro:page-load', () => {
+          resetForPage();
+          onScroll();
+        });
+
+        resetForPage();
+        onScroll();
       })();
     </script>
 

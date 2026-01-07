@@ -28,7 +28,7 @@
       "label": "build",
       "type": "shell",
       "command": "bun",
-      "args": ["build"],
+      "args": ["run", "build"],
       "problemMatcher": []
     },
     {

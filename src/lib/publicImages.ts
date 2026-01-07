@@ -6,6 +6,8 @@ export type PublicResponsiveImage = {
   src: string;
   /** URL srcset string (already prefixed with BASE_URL). */
   srcSet?: string | undefined;
+  /** AVIF URL srcset string (already prefixed with BASE_URL). */
+  avifSrcSet?: string | undefined;
   /** WebP URL srcset string (already prefixed with BASE_URL). */
   webpSrcSet?: string | undefined;
   /** sizes attribute to pair with srcSet. */
@@ -56,20 +58,28 @@ export const getPublicResponsiveImage = (
     .map((w) => ({ w, rel: `${stem}-${w}${ext}` }))
     .filter((c) => exists(c.rel));
 
+  const avifCandidates = widths
+    .map((w) => ({ w, rel: `${stem}-${w}.avif` }))
+    .filter((c) => exists(c.rel));
+
   const webpCandidates = widths
     .map((w) => ({ w, rel: `${stem}-${w}.webp` }))
     .filter((c) => exists(c.rel));
 
   // If we don't have any generated variants, don't emit srcset.
-  if (!candidates.length && !webpCandidates.length) return { src };
+  if (!candidates.length && !webpCandidates.length && !avifCandidates.length) return { src };
 
   const srcSet = candidates.length
     ? candidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ')
+    : undefined;
+
+  const avifSrcSet = avifCandidates.length
+    ? avifCandidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ')
     : undefined;
 
   const webpSrcSet = webpCandidates.length
     ? webpCandidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ')
     : undefined;
 
-  return { src, srcSet, webpSrcSet, sizes };
+  return { src, srcSet, avifSrcSet, webpSrcSet, sizes };
 };

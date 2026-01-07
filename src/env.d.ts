@@ -4,6 +4,9 @@ interface ImportMetaEnv {
   readonly BASE_URL: string;
   readonly PUBLIC_FORM_ENDPOINT?: string;
   readonly PUBLIC_ENABLE_HERO_VIDEO?: string;
+  readonly PUBLIC_PLAUSIBLE_DOMAIN?: string;
+  readonly PUBLIC_PLAUSIBLE_SRC?: string;
+  readonly PUBLIC_SENTRY_DSN?: string;
   readonly SITE_URL?: string;
   readonly PUBLIC_SITE_BASE?: string;
   readonly GALLERY_SHUFFLE_SEED?: string;

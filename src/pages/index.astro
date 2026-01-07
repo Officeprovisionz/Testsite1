@@ -25,6 +25,8 @@ const heroImageMobile = heroSecondary
   : heroImage;
 
 const faqs = await getCollection('faqs');
+
+const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
 ---
 
 <BaseLayout>
@@ -36,8 +38,8 @@ const faqs = await getCollection('faqs');
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'Office Provisionz',
-        url: 'https://officeprovisionz.com',
-        logo: 'https://officeprovisionz.com/brand/logo.svg',
+        url: siteUrl,
+        logo: new URL('/brand/logo.png', siteUrl).toString(),
         contactPoint: {
           '@type': 'ContactPoint',
           telephone: '+1-510-913-2197',

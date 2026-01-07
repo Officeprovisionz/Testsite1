@@ -74,14 +74,26 @@ const resolvedItems = items.map((item, idx) => {
 
 const getImgAttrs = (src: string) => {
   if (/^https?:\/\//i.test(src))
-    return { src, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
+    return {
+      src,
+      srcSet: undefined,
+      avifSrcSet: undefined,
+      webpSrcSet: undefined,
+      sizes: undefined,
+    };
   const cleaned = src.replace(/^\/+/, '');
   if (/\.jpe?g$/i.test(cleaned)) {
     return getPublicResponsiveImage(cleaned, base, {
       sizes: '(min-width: 1024px) 50vw, 100vw',
     });
   }
-  return { src: `${base}${cleaned}`, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
+  return {
+    src: `${base}${cleaned}`,
+    srcSet: undefined,
+    avifSrcSet: undefined,
+    webpSrcSet: undefined,
+    sizes: undefined,
+  };
 };
 ---
 
@@ -106,6 +118,9 @@ const getImgAttrs = (src: string) => {
             >
               <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:aspect-[16/10]">
                 <picture>
+                  {attrs.avifSrcSet && (
+                    <source type="image/avif" srcset={attrs.avifSrcSet} sizes={attrs.sizes} />
+                  )}
                   {attrs.webpSrcSet && (
                     <source type="image/webp" srcset={attrs.webpSrcSet} sizes={attrs.sizes} />
                   )}

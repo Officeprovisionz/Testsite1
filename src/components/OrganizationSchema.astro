@@ -1,0 +1,35 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+
+const { name, city } = siteConfig.brand;
+
+const { phoneE164, email } = siteConfig.contact;
+
+const [localityRaw, regionRaw] = city.split(',').map((s) => s.trim());
+const addressLocality = localityRaw ?? city;
+const addressRegion = regionRaw ?? 'CA';
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: name,
+  url: Astro.site?.toString() || Astro.url.origin,
+  logo: new URL('/brand/logo.png', Astro.url).toString(),
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: phoneE164,
+    contactType: 'customer service',
+    areaServed: 'US',
+    availableLanguage: 'en',
+  },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: addressLocality,
+    addressRegion: addressRegion,
+    addressCountry: 'US',
+  },
+  email: email,
+};
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

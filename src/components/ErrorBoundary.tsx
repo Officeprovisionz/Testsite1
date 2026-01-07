@@ -1,6 +1,6 @@
 import React, { Component, type ReactNode } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
-import * as Sentry from '@sentry/astro';
+import * as Sentry from '@sentry/browser';
 
 interface Props {
   fallback?: ReactNode;

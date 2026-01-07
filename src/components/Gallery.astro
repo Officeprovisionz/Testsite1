@@ -73,7 +73,13 @@ const toPublicUrl = (src: string) => {
 const getImgAttrs = (src: string) => {
   // Allow absolute URLs
   if (/^https?:\/\//i.test(src))
-    return { src, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
+    return {
+      src,
+      srcSet: undefined,
+      avifSrcSet: undefined,
+      webpSrcSet: undefined,
+      sizes: undefined,
+    };
 
   const cleaned = src.replace(/^\/+/, '');
   if (/\.jpe?g$/i.test(cleaned)) {
@@ -82,7 +88,13 @@ const getImgAttrs = (src: string) => {
     });
   }
 
-  return { src: `${base}${cleaned}`, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
+  return {
+    src: `${base}${cleaned}`,
+    srcSet: undefined,
+    avifSrcSet: undefined,
+    webpSrcSet: undefined,
+    sizes: undefined,
+  };
 };
 ---
 
@@ -145,6 +157,9 @@ const getImgAttrs = (src: string) => {
             >
               <div class="relative aspect-[4/3] overflow-hidden">
                 <picture>
+                  {attrs.avifSrcSet && (
+                    <source type="image/avif" srcset={attrs.avifSrcSet} sizes={attrs.sizes} />
+                  )}
                   {attrs.webpSrcSet && (
                     <source type="image/webp" srcset={attrs.webpSrcSet} sizes={attrs.sizes} />
                   )}

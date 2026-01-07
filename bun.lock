@@ -13,6 +13,7 @@
         "@fontsource/playfair-display": "^5.2.8",
         "@radix-ui/react-slot": "^1.2.4",
         "@sentry/astro": "^10.32.1",
+        "@sentry/browser": "^10.32.1",
         "astro": "5.16.6",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

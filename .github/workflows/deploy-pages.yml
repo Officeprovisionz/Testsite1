@@ -24,23 +24,19 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 10.24.0
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: pnpm
-          cache-dependency-path: pnpm-lock.yaml
 
       - name: Install
-        run: pnpm install --frozen-lockfile
+        run: bun install
 
       - name: Copy/encoding check
-        run: pnpm check:copy
+        run: bun run check:copy
 
       - name: Build (static)
         env:
@@ -49,7 +45,7 @@ jobs:
           PUBLIC_SITE_BASE: /
           SITE_URL: https://officeprovisionz.com/
           ASTRO_TELEMETRY_DISABLED: 1
-        run: pnpm build
+        run: bun run build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

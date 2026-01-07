@@ -1,5 +1,6 @@
 import React, { Component, type ReactNode } from 'react';
 import { AlertTriangle, RefreshCw } from 'lucide-react';
+import * as Sentry from '@sentry/astro';
 
 interface Props {
   fallback?: ReactNode;
@@ -35,7 +36,12 @@ export class ErrorBoundary extends Component<Props, State> {
 
     // Send to error tracking service in production
     if (import.meta.env.PROD) {
-      // Example: Sentry.captureException(error, { extra: errorInfo });
+      Sentry.captureException(error, {
+        extra: {
+          componentStack: errorInfo.componentStack,
+        },
+      });
+
       // Track error event
       if (typeof window !== 'undefined' && window.damraTrack) {
         window.damraTrack('error_boundary_catch', {

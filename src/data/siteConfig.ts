@@ -385,7 +385,7 @@ export const siteConfig = {
     },
   },
   analytics: {
-    enabled: false,
+    enabled: true,
   },
 } as const;
 

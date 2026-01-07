@@ -19,18 +19,17 @@ The repo includes:
 
 1. Install dependencies
 
-- Preferred: pnpm
-  - `corepack enable`
-  - `pnpm install`
+- Preferred: bun
+  - `bun install`
 
 1. Run the dev server
 
-- `pnpm dev`
+- `bun dev`
 
 1. Build static output
 
-- `pnpm build`
-- `pnpm preview`
+- `bun build`
+- `bun preview`
 
 ## Key goals
 
@@ -67,7 +66,7 @@ If you want to automatically populate the gallery with high-quality, watermark-f
 
 1. Create an API key: https://www.pexels.com/api/
 2. Put it in `.env` as `PEXELS_API_KEY=...`
-3. Run: `pnpm gallery:fetch`
+3. Run: `bun gallery:fetch`
 
 This will write:
 
@@ -170,7 +169,7 @@ When prompted:
 
 - **app location**: `/`
 - **output location**: `dist`
-- **build command**: `pnpm build`
+- **build command**: `bun build`
 
 > Note: this repo is GitHub Pages-first. For SWA, you typically keep base `/` (no repo subpath).
 
@@ -184,10 +183,10 @@ Update phone, hours, service areas, quotes, FAQs, testimonials, etc. there.
 
 ## Scripts
 
-- `pnpm dev` — local dev
-- `pnpm build` — static production build
-- `pnpm preview` — preview the build
-- `pnpm lint` — ESLint
-- `pnpm format` — Prettier check
-- `pnpm typecheck` — `astro check`
-- `pnpm check` — format + lint + typecheck
+- `bun dev` — local dev
+- `bun build` — static production build
+- `bun preview` — preview the build
+- `bun lint` — ESLint
+- `bun format` — Prettier check
+- `bun typecheck` — `astro check`
+- `bun check` — format + lint + typecheck

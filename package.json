@@ -2,7 +2,7 @@
   "name": "cleaning-landing",
   "private": true,
   "type": "module",
-  "packageManager": "pnpm@10.24.0",
+  "packageManager": "bun@1.2.4",
   "engines": {
     "node": ">=22"
   },
@@ -16,7 +16,7 @@
     "simulate:pages": "node scripts/simulate-pages.mjs",
     "gallery:fetch": "node scripts/fetch-gallery.mjs",
     "check:copy": "node scripts/check-mojibake.mjs",
-    "test": "pnpm test:unit",
+    "test": "bun run test:unit",
     "test:unit": "vitest run",
     "test:unit:watch": "vitest",
     "test:e2e": "playwright test",
@@ -28,7 +28,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --check",
     "format:write": "prettier . --write",
-    "check": "pnpm format && pnpm lint && pnpm typecheck",
+    "check": "bun run format && bun run lint && bun run typecheck",
     "prepare": "husky"
   },
   "dependencies": {
@@ -39,6 +39,7 @@
     "@fontsource/inter": "^5.2.8",
     "@fontsource/playfair-display": "^5.2.8",
     "@radix-ui/react-slot": "^1.2.4",
+    "@sentry/astro": "^10.32.1",
     "astro": "5.16.6",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -49,7 +50,8 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "web-vitals": "^5.1.0"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.11.0",

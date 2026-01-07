@@ -7,6 +7,7 @@ import BridgeDivider from '@/components/BridgeDivider.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
+import { getCollection } from 'astro:content';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
 
@@ -22,10 +23,42 @@ const heroImage = heroPrimary
 const heroImageMobile = heroSecondary
   ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, { sizes: '100vw' })
   : heroImage;
+
+const faqs = await getCollection('faqs');
 ---
 
 <BaseLayout>
   <Header slot="header" transparent={true} />
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify([
+      {
+        '@context': 'https://schema.org',
+        '@type': 'Organization',
+        name: 'Office Provisionz',
+        url: 'https://officeprovisionz.com',
+        logo: 'https://officeprovisionz.com/brand/logo.svg',
+        contactPoint: {
+          '@type': 'ContactPoint',
+          telephone: '+1-510-913-2197',
+          contactType: 'Customer Service',
+          email: 'officeprovisionz@gmail.com',
+        },
+      },
+      {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.data.question,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: f.data.answer,
+          },
+        })),
+      },
+    ])}
+  />
   <HeroPro
     client:load
     imageSrc={heroImage.src}

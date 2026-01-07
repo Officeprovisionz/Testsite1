@@ -16,9 +16,9 @@ const extraArgs = sepIndex >= 0 ? process.argv.slice(sepIndex + 1) : [];
 const port = Number(process.env.PORT ?? process.env.ASTRO_PORT ?? 4321);
 const { env, base } = getPagesLikeEnv({ port });
 
-const pnpmCmd = process.platform === 'win32' ? 'pnpm' : 'pnpm';
+const bunCmd = 'bun';
 
-// `pnpm astro <action>` ensures we run the workspace-local astro.
+// `bun astro <action>` ensures we run the workspace-local astro.
 const args = ['astro', action, ...extraArgs];
 
 // Keep the server's listening port in sync with the URL we print/set.
@@ -31,24 +31,12 @@ if (wantsPort && !hasPortFlag) {
 
 console.log(`[pages-like] PUBLIC_SITE_BASE=${base}`);
 console.log(`[pages-like] SITE_URL=${env.SITE_URL}`);
-console.log(`[pages-like] Running: pnpm ${args.join(' ')}`);
+console.log(`[pages-like] Running: bun ${args.join(' ')}`);
 
-let child;
-
-if (process.platform === 'win32') {
-  // Execute via cmd.exe to reliably locate pnpm on PATH without using `shell: true`.
-  const comspec = process.env.ComSpec || 'cmd.exe';
-  child = spawn(comspec, ['/d', '/s', '/c', pnpmCmd, ...args], {
-    stdio: 'inherit',
-    env,
-    windowsVerbatimArguments: true,
-  });
-} else {
-  child = spawn(pnpmCmd, args, {
-    stdio: 'inherit',
-    env,
-  });
-}
+const child = spawn(bunCmd, args, {
+  stdio: 'inherit',
+  env,
+});
 
 child.on('exit', (code, signal) => {
   if (signal) process.exit(1);

@@ -4,7 +4,7 @@
     {
       "label": "dev",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["dev"],
       "isBackground": true,
       "problemMatcher": []
@@ -12,7 +12,7 @@
     {
       "label": "dev:pages",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["dev:pages"],
       "isBackground": true,
       "problemMatcher": []
@@ -20,21 +20,21 @@
     {
       "label": "build:pages",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["build:pages"],
       "problemMatcher": []
     },
     {
       "label": "build",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["build"],
       "problemMatcher": []
     },
     {
       "label": "preview",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["preview"],
       "isBackground": true,
       "problemMatcher": []
@@ -42,7 +42,7 @@
     {
       "label": "preview:pages",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["preview:pages"],
       "isBackground": true,
       "options": {
@@ -55,7 +55,7 @@
     {
       "label": "simulate:pages",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["simulate:pages"],
       "isBackground": true,
       "options": {
@@ -68,21 +68,21 @@
     {
       "label": "lint",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["lint"],
       "problemMatcher": []
     },
     {
       "label": "format",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["format"],
       "problemMatcher": []
     },
     {
       "label": "typecheck",
       "type": "shell",
-      "command": "pnpm",
+      "command": "bun",
       "args": ["typecheck"],
       "problemMatcher": []
     }

@@ -11,7 +11,7 @@ const OPTIONS_DIR = path.join(OUT_DIR, 'options');
 const OPTIONS_SERVICES_DIR = path.join(OPTIONS_DIR, 'services');
 const ATTRIBUTION_OPTIONS_PATH = path.join(OUT_DIR, 'ATTRIBUTION.options.txt');
 
-const RESPONSIVE_WIDTHS = [640, 960, 1280, 1600, 1920, 2560, 3840];
+const RESPONSIVE_WIDTHS = [640, 768, 960, 1280, 1600, 1920];
 const OPTIONS_MAX_WIDTH = 1920;
 
 const args = new Set(process.argv.slice(2));
@@ -261,7 +261,7 @@ async function main() {
   }
 
   // Each slot maps to a specific theme so the site feels intentionally curated.
-  // You can tweak these queries anytime and re-run `pnpm gallery:fetch`.
+  // You can tweak these queries anytime and re-run `bun run gallery:fetch`.
   const slots = [
     {
       id: '01',
@@ -447,6 +447,10 @@ async function main() {
     // 1) Write the primary image (kept for back-compat paths like gallery/01.jpg).
     await base.jpeg({ quality: 82, progressive: true, mozjpeg: true }).toFile(outPath);
 
+    // Also write a WebP version of the primary image.
+    const webpPath = outPath.replace(/\.jpe?g$/i, '.webp');
+    await base.webp({ quality: 80, effort: 6 }).toFile(webpPath);
+
     // 2) Write responsive variants for srcset usage.
     // Naming: <name>-<width>.jpg next to the primary file.
     const ext = path.extname(outPath);
@@ -456,13 +460,21 @@ async function main() {
     const widths = RESPONSIVE_WIDTHS.filter((w) => w <= availableMax);
     for (const w of widths) {
       const variantPath = `${stem}-${w}${ext}`;
+      const webpVariantPath = `${stem}-${w}.webp`;
+
       // Avoid unnecessary re-encoding if the primary image already matches this width.
-      if (w === availableMax && variantPath === outPath) continue;
-      await sharp(buf)
-        .rotate()
-        .resize({ width: w, withoutEnlargement: true })
+      if (w === availableMax && variantPath === outPath) {
+        // Still might want to write the WebP variant if it's missing or named differently
+      }
+
+      const resized = sharp(buf).rotate().resize({ width: w, withoutEnlargement: true });
+
+      await resized
+        .clone()
         .jpeg({ quality: 80, progressive: true, mozjpeg: true })
         .toFile(variantPath);
+
+      await resized.clone().webp({ quality: 75, effort: 5 }).toFile(webpVariantPath);
     }
   };
 

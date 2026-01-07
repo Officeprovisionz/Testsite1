@@ -72,7 +72,8 @@ const toPublicUrl = (src: string) => {
 
 const getImgAttrs = (src: string) => {
   // Allow absolute URLs
-  if (/^https?:\/\//i.test(src)) return { src, srcSet: undefined, sizes: undefined };
+  if (/^https?:\/\//i.test(src))
+    return { src, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
 
   const cleaned = src.replace(/^\/+/, '');
   if (/\.jpe?g$/i.test(cleaned)) {
@@ -81,7 +82,7 @@ const getImgAttrs = (src: string) => {
     });
   }
 
-  return { src: `${base}${cleaned}`, srcSet: undefined, sizes: undefined };
+  return { src: `${base}${cleaned}`, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
 };
 ---
 
@@ -143,20 +144,25 @@ const getImgAttrs = (src: string) => {
               data-gallery-index={String(idx)}
             >
               <div class="relative aspect-[4/3] overflow-hidden">
-                <img
-                  src={attrs.src}
-                  srcset={attrs.srcSet}
-                  alt={it.alt}
-                  loading="lazy"
-                  decoding="async"
-                  fetchpriority="low"
-                  sizes={
-                    attrs.srcSet
-                      ? attrs.sizes
-                      : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
-                  }
-                  class="gallery-hover-zoom h-full w-full object-cover transition-transform duration-700"
-                />
+                <picture>
+                  {attrs.webpSrcSet && (
+                    <source type="image/webp" srcset={attrs.webpSrcSet} sizes={attrs.sizes} />
+                  )}
+                  <img
+                    src={attrs.src}
+                    srcset={attrs.srcSet}
+                    alt={it.alt}
+                    loading="lazy"
+                    decoding="async"
+                    fetchpriority="low"
+                    sizes={
+                      attrs.srcSet
+                        ? attrs.sizes
+                        : '(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw'
+                    }
+                    class="gallery-hover-zoom h-full w-full object-cover transition-transform duration-700"
+                  />
+                </picture>
 
                 {variant === 'overlay' && showItemText ? (
                   <>
@@ -466,6 +472,18 @@ const getImgAttrs = (src: string) => {
           lastFocused = document.activeElement as HTMLElement | null;
           if (typeof dialog.showModal === 'function') dialog.showModal();
           else dialog.setAttribute('open', '');
+
+          // Track lightbox opening
+          try {
+            const it = items[index];
+            window.damraTrack?.('gallery_open', {
+              caption: it?.caption || 'unknown',
+              index: index + 1,
+            });
+          } catch {
+            // ignore
+          }
+
           // Move focus into the dialog for keyboard users.
           (closeBtn ?? getFocusables()[0])?.focus();
         };

@@ -95,7 +95,17 @@ const faqJsonLd = (() => {
         items.forEach((el) => {
           el.addEventListener('toggle', () => {
             // Keep it "dropdown" style: only one open at a time.
-            if (el.open) items.forEach((other) => other !== el && (other.open = false));
+            if (el.open) {
+              items.forEach((other) => other !== el && (other.open = false));
+
+              // Track FAQ interaction
+              const question = el.querySelector('summary span')?.textContent || 'unknown';
+              try {
+                window.damraTrack?.('faq_open', { question });
+              } catch {
+                // ignore
+              }
+            }
           });
         });
       };

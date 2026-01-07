@@ -38,6 +38,14 @@ const manifestHref = `${base}site.webmanifest`;
 
 const assetNoise = `${base}noise.svg`;
 
+const plausibleDomain =
+  (import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined) ?? 'officeprovisionz.com';
+const plausibleSrc =
+  (import.meta.env.PUBLIC_PLAUSIBLE_SRC as string | undefined) ??
+  'https://plausible.io/js/script.js';
+
+const analyticsEnabled = siteConfig.analytics.enabled;
+
 const jsonLd = (() => {
   const [localityRaw, regionRaw] = siteConfig.brand.city.split(',').map((s) => s.trim());
   const addressLocality = localityRaw || undefined;
@@ -140,12 +148,35 @@ const breadcrumbJsonLd = (() => {
 >
   <head>
     <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogUrl} />
+
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={Astro.url} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={ogUrl} />
+
+    <link rel="icon" type="image/svg+xml" href={faviconHref} />
+    <link rel="alternate icon" type="image/x-icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href={manifestHref} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
     {/* Resource hints for faster loading */}
     <link rel="dns-prefetch" href="https://images.unsplash.com" />
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
+
+    {analyticsEnabled ? <link rel="dns-prefetch" href="https://plausible.io" /> : null}
+    {analyticsEnabled ? <link rel="preconnect" href="https://plausible.io" crossorigin /> : null}
 
     {/* Preload critical fonts to reduce FOUT */}
     <link rel="preload" href={inter600Url} as="font" type="font/woff2" crossorigin />
@@ -186,7 +217,30 @@ const breadcrumbJsonLd = (() => {
             // ignore
           }
         };
+
+        // Web Vitals tracking (handled in non-inline script below)
       })();
+    </script>
+
+    <script>
+      import { onCLS, onLCP, onFCP, onTTFB, onINP, type Metric } from 'web-vitals';
+
+      function sendToAnalytics(metric: Metric) {
+        if (typeof window.damraTrack === 'function') {
+          window.damraTrack('web_vitals', {
+            name: metric.name,
+            value: metric.value,
+            id: metric.id,
+            rating: metric.rating,
+          });
+        }
+      }
+
+      onCLS(sendToAnalytics);
+      onLCP(sendToAnalytics);
+      onFCP(sendToAnalytics);
+      onTTFB(sendToAnalytics);
+      onINP(sendToAnalytics);
     </script>
 
     <script is:inline>
@@ -497,7 +551,8 @@ const breadcrumbJsonLd = (() => {
       })();
     </script>
 
-    {/* Optional: add your analytics provider script here (Plausible/GTM/etc). */}
+    {/* Analytics provider script (Plausible) */}
+    {analyticsEnabled ? <script defer data-domain={plausibleDomain} src={plausibleSrc} /> : null}
   </head>
   <body id="top">
     <div class="scroll-progress" aria-hidden="true"></div>
@@ -525,5 +580,12 @@ const breadcrumbJsonLd = (() => {
 
     <!-- Floating Action Button (mobile speed dial) -->
     <FloatingActionButton client:load />
+
+    <script>
+      import { initScrollTracking, captureUTMs } from '@/lib/tracking';
+      // Initialize analytics and tracking
+      captureUTMs();
+      initScrollTracking();
+    </script>
   </body>
 </html>

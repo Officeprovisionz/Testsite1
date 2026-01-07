@@ -12,7 +12,8 @@
     "astro": "html"
   },
   "files.associations": {
-    "*.astro": "astro"
+    "*.astro": "astro",
+    "**/_headers": "plaintext"
   },
 
   "files.exclude": {
@@ -35,5 +36,15 @@
     "**/.astro/**": true,
     "**/playwright-report/**": true,
     "**/test-results/**": true
-  }
+  },
+
+  // Only enable necessary extensions for this workspace
+  "extensions.ignoreRecommendations": false,
+  "extensions.autoUpdate": false,
+
+  // Explicitly enable only required extensions
+  "astro-build.astro-vscode.enabled": true,
+  "esbenp.prettier-vscode.enabled": true,
+  "dbaeumer.vscode-eslint.enabled": true,
+  "bradlc.vscode-tailwindcss.enabled": true
 }

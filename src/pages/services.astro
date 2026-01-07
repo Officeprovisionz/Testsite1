@@ -41,6 +41,31 @@ const heroImageMobile = heroSecondary
 <BaseLayout title={title} description={description}>
   <Header slot="header" />
 
+  <script
+    type="application/ld+json"
+    set:html={JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Service',
+      serviceType: 'Office Cleaning',
+      provider: {
+        '@type': 'LocalBusiness',
+        name: 'Office Provisionz',
+      },
+      areaServed: {
+        '@type': 'City',
+        name: 'San Francisco',
+      },
+      description:
+        'Professional office cleaning services including janitorial, deep cleaning, and supply restocking.',
+      offers: {
+        '@type': 'Offer',
+        availability: 'https://schema.org/InStock',
+        priceCurrency: 'USD',
+        price: 'Call for quote',
+      },
+    })}
+  />
+
   <PageHeroPro
     client:load
     title="Services"

@@ -73,14 +73,15 @@ const resolvedItems = items.map((item, idx) => {
 });
 
 const getImgAttrs = (src: string) => {
-  if (/^https?:\/\//i.test(src)) return { src, srcSet: undefined, sizes: undefined };
+  if (/^https?:\/\//i.test(src))
+    return { src, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
   const cleaned = src.replace(/^\/+/, '');
   if (/\.jpe?g$/i.test(cleaned)) {
     return getPublicResponsiveImage(cleaned, base, {
       sizes: '(min-width: 1024px) 50vw, 100vw',
     });
   }
-  return { src: `${base}${cleaned}`, srcSet: undefined, sizes: undefined };
+  return { src: `${base}${cleaned}`, srcSet: undefined, webpSrcSet: undefined, sizes: undefined };
 };
 ---
 
@@ -104,15 +105,20 @@ const getImgAttrs = (src: string) => {
               style={`animation-delay: ${index * 120}ms`}
             >
               <div class="relative aspect-[16/10] overflow-hidden sm:aspect-[16/9] lg:aspect-[16/10]">
-                <img
-                  src={attrs.src}
-                  srcset={attrs.srcSet}
-                  sizes={attrs.sizes ?? '(min-width: 1024px) 50vw, 100vw'}
-                  alt={item.alt}
-                  loading="lazy"
-                  decoding="async"
-                  class="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
-                />
+                <picture>
+                  {attrs.webpSrcSet && (
+                    <source type="image/webp" srcset={attrs.webpSrcSet} sizes={attrs.sizes} />
+                  )}
+                  <img
+                    src={attrs.src}
+                    srcset={attrs.srcSet}
+                    sizes={attrs.sizes ?? '(min-width: 1024px) 50vw, 100vw'}
+                    alt={item.alt}
+                    loading="lazy"
+                    decoding="async"
+                    class="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
+                  />
+                </picture>
                 <div
                   class="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 via-60% to-transparent transition-opacity duration-500 group-hover:from-black/95"
                   aria-hidden="true"

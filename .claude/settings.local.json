@@ -5,15 +5,16 @@
       "Bash(wc:*)",
       "Bash(ls:*)",
       "Bash(npm install:*)",
-      "Bash(pnpm add:*)",
-      "Bash(pnpm run build:*)",
+      "Bash(bun add:*)",
+      "Bash(bun run build:*)",
       "Bash(dir:*)",
-      "Bash(pnpm exec tsc:*)",
-      "Bash(pnpm run typecheck:*)",
+      "Bash(bun x tsc:*)",
+      "Bash(bun run typecheck:*)",
       "Bash(git add:*)",
       "Bash(grep:*)",
       "Bash(git push:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Bash(tree:*)"
     ]
   }
 }

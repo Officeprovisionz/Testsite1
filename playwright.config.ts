@@ -13,8 +13,8 @@ export default defineConfig({
   reporter: isCI ? [['list'], ['html', { open: 'never' }]] : [['list'], ['html']],
   webServer: {
     // Start the Astro dev server for E2E runs.
-    // `pnpm dev -- --port <port>` forwards args to `astro dev`.
-    command: `pnpm dev -- --port ${port}`,
+    // `bun dev -- --port <port>` forwards args to `astro dev`.
+    command: `bun dev -- --port ${port}`,
     port,
     reuseExistingServer: !isCI,
     timeout: 120_000,

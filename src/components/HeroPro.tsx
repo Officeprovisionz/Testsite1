@@ -144,6 +144,11 @@ export const HeroPro = ({
             poster={heroImg}
             disablePictureInPicture
             onError={() => setVideoEnabled(false)}
+            onPlay={() => {
+              if (typeof window !== 'undefined' && window.damraTrack) {
+                window.damraTrack('video_play', { video: 'hero' });
+              }
+            }}
           >
             <source src={heroVideoWebm} type="video/webm" />
             <source src={heroVideoMp4} type="video/mp4" />

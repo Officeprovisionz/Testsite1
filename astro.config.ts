@@ -69,10 +69,30 @@ export default defineConfig({
       'X-Content-Type-Options': 'nosniff',
       'X-Frame-Options': 'SAMEORIGIN',
       'Referrer-Policy': 'strict-origin-when-cross-origin',
+      // Baseline modern hardening headers.
+      'Cross-Origin-Opener-Policy': 'same-origin',
+      'Cross-Origin-Resource-Policy': 'same-origin',
+      'Cross-Origin-Embedder-Policy': 'require-corp',
+      'X-Permitted-Cross-Domain-Policies': 'none',
       // Keep local dev behavior closer to hosts that honor `public/_headers`.
       // (GitHub Pages ignores custom headers; see README.)
       'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
       'X-DNS-Prefetch-Control': 'on',
+
+      // Content Security Policy
+      // Astro uses inline scripts for island hydration and our own inline scripts.
+      // We keep a tight baseline while allowing required inline script/style.
+      // Tighten later with nonces/hashes.
+      'Content-Security-Policy':
+        "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; " +
+        "form-action 'self' https://formspree.io; " +
+        "script-src 'self' 'unsafe-inline' https://plausible.io; " +
+        "style-src 'self' 'unsafe-inline'; " +
+        "font-src 'self' data:; " +
+        "img-src 'self' data: https:; " +
+        "media-src 'self' https:; " +
+        "connect-src 'self' https://formspree.io https://plausible.io; " +
+        'upgrade-insecure-requests',
     },
   },
   integrations,

@@ -109,6 +109,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           minlength="2"
           maxlength="100"
           required
+          aria-required="true"
         />
       </label>
 
@@ -124,6 +125,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           minlength="2"
           maxlength="80"
           required
+          aria-required="true"
         />
       </label>
 
@@ -140,6 +142,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           enterkeyhint="next"
           maxlength="254"
           required
+          aria-required="true"
         />
       </label>
 
@@ -149,10 +152,12 @@ const servicesErrorId = `${servicesHelpId}-error`;
           class="input"
           type="tel"
           name="phone"
+          data-phone-input
           autocomplete="tel"
           inputmode="tel"
           enterkeyhint="next"
           maxlength="20"
+          placeholder="(555) 000-0000"
         />
       </label>
     </div>
@@ -178,6 +183,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
           minlength="3"
           maxlength="100"
           required
+          aria-required="true"
           placeholder="Example: San Francisco, 94103"
         />
       </label>
@@ -186,7 +192,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
     <div class="grid gap-4 sm:grid-cols-2">
       <label class="grid gap-1 text-sm">
         <span class="text-strong font-semibold">Industry *</span>
-        <select class="select" name="industry" required>
+        <select class="select" name="industry" required aria-required="true">
           <option value="">Select an industry</option>
           {industryOptions.map((opt) => <option value={opt}>{opt}</option>)}
         </select>
@@ -194,7 +200,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
 
       <label class="grid gap-1 text-sm">
         <span class="text-strong font-semibold">Cleaning frequency *</span>
-        <select class="select" name="frequency" required>
+        <select class="select" name="frequency" required aria-required="true">
           <option value="">Select a frequency</option>
           <option value="One-time">One-time</option>
           <option value="Weekly">Weekly</option>
@@ -239,7 +245,12 @@ const servicesErrorId = `${servicesHelpId}-error`;
         </div>
       </div>
 
-      <p id={servicesErrorId} class="hidden text-xs text-destructive" data-services-error>
+      <p
+        id={servicesErrorId}
+        class="hidden text-xs text-destructive"
+        data-services-error
+        aria-live="assertive"
+      >
         Please pick at least one service.
       </p>
     </fieldset>
@@ -250,6 +261,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
         class="textarea min-h-28"
         name="message"
         required
+        aria-required="true"
         enterkeyhint="send"
         minlength="10"
         maxlength="2000"
@@ -269,7 +281,14 @@ const servicesErrorId = `${servicesHelpId}-error`;
     </button>
 
     <label class="flex cursor-pointer items-start gap-2 text-sm">
-      <input class="checkbox mt-0.5" type="checkbox" name="consent" value="Yes" required />
+      <input
+        class="checkbox mt-0.5"
+        type="checkbox"
+        name="consent"
+        value="Yes"
+        required
+        aria-required="true"
+      />
       <span class="text-subtle">I agree to be contacted about this quote request. No spam.</span>
     </label>
 

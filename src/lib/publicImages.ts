@@ -5,9 +5,11 @@ export type PublicResponsiveImage = {
   /** URL suitable for HTML (already prefixed with BASE_URL). */
   src: string;
   /** URL srcset string (already prefixed with BASE_URL). */
-  srcSet?: string;
+  srcSet?: string | undefined;
+  /** WebP URL srcset string (already prefixed with BASE_URL). */
+  webpSrcSet?: string | undefined;
   /** sizes attribute to pair with srcSet. */
-  sizes?: string;
+  sizes?: string | undefined;
 };
 
 const publicFilePath = (relPath: string) => {
@@ -37,7 +39,7 @@ export const getPublicResponsiveImage = (
     sizes?: string;
   }
 ): PublicResponsiveImage => {
-  const widths = opts?.widths ?? [640, 960, 1280, 1600, 1920, 2560, 3840];
+  const widths = opts?.widths ?? [640, 768, 960, 1280, 1600, 1920];
   const sizes = opts?.sizes ?? '(min-width: 1024px) 1024px, (min-width: 640px) 100vw, 100vw';
 
   const cleaned = relJpgPath.replace(/^\/+/, '');
@@ -54,10 +56,20 @@ export const getPublicResponsiveImage = (
     .map((w) => ({ w, rel: `${stem}-${w}${ext}` }))
     .filter((c) => exists(c.rel));
 
+  const webpCandidates = widths
+    .map((w) => ({ w, rel: `${stem}-${w}.webp` }))
+    .filter((c) => exists(c.rel));
+
   // If we don't have any generated variants, don't emit srcset.
-  if (!candidates.length) return { src };
+  if (!candidates.length && !webpCandidates.length) return { src };
 
-  const srcSet = candidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ');
+  const srcSet = candidates.length
+    ? candidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ')
+    : undefined;
 
-  return { src, srcSet, sizes };
+  const webpSrcSet = webpCandidates.length
+    ? webpCandidates.map((c) => `${toPublicUrl(baseUrl, c.rel)} ${c.w}w`).join(', ')
+    : undefined;
+
+  return { src, srcSet, webpSrcSet, sizes };
 };

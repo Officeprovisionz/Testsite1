@@ -5,7 +5,7 @@ User-agent: *
 Allow: /
 
 # Sitemap location (update with your actual domain)
-# Sitemap: https://yourdomain.com/sitemap-index.xml
+Sitemap: https://officeprovisionz.com/sitemap-index.xml
 
 # Disallow crawling of dev/testing pages
 Disallow: /dev/

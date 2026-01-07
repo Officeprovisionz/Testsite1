@@ -18,10 +18,10 @@ if [ "$node_major" -lt 22 ]; then
 	exit 0
 fi
 
-if ! command -v pnpm >/dev/null 2>&1; then
-	echo "[pre-commit] pnpm not found; skipping lint-staged"
+if ! command -v bun >/dev/null 2>&1; then
+	echo "[pre-commit] bun not found; skipping lint-staged"
 	exit 0
 fi
 
-pnpm lint-staged --concurrent false --allow-empty
+bun run lint-staged --concurrent false --allow-empty
 

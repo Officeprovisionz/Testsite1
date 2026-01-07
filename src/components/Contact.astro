@@ -172,8 +172,6 @@ const serviceOptions = [
 </div>
 
 <script>
-  import { actions } from 'astro:actions';
-
   // () => {
   const root = document.documentElement;
 
@@ -657,39 +655,97 @@ const serviceOptions = [
         setStatus('Sending...', 'info');
 
         try {
-          const result = await actions.contact.submit(fd);
-          const { error } = result;
+          if (endpoint && endpoint.startsWith('http')) {
+            const payload: Record<string, unknown> = {};
 
-          setBusy(false);
+            // Serialize non-array fields
+            fd.forEach((value, key) => {
+              // Keep honeypot fields out of the payload.
+              if (key === 'website_url' || key === 'website') return;
+              if (key === 'servicesNeeded') return;
+              payload[key] = String(value);
+            });
 
-          if (error) {
-            const msg =
-              error instanceof Error ? error.message : 'Something went wrong. Please try again.';
-            setStatus(msg, 'error');
-            track('lead_submit_error', { source, via: 'action', message: msg });
+            // Preserve multi-select services
+            payload.servicesNeeded = servicesNeeded;
+
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) {
+              throw new Error('Could not send message. Please try again.');
+            }
+
+            setBusy(false);
+            setStatus("Quote request received - we'll reply within 1 business day.", 'success');
+            form.reset();
+            applyAttributionToForm();
+            track('lead_submit_success', { source, via: 'endpoint' });
+
+            const redirect = form.dataset.successRedirect || '';
+            if (redirect) {
+              window.setTimeout(() => {
+                try {
+                  window.location.assign(redirect);
+                } catch {
+                  // ignore
+                }
+              }, 650);
+            }
             return;
           }
 
-          setStatus("Quote request received - we'll reply within 1 business day.", 'success');
-          form.reset();
-          applyAttributionToForm();
-          track('lead_submit_success', { source, via: 'action' });
+          // No endpoint configured: fall back to mailto.
+          const subject = `Quote request - ${companyName || 'Office Provisionz'}`;
+          const bodyLines = [
+            `Company: ${companyName}`,
+            `Name: ${name}`,
+            `Email: ${email}`,
+            phone ? `Phone: ${phone}` : '',
+            `Location: ${location}`,
+            `Industry: ${industry}`,
+            `Frequency: ${frequency}`,
+            servicesNeeded.length ? `Services needed: ${servicesNeeded.join(', ')}` : '',
+            '',
+            'Notes:',
+            message,
+            '',
+            source ? `Source: ${source}` : '',
+          ].filter(Boolean);
 
-          const redirect = form.dataset.successRedirect || '';
-          if (redirect) {
-            window.setTimeout(() => {
-              try {
-                window.location.assign(redirect);
-              } catch {
-                // ignore
-              }
-            }, 650);
+          const mailto =
+            `mailto:${encodeURIComponent(to)}` +
+            `?subject=${encodeURIComponent(subject)}` +
+            `&body=${encodeURIComponent(bodyLines.join('\n'))}`;
+
+          try {
+            window.location.assign(mailto);
+          } catch {
+            try {
+              window.open(mailto, '_blank', 'noopener,noreferrer');
+            } catch {
+              // ignore
+            }
           }
+
+          setBusy(false);
+          setStatus('Opening your email app...', 'success');
+          track('lead_submit_success', { source, via: 'mailto' });
         } catch (err) {
           setBusy(false);
           const msg = err instanceof Error ? err.message : 'Something went wrong.';
           setStatus(msg, 'error');
-          track('lead_submit_error', { source, via: 'action', message: msg });
+          track('lead_submit_error', {
+            source,
+            via: endpoint ? 'endpoint' : 'mailto',
+            message: msg,
+          });
         }
       });
     };

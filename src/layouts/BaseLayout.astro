@@ -609,6 +609,77 @@ const breadcrumbJsonLd = (() => {
       requestScrollProgress();
     </script>
 
+    <script is:inline>
+      (() => {
+        if (typeof window === 'undefined') return;
+
+        const root = document.documentElement;
+        if (root.dataset.routeProgressInit === 'true') return;
+        root.dataset.routeProgressInit = 'true';
+
+        const prefersReducedMotion =
+          window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+
+        const getBar = () => document.querySelector('[data-route-progress]');
+        let finishTimer = 0;
+        let trickleTimer = 0;
+
+        const clearTimers = () => {
+          if (finishTimer) window.clearTimeout(finishTimer);
+          if (trickleTimer) window.clearTimeout(trickleTimer);
+          finishTimer = 0;
+          trickleTimer = 0;
+        };
+
+        const setScale = (el, value) => {
+          /** @type {HTMLElement} */ (el).style.setProperty(
+            '--route-progress-scale',
+            String(value)
+          );
+        };
+
+        const start = () => {
+          const el = getBar();
+          if (!el) return;
+          clearTimers();
+
+          /** @type {HTMLElement} */ (el).dataset.state = 'loading';
+          setScale(el, 0.12);
+          requestAnimationFrame(() => setScale(el, 0.35));
+
+          const target = prefersReducedMotion ? 0.85 : 0.92;
+          trickleTimer = window.setTimeout(
+            () => setScale(el, target),
+            prefersReducedMotion ? 60 : 260
+          );
+        };
+
+        const done = () => {
+          const el = getBar();
+          if (!el) return;
+          clearTimers();
+
+          /** @type {HTMLElement} */ (el).dataset.state = 'finishing';
+          setScale(el, 1);
+
+          finishTimer = window.setTimeout(
+            () => {
+              const bar = getBar();
+              if (!bar) return;
+              /** @type {HTMLElement} */ (bar).dataset.state = 'idle';
+              setScale(bar, 0);
+            },
+            prefersReducedMotion ? 120 : 420
+          );
+        };
+
+        // Astro View Transitions lifecycle.
+        document.addEventListener('astro:before-preparation', start);
+        document.addEventListener('astro:after-preparation', done);
+        document.addEventListener('astro:page-load', done);
+      })();
+    </script>
+
     <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
       (() => {
         // Register a lightweight service worker in production builds.
@@ -672,6 +743,7 @@ const breadcrumbJsonLd = (() => {
   </head>
   <body id="top">
     <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="route-progress" aria-hidden="true" data-route-progress data-state="idle"></div>
 
     <a
       href="#main-content"

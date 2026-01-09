@@ -490,6 +490,29 @@
     pointer-events: none;
   }
 
+  /* Route Progress Indicator — triggered on client-side navigations (Astro View Transitions). */
+  .route-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 10000;
+    background: linear-gradient(90deg, rgb(var(--color-brand)), rgb(var(--color-brand)));
+    transform-origin: left center;
+    transform: scaleX(var(--route-progress-scale, 0));
+    opacity: 0;
+    transition:
+      transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 160ms ease-out;
+    pointer-events: none;
+  }
+
+  .route-progress[data-state='loading'],
+  .route-progress[data-state='finishing'] {
+    opacity: 1;
+  }
+
   /* Links with underline-offset and smooth transitions */
   .link-underline {
     @apply underline decoration-brand-500/40 underline-offset-4 transition-colors;
@@ -1714,6 +1737,12 @@
 
   .text-subtle {
     color: rgb(var(--color-text-subtle));
+  }
+
+  /* Touch target sizing helper (WCAG 2.5.8 guidance: at least 24×24 CSS px, often better at ~44px). */
+  .tap-target {
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .bg-grid-black\/\[0\.05\] {

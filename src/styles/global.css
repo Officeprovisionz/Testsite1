@@ -569,6 +569,17 @@
     padding-block: clamp(3.25rem, 6.5vw, 5.75rem);
   }
 
+  /* Performance: avoid rendering offscreen sections until needed.
+     This can reduce main-thread work on long pages while keeping layout stable.
+     https://web.dev/articles/content-visibility
+  */
+  @supports (content-visibility: auto) {
+    .section {
+      content-visibility: auto;
+      contain-intrinsic-size: 900px;
+    }
+  }
+
   @media (max-width: 640px) {
     .section {
       padding-block: clamp(2.75rem, 8vw, 4.5rem);

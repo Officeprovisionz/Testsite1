@@ -621,8 +621,25 @@ const breadcrumbJsonLd = (() => {
           window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
 
         const getBar = () => document.querySelector('[data-route-progress]');
+        const getStatus = () => document.querySelector('[data-route-status]');
+        const getMain = () => document.querySelector('#main-content');
         let finishTimer = 0;
         let trickleTimer = 0;
+
+        const setBusy = (busy) => {
+          const main = getMain();
+          if (!main || !(main instanceof HTMLElement)) return;
+          if (busy) main.setAttribute('aria-busy', 'true');
+          else main.removeAttribute('aria-busy');
+        };
+
+        const setSrStatus = (text) => {
+          const el = getStatus();
+          if (!el || !(el instanceof HTMLElement)) return;
+          // Avoid spamming SR with duplicate messages.
+          if (el.textContent === text) return;
+          el.textContent = text;
+        };
 
         const clearTimers = () => {
           if (finishTimer) window.clearTimeout(finishTimer);
@@ -642,6 +659,9 @@ const breadcrumbJsonLd = (() => {
           const el = getBar();
           if (!el) return;
           clearTimers();
+
+          setBusy(true);
+          setSrStatus('Loading page…');
 
           /** @type {HTMLElement} */ (el).dataset.state = 'loading';
           setScale(el, 0.12);
@@ -668,6 +688,9 @@ const breadcrumbJsonLd = (() => {
               if (!bar) return;
               /** @type {HTMLElement} */ (bar).dataset.state = 'idle';
               setScale(bar, 0);
+
+              setBusy(false);
+              setSrStatus('Page loaded.');
             },
             prefersReducedMotion ? 120 : 420
           );
@@ -786,6 +809,9 @@ const breadcrumbJsonLd = (() => {
   <body id="top">
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="route-progress" aria-hidden="true" data-route-progress data-state="idle"></div>
+
+    <!-- Screen-reader friendly navigation status (matches the visual route progress bar). -->
+    <p class="sr-only" data-route-status role="status" aria-live="polite" aria-atomic="true"></p>
 
     <a
       href="#main-content"

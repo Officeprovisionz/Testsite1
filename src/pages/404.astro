@@ -36,6 +36,8 @@ const quickLinks = [
   { label: 'Resources', href: href('resources/') },
   { label: 'Contact', href: href('contact/') },
 ];
+
+const contactHref = href('contact/');
 ---
 
 <BaseLayout title={title} description={description} noIndex>
@@ -53,16 +55,35 @@ const quickLinks = [
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 40%"
   >
-    <div class="flex flex-col items-center justify-center gap-3 sm:flex-row">
-      <a class="btn-secondary w-full sm:w-auto" href={href('')}>Go to homepage</a>
+    <div class="flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
+      <a class="btn-accent w-full sm:w-auto" href={contactHref} data-haptic="true">
+        Request a quote
+      </a>
+      <a class="btn-secondary w-full sm:w-auto" href={href('')} data-haptic="true">
+        Go to homepage
+      </a>
+      <button type="button" class="btn-secondary w-full sm:w-auto" data-go-back data-haptic="true">
+        Go back
+      </button>
     </div>
   </PageHero>
 
   <section class="section">
     <div class="container-narrow">
       <div class="card p-6 sm:p-8">
-        <h2 class="heading-3">Quick links</h2>
-        <p class="mt-2 text-sm text-muted">Most people are looking for one of these.</p>
+        <h2 class="heading-3">This page is cleaner than clean — it doesn’t exist.</h2>
+        <p class="mt-2 text-sm text-muted">
+          It may have moved, or the link might be old. Use the shortcuts below to get back on track.
+        </p>
+
+        <div class="mt-5 flex flex-col gap-2 sm:flex-row">
+          <button type="button" class="btn-secondary w-full sm:w-auto" data-copy-url>
+            Copy this link
+          </button>
+          <a class="btn-secondary w-full sm:w-auto" href={contactHref} data-haptic="true">
+            Tell us what you needed
+          </a>
+        </div>
 
         <nav aria-label="Quick links" class="mt-6 grid gap-3 sm:grid-cols-2">
           {
@@ -87,6 +108,45 @@ const quickLinks = [
       </div>
     </div>
   </section>
+
+  <script is:inline>
+    (() => {
+      const backBtn = document.querySelector('[data-go-back]');
+      if (backBtn instanceof HTMLButtonElement) {
+        // Hide when there's no meaningful history.
+        if (window.history.length <= 1) backBtn.classList.add('hidden');
+        backBtn.addEventListener('click', () => {
+          try {
+            window.history.back();
+          } catch {
+            window.location.href = '/';
+          }
+        });
+      }
+
+      const copyBtn = document.querySelector('[data-copy-url]');
+      if (copyBtn instanceof HTMLButtonElement) {
+        copyBtn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard?.writeText(window.location.href);
+            copyBtn.textContent = 'Copied!';
+            window.setTimeout(() => (copyBtn.textContent = 'Copy this link'), 1200);
+          } catch {
+            // ignore
+          }
+        });
+      }
+
+      try {
+        window.damraTrack?.('page_404_view', {
+          path: window.location.pathname,
+          ref: document.referrer || '',
+        });
+      } catch {
+        // ignore
+      }
+    })();
+  </script>
 
   <Footer slot="footer" />
 </BaseLayout>

@@ -1,0 +1,10 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Office Provisionz
+ORG:Office Provisionz
+TEL;TYPE=WORK,VOICE:(510) 913-2197
+TEL;TYPE=CELL,VOICE:+15109132197
+EMAIL;TYPE=WORK:officeprovisionz@gmail.com
+ADR;TYPE=WORK:;;San Francisco;CA;;;US
+URL:https://officeprovisionz.com
+END:VCARD

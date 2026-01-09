@@ -335,6 +335,41 @@ const serviceOptions = [
         }
       };
 
+      // Save a small, non-sensitive summary for the Thanks page.
+      // (We intentionally avoid storing the free-form message body.)
+      const saveLeadSummary = (data: {
+        companyName: string;
+        name: string;
+        email: string;
+        phone: string;
+        location: string;
+        industry: string;
+        frequency: string;
+        servicesNeeded: string[];
+        source: string;
+      }) => {
+        try {
+          if (!window.sessionStorage) return;
+          const ref = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+          const payload = {
+            ref,
+            createdAt: Date.now(),
+            companyName: data.companyName,
+            name: data.name,
+            email: data.email,
+            phone: data.phone,
+            location: data.location,
+            industry: data.industry,
+            frequency: data.frequency,
+            servicesNeeded: data.servicesNeeded,
+            source: data.source,
+          };
+          window.sessionStorage.setItem('damra_last_lead', JSON.stringify(payload));
+        } catch {
+          // ignore
+        }
+      };
+
       const focusFirstInvalid = () => {
         const el = form.querySelector<HTMLElement>(':invalid');
         el?.focus?.();
@@ -684,6 +719,19 @@ const serviceOptions = [
 
             setBusy(false);
             setStatus("Quote request received - we'll reply within 1 business day.", 'success');
+
+            saveLeadSummary({
+              companyName,
+              name,
+              email,
+              phone,
+              location,
+              industry,
+              frequency,
+              servicesNeeded,
+              source,
+            });
+
             form.reset();
             applyAttributionToForm();
             track('lead_submit_success', { source, via: 'endpoint' });

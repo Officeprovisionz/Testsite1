@@ -59,3 +59,24 @@ test('contact form is present and validates required fields', async ({ page }) =
   const isValid = await form.evaluate((el) => (el as HTMLFormElement).checkValidity());
   expect(isValid).toBe(true);
 });
+
+test('thanks page renders confirmation actions', async ({ page }) => {
+  await page.goto('/thanks/');
+  await disableAnimations(page);
+
+  await expect(page.getByRole('heading', { name: /Thanks/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /View our checklist/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Save our contact/i })).toHaveAttribute(
+    'href',
+    /\.vcf$/
+  );
+});
+
+test('404 page offers recovery actions', async ({ page }) => {
+  await page.goto('/this-page-should-not-exist');
+  await disableAnimations(page);
+
+  await expect(page.getByText('404')).toBeVisible();
+  await expect(page.getByRole('link', { name: /Go to homepage/i })).toBeVisible();
+  await expect(page.getByRole('link', { name: /Request a quote/i })).toBeVisible();
+});

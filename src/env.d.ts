@@ -50,3 +50,8 @@ interface MediaQueryListLegacy extends MediaQueryList {
   /** @deprecated Use removeEventListener('change', cb) instead */
   removeListener(callback: (this: MediaQueryList, ev: MediaQueryListEvent) => void): void;
 }
+
+// Side-effect imports for local webfonts (used in BaseLayout).
+// These packages ship CSS and don't always include TS module declarations.
+declare module '@fontsource-variable/inter';
+declare module '@fontsource-variable/playfair-display';

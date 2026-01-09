@@ -1,0 +1,267 @@
+---
+import { Icon } from 'astro-icon/components';
+import { getPublicResponsiveImage } from '@/lib/publicImages';
+
+type Props = {
+  /** Image paths relative to /public (e.g. 'gallery/01.jpg') or absolute URLs. */
+  beforeSrc: string;
+  afterSrc: string;
+  /** Alt text describes the "after" state (the end result). */
+  alt: string;
+  /** Optional labels shown as corner pills. */
+  beforeLabel?: string;
+  afterLabel?: string;
+  /** Initial position of the divider (0-100). */
+  initial?: number;
+  /** If true, gently auto-sweeps until the user interacts. */
+  autoPlay?: boolean;
+};
+
+const {
+  beforeSrc,
+  afterSrc,
+  alt,
+  beforeLabel = 'Before',
+  afterLabel = 'After',
+  initial = 52,
+  autoPlay = true,
+} = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL;
+
+const toPublicUrl = (src: string) => {
+  if (/^https?:\/\//i.test(src)) return src;
+  const cleaned = src.replace(/^\/+/, '');
+  return `${base}${cleaned}`;
+};
+
+const getImgAttrs = (src: string) => {
+  if (/^https?:\/\//i.test(src))
+    return {
+      src,
+      srcSet: undefined as string | undefined,
+      avifSrcSet: undefined as string | undefined,
+      webpSrcSet: undefined as string | undefined,
+      sizes: undefined as string | undefined,
+    };
+
+  const cleaned = src.replace(/^\/+/, '');
+
+  // Only generate responsive variants for JPEGs (matches existing site pattern).
+  if (/\.jpe?g$/i.test(cleaned)) {
+    return getPublicResponsiveImage(cleaned, base, {
+      sizes: '(min-width: 1024px) 60vw, 100vw',
+    });
+  }
+
+  return {
+    src: `${base}${cleaned}`,
+    srcSet: undefined,
+    avifSrcSet: undefined,
+    webpSrcSet: undefined,
+    sizes: undefined,
+  };
+};
+
+const beforeAttrs = getImgAttrs(beforeSrc);
+const afterAttrs = getImgAttrs(afterSrc);
+const beforeHref = toPublicUrl(beforeSrc);
+const afterHref = toPublicUrl(afterSrc);
+
+const initialClamped = Math.max(0, Math.min(100, Math.round(initial)));
+---
+
+<div
+  class="ba"
+  style={`--ba-pos:${initialClamped}%`}
+  data-before-after
+  data-initial={String(initialClamped)}
+  data-autoplay={autoPlay ? 'true' : 'false'}
+>
+  <div class="ba__frame" role="group" aria-label="Before and after comparison">
+    <a class="ba__link" href={afterHref} aria-label="Open after image" data-haptic="true">
+      <picture>
+        {
+          afterAttrs.avifSrcSet && (
+            <source type="image/avif" srcset={afterAttrs.avifSrcSet} sizes={afterAttrs.sizes} />
+          )
+        }
+        {
+          afterAttrs.webpSrcSet && (
+            <source type="image/webp" srcset={afterAttrs.webpSrcSet} sizes={afterAttrs.sizes} />
+          )
+        }
+        <img
+          class="ba__img ba__img--after"
+          src={afterAttrs.src}
+          srcset={afterAttrs.srcSet}
+          sizes={afterAttrs.srcSet ? afterAttrs.sizes : undefined}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+        />
+      </picture>
+    </a>
+
+    <div class="ba__before" aria-hidden="true">
+      <a class="ba__link" href={beforeHref} tabindex={-1} aria-hidden="true">
+        <picture>
+          {
+            beforeAttrs.avifSrcSet && (
+              <source type="image/avif" srcset={beforeAttrs.avifSrcSet} sizes={beforeAttrs.sizes} />
+            )
+          }
+          {
+            beforeAttrs.webpSrcSet && (
+              <source type="image/webp" srcset={beforeAttrs.webpSrcSet} sizes={beforeAttrs.sizes} />
+            )
+          }
+          <img
+            class="ba__img ba__img--before"
+            src={beforeAttrs.src}
+            srcset={beforeAttrs.srcSet}
+            sizes={beforeAttrs.srcSet ? beforeAttrs.sizes : undefined}
+            alt=""
+            loading="lazy"
+            decoding="async"
+          />
+        </picture>
+      </a>
+    </div>
+
+    <div class="ba__labels" aria-hidden="true">
+      <span class="ba__pill ba__pill--before">{beforeLabel}</span>
+      <span class="ba__pill ba__pill--after">{afterLabel}</span>
+    </div>
+
+    <div class="ba__handle" aria-hidden="true">
+      <span class="ba__line"></span>
+      <span class="ba__knob">
+        <Icon name="lucide:chevrons-left-right" class="h-4 w-4" />
+      </span>
+    </div>
+
+    <input
+      class="ba__range"
+      type="range"
+      min="0"
+      max="100"
+      value={String(initialClamped)}
+      aria-label="Adjust before and after divider"
+      data-ba-range
+    />
+  </div>
+
+  <div class="ba__actions">
+    <button type="button" class="btn-secondary" data-ba-toggle data-haptic="true">
+      Tap to swap
+    </button>
+  </div>
+</div>
+
+<script>
+  function initBeforeAfter() {
+    const widgets = Array.from(document.querySelectorAll<HTMLElement>('[data-before-after]'));
+    if (!widgets.length) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+
+    widgets.forEach((root) => {
+      if (root.dataset.init === 'true') return;
+      root.dataset.init = 'true';
+
+      const range = root.querySelector<HTMLInputElement>('[data-ba-range]');
+      const toggle = root.querySelector<HTMLButtonElement>('[data-ba-toggle]');
+      if (!range) return;
+
+      const setPos = (v: number) => {
+        const clamped = Math.max(0, Math.min(100, Math.round(v)));
+        root.style.setProperty('--ba-pos', `${clamped}%`);
+        range.value = String(clamped);
+      };
+
+      const initial = Number(root.dataset.initial ?? range.value ?? 50);
+      setPos(Number.isFinite(initial) ? initial : 50);
+
+      let interacted = false;
+      const markInteracted = () => {
+        interacted = true;
+        root.dataset.interacted = 'true';
+      };
+
+      range.addEventListener('input', () => {
+        markInteracted();
+        setPos(Number(range.value));
+      });
+
+      toggle?.addEventListener('click', () => {
+        markInteracted();
+        const current = Number(range.value);
+        setPos(current < 50 ? 75 : 25);
+      });
+
+      // Optional gentle autoplay sweep (stops after first user interaction).
+      const wantsAuto = root.dataset.autoplay === 'true' && !reduceMotion;
+      if (!wantsAuto) return;
+
+      let raf = 0;
+      let dir: 1 | -1 = 1;
+      let last = performance.now();
+      const speed = 0.018; // percent/ms (~18% per second)
+
+      const tick = (now: number) => {
+        raf = 0;
+        if (interacted) return;
+
+        const dt = Math.min(48, now - last);
+        last = now;
+
+        const v = Number(range.value);
+        const next = v + dir * dt * speed;
+
+        if (next >= 78) dir = -1;
+        if (next <= 22) dir = 1;
+        setPos(next);
+
+        raf = window.requestAnimationFrame(tick);
+      };
+
+      const start = () => {
+        if (raf || interacted) return;
+        last = performance.now();
+        raf = window.requestAnimationFrame(tick);
+      };
+
+      const stop = () => {
+        if (!raf) return;
+        window.cancelAnimationFrame(raf);
+        raf = 0;
+      };
+
+      // Pause autoplay when the slider is in use / visible focus.
+      root.addEventListener('pointerdown', () => {
+        markInteracted();
+        stop();
+      });
+      root.addEventListener('focusin', () => {
+        markInteracted();
+        stop();
+      });
+
+      // Kick off when on screen.
+      const io = new IntersectionObserver(
+        (entries) => {
+          const e = entries[0];
+          if (!e) return;
+          if (e.isIntersecting) start();
+          else stop();
+        },
+        { threshold: 0.35 }
+      );
+      io.observe(root);
+    });
+  }
+
+  document.addEventListener('astro:page-load', initBeforeAfter);
+  initBeforeAfter();
+</script>

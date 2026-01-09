@@ -43,6 +43,24 @@ const imagePositionClass = getImagePositionClass(imagePosition);
 
 const heroVideoWebm = `${base}media/hero-cleaning.webm`;
 const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
+
+const heroStats = [
+  {
+    label: 'Step process',
+    value: siteConfig.processSteps?.length ?? 4,
+    note: 'Scope → checklist → delivery → follow-up',
+  },
+  {
+    label: 'Checklist essentials',
+    value: siteConfig.whatIncluded?.length ?? 6,
+    note: 'Repeatable, documented, predictable',
+  },
+  {
+    label: 'Point of contact',
+    value: 1,
+    note: 'Fast answers, no runaround',
+  },
+];
 ---
 
 <section
@@ -133,11 +151,13 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
     <div class="mx-auto max-w-4xl text-center lg:max-w-5xl">
       <h1
         class="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md lg:text-5xl xl:text-6xl"
+        data-hero-headline
       >
-        For spaces shaped by ambition and expectation.
+        <span class="hero-shine">For spaces shaped by ambition and expectation.</span>
       </h1>
       <p
         class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
+        data-hero-subhead
       >
         Premium commercial cleaning and facility management for{' '}
         <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
@@ -159,8 +179,36 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           View Services
         </a>
       </div>
+
+      <div
+        class="mx-auto mt-10 grid max-w-3xl animate-slide-up gap-3 [animation-delay:550ms] sm:mt-12 sm:grid-cols-3 sm:gap-4"
+        data-hero-stats
+      >
+        {
+          heroStats.map((stat) => (
+            <div class="hero-stat" data-haptic="true">
+              <div class="hero-stat__value" data-countup data-target={String(stat.value)}>
+                0
+              </div>
+              <div class="hero-stat__label">{stat.label}</div>
+              <div class="hero-stat__note">{stat.note}</div>
+            </div>
+          ))
+        }
+      </div>
     </div>
   </div>
+
+  <a
+    class="hero-swipe"
+    href="#expertise"
+    aria-label="Swipe up to discover the next section"
+    data-haptic="true"
+    data-hero-swipe
+  >
+    <span class="hero-swipe__text">Swipe up to discover</span>
+    <span class="hero-swipe__arrow" aria-hidden="true"></span>
+  </a>
 </section>
 
 <script>
@@ -209,8 +257,102 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
     }
   };
 
+  const clamp = (v: number, min: number, max: number) => Math.max(min, Math.min(max, v));
+
+  const initHeroMotion = () => {
+    const hero = document.querySelector<HTMLElement>('[data-hero-section]');
+    if (!hero) return;
+
+    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+    const headline = hero.querySelector<HTMLElement>('[data-hero-headline]');
+    const subhead = hero.querySelector<HTMLElement>('[data-hero-subhead]');
+    const swipe = hero.querySelector<HTMLElement>('[data-hero-swipe]');
+
+    // Parallax text overlay (subtle, mobile-first). Disabled for reduced motion.
+    if (!reduceMotion && headline && subhead) {
+      let ticking = false;
+      const onScroll = () => {
+        if (ticking) return;
+        ticking = true;
+        window.requestAnimationFrame(() => {
+          ticking = false;
+          const rect = hero.getBoundingClientRect();
+          const progress = clamp(-rect.top / Math.max(1, rect.height), 0, 1);
+          // Headline moves slightly slower than scroll.
+          const hY = progress * -18;
+          const pY = progress * -12;
+          headline.style.transform = `translate3d(0, ${hY}px, 0)`;
+          subhead.style.transform = `translate3d(0, ${pY}px, 0)`;
+
+          // Fade the swipe affordance once the user scrolls.
+          if (swipe) swipe.style.opacity = String(clamp(1 - progress * 1.6, 0, 1));
+        });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      onScroll();
+    }
+
+    // Scroll-triggered stat counters.
+    const counters = Array.from(hero.querySelectorAll<HTMLElement>('[data-countup]'));
+    if (!counters.length) return;
+
+    const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
+    const setText = (el: HTMLElement, n: number) => {
+      el.textContent = fmt.format(Math.round(n));
+    };
+
+    const animate = (el: HTMLElement, to: number) => {
+      if (reduceMotion) {
+        setText(el, to);
+        return;
+      }
+
+      const from = 0;
+      const duration = 900;
+      const start = performance.now();
+
+      const tick = (now: number) => {
+        const t = clamp((now - start) / duration, 0, 1);
+        // EaseOutCubic.
+        const eased = 1 - Math.pow(1 - t, 3);
+        setText(el, from + (to - from) * eased);
+        if (t < 1) window.requestAnimationFrame(tick);
+      };
+
+      window.requestAnimationFrame(tick);
+    };
+
+    const run = () => {
+      counters.forEach((el) => {
+        if (el.dataset.done === 'true') return;
+        el.dataset.done = 'true';
+        const target = Number(el.dataset.target ?? 0);
+        animate(el, Number.isFinite(target) ? target : 0);
+      });
+    };
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const e = entries[0];
+        if (!e) return;
+        if (e.isIntersecting) {
+          run();
+          io.disconnect();
+        }
+      },
+      { threshold: 0.4 }
+    );
+
+    const statsRoot = hero.querySelector<HTMLElement>('[data-hero-stats]') ?? hero;
+    io.observe(statsRoot);
+  };
+
   // Run on load
   initVideo();
+  initHeroMotion();
   // Also run on view transitions if enabled later
   document.addEventListener('astro:page-load', initVideo);
+  document.addEventListener('astro:page-load', initHeroMotion);
 </script>

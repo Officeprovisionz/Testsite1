@@ -7,7 +7,7 @@ import playfairVariableUrl from '@fontsource-variable/playfair-display/files/pla
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
-import MobileCTABar from '@/components/MobileCTABar.astro';
+import BottomTabBar from '@/components/BottomTabBar.astro';
 import FloatingActionButton from '@/components/FloatingActionButton.astro';
 import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
@@ -39,6 +39,10 @@ const plausibleSrc = PUBLIC_PLAUSIBLE_SRC;
 const sentryDsn = PUBLIC_SENTRY_DSN;
 
 const analyticsEnabled = siteConfig.analytics.enabled;
+
+const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import.meta.env.PROD })
+  // Prevent accidental "</script>" injection via safe escaping.
+  .replace(/</g, '\\u003c');
 
 const jsonLd = (() => {
   const [localityRaw, regionRaw] = siteConfig.brand.city.split(',').map((s) => s.trim());
@@ -234,12 +238,12 @@ const breadcrumbJsonLd = (() => {
       })();
     </script>
 
-    <script is:inline define:vars={{ sentryDsn, isProd: import.meta.env.PROD }}>
-      (() => {
-        // @ts-expect-error - injected by define:vars
-        const dsn = sentryDsn;
-        // @ts-expect-error - injected by define:vars
-        const prod = isProd;
+    <script
+      is:inline
+      set:html={`(() => {
+        const cfg = ${sentryClientConfig};
+        const dsn = cfg && cfg.dsn ? String(cfg.dsn) : '';
+        const prod = Boolean(cfg && cfg.prod);
 
         // Client-side error tracking (optional).
         // Only runs when PUBLIC_SENTRY_DSN is configured.
@@ -262,8 +266,8 @@ const breadcrumbJsonLd = (() => {
           .catch(() => {
             // ignore
           });
-      })();
-    </script>
+      })();`}
+    />
 
     <script>
       import { onCLS, onLCP, onFCP, onTTFB, onINP, type Metric } from 'web-vitals';
@@ -678,7 +682,7 @@ const breadcrumbJsonLd = (() => {
 
     <slot name="header" />
 
-    <main id="main-content" class="pb-0">
+    <main id="main-content" class="pb-24 md:pb-0">
       <slot />
     </main>
 
@@ -687,8 +691,8 @@ const breadcrumbJsonLd = (() => {
     <!-- Toast Notification System -->
     <Toaster client:load transition:persist />
 
-    <!-- Mobile CTA Bar (bottom-sticky on mobile) -->
-    <MobileCTABar />
+    <!-- Mobile Bottom Tab Bar (persistent navigation) -->
+    <BottomTabBar />
 
     <!-- Floating Action Button (mobile speed dial) -->
     <FloatingActionButton />
@@ -698,6 +702,49 @@ const breadcrumbJsonLd = (() => {
       // Initialize analytics and tracking
       captureUTMs();
       initScrollTracking();
+
+      // Micro-interactions: "haptic" press simulation.
+      // We keep CSS `:active` scaling for responsiveness and add a tiny springy release.
+      (() => {
+        if (typeof window === 'undefined') return;
+        const mq = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+        if (mq?.matches) return;
+
+        const root = document.documentElement;
+        if (root.dataset.hapticInit === 'true') return;
+        root.dataset.hapticInit = 'true';
+
+        const isHapticEl = (t: EventTarget | null) => {
+          const target = t as Element | null;
+          const el = target?.closest?.('[data-haptic="true"]') ?? null;
+          return el && el instanceof HTMLElement ? el : null;
+        };
+
+        document.addEventListener(
+          'pointerup',
+          (e) => {
+            const el = isHapticEl(e.target);
+            if (!el) return;
+
+            try {
+              el.animate(
+                [
+                  { transform: 'scale(0.98)' },
+                  { transform: 'scale(1.02)' },
+                  { transform: 'scale(1)' },
+                ],
+                {
+                  duration: 220,
+                  easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+                }
+              );
+            } catch {
+              // ignore
+            }
+          },
+          { passive: true }
+        );
+      })();
     </script>
   </body>
 </html>

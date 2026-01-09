@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
@@ -75,6 +76,31 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
   <BridgeDivider />
 
   <ExpertiseGallery />
+
+  <section class="section section-creative" id="before-after">
+    <div class="container-page">
+      <div class="mb-10 text-center">
+        <p class="eyebrow">Before / After</p>
+        <h2 class="heading-2">See the difference good process makes</h2>
+        <p class="lede mx-auto">
+          Drag the divider to compare. Swap in true before/after pairs anytime—this component is
+          ready.
+        </p>
+      </div>
+
+      <div class="mx-auto max-w-4xl">
+        <BeforeAfterSlider
+          beforeSrc={heroPrimary?.src ?? heroSecondary?.src ?? 'gallery/01.jpg'}
+          afterSrc={heroPrimary?.src ?? heroSecondary?.src ?? 'gallery/01.jpg'}
+          alt="Commercial workspace cleaned and client-ready"
+          beforeLabel="Before"
+          afterLabel="After"
+          initial={56}
+          autoPlay={true}
+        />
+      </div>
+    </div>
+  </section>
 
   <ConversionStrip
     tone="surface"

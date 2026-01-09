@@ -497,6 +497,79 @@ const navItems = [
       panel.addEventListener('touchend', onTouchEnd, { passive: true });
       panel.addEventListener('touchcancel', onTouchEnd, { passive: true });
     }
+
+    // --- Swipe from right edge to open ---
+    // When the menu is closed, a short swipe-left starting near the right screen edge opens it.
+    // This keeps the gesture discoverable (iOS-style "back"/drawer region) without hijacking
+    // in-content horizontal scroll.
+    if (typeof window !== 'undefined') {
+      const EDGE_PX = 22;
+      const TRIGGER_PX = 52;
+
+      let edgeStartX = 0;
+      let edgeStartY = 0;
+      let edgeMaybe = false;
+      let edgeTriggered = false;
+
+      const isEditableTarget = (t: EventTarget | null) => {
+        const el = t as HTMLElement | null;
+        if (!el) return false;
+        const tag = el.tagName;
+        return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
+      };
+
+      const onDocTouchStart = (e: TouchEvent) => {
+        if (menu.open) return;
+        if (isEditableTarget(e.target)) return;
+
+        const t = e.touches[0];
+        if (!t) return;
+
+        edgeStartX = t.clientX;
+        edgeStartY = t.clientY;
+        edgeTriggered = false;
+
+        const w = window.innerWidth || 0;
+        edgeMaybe = w > 0 && edgeStartX >= w - EDGE_PX;
+      };
+
+      const onDocTouchMove = (e: TouchEvent) => {
+        if (!edgeMaybe) return;
+        if (menu.open) return;
+        if (edgeTriggered) return;
+
+        const t = e.touches[0];
+        if (!t) return;
+
+        const dx = t.clientX - edgeStartX;
+        const dy = t.clientY - edgeStartY;
+
+        // Swipe-left only, strongly horizontal.
+        if (dx >= 0) return;
+        if (Math.abs(dx) < Math.abs(dy) * 1.15) return;
+
+        if (Math.abs(dx) > TRIGGER_PX) {
+          edgeTriggered = true;
+          menu.open = true;
+          // Prevent the page from also scrolling horizontally while we trigger the drawer.
+          e.preventDefault();
+        }
+      };
+
+      const onDocTouchEnd = () => {
+        edgeMaybe = false;
+        edgeTriggered = false;
+      };
+
+      // Use a guard so we don't bind multiple times across client-side navigations.
+      if (document.documentElement.dataset.menuEdgeSwipeInit !== 'true') {
+        document.documentElement.dataset.menuEdgeSwipeInit = 'true';
+        document.addEventListener('touchstart', onDocTouchStart, { passive: true });
+        document.addEventListener('touchmove', onDocTouchMove, { passive: false });
+        document.addEventListener('touchend', onDocTouchEnd, { passive: true });
+        document.addEventListener('touchcancel', onDocTouchEnd, { passive: true });
+      }
+    }
   })();
 </script>
 

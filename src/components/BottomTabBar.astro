@@ -1,0 +1,165 @@
+---
+import { Icon } from 'astro-icon/components';
+import { makeHref, makeIsActive } from '@/lib/nav';
+
+type Props = {
+  /** Hide the bar on specific routes (e.g., contact/thanks). */
+  hiddenPaths?: string[];
+};
+
+type TabItem = {
+  key: string;
+  label: string;
+  icon: string;
+  active: () => boolean;
+  /** Navigation href. If omitted, this item is treated as an action button. */
+  href?: string;
+  /** Primary (center) action styling. */
+  primary?: boolean;
+  /** Optional action identifier. */
+  action?: 'open-menu';
+};
+
+const { hiddenPaths = ['/contact/', '/thanks/'] } = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL;
+const href = makeHref(base);
+const isActive = makeIsActive(Astro.url.pathname, base);
+
+const items: TabItem[] = [
+  {
+    key: 'home',
+    label: 'Home',
+    href: href(''),
+    icon: 'lucide:home',
+    active: () => isActive(href('')),
+  },
+  {
+    key: 'services',
+    label: 'Services',
+    href: href('services/'),
+    icon: 'lucide:sparkles',
+    // Treat Industries as part of the "Services" mental model for quick nav.
+    active: () => isActive(href('services/')) || isActive(href('industries/')),
+  },
+  {
+    key: 'quote',
+    label: 'Quote',
+    href: href('contact/'),
+    icon: 'lucide:file-text',
+    active: () => isActive(href('contact/')),
+    primary: true,
+  },
+  {
+    key: 'results',
+    label: 'Results',
+    href: href('about/#proof'),
+    icon: 'lucide:images',
+    active: () => isActive(href('about/')),
+  },
+  {
+    key: 'more',
+    label: 'More',
+    icon: 'lucide:menu',
+    active: () => false,
+    action: 'open-menu',
+  },
+];
+
+const normalizedPath = (() => {
+  const raw = Astro.url.pathname || '/';
+  const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
+  const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
+  return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+})();
+
+const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
+---
+
+{
+  !shouldHide && (
+    <nav
+      class="bottom-tab-bar border-app fixed inset-x-0 bottom-0 z-40 md:hidden"
+      aria-label="Primary"
+      data-bottom-tab-bar
+    >
+      <div class="bottom-tab-bar__inner">
+        {items.map((it) => {
+          const active = it.active();
+          const isPrimary = Boolean(it.primary);
+
+          if (it.action === 'open-menu') {
+            return (
+              <button
+                type="button"
+                class:list={[
+                  'bottom-tab-bar__item',
+                  active ? 'is-active' : '',
+                  isPrimary ? 'is-primary' : '',
+                ]}
+                aria-label="Open menu"
+                data-open-mobile-menu
+                aria-current={active ? 'page' : undefined}
+                data-haptic="true"
+              >
+                <span class="bottom-tab-bar__icon" aria-hidden="true">
+                  <Icon name={it.icon} class="h-5 w-5" />
+                </span>
+                <span class="bottom-tab-bar__label">{it.label}</span>
+              </button>
+            );
+          }
+
+          return (
+            <a
+              href={it.href}
+              class:list={[
+                'bottom-tab-bar__item',
+                active ? 'is-active' : '',
+                isPrimary ? 'is-primary' : '',
+              ]}
+              aria-current={active ? 'page' : undefined}
+              data-haptic="true"
+            >
+              <span class="bottom-tab-bar__icon" aria-hidden="true">
+                <Icon name={it.icon} class="h-5 w-5" />
+              </span>
+              <span class="bottom-tab-bar__label">{it.label}</span>
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+  )
+}
+
+<script is:inline define:vars={{ base }}>
+  function initBottomTabBar() {
+    // Hook the "More" tab into the existing header drawer.
+    const openBtn = document.querySelector('[data-open-mobile-menu]');
+    if (!openBtn) return;
+    if (openBtn.dataset.init === 'true') return;
+    openBtn.dataset.init = 'true';
+
+    const openMenu = () => {
+      const menu = document.querySelector('details[data-mobile-menu]');
+      if (menu && menu instanceof HTMLDetailsElement) {
+        menu.open = true;
+        return;
+      }
+
+      // Fallback: navigate to a sensible catch-all page.
+      try {
+        const url = new URL(`${base}about/`, window.location.origin);
+        window.location.href = url.toString();
+      } catch {
+        window.location.href = '/about/';
+      }
+    };
+
+    openBtn.addEventListener('click', openMenu);
+  }
+
+  document.addEventListener('astro:page-load', initBottomTabBar);
+  initBottomTabBar();
+</script>

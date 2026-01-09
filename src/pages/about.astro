@@ -7,6 +7,7 @@ import ProcessStepsGrid from '@/components/ProcessStepsGrid.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import ConversionStrip from '@/components/ConversionStrip.astro';
 import Gallery from '@/components/Gallery.astro';
+import BeforeAfterSlider from '@/components/BeforeAfterSlider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
@@ -158,6 +159,30 @@ const heroImageMobile = heroSecondary
   </section>
 
   <AreasServed />
+
+  <section
+    class="section section-muted section-creative scroll-mt-20"
+    aria-label="Before and after"
+  >
+    <div class="container-page">
+      <SectionHeader
+        eyebrow="Results"
+        heading="Before / after (drag to compare)"
+        description="Real spaces, clearer expectations. We confirm scope and deliver against a checklist so the result is consistent—not random."
+        align="center"
+      />
+
+      <div class="mx-auto mt-10 max-w-4xl">
+        <BeforeAfterSlider
+          beforeSrc={heroSecondary?.src ?? heroPrimary?.src ?? 'gallery/03.jpg'}
+          afterSrc={heroPrimary?.src ?? heroSecondary?.src ?? 'gallery/03.jpg'}
+          alt="Commercial space cleaned and refreshed"
+          initial={48}
+          autoPlay={true}
+        />
+      </div>
+    </div>
+  </section>
 
   <Gallery
     id="proof"

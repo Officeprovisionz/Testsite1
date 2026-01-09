@@ -1,6 +1,12 @@
 ---
 import { Icon } from 'astro-icon/components';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
+import galleryMetadataRaw from '@/data/gallery-metadata.json';
+
+const galleryMetadata = galleryMetadataRaw as Record<
+  string,
+  { dominant: string; lqip: string; width?: number; height?: number } | undefined
+>;
 
 type Props = {
   /** Image paths relative to /public (e.g. 'gallery/01.jpg') or absolute URLs. */
@@ -15,6 +21,13 @@ type Props = {
   initial?: number;
   /** If true, gently auto-sweeps until the user interacts. */
   autoPlay?: boolean;
+
+  /**
+   * Optional intrinsic sizing to reserve layout space (helps reduce CLS).
+   * If omitted and the image is from /public/gallery, we'll try to infer dimensions from gallery metadata.
+   */
+  width?: number;
+  height?: number;
 };
 
 const {
@@ -25,6 +38,8 @@ const {
   afterLabel = 'After',
   initial = 52,
   autoPlay = true,
+  width = 1280,
+  height = 720,
 } = Astro.props as Props;
 
 const base = import.meta.env.BASE_URL;
@@ -68,6 +83,17 @@ const afterAttrs = getImgAttrs(afterSrc);
 const beforeHref = toPublicUrl(beforeSrc);
 const afterHref = toPublicUrl(afterSrc);
 
+const getDimsFromGalleryMeta = (src: string) => {
+  if (/^https?:\/\//i.test(src)) return { width: undefined, height: undefined };
+  const cleaned = src.replace(/^\/+/, '');
+  const fileName = cleaned.split('/').pop() || '';
+  const meta = galleryMetadata[fileName];
+  return { width: meta?.width, height: meta?.height };
+};
+
+const beforeMeta = getDimsFromGalleryMeta(beforeSrc);
+const afterMeta = getDimsFromGalleryMeta(afterSrc);
+
 const initialClamped = Math.max(0, Math.min(100, Math.round(initial)));
 ---
 
@@ -96,6 +122,8 @@ const initialClamped = Math.max(0, Math.min(100, Math.round(initial)));
           src={afterAttrs.src}
           srcset={afterAttrs.srcSet}
           sizes={afterAttrs.srcSet ? afterAttrs.sizes : undefined}
+          width={afterMeta.width ?? width}
+          height={afterMeta.height ?? height}
           alt={alt}
           loading="lazy"
           decoding="async"
@@ -121,6 +149,8 @@ const initialClamped = Math.max(0, Math.min(100, Math.round(initial)));
             src={beforeAttrs.src}
             srcset={beforeAttrs.srcSet}
             sizes={beforeAttrs.srcSet ? beforeAttrs.sizes : undefined}
+            width={beforeMeta.width ?? width}
+            height={beforeMeta.height ?? height}
             alt=""
             loading="lazy"
             decoding="async"

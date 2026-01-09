@@ -39,6 +39,7 @@ const navItems = [
       data-action="home"
       data-label="header_logo"
       href={href('')}
+      data-astro-prefetch="tap"
       class="flex items-center gap-3 text-xl font-bold tracking-tight"
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
@@ -66,6 +67,7 @@ const navItems = [
         navItems.map((item) => (
           <a
             href={item.href}
+            data-astro-prefetch
             class:list={[
               'relative rounded-lg px-3 py-2 transition-all focus-visible:outline-none lg:px-4 lg:py-2.5',
               transparent
@@ -200,6 +202,7 @@ const navItems = [
               navItems.map((item) => (
                 <a
                   href={item.href}
+                  data-astro-prefetch="tap"
                   class:list={[
                     'hover:bg-brand/5 hover:text-brand dark:hover:text-brand block rounded-lg px-3 py-2.5 text-base font-medium transition-colors dark:hover:bg-white/10',
                     isActive(item.href)
@@ -583,11 +586,33 @@ const navItems = [
       document.querySelector('header[data-site-header]') as HTMLElement | null;
 
     let raf = 0;
+    let lastY = window.scrollY || 0;
+    let lastDir: 'up' | 'down' = 'up';
+
+    const COMPACT_AFTER_PX = 96;
+    const DIR_DEADBAND_PX = 6;
+
     const update = () => {
       raf = 0;
       const header = getHeader();
       if (!header) return;
-      header.classList.toggle('is-scrolled', (window.scrollY || 0) > 8);
+
+      const y = window.scrollY || 0;
+      header.classList.toggle('is-scrolled', y > 8);
+
+      const dy = y - lastY;
+      if (Math.abs(dy) > DIR_DEADBAND_PX) {
+        lastDir = dy > 0 ? 'down' : 'up';
+        lastY = y;
+      }
+
+      // "Scroll-aware header" behavior:
+      // - When scrolling down past a threshold, compact the header to reduce chrome.
+      // - When scrolling up, expand for navigation.
+      // Avoid compacting while the user is interacting with header controls.
+      const allowCompact = !header.matches(':focus-within');
+      const shouldCompact = allowCompact && y > COMPACT_AFTER_PX && lastDir === 'down';
+      header.classList.toggle('is-compact', shouldCompact);
 
       // Keep anchor offsets in sync with the *actual* rendered header height.
       const h = Math.ceil(header.getBoundingClientRect().height);

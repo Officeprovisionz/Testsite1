@@ -680,6 +680,48 @@ const breadcrumbJsonLd = (() => {
       })();
     </script>
 
+    <script is:inline>
+      (() => {
+        // Prefetch high-intent internal navigations (CTAs) for snappier UX.
+        // Astro recommends opt-in prefetching per-link (or by selector) rather than prefetching everything.
+        // https://docs.astro.build/en/guides/prefetch/
+        if (typeof window === 'undefined') return;
+
+        const init = () => {
+          const selector = 'a.btn-primary, a.btn-secondary, a.btn-accent, a.btn-invert';
+          const anchors = Array.from(document.querySelectorAll(selector)).filter(
+            (n) => n instanceof HTMLAnchorElement
+          );
+
+          anchors.forEach((a) => {
+            if (a.hasAttribute('data-astro-prefetch')) return;
+            if (a.dataset.ctaPrefetch === 'true') return;
+            const href = a.getAttribute('href') || '';
+            if (!href) return;
+
+            // Skip non-page navigations.
+            if (href.startsWith('#')) return;
+            if (/^(tel:|mailto:|sms:)/i.test(href)) return;
+            if (/^https?:\/\//i.test(href)) {
+              try {
+                const u = new URL(href);
+                if (u.origin !== window.location.origin) return;
+              } catch {
+                return;
+              }
+            }
+
+            // Prefer "tap" for CTAs (mobile-first), keeping bandwidth usage modest.
+            a.setAttribute('data-astro-prefetch', 'tap');
+            a.dataset.ctaPrefetch = 'true';
+          });
+        };
+
+        document.addEventListener('astro:page-load', init);
+        init();
+      })();
+    </script>
+
     <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
       (() => {
         // Register a lightweight service worker in production builds.

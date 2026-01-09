@@ -1570,6 +1570,25 @@
       transform 220ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
+  /* Scroll-aware header: compact on scroll-down, expand on scroll-up. */
+  header[data-site-header].is-compact .header-inner {
+    height: 3.75rem;
+  }
+
+  header[data-site-header].is-compact .brand-mark {
+    transform: scale(0.88);
+  }
+
+  @media (min-width: 768px) {
+    /* Desktop: keep header usable; compact mode is subtle. */
+    header[data-site-header].is-compact .header-inner {
+      height: 4.25rem;
+    }
+    header[data-site-header].is-compact .brand-mark {
+      transform: scale(0.92);
+    }
+  }
+
   header[data-site-header].is-scrolled .header-inner {
     height: 4.25rem;
   }
@@ -1596,6 +1615,53 @@
     header[data-site-header] .brand-mark {
       height: 2.25rem;
       width: 2.25rem;
+    }
+
+    header[data-site-header].is-compact .header-inner {
+      height: 3.5rem;
+    }
+  }
+
+  /* View transitions (Astro ClientRouter / native view-transition pseudo-elements).
+     Keep it fast and subtle; browsers will ignore unsupported selectors. */
+  @view-transition {
+    navigation: auto;
+  }
+
+  @keyframes damra-vt-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+
+  @keyframes damra-vt-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  ::view-transition-old(root) {
+    animation: 220ms cubic-bezier(0.2, 0, 0, 1) both damra-vt-out;
+  }
+
+  ::view-transition-new(root) {
+    animation: 260ms cubic-bezier(0.2, 0, 0, 1) both damra-vt-in;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none;
     }
   }
 

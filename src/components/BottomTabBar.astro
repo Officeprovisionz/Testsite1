@@ -93,7 +93,7 @@ const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
               <button
                 type="button"
                 class:list={[
-                  'bottom-tab-bar__item',
+                  'bottom-tab-bar__item tap-target',
                   active ? 'is-active' : '',
                   isPrimary ? 'is-primary' : '',
                 ]}
@@ -114,12 +114,13 @@ const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
             <a
               href={it.href}
               class:list={[
-                'bottom-tab-bar__item',
+                'bottom-tab-bar__item tap-target',
                 active ? 'is-active' : '',
                 isPrimary ? 'is-primary' : '',
               ]}
               aria-current={active ? 'page' : undefined}
               data-haptic="true"
+              data-astro-prefetch="tap"
             >
               <span class="bottom-tab-bar__icon" aria-hidden="true">
                 <Icon name={it.icon} class="h-5 w-5" />

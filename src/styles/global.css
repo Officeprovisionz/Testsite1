@@ -800,6 +800,8 @@
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
     padding: 0.55rem 0.85rem;
     border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, 0.18);
@@ -865,6 +867,8 @@
     line-height: 1.05;
     font-weight: 760;
     letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
   }
 
   .hero-stat__label {
@@ -1063,7 +1067,7 @@
   }
 
   .icon-btn {
-    @apply btn-secondary px-0;
+    @apply btn-secondary tap-target px-0;
     width: 2.75rem;
   }
 
@@ -1739,7 +1743,7 @@
   }
 
   .menu-link {
-    @apply block rounded-lg px-4 py-3.5 text-sm font-medium;
+    @apply tap-target block rounded-lg px-4 py-3.5 text-sm font-medium;
     color: rgb(var(--color-text-muted));
   }
 

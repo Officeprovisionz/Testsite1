@@ -103,6 +103,30 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0d11" />
     <ClientRouter />
 
+    {/* 2026 Speculation Rules - Instant pre-rendering for key conversion paths */}
+    <script
+      type="speculationrules"
+      is:inline
+      set:html={JSON.stringify({
+        prerender: [
+          {
+            source: 'list',
+            urls: ['/pricing', '/services', '/contact', '/about'],
+          },
+          {
+            source: 'document',
+            where: {
+              and: [
+                { href_matches: '/*' },
+                { not: { href_matches: ['/dev/*', '#*', 'mailto:*', 'tel:*'] } },
+              ],
+            },
+            eagerness: 'moderate',
+          },
+        ],
+      })}
+    />
+
     <script is:inline>
       (() => {
         // Vendor-neutral tracking hook.
@@ -755,6 +779,15 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
           (e) => {
             const el = isHapticEl(e.target);
             if (!el) return;
+
+            // Physical tactile feedback for 2026 mobile devices (12-15ms is "soft click")
+            if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+              try {
+                navigator.vibrate(12);
+              } catch {
+                /* block */
+              }
+            }
 
             try {
               el.animate(

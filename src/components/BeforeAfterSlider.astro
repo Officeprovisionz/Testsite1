@@ -208,6 +208,21 @@ const initialClamped = Math.max(0, Math.min(100, Math.round(initial)));
         const clamped = Math.max(0, Math.min(100, Math.round(v)));
         root.style.setProperty('--ba-pos', `${clamped}%`);
         range.value = String(clamped);
+
+        // Tactile feedback for mobile: tiny buzz when crossing mid-point or hitting extremes.
+        if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
+          const prev = Number(root.dataset.lastPos || 50);
+          const crossedCenter = (prev < 50 && clamped >= 50) || (prev > 50 && clamped <= 50);
+          const hitEdge = (prev > 5 && clamped <= 5) || (prev < 95 && clamped >= 95);
+          if (crossedCenter || hitEdge) {
+            try {
+              navigator.vibrate(crossedCenter ? 8 : 12);
+            } catch {
+              /* ignore */
+            }
+          }
+        }
+        root.dataset.lastPos = String(clamped);
       };
 
       const initial = Number(root.dataset.initial ?? range.value ?? 50);

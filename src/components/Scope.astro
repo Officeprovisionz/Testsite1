@@ -3,6 +3,7 @@ import { siteConfig } from '@/data/siteConfig';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { makeHref } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
 
 type Props = {
   id?: string | undefined;
@@ -17,11 +18,12 @@ const {
   heading = 'Scope & service levels',
   description = siteConfig.scope.note,
   ctaHref,
-  ctaLabel = 'Request a quote',
+  ctaLabel = 'Call for a quote',
 } = Astro.props as Props;
 
 const href = makeHref(import.meta.env.BASE_URL);
-const cta = ctaHref ?? href('contact/');
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+const cta = ctaHref ?? telHref;
 
 const levels = siteConfig.scope.levels;
 const featuredIndex = levels.length >= 3 ? 1 : 0;
@@ -78,7 +80,7 @@ const featuredIndex = levels.length >= 3 ? 1 : 0;
               {lvl.includes.map((i) => (
                 <li>
                   <span class="check-icon check-icon--sm" aria-hidden="true">
-                    ✓
+                    +
                   </span>
                   <span>{i}</span>
                 </li>

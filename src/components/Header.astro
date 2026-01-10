@@ -89,12 +89,7 @@ const navItems = [
 
     <div class="flex items-center gap-1.5 sm:gap-2">
       <a
-        class:list={[
-          'btn-secondary hidden sm:inline-flex',
-          transparent
-            ? 'border-white/25 bg-white/10 text-white hover:border-white/30 hover:bg-white/15 hover:text-white'
-            : '',
-        ]}
+        class="btn-primary px-3 sm:px-6"
         href={telHref}
         aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
         data-track="cta_click"
@@ -102,44 +97,24 @@ const navItems = [
         data-action="call"
         data-label="header_call"
       >
-        {siteConfig.contact.phoneDisplay}
-      </a>
-      <a
-        class:list={['icon-btn sm:hidden', transparent ? 'text-white hover:bg-white/10' : '']}
-        href={telHref}
-        aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
-        data-track="cta_click"
-        data-location="header"
-        data-action="call"
-        data-label="header_call_icon"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="h-5 w-5"
-          aria-hidden="true"
-        >
-          <path
-            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.08 4.18 2 2 0 0 1 4.06 2h3a2 2 0 0 1 2 1.72c.12.86.3 1.7.54 2.51a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.57-1.06a2 2 0 0 1 2.11-.45c.81.24 1.65.42 2.51.54A2 2 0 0 1 22 16.92z"
-          ></path>
-        </svg>
+        <span class="sm:hidden">Call now</span>
+        <span class="hidden sm:inline">Call {siteConfig.contact.phoneDisplay}</span>
       </a>
 
       <a
-        class="btn-primary px-3 sm:px-6"
+        class:list={[
+          'btn-secondary hidden sm:inline-flex',
+          transparent
+            ? 'border-white/25 bg-white/10 text-white hover:border-white/30 hover:bg-white/15 hover:text-white'
+            : '',
+        ]}
         href={href('contact/')}
         data-track="cta_click"
         data-location="header"
         data-action="quote"
         data-label="header_quote"
       >
-        <span class="sm:hidden">Quote</span>
-        <span class="hidden sm:inline">Request a quote</span>
+        Request a quote
       </a>
 
       <details class="relative md:hidden" data-mobile-menu>
@@ -697,10 +672,10 @@ const navItems = [
     };
 
     const prettyName = (t: string) => {
-      if (t === 'teal') return 'Theme: Teal';
-      if (t === 'navy') return 'Theme: Navy';
-      if (t === 'emerald') return 'Theme: Emerald';
-      if (t === 'slate') return 'Theme: Slate';
+      if (t === 'teal') return 'Theme: Glacier';
+      if (t === 'navy') return 'Theme: Midnight';
+      if (t === 'emerald') return 'Theme: Verdant';
+      if (t === 'slate') return 'Theme: Graphite';
       return `Theme: ${t}`;
     };
 

@@ -53,5 +53,5 @@ interface MediaQueryListLegacy extends MediaQueryList {
 
 // Side-effect imports for local webfonts (used in BaseLayout).
 // These packages ship CSS and don't always include TS module declarations.
-declare module '@fontsource-variable/inter';
-declare module '@fontsource-variable/playfair-display';
+declare module '@fontsource-variable/space-grotesk';
+declare module '@fontsource-variable/fraunces';

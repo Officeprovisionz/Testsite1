@@ -2,6 +2,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import Spotlight from './ui/Spotlight.astro';
 import { getImagePositionClass } from '@/lib/utils';
+import { makeTelHref } from '@/lib/links';
 
 type Props = {
   /** Optional fully-qualified (BASE_URL-prefixed) hero image URL. */
@@ -33,6 +34,7 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
 // Opt-in only: avoids 404 network requests when the optional hero videos are not present.
 const heroVideoOptIn =
   String(import.meta.env.PUBLIC_ENABLE_HERO_VIDEO ?? '').toLowerCase() === 'true';
@@ -46,19 +48,19 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
 
 const heroStats = [
   {
-    label: 'Step process',
-    value: siteConfig.processSteps?.length ?? 4,
-    note: 'Scope → checklist → delivery → follow-up',
-  },
-  {
-    label: 'Checklist essentials',
+    label: 'Checklist pillars',
     value: siteConfig.whatIncluded?.length ?? 6,
-    note: 'Repeatable, documented, predictable',
+    note: 'Documented, consistent, verified',
   },
   {
-    label: 'Point of contact',
-    value: 1,
-    note: 'Fast answers, no runaround',
+    label: 'Service coverage',
+    value: siteConfig.services?.length ?? 5,
+    note: 'Cleaning, restocking, facilities',
+  },
+  {
+    label: 'Process steps',
+    value: siteConfig.processSteps?.length ?? 4,
+    note: 'Scope, checklist, delivery',
   },
 ];
 ---
@@ -153,30 +155,30 @@ const heroStats = [
         class="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md lg:text-5xl xl:text-6xl"
         data-hero-headline
       >
-        <span class="hero-shine">For spaces shaped by ambition and expectation.</span>
+        <span class="hero-shine">Precision cleaning for spaces that lead.</span>
       </h1>
       <p
         class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
         data-hero-subhead
       >
-        Premium commercial cleaning and facility management for{' '}
+        Discreet, checklist-driven commercial cleaning for{' '}
         <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
-        environments.
+        workplaces.
       </p>
       <div
         class="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5"
       >
         <a
-          href={`${base}contact/`}
-          class="btn-accent shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          href={telHref}
+          class="btn-primary shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
         >
-          Get a Free Quote
+          Call now
         </a>
         <a
-          href={`${base}services/`}
-          class="btn-invert w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          href={`${base}contact/`}
+          class="btn-secondary w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
         >
-          View Services
+          Request a quote
         </a>
       </div>
 

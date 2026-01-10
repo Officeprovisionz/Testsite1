@@ -10,32 +10,31 @@
     --header-sticky: 5rem;
     --section-nav-sticky: 3.25rem;
 
-    /* Brand (Teal) — centered on #00B4A6 for fresh, trustworthy feel
-       Refined with perceptual uniformity (CIELAB-based) and consistent hue progression */
-    --color-brand-50: 240 253 251; /* #F0FDFB - Slightly cooler for glass effects */
-    --color-brand-100: 205 251 242; /* #CDFBF2 - Enhanced saturation +2% */
-    --color-brand-200: 154 247 230; /* #9AF7E6 - Perceptually balanced */
-    --color-brand-300: 95 235 214; /* #5FEBD6 - Increased vibrancy +3% */
-    --color-brand-400: 46 213 193; /* #2ED5C1 - Golden ratio brightness */
-    --color-brand-500: 0 180 166; /* #00B4A6 — design spec primary (unchanged anchor) */
-    --color-brand-600: 0 156 143; /* #009C8F - Enhanced contrast +2% */
-    --color-brand-700: 0 130 120; /* #008278 - Deeper for AAA compliance */
-    --color-brand-800: 0 104 96; /* #006860 - Warm shift +1° hue for depth */
-    --color-brand-900: 0 78 72; /* #004E48 - Increased lightness gap */
-    --color-brand-950: 0 52 48; /* #003430 - Warmer black base */
+    /* Brand (Glacier) - clean, precise cool blue */
+    --color-brand-50: 239 250 252; /* #EFFAFC */
+    --color-brand-100: 215 242 248; /* #D7F2F8 */
+    --color-brand-200: 184 231 240; /* #B8E7F0 */
+    --color-brand-300: 144 214 229; /* #90D6E5 */
+    --color-brand-400: 112 197 216; /* #70C5D8 */
+    --color-brand-500: 82 176 200; /* #52B0C8 */
+    --color-brand-600: 61 148 171; /* #3D94AB */
+    --color-brand-700: 44 118 136; /* #2C7688 */
+    --color-brand-800: 31 87 100; /* #1F5764 */
+    --color-brand-900: 23 66 76; /* #17424C */
+    --color-brand-950: 13 41 49; /* #0D2931 */
 
-    /* Accent (Coral) — #FF6B6B for CTAs, warm and inviting
-       Refined for complementary harmony with teal, enhanced warmth and depth */
-    --color-accent-50: 255 246 245; /* #FFF6F5 - Warmer, less pink */
-    --color-accent-100: 255 229 227; /* #FFE5E3 - Subtle warmth boost */
-    --color-accent-200: 255 201 198; /* #FFC9C6 - Perceptually balanced */
-    --color-accent-300: 255 162 158; /* #FFA29E - Enhanced vibrancy +4% */
-    --color-accent-400: 255 136 132; /* #FF8884 - Golden ratio saturation */
-    --color-accent-500: 255 107 107; /* #FF6B6B — design spec accent (unchanged anchor) */
-    --color-accent-600: 232 82 78; /* #E8524E - Deeper for better contrast */
-    --color-accent-700: 202 58 54; /* #CA3A36 - AAA compliance target */
-    --color-accent-800: 172 42 38; /* #AC2A26 - Warm undertone preserved */
-    --color-accent-900: 142 32 28; /* #8E201C - Richer dark tone */
+    /* Accent (Champagne) - premium warm highlight */
+    --color-accent-50: 255 250 242; /* #FFFAF2 */
+    --color-accent-100: 252 241 221; /* #FCF1DD */
+    --color-accent-200: 248 222 184; /* #F8DEB8 */
+    --color-accent-300: 240 198 142; /* #F0C68E */
+    --color-accent-400: 232 176 105; /* #E8B069 */
+    --color-accent-500: 221 149 79; /* #DD954F */
+    --color-accent-600: 198 119 58; /* #C6773A */
+    --color-accent-700: 169 92 45; /* #A95C2D */
+    --color-accent-800: 132 70 37; /* #844625 */
+    --color-accent-900: 98 52 31; /* #62341F */
+    --color-accent-950: 64 34 22; /* #402216 */
 
     /* Spacing Scale (4-8-12-16-24-32-48-64-96) */
     --space-1: 0.25rem; /* 4px */
@@ -50,46 +49,44 @@
 
     /* Type + layout defaults */
     /* Cleaner, less “bubbly” geometry */
-    --radius-card: 0.75rem;
-    --radius-control: 0.625rem;
-    --shadow-soft: 0 10px 26px -18px rgba(2, 6, 23, 0.18);
+    --radius-card: 1rem;
+    --radius-control: 0.875rem;
+    --shadow-soft: 0 18px 40px -24px rgba(2, 6, 23, 0.35);
 
     /* Semantic Brand Tokens */
     --color-brand: var(--color-brand-500);
-    --color-accent: var(--color-accent-500);
+    --color-accent: var(--color-accent-400);
 
-    /* Semantic surfaces (light) — cream base + strong contrast */
-    --color-bg: 255 255 255;
+    /* Semantic surfaces (light) - porcelain base */
+    --color-bg: 250 247 242; /* #FAF7F2 */
     --color-surface: 255 255 255;
-    --color-surface-muted: 249 250 251; /* gray-50 */
-    --color-border: 229 231 235; /* gray-200 */
-    --color-text: 17 24 39; /* slate-900 */
-    --color-text-muted: 75 85 99; /* gray-600 */
-    --color-text-subtle: 107 114 128; /* gray-500 */
+    --color-surface-muted: 244 241 236; /* #F4F1EC */
+    --color-border: 223 217 208; /* #DFD9D0 */
+    --color-text: 21 22 26; /* #15161A */
+    --color-text-muted: 78 81 92; /* #4E515C */
+    --color-text-subtle: 112 116 129; /* #707481 */
 
-    /* Shadcn UI Variables (Mapped to Brand - Teal #00B4A6) */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    /* Primary teal #00B4A6 in HSL: 174° 100% 35% */
-    --primary: 174 100% 35%;
+    /* Shadcn UI Variables (Mapped to Glacier brand) */
+    --background: 30 33% 98%;
+    --foreground: 222 20% 12%;
+    --card: 30 33% 99%;
+    --card-foreground: 222 20% 12%;
+    --popover: 30 33% 99%;
+    --popover-foreground: 222 20% 12%;
+    --primary: 194 54% 48%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 40 6% 97%;
-    --secondary-foreground: 0 0% 4%;
-    --muted: 40 6% 97%;
-    /* High contrast muted foreground for readability */
-    --muted-foreground: 0 0% 23%;
-    --accent: 40 6% 97%;
-    --accent-foreground: 0 0% 4%;
+    --secondary: 30 18% 96%;
+    --secondary-foreground: 222 22% 14%;
+    --muted: 30 18% 96%;
+    --muted-foreground: 220 10% 32%;
+    --accent: 33 40% 92%;
+    --accent-foreground: 222 22% 14%;
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --border: 40 6% 90%;
-    --input: 40 6% 90%;
-    --ring: 174 100% 35%;
-    --radius: 0.5rem;
+    --border: 30 10% 86%;
+    --input: 30 10% 86%;
+    --ring: 194 54% 48%;
+    --radius: 0.75rem;
   }
 
   @media (max-width: 640px) {
@@ -108,6 +105,9 @@
     background-color: rgb(var(--color-bg));
     color: rgb(var(--color-text));
     min-height: 100dvh;
+    letter-spacing: 0.01em;
+    line-height: 1.7;
+    font-optical-sizing: auto;
   }
 
   html {
@@ -127,11 +127,11 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Clean, premium gradients (subtle depth, no busy imagery) */
+    /* Clean luxury glow: cool brand + warm accent at low opacity. */
     background:
-      radial-gradient(900px 520px at 20% 0%, rgb(var(--color-brand) / 0.1), transparent 62%),
-      radial-gradient(820px 520px at 85% 15%, rgb(var(--color-brand) / 0.08), transparent 68%),
-      radial-gradient(980px 640px at 50% 100%, rgb(var(--color-brand) / 0.07), transparent 70%);
+      radial-gradient(1200px 640px at 85% -10%, rgb(var(--color-accent) / 0.18), transparent 65%),
+      radial-gradient(980px 560px at 12% -10%, rgb(var(--color-brand) / 0.22), transparent 62%),
+      radial-gradient(900px 640px at 50% 120%, rgb(var(--color-brand-900) / 0.25), transparent 70%);
     pointer-events: none;
   }
 
@@ -147,39 +147,38 @@
   header.sticky {
     @apply bg-surface/80 backdrop-blur-md dark:bg-surface/80;
   }
-  /* Forced dark mode — Helmholtz-Kohlrausch effect compensation applied */
+  /* Forced dark mode */
   :root[data-mode='dark'] {
     color-scheme: dark;
-    /* Dark theme — warmer blacks with subtle teal tint for premium feel */
-    --color-bg: 15 16 16; /* #0F1010 - Warm shift */
-    --color-surface: 26 27 27; /* #1A1B1B - Subtle warmth */
-    --color-surface-muted: 31 32 32; /* #1F2020 - Consistent progression */
-    --color-border: 68 70 70; /* #444646 - Warmer, more visible borders */
-    --color-text: 242 242 242; /* #F2F2F2 - Brighter for AAA */
-    --color-text-muted: 215 215 215; /* #D7D7D7 - Enhanced readability */
-    --color-text-subtle: 168 168 168; /* #A8A8A8 - Better contrast */
-    --shadow-soft: 0 20px 60px -20px rgba(0, 0, 0, 0.75); /* Deeper shadows */
+    --color-bg: 9 11 15; /* #090B0F */
+    --color-surface: 15 18 24; /* #0F1218 */
+    --color-surface-muted: 19 23 31; /* #13171F */
+    --color-border: 35 41 55; /* #232937 */
+    --color-text: 243 239 232; /* #F3EFE8 */
+    --color-text-muted: 186 193 205; /* #BAC1CD */
+    --color-text-subtle: 140 149 165; /* #8C95A5 */
+    --shadow-soft: 0 24px 80px -32px rgba(0, 0, 0, 0.7);
 
     /* Shadcn Dark Mode */
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 173 85% 42%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
+    --background: 220 25% 6%;
+    --foreground: 30 20% 96%;
+    --card: 220 25% 8%;
+    --card-foreground: 30 20% 96%;
+    --popover: 220 25% 8%;
+    --popover-foreground: 30 20% 96%;
+    --primary: 193 54% 60%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 16% 16%;
     --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 0 0% 82%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --muted: 220 16% 16%;
+    --muted-foreground: 215 14% 75%;
+    --accent: 33 35% 22%;
+    --accent-foreground: 45 50% 85%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 173 85% 42%;
+    --border: 220 14% 22%;
+    --input: 220 14% 22%;
+    --ring: 193 54% 60%;
   }
 
   /* Auto mode: follow system preference unless forced to light */
@@ -187,35 +186,35 @@
     :root:not([data-mode='light']) {
       color-scheme: dark;
       /* Mirror the dark-mode token set when user is in auto and OS is dark. */
-      --color-bg: 15 15 15;
-      --color-surface: 26 26 26;
-      --color-surface-muted: 31 31 31;
-      --color-border: 64 64 64;
-      --color-text: 240 240 240;
-      --color-text-muted: 212 212 212;
-      --color-text-subtle: 163 163 163;
-      --shadow-soft: 0 18px 60px -24px rgba(0, 0, 0, 0.55);
+      --color-bg: 9 11 15;
+      --color-surface: 15 18 24;
+      --color-surface-muted: 19 23 31;
+      --color-border: 35 41 55;
+      --color-text: 243 239 232;
+      --color-text-muted: 186 193 205;
+      --color-text-subtle: 140 149 165;
+      --shadow-soft: 0 24px 80px -32px rgba(0, 0, 0, 0.7);
 
       /* Shadcn vars MUST also follow auto-dark; otherwise `text-muted-foreground` etc. stay light. */
-      --background: 222.2 84% 4.9%;
-      --foreground: 210 40% 98%;
-      --card: 222.2 84% 4.9%;
-      --card-foreground: 210 40% 98%;
-      --popover: 222.2 84% 4.9%;
-      --popover-foreground: 210 40% 98%;
-      --primary: 173 85% 42%;
-      --primary-foreground: 210 40% 98%;
-      --secondary: 217.2 32.6% 17.5%;
+      --background: 220 25% 6%;
+      --foreground: 30 20% 96%;
+      --card: 220 25% 8%;
+      --card-foreground: 30 20% 96%;
+      --popover: 220 25% 8%;
+      --popover-foreground: 30 20% 96%;
+      --primary: 193 54% 60%;
+      --primary-foreground: 0 0% 100%;
+      --secondary: 220 16% 16%;
       --secondary-foreground: 210 40% 98%;
-      --muted: 217.2 32.6% 17.5%;
-      --muted-foreground: 0 0% 82%;
-      --accent: 217.2 32.6% 17.5%;
-      --accent-foreground: 210 40% 98%;
+      --muted: 220 16% 16%;
+      --muted-foreground: 215 14% 75%;
+      --accent: 33 35% 22%;
+      --accent-foreground: 45 50% 85%;
       --destructive: 0 62.8% 30.6%;
       --destructive-foreground: 210 40% 98%;
-      --border: 217.2 32.6% 17.5%;
-      --input: 217.2 32.6% 17.5%;
-      --ring: 173 85% 42%;
+      --border: 220 14% 22%;
+      --input: 220 14% 22%;
+      --ring: 193 54% 60%;
     }
   }
 
@@ -225,104 +224,103 @@
   }
 
   :root[data-theme='navy'] {
-    --color-brand-50: 239 246 255;
-    --color-brand-100: 219 234 254;
-    --color-brand-200: 191 219 254;
-    --color-brand-300: 147 197 253;
-    --color-brand-400: 96 165 250;
-    --color-brand-500: 59 130 246;
-    --color-brand-600: 37 99 235;
-    --color-brand-700: 29 78 216;
-    --color-brand-800: 30 64 175;
-    --color-brand-900: 30 58 138;
-    --color-brand-950: 23 37 84;
+    --color-brand-50: 237 242 250;
+    --color-brand-100: 220 230 247;
+    --color-brand-200: 193 208 240;
+    --color-brand-300: 153 175 228;
+    --color-brand-400: 115 145 210;
+    --color-brand-500: 86 116 190;
+    --color-brand-600: 66 92 165;
+    --color-brand-700: 50 72 134;
+    --color-brand-800: 36 54 101;
+    --color-brand-900: 26 39 74;
+    --color-brand-950: 14 22 43;
 
-    --primary: 221 83% 53%;
-    --ring: 221 83% 53%;
+    --primary: 220 52% 55%;
+    --ring: 220 52% 55%;
   }
 
   :root[data-theme='emerald'] {
-    --color-brand-50: 236 253 245;
-    --color-brand-100: 209 250 229;
-    --color-brand-200: 167 243 208;
-    --color-brand-300: 110 231 183;
-    --color-brand-400: 52 211 153;
-    --color-brand-500: 16 185 129;
-    --color-brand-600: 5 150 105;
-    --color-brand-700: 4 120 87;
-    --color-brand-800: 6 95 70;
-    --color-brand-900: 6 78 59;
-    --color-brand-950: 2 44 34;
+    --color-brand-50: 236 253 247;
+    --color-brand-100: 212 248 233;
+    --color-brand-200: 176 240 213;
+    --color-brand-300: 128 222 183;
+    --color-brand-400: 92 199 155;
+    --color-brand-500: 64 168 126;
+    --color-brand-600: 46 135 100;
+    --color-brand-700: 35 107 80;
+    --color-brand-800: 27 82 62;
+    --color-brand-900: 20 62 47;
+    --color-brand-950: 10 37 27;
 
-    /* Keep shadcn primary/ring aligned with the selected theme. */
-    --primary: 160 84% 36%;
-    --ring: 160 84% 36%;
+    --primary: 158 40% 42%;
+    --ring: 158 40% 42%;
   }
 
   :root[data-theme='slate'] {
-    --color-brand-50: 248 250 252;
-    --color-brand-100: 241 245 249;
-    --color-brand-200: 226 232 240;
-    --color-brand-300: 203 213 225;
-    --color-brand-400: 148 163 184;
-    --color-brand-500: 100 116 139;
-    --color-brand-600: 71 85 105;
-    --color-brand-700: 51 65 85;
-    --color-brand-800: 30 41 59;
-    --color-brand-900: 15 23 42;
-    --color-brand-950: 2 6 23;
+    --color-brand-50: 245 246 248;
+    --color-brand-100: 230 233 238;
+    --color-brand-200: 203 209 218;
+    --color-brand-300: 166 174 187;
+    --color-brand-400: 130 140 155;
+    --color-brand-500: 101 112 128;
+    --color-brand-600: 79 90 105;
+    --color-brand-700: 60 70 84;
+    --color-brand-800: 39 47 61;
+    --color-brand-900: 26 32 44;
+    --color-brand-950: 15 19 29;
 
-    --primary: 215 16% 44%;
-    --ring: 215 16% 44%;
+    --primary: 215 12% 52%;
+    --ring: 215 12% 52%;
   }
 
   /* Theme variants (dark-mode tuning). */
   :root[data-mode='dark'][data-theme='emerald'] {
-    --primary: 160 84% 44%;
-    --ring: 160 84% 44%;
+    --primary: 158 45% 52%;
+    --ring: 158 45% 52%;
     --primary-foreground: 210 40% 98%;
   }
 
   :root[data-mode='dark'][data-theme='teal'] {
-    --primary: 173 85% 42%;
-    --ring: 173 85% 42%;
+    --primary: 193 54% 60%;
+    --ring: 193 54% 60%;
     --primary-foreground: 210 40% 98%;
   }
 
   :root[data-mode='dark'][data-theme='navy'] {
-    --primary: 221 83% 60%;
-    --ring: 221 83% 60%;
+    --primary: 220 52% 64%;
+    --ring: 220 52% 64%;
     --primary-foreground: 210 40% 98%;
   }
 
   :root[data-mode='dark'][data-theme='slate'] {
-    --primary: 215 20% 62%;
-    --ring: 215 20% 62%;
+    --primary: 215 12% 64%;
+    --ring: 215 12% 64%;
     --primary-foreground: 210 40% 98%;
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light'])[data-theme='emerald'] {
-      --primary: 160 84% 44%;
-      --ring: 160 84% 44%;
+      --primary: 158 45% 52%;
+      --ring: 158 45% 52%;
       --primary-foreground: 210 40% 98%;
     }
 
     :root:not([data-mode='light'])[data-theme='teal'] {
-      --primary: 173 85% 42%;
-      --ring: 173 85% 42%;
+      --primary: 193 54% 60%;
+      --ring: 193 54% 60%;
       --primary-foreground: 210 40% 98%;
     }
 
     :root:not([data-mode='light'])[data-theme='navy'] {
-      --primary: 221 83% 60%;
-      --ring: 221 83% 60%;
+      --primary: 220 52% 64%;
+      --ring: 220 52% 64%;
       --primary-foreground: 210 40% 98%;
     }
 
     :root:not([data-mode='light'])[data-theme='slate'] {
-      --primary: 215 20% 62%;
-      --ring: 215 20% 62%;
+      --primary: 215 12% 64%;
+      --ring: 215 12% 64%;
       --primary-foreground: 210 40% 98%;
     }
   }
@@ -566,7 +564,7 @@
   }
 
   .section {
-    padding-block: clamp(3.25rem, 6.5vw, 5.75rem);
+    padding-block: clamp(3.75rem, 7vw, 6.75rem);
   }
 
   /* Performance: avoid rendering offscreen sections until needed.
@@ -582,13 +580,13 @@
 
   @media (max-width: 640px) {
     .section {
-      padding-block: clamp(2.75rem, 8vw, 4.5rem);
+      padding-block: clamp(3rem, 9vw, 5rem);
     }
   }
 
   @media (min-width: 1024px) {
     .section {
-      padding-block: clamp(4rem, 7vw, 7rem);
+      padding-block: clamp(4.5rem, 8vw, 8rem);
     }
   }
 
@@ -605,26 +603,28 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.07; /* Reduced from 0.12 */
-    background-image: radial-gradient(rgb(var(--color-border) / 0.5) 1px, transparent 1px);
-    background-size: 24px 24px; /* Increased size for cleaner look */
-    background-position: -2px -2px;
-    -webkit-mask-image: radial-gradient(70% 60% at 50% 0%, #000 0%, transparent 85%);
-    mask-image: radial-gradient(70% 60% at 50% 0%, #000 0%, transparent 85%);
+    opacity: 0.12;
+    background-image:
+      linear-gradient(90deg, rgb(var(--color-border) / 0.35) 1px, transparent 1px),
+      linear-gradient(rgb(var(--color-border) / 0.35) 1px, transparent 1px);
+    background-size: 28px 28px;
+    background-position: -1px -1px;
+    -webkit-mask-image: radial-gradient(72% 68% at 50% 0%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(72% 68% at 50% 0%, #000 0%, transparent 78%);
   }
 
   .section-creative::after {
     content: '';
     position: absolute;
-    inset: -10% -10% auto;
-    height: 18rem;
+    inset: -12% -10% auto;
+    height: 20rem;
     pointer-events: none;
     background: radial-gradient(
       50% 50% at 50% 30%,
-      rgb(var(--color-brand) / 0.04),
+      rgb(var(--color-accent) / 0.18),
       transparent 70%
     );
-    /* Simplified to a single subtle center-top glow */
+    opacity: 0.65;
   }
 
   .section-creative > * {
@@ -634,32 +634,39 @@
 
   .card {
     @apply border transition-all duration-300;
-    border-color: rgb(var(--color-border));
-    background-color: rgb(var(--color-surface));
+    border-color: rgb(var(--color-border) / 0.85);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface)) 0%,
+      rgb(var(--color-surface-muted)) 140%
+    );
     border-radius: var(--radius-card);
-    /* Varied shadow - use shadow-md equivalent for cards */
     box-shadow:
-      0 4px 6px -1px rgb(0 0 0 / 0.07),
-      0 2px 4px -2px rgb(0 0 0 / 0.07);
+      0 24px 60px -48px rgb(0 0 0 / 0.55),
+      0 1px 0 0 rgb(255 255 255 / 0.06) inset;
   }
 
   .card-elevated {
     /* Stronger shadow for featured/highlighted cards */
     box-shadow:
-      0 10px 15px -3px rgb(0 0 0 / 0.08),
-      0 4px 6px -4px rgb(0 0 0 / 0.08);
+      0 28px 70px -52px rgb(0 0 0 / 0.6),
+      0 1px 0 0 rgb(255 255 255 / 0.1) inset;
   }
 
   .panel {
     @apply border;
-    border-color: rgb(var(--color-border));
+    border-color: rgb(var(--color-border) / 0.8);
     background-color: rgb(var(--color-surface));
     border-radius: var(--radius-card);
     box-shadow: none;
   }
 
   .panel-muted {
-    background-color: rgb(var(--color-surface-muted));
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface-muted)) 0%,
+      rgb(var(--color-surface)) 100%
+    );
   }
 
   .card-hover {
@@ -731,7 +738,7 @@
     isolation: isolate;
     padding-top: clamp(3.5rem, 7vw, 6rem);
     padding-bottom: clamp(2.5rem, 6vw, 4.5rem);
-    background: linear-gradient(180deg, rgb(var(--color-surface-muted)), rgb(var(--color-bg)) 70%);
+    background: linear-gradient(180deg, rgb(var(--color-bg)) 0%, rgb(var(--color-surface)) 70%);
   }
 
   /* Homepage photo hero: let the actual image do the work (less decorative wash). */
@@ -749,10 +756,10 @@
     inset: -20% -10% -35%;
     pointer-events: none;
     background:
-      radial-gradient(60% 55% at 25% 25%, rgb(var(--color-brand) / 0.06), transparent 60%),
-      radial-gradient(55% 50% at 80% 10%, rgb(var(--color-brand) / 0.07), transparent 62%);
-    transform: rotate(-3deg);
-    opacity: 0.55;
+      radial-gradient(60% 55% at 22% 20%, rgb(var(--color-brand) / 0.2), transparent 62%),
+      radial-gradient(55% 50% at 80% 8%, rgb(var(--color-accent) / 0.14), transparent 65%);
+    transform: rotate(-2deg);
+    opacity: 0.7;
   }
 
   .hero-splash > * {
@@ -765,11 +772,11 @@
   .hero-shine {
     background-image: linear-gradient(
       110deg,
-      rgba(255, 255, 255, 0.88) 0%,
-      rgba(255, 255, 255, 0.88) 42%,
-      rgba(255, 255, 255, 1) 50%,
-      rgba(255, 255, 255, 0.88) 58%,
-      rgba(255, 255, 255, 0.88) 100%
+      rgb(var(--color-accent-200)) 0%,
+      rgb(var(--color-accent-400)) 44%,
+      rgb(255 255 255) 52%,
+      rgb(var(--color-accent-300)) 62%,
+      rgb(var(--color-accent-200)) 100%
     );
     background-size: 220% 100%;
     background-position: 0% 50%;
@@ -804,11 +811,11 @@
     min-height: 44px;
     padding: 0.55rem 0.85rem;
     border-radius: 999px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(0, 0, 0, 0.18);
+    border: 1px solid rgb(var(--color-accent) / 0.35);
+    background: rgb(var(--color-bg) / 0.28);
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
-    color: rgba(255, 255, 255, 0.92);
+    color: rgba(255, 255, 255, 0.94);
     text-decoration: none;
     transition:
       transform 160ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -826,8 +833,8 @@
   .hero-swipe__arrow {
     width: 0.65rem;
     height: 0.65rem;
-    border-right: 2px solid rgba(255, 255, 255, 0.72);
-    border-bottom: 2px solid rgba(255, 255, 255, 0.72);
+    border-right: 2px solid rgba(255, 255, 255, 0.82);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.82);
     transform: rotate(45deg);
     animation: heroSwipeBounce 1.25s ease-in-out infinite;
   }
@@ -854,8 +861,8 @@
   .hero-stat {
     border-radius: 1rem;
     padding: 0.9rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     box-shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.55);
@@ -900,32 +907,28 @@
 
   /* Slightly darker in dark mode for that “premium” hero feel */
   :root[data-mode='dark'] .hero-splash {
-    background: linear-gradient(180deg, rgb(var(--color-surface) / 0.35), rgb(var(--color-bg)) 70%);
+    background: linear-gradient(180deg, rgb(var(--color-bg)) 0%, rgb(var(--color-surface)) 70%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .hero-splash {
-      background: linear-gradient(
-        180deg,
-        rgb(var(--color-surface) / 0.35),
-        rgb(var(--color-bg)) 70%
-      );
+      background: linear-gradient(180deg, rgb(var(--color-bg)) 0%, rgb(var(--color-surface)) 70%);
     }
   }
 
   :root[data-mode='dark'] .hero-panel {
     background:
-      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.18), transparent 55%),
-      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand) / 0.14), transparent 60%),
-      linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-surface)) 65%);
+      radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.22), transparent 55%),
+      radial-gradient(800px 380px at 85% 0%, rgb(var(--color-accent) / 0.18), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.5), rgb(var(--color-surface)) 65%);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .hero-panel {
       background:
-        radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.18), transparent 55%),
-        radial-gradient(800px 380px at 85% 0%, rgb(var(--color-brand) / 0.14), transparent 60%),
-        linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-surface)) 65%);
+        radial-gradient(800px 380px at 15% 10%, rgb(var(--color-brand) / 0.22), transparent 55%),
+        radial-gradient(800px 380px at 85% 0%, rgb(var(--color-accent) / 0.18), transparent 60%),
+        linear-gradient(180deg, rgb(var(--color-surface) / 0.5), rgb(var(--color-surface)) 65%);
     }
   }
 
@@ -936,7 +939,11 @@
     }
 
     .card-hover:hover {
-      @apply -translate-y-1 border-brand-500/40 shadow-lg shadow-brand-500/10;
+      transform: translateY(-6px);
+      border-color: rgb(var(--color-brand) / 0.35);
+      box-shadow:
+        0 28px 70px -52px rgb(0 0 0 / 0.65),
+        0 0 0 1px rgb(var(--color-brand) / 0.05);
     }
 
     .gallery-hover-zoom {
@@ -995,7 +1002,9 @@
   .btn {
     @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold transition-all duration-200;
     border-radius: var(--radius-control);
-    letter-spacing: 0.01em;
+    letter-spacing: 0.02em;
+    position: relative;
+    overflow: hidden;
   }
 
   .btn:focus-visible {
@@ -1003,13 +1012,26 @@
   }
 
   .btn-primary {
-    @apply btn text-white shadow-sm active:scale-[0.99];
-    background-color: rgb(var(--color-brand-700));
-    border: 1px solid rgb(var(--color-brand-800) / 0.25);
+    @apply btn active:scale-[0.99];
+    color: rgb(12 14 18);
+    background: linear-gradient(
+      120deg,
+      rgb(var(--color-accent-300)) 0%,
+      rgb(var(--color-accent-500)) 100%
+    );
+    border: 1px solid rgb(var(--color-accent-400) / 0.7);
+    box-shadow:
+      0 18px 40px -28px rgb(var(--color-accent-500) / 0.8),
+      0 1px 0 0 rgb(255 255 255 / 0.6) inset;
+    background-size: 160% 160%;
+    background-position: 10% 50%;
   }
 
   .btn-primary:hover {
-    background-color: rgb(var(--color-brand-800));
+    background-position: 90% 50%;
+    box-shadow:
+      0 24px 50px -30px rgb(var(--color-accent-500) / 0.9),
+      0 1px 0 0 rgb(255 255 255 / 0.7) inset;
   }
 
   .btn-primary:disabled,
@@ -1023,42 +1045,47 @@
   /* Accent button - warm coral for important CTAs */
   .btn-accent {
     @apply btn text-white shadow-sm active:scale-[0.99];
-    /* Slightly darker base improves contrast with white text (especially on smaller buttons). */
-    background-color: rgb(var(--color-accent-600));
-    border: 1px solid rgb(var(--color-accent-800) / 0.22);
+    background: linear-gradient(
+      120deg,
+      rgb(var(--color-brand-400)) 0%,
+      rgb(var(--color-brand-600)) 100%
+    );
+    border: 1px solid rgb(var(--color-brand-500) / 0.6);
+    box-shadow:
+      0 16px 36px -26px rgb(var(--color-brand-600) / 0.6),
+      0 1px 0 0 rgb(255 255 255 / 0.35) inset;
   }
 
   .btn-accent:hover {
-    background-color: rgb(var(--color-accent-700));
+    filter: brightness(1.05);
   }
 
   .btn-secondary {
     @apply btn border active:scale-[0.99];
-    border-color: rgb(var(--color-border));
-    background-color: rgb(var(--color-surface));
-    color: rgb(var(--color-text-muted));
+    border-color: rgb(var(--color-border) / 0.9);
+    background-color: rgb(var(--color-surface) / 0.7);
+    color: rgb(var(--color-text));
+    box-shadow: 0 12px 26px -22px rgb(0 0 0 / 0.45);
   }
 
   .btn-secondary:hover {
-    background-color: rgb(var(--color-surface-muted));
+    background-color: rgb(var(--color-surface));
     border-color: rgb(var(--color-border));
-    color: rgb(var(--color-text));
   }
 
   :root[data-mode='dark'] .btn-secondary {
-    background-color: rgb(var(--color-surface) / 0.25);
-    color: rgb(var(--color-text));
+    background-color: rgb(var(--color-surface) / 0.35);
   }
   :root[data-mode='dark'] .btn-secondary:hover {
-    background-color: rgb(var(--color-surface) / 0.35);
+    background-color: rgb(var(--color-surface) / 0.5);
   }
 
   /* For dark hero / media overlays (keeps text readable on dark backgrounds). */
   .btn-invert {
     @apply btn border;
-    border-color: rgb(255 255 255 / 0.18);
-    background-color: rgb(255 255 255 / 0.1);
-    color: white;
+    border-color: rgb(255 255 255 / 0.3);
+    background-color: rgb(255 255 255 / 0.08);
+    color: rgb(255 255 255);
   }
 
   .btn-invert:hover {
@@ -1072,7 +1099,7 @@
   }
 
   .section-head {
-    @apply flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between;
+    @apply flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between;
   }
 
   @media (max-width: 640px) {
@@ -1085,51 +1112,66 @@
   }
 
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.18em];
-    color: rgb(var(--color-brand-700));
+    @apply mb-4 inline-flex items-center gap-3 text-[0.68rem] font-semibold uppercase;
+    letter-spacing: 0.32em;
+    color: rgb(var(--color-accent-500));
   }
 
   :root[data-mode='dark'] .eyebrow {
-    color: rgb(var(--color-brand-300));
+    color: rgb(var(--color-accent-300));
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .eyebrow {
-      color: rgb(var(--color-brand-300));
+      color: rgb(var(--color-accent-300));
     }
   }
 
+  .eyebrow__line {
+    height: 1px;
+    width: 1.75rem;
+    background: linear-gradient(
+      90deg,
+      rgb(var(--color-brand) / 0.6),
+      rgb(var(--color-accent) / 0.9)
+    );
+    border-radius: 999px;
+  }
+
   .heading-1 {
-    @apply text-balance font-serif font-bold tracking-tight;
-    font-size: clamp(2.05rem, 3.2vw + 1.15rem, 3.6rem);
-    line-height: 1.06;
+    @apply text-balance font-serif font-semibold;
+    font-size: clamp(2.4rem, 3.8vw + 1.15rem, 4.2rem);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
     color: rgb(var(--color-text));
   }
 
   .heading-2 {
-    @apply text-balance font-serif font-bold tracking-tight;
-    font-size: clamp(1.65rem, 2vw + 1.1rem, 2.5rem);
-    line-height: 1.12;
+    @apply text-balance font-serif font-semibold;
+    font-size: clamp(1.9rem, 2.4vw + 1.05rem, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.015em;
     color: rgb(var(--color-text));
   }
 
   .heading-3 {
-    @apply text-balance font-semibold tracking-tight;
-    font-size: clamp(1.25rem, 1.05vw + 1.05rem, 1.85rem);
-    line-height: 1.22;
+    @apply text-balance font-semibold;
+    font-size: clamp(1.35rem, 1.25vw + 1.05rem, 2.1rem);
+    line-height: 1.18;
+    letter-spacing: -0.01em;
     color: rgb(var(--color-text));
   }
 
   .heading-4 {
-    @apply text-balance font-semibold tracking-tight;
-    font-size: clamp(1.125rem, 0.6vw + 1rem, 1.35rem);
-    line-height: 1.25;
+    @apply text-balance font-semibold;
+    font-size: clamp(1.15rem, 0.7vw + 1rem, 1.45rem);
+    line-height: 1.2;
     color: rgb(var(--color-text));
   }
 
   /* Type scale utilities */
   .text-display {
-    @apply font-serif text-5xl font-bold tracking-tight lg:text-6xl;
+    @apply font-serif text-5xl font-semibold tracking-tight lg:text-6xl;
     color: rgb(var(--color-text));
   }
 
@@ -1160,7 +1202,7 @@
 
   .lede {
     @apply mt-2 max-w-prose leading-relaxed;
-    font-size: clamp(1rem, 0.55vw + 0.95rem, 1.125rem);
+    font-size: clamp(1.05rem, 0.7vw + 0.95rem, 1.2rem);
     color: rgb(var(--color-text-muted));
   }
 
@@ -1169,9 +1211,10 @@
   .textarea {
     @apply w-full rounded-xl border px-3;
     @apply text-base;
-    border-color: rgb(var(--color-border));
-    background-color: rgb(var(--color-surface));
+    border-color: rgb(var(--color-border) / 0.85);
+    background-color: rgb(var(--color-surface) / 0.7);
     color: rgb(var(--color-text));
+    box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.06) inset;
     --tw-ring-offset-color: rgb(var(--color-surface));
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2;
     @apply transition-colors;
@@ -1281,9 +1324,9 @@
     border-radius: 0.5rem;
     font-size: 0.875rem;
     font-weight: 700;
-    background-color: rgb(var(--color-brand-50));
-    color: rgb(var(--color-brand-700));
-    border: 1px solid rgb(var(--color-brand-200) / 0.85);
+    background: linear-gradient(120deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-500)));
+    color: rgb(12 14 18);
+    border: 1px solid rgb(var(--color-accent-400) / 0.7);
   }
 
   .check-icon--sm {
@@ -1294,16 +1337,20 @@
   }
 
   :root[data-mode='dark'] .check-icon {
-    background-color: rgb(var(--color-brand-900) / 0.28);
-    color: rgb(var(--color-brand-300));
-    border-color: rgb(var(--color-brand-700) / 0.45);
+    background: linear-gradient(120deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-500)));
+    color: rgb(12 14 18);
+    border-color: rgb(var(--color-accent-400) / 0.65);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .check-icon {
-      background-color: rgb(var(--color-brand-900) / 0.28);
-      color: rgb(var(--color-brand-300));
-      border-color: rgb(var(--color-brand-700) / 0.45);
+      background: linear-gradient(
+        120deg,
+        rgb(var(--color-accent-300)),
+        rgb(var(--color-accent-500))
+      );
+      color: rgb(12 14 18);
+      border-color: rgb(var(--color-accent-400) / 0.65);
     }
   }
 
@@ -1486,18 +1533,18 @@
   /* --- Mobile Bottom Tab Bar --- */
   .bottom-tab-bar {
     /* Glassy surface with safe-area padding; matches the header "app-bar" vibe. */
-    background-color: rgb(var(--color-surface) / 0.86);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-    border-top: 1px solid rgb(var(--color-border) / 0.55);
-    box-shadow: 0 -10px 30px -22px rgba(2, 6, 23, 0.35);
+    background-color: rgb(var(--color-bg) / 0.78);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    backdrop-filter: blur(18px) saturate(130%);
+    border-top: 1px solid rgb(var(--color-border) / 0.6);
+    box-shadow: 0 -16px 40px -24px rgba(2, 6, 23, 0.45);
     padding-bottom: env(safe-area-inset-bottom);
   }
 
   :root[data-mode='dark'] .bottom-tab-bar {
-    background-color: rgb(var(--color-surface) / 0.8);
-    border-top: 1px solid rgb(var(--color-border) / 0.55);
-    box-shadow: 0 -12px 34px -22px rgba(0, 0, 0, 0.6);
+    background-color: rgb(var(--color-bg) / 0.85);
+    border-top: 1px solid rgb(var(--color-border) / 0.65);
+    box-shadow: 0 -18px 46px -26px rgba(0, 0, 0, 0.7);
   }
 
   .bottom-tab-bar__inner {
@@ -1514,7 +1561,7 @@
     align-items: center;
     gap: 0.15rem;
     height: 3.5rem;
-    border-radius: 0.95rem;
+    border-radius: 1.1rem;
     color: rgb(var(--color-text-muted));
     text-decoration: none;
     -webkit-tap-highlight-color: transparent;
@@ -1531,12 +1578,12 @@
   }
 
   .bottom-tab-bar__item.is-active {
-    background-color: rgb(var(--color-brand-50) / 0.78);
+    background-color: rgb(var(--color-brand-100) / 0.75);
     color: rgb(var(--color-brand-700));
   }
 
   :root[data-mode='dark'] .bottom-tab-bar__item.is-active {
-    background-color: rgb(var(--color-brand-900) / 0.32);
+    background-color: rgb(var(--color-brand-900) / 0.35);
     color: rgb(var(--color-brand-200));
   }
 
@@ -1546,8 +1593,8 @@
   }
 
   .bottom-tab-bar__item.is-primary.is-active {
-    background-color: rgb(var(--color-brand) / 0.12);
-    color: rgb(var(--color-brand-800));
+    background-color: rgb(var(--color-accent) / 0.25);
+    color: rgb(var(--color-text));
   }
 
   :root[data-mode='dark'] .bottom-tab-bar__item.is-primary {
@@ -1555,8 +1602,8 @@
   }
 
   :root[data-mode='dark'] .bottom-tab-bar__item.is-primary.is-active {
-    background-color: rgb(var(--color-brand) / 0.18);
-    color: rgb(var(--color-brand-100));
+    background-color: rgb(var(--color-accent) / 0.35);
+    color: rgb(var(--color-text));
   }
 
   /* --- Micro-interactions: "haptic" press simulation --- */
@@ -1705,15 +1752,19 @@
   }
 
   .section-muted {
-    background-color: rgb(var(--color-surface-muted));
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface-muted)) 0%,
+      rgb(var(--color-bg)) 100%
+    );
   }
 
   .app-bar {
     /* Glass overlay at top of page */
-    background-color: rgb(var(--color-surface) / 0.04);
-    border-color: rgb(var(--color-border) / 0.35);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    background-color: rgb(var(--color-surface) / 0.6);
+    border-color: rgb(var(--color-border) / 0.45);
+    -webkit-backdrop-filter: blur(18px) saturate(130%);
+    backdrop-filter: blur(18px) saturate(130%);
   }
 
   header[data-site-header].header-transparent.app-bar {
@@ -1724,22 +1775,22 @@
   }
 
   header[data-site-header].is-scrolled.app-bar {
-    background-color: rgb(var(--color-surface) / 0.86);
-    border-color: rgb(var(--color-border) / 0.55);
+    background-color: rgb(var(--color-surface) / 0.88);
+    border-color: rgb(var(--color-border) / 0.6);
     -webkit-backdrop-filter: blur(24px);
     backdrop-filter: blur(24px);
     box-shadow: var(--shadow-soft);
   }
 
   :root[data-mode='dark'] .app-bar {
-    background-color: rgb(var(--color-bg) / 0.35);
-    border-color: rgb(var(--color-border) / 0.45);
+    background-color: rgb(var(--color-bg) / 0.7);
+    border-color: rgb(var(--color-border) / 0.6);
   }
 
   :root[data-mode='dark'] header[data-site-header].is-scrolled.app-bar {
-    background-color: rgb(var(--color-surface) / 0.8);
-    border-color: rgb(var(--color-border) / 0.55);
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.45);
+    background-color: rgb(var(--color-surface) / 0.85);
+    border-color: rgb(var(--color-border) / 0.65);
+    box-shadow: 0 16px 40px -22px rgba(0, 0, 0, 0.55);
   }
 
   .menu-link {
@@ -1755,45 +1806,52 @@
   .page-header {
     border-color: rgb(var(--color-border));
     background:
-      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.12), transparent 60%),
-      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.1), transparent 60%),
-      linear-gradient(180deg, rgb(var(--color-brand-50) / 0.55), rgb(var(--color-bg) / 0) 70%),
+      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.18), transparent 60%),
+      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-accent) / 0.16), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-brand-50) / 0.45), rgb(var(--color-bg) / 0) 70%),
       rgb(var(--color-bg));
   }
 
   .footer-surface {
-    background: rgb(var(--color-surface) / 0.03);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-top: 1px solid rgb(var(--color-border) / 0.45);
+    background:
+      radial-gradient(900px 420px at 10% 0%, rgb(var(--color-brand) / 0.18), transparent 60%),
+      radial-gradient(900px 420px at 90% 6%, rgb(var(--color-accent) / 0.16), transparent 60%),
+      rgb(var(--color-bg));
+    border-top: 1px solid rgb(var(--color-border) / 0.55);
   }
 
   :root[data-mode='dark'] .footer-surface {
-    background: rgb(var(--color-surface) / 0.12);
-    border-top: 1px solid rgb(var(--color-border) / 0.5);
+    background:
+      radial-gradient(900px 420px at 10% 0%, rgb(var(--color-brand) / 0.22), transparent 60%),
+      radial-gradient(900px 420px at 90% 6%, rgb(var(--color-accent) / 0.2), transparent 60%),
+      rgb(var(--color-bg));
+    border-top: 1px solid rgb(var(--color-border) / 0.6);
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .footer-surface {
-      background: rgb(var(--color-surface) / 0.12);
-      border-top: 1px solid rgb(var(--color-border) / 0.5);
+      background:
+        radial-gradient(900px 420px at 10% 0%, rgb(var(--color-brand) / 0.22), transparent 60%),
+        radial-gradient(900px 420px at 90% 6%, rgb(var(--color-accent) / 0.2), transparent 60%),
+        rgb(var(--color-bg));
+      border-top: 1px solid rgb(var(--color-border) / 0.6);
     }
   }
 
   :root[data-mode='dark'] .page-header {
     background:
-      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.18), transparent 60%),
-      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.14), transparent 60%),
-      linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-bg) / 0) 70%),
+      radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.22), transparent 60%),
+      radial-gradient(900px 420px at 90% 12%, rgb(var(--color-accent) / 0.18), transparent 60%),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.5), rgb(var(--color-bg) / 0) 70%),
       rgb(var(--color-bg));
   }
 
   @media (prefers-color-scheme: dark) {
     :root:not([data-mode='light']) .page-header {
       background:
-        radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.18), transparent 60%),
-        radial-gradient(900px 420px at 90% 12%, rgb(var(--color-brand) / 0.14), transparent 60%),
-        linear-gradient(180deg, rgb(var(--color-surface) / 0.4), rgb(var(--color-bg) / 0) 70%),
+        radial-gradient(900px 420px at 10% 10%, rgb(var(--color-brand) / 0.22), transparent 60%),
+        radial-gradient(900px 420px at 90% 12%, rgb(var(--color-accent) / 0.18), transparent 60%),
+        linear-gradient(180deg, rgb(var(--color-surface) / 0.5), rgb(var(--color-bg) / 0) 70%),
         rgb(var(--color-bg));
     }
   }
@@ -1900,8 +1958,10 @@
 
 @layer base {
   body {
-    @apply text-base leading-relaxed antialiased;
+    @apply text-base antialiased;
     background-color: rgb(var(--color-bg));
+    line-height: 1.7;
+    letter-spacing: 0.01em;
   }
 
   /* Fixed Background Gradient */
@@ -1910,13 +1970,17 @@
     position: fixed;
     inset: 0;
     z-index: -50;
-    background-image: var(--asset-hero-bg);
+    background-image:
+      var(--asset-hero-bg),
+      radial-gradient(1200px 640px at 85% -10%, rgb(var(--color-accent) / 0.18), transparent 65%),
+      radial-gradient(980px 560px at 12% -10%, rgb(var(--color-brand) / 0.22), transparent 62%),
+      radial-gradient(900px 640px at 50% 120%, rgb(var(--color-brand-900) / 0.25), transparent 70%);
     background-position: center top;
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
     /* Too high makes light sections feel washed out and text less readable. */
-    opacity: 0.2;
+    opacity: 0.28;
     pointer-events: none;
   }
 

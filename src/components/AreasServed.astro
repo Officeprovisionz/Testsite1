@@ -6,11 +6,14 @@ import { siteConfig } from '@/data/siteConfig';
   <div class="container-page relative lg:max-w-6xl">
     <h2 class="heading-2 lg:text-4xl">{siteConfig.areasServed.title}</h2>
     <p class="lede lg:text-lg">
-      Not seeing your neighborhood? Send us your address—we'll confirm availability.
+      Not seeing your neighborhood? Send your address and we will confirm availability.
     </p>
 
     <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 -z-10">
-      <div class="bg-brand/10 mx-auto h-64 w-[min(70rem,94vw)] rounded-full blur-3xl"></div>
+      <div
+        class="mx-auto h-64 w-[min(70rem,94vw)] rounded-full bg-[rgb(var(--color-accent)/0.18)] blur-3xl"
+      >
+      </div>
     </div>
 
     <div class="card mt-8 p-5 sm:p-6 lg:mt-10 lg:p-8">
@@ -18,7 +21,7 @@ import { siteConfig } from '@/data/siteConfig';
         {
           siteConfig.areasServed.items.map((a) => (
             <li class="flex items-center gap-2">
-              <span class="bg-brand h-2 w-2 rounded-full" aria-hidden="true" />
+              <span class="h-2 w-2 rounded-full bg-[rgb(var(--color-accent))]" aria-hidden="true" />
               <span>{a}</span>
             </li>
           ))

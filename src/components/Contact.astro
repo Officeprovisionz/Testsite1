@@ -18,8 +18,8 @@ type Props = {
 
 const {
   id,
-  heading = 'Request a quote',
-  description = 'Share a few details about your space and services needed. We’ll confirm scope (often via a walkthrough), then send a clear written quote.',
+  heading = 'Talk to a local specialist',
+  description = "Call for the fastest response, or send a quick request. We'll confirm scope (often via a walkthrough), then send a clear written quote.",
   variant = 'section',
   showSidebar = true,
 } = Astro.props;
@@ -54,7 +54,7 @@ const serviceOptions = [
       <div id={id} class="card relative overflow-hidden p-6 sm:p-7">
         <div
           aria-hidden="true"
-          class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+          class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
         />
         <div class="relative">
           <h2 class="heading-3">{heading}</h2>
@@ -79,7 +79,7 @@ const serviceOptions = [
       <section id={id} class="section section-muted section-creative scroll-mt-20">
         <div class="container-page relative lg:max-w-6xl">
           <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-14 -z-10">
-            <div class="bg-brand/10 mx-auto h-72 w-[min(74rem,96vw)] rounded-full blur-3xl" />
+            <div class="mx-auto h-72 w-[min(74rem,96vw)] rounded-full bg-[rgb(var(--color-accent)/0.18)] blur-3xl" />
           </div>
 
           <div
@@ -92,6 +92,29 @@ const serviceOptions = [
               <div>
                 <h2 class="heading-2 lg:text-4xl">{heading}</h2>
                 <p class="lede lg:text-lg">{description}</p>
+
+                <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    class="btn-primary w-full sm:w-auto"
+                    href={telHref}
+                    data-track="cta_click"
+                    data-location="contact_sidebar"
+                    data-action="call"
+                    data-label="contact_call_primary"
+                  >
+                    Call now
+                  </a>
+                  <a
+                    class="btn-secondary w-full sm:w-auto"
+                    href={mailtoHref}
+                    data-track="cta_click"
+                    data-location="contact_sidebar"
+                    data-action="email"
+                    data-label="contact_email_secondary"
+                  >
+                    Email us
+                  </a>
+                </div>
 
                 <div class="mt-6 space-y-3 text-sm text-muted">
                   <p>
@@ -119,7 +142,7 @@ const serviceOptions = [
                 <div class="card relative mt-8 overflow-hidden p-6">
                   <div
                     aria-hidden="true"
-                    class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+                    class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
                   />
                   <div class="relative">
                     <p class="text-strong text-sm font-semibold">What happens next</p>
@@ -150,7 +173,7 @@ const serviceOptions = [
             <div class="card relative overflow-hidden p-6 sm:p-7">
               <div
                 aria-hidden="true"
-                class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
               />
               <div class="relative">
                 <ContactForm
@@ -331,7 +354,7 @@ const serviceOptions = [
           submitBtn.disabled = busy;
           submitBtn.classList.toggle('opacity-70', busy);
           submitBtn.classList.toggle('cursor-not-allowed', busy);
-          submitBtn.textContent = busy ? 'Sending...' : 'Submit Request';
+          submitBtn.textContent = busy ? 'Sending...' : 'Send request';
         }
       };
 

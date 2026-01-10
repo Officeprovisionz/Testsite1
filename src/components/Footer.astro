@@ -11,9 +11,7 @@ const base = import.meta.env.BASE_URL;
 const logoOrbSrc = `${base}brand/logo-orb.svg`;
 ---
 
-<footer
-  class="footer-surface from-white/88 to-brand/5 dark:to-brand/10 bg-gradient-to-b via-white/75 dark:from-surface/85 dark:via-surface/75"
->
+<footer class="footer-surface">
   <div class="container-page safe-bottom-pad pb-20 pt-10 md:py-12 lg:py-16">
     <div class="grid gap-8 md:grid-cols-4 md:gap-9 lg:gap-12">
       <!-- Brand Column -->
@@ -36,6 +34,29 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
         </a>
         <p class="mt-2 text-sm leading-relaxed text-muted">{siteConfig.brand.tagline}</p>
         <p class="text-subtle mt-3 text-sm">Serving {siteConfig.brand.city}</p>
+
+        <div class="mt-4 flex flex-col gap-2 sm:flex-row">
+          <a
+            class="btn-primary w-full sm:w-auto"
+            href={telHref}
+            data-track="cta_click"
+            data-location="footer"
+            data-action="call"
+            data-label="footer_call_primary"
+          >
+            Call now
+          </a>
+          <a
+            class="btn-secondary w-full sm:w-auto"
+            href={mailtoHref}
+            data-track="cta_click"
+            data-location="footer"
+            data-action="email"
+            data-label="footer_email_secondary"
+          >
+            Email us
+          </a>
+        </div>
 
         <div class="mt-4 space-y-1">
           <a

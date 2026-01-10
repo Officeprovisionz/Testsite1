@@ -44,7 +44,7 @@ export type ServiceFamily = {
 export const siteConfig = {
   brand: {
     name: 'Office Provisionz',
-    tagline: 'For spaces shaped by ambition and expectation.',
+    tagline: 'Precision cleaning for spaces that lead.',
     city: 'San Francisco, CA',
   },
   contact: {
@@ -382,7 +382,7 @@ export const siteConfig = {
       'Office Provisionz | Office cleaning, supplies & facilities support in San Francisco, CA',
     description:
       'Office cleaning, supply restocking, and facilities support in San Francisco. Clear checklists, consistent results, and fast quotes.',
-    themeColor: 'hsl(190 85% 38%)',
+    themeColor: 'hsl(34 70% 58%)',
     /** Open Graph image dimensions for proper social previews */
     ogImage: {
       width: 1200,

@@ -13,13 +13,14 @@ const items = siteConfig.industries.map((industry) => ({
 }));
 ---
 
-<section class="section" id="industries">
+<section class="section section-creative" id="industries">
   <div class="container-page">
     <div class="mb-10 text-center lg:mb-14">
       <Eyebrow>Industries</Eyebrow>
-      <h2 class="heading-2 lg:text-4xl">Who we serve</h2>
+      <h2 class="heading-2 lg:text-4xl">Where precision matters most</h2>
       <p class="lede mx-auto mt-4 max-w-2xl lg:mt-5 lg:text-lg">
-        Commercial cleaning built for real workplaces—scoped clearly and delivered consistently.
+        We specialize in workplaces where detail, discretion, and consistent routines keep the day
+        running smoothly.
       </p>
     </div>
 
@@ -29,16 +30,20 @@ const items = siteConfig.industries.map((industry) => ({
           items.map((item) => (
             <a
               href={item.link}
-              class="hover:border-brand/10 hover:bg-brand/5 group relative block h-full w-full rounded-2xl border border-transparent p-2 transition-all duration-300 sm:p-4"
+              class="card card-hover group relative block h-full w-full overflow-hidden p-2 transition-all duration-300 sm:p-4"
             >
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-brand)/0.16)] via-transparent to-[rgb(var(--color-accent)/0.18)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
               <div class="relative z-10 flex h-full flex-col p-4">
                 <h3 class="text-strong text-xl font-bold tracking-wide">{item.title}</h3>
                 <p class="mt-4 flex-grow text-sm leading-relaxed tracking-wide text-muted">
                   {item.description}
                 </p>
 
-                <div class="text-brand mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
-                  Get a quote <ArrowRight className="ml-1 w-4 h-4" />
+                <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                  Get a quote <ArrowRight className="ml-1 h-4 w-4" />
                 </div>
               </div>
             </a>

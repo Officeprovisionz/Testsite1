@@ -5,6 +5,7 @@ import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
 
@@ -38,6 +39,7 @@ const quickLinks = [
 ];
 
 const contactHref = href('contact/');
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
 ---
 
 <BaseLayout title={title} description={description} noIndex>
@@ -56,7 +58,8 @@ const contactHref = href('contact/');
     imagePosition="50% 40%"
   >
     <div class="flex w-full flex-col items-center justify-center gap-3 sm:flex-row">
-      <a class="btn-accent w-full sm:w-auto" href={contactHref} data-haptic="true">
+      <a class="btn-primary w-full sm:w-auto" href={telHref} data-haptic="true"> Call now </a>
+      <a class="btn-secondary w-full sm:w-auto" href={contactHref} data-haptic="true">
         Request a quote
       </a>
       <a class="btn-secondary w-full sm:w-auto" href={href('')} data-haptic="true">

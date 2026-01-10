@@ -1,9 +1,9 @@
 ---
 import '@/styles/global.css';
-import '@fontsource-variable/inter';
-import '@fontsource-variable/playfair-display';
-import interVariableUrl from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
-import playfairVariableUrl from '@fontsource-variable/playfair-display/files/playfair-display-latin-wght-normal.woff2?url';
+import '@fontsource-variable/space-grotesk';
+import '@fontsource-variable/fraunces';
+import spaceGroteskVariableUrl from '@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url';
+import frauncesVariableUrl from '@fontsource-variable/fraunces/files/fraunces-latin-opsz-normal.woff2?url';
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
@@ -50,7 +50,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 <html
   lang="en"
   data-theme="teal"
-  data-mode="auto"
+  data-mode="dark"
   style={`--asset-hero-bg: none; --asset-noise: url('${assetNoise}')`}
 >
   <head>
@@ -87,8 +87,8 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     {analyticsEnabled ? <link rel="preconnect" href="https://plausible.io" crossorigin /> : null}
 
     {/* Preload critical fonts to reduce FOUT */}
-    <link rel="preload" href={interVariableUrl} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={playfairVariableUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={spaceGroteskVariableUrl} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={frauncesVariableUrl} as="font" type="font/woff2" crossorigin />
 
     {
       /* Fonts are self-hosted via @fontsource imports (see frontmatter) to avoid third-party requests. */
@@ -100,7 +100,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
       media="(prefers-color-scheme: light)"
       content={siteConfig.seo.themeColor}
     />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#020617" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0b0d11" />
     <ClientRouter />
 
     <script is:inline>
@@ -551,7 +551,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
           clearTimers();
 
           setBusy(true);
-          setSrStatus('Loading page…');
+          setSrStatus('Loading page...');
 
           /** @type {HTMLElement} */ (el).dataset.state = 'loading';
           setScale(el, 0.12);

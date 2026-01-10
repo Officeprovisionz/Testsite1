@@ -80,13 +80,13 @@ const resources = [
     imagePosition="50% 45%"
   />
 
-  <section class="section">
+  <section class="section section-creative">
     <div class="container-page">
       <SectionHeader
         align="center"
         eyebrow="Tools"
-        heading="Make scope crystal clear"
-        description="Pros keep it simple: written scope, checklists, and consistent follow-up. These resources help you do exactly that."
+        heading="Make scope feel effortless"
+        description="Short, printable tools for walkthroughs, vendor comparisons, and keeping expectations crystal clear."
       >
         <a slot="actions" class="btn-secondary w-full sm:w-auto" href={href('services/')}>
           See services
@@ -99,7 +99,7 @@ const resources = [
             <article class="card card-hover relative overflow-hidden p-6 sm:p-7">
               <div
                 aria-hidden="true"
-                class="from-brand/10 to-brand/5 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
+                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
               />
               <div class="relative">
                 <Eyebrow>{r.eyebrow}</Eyebrow>
@@ -119,8 +119,8 @@ const resources = [
       <div class="panel panel-muted mt-10 p-5 sm:p-6">
         <p class="text-strong text-sm font-semibold">Want a walkthrough-ready quote?</p>
         <p class="mt-2 text-sm text-muted">
-          Share your space basics and priorities. We’ll confirm scope + access details and then send
-          a clear written quote.
+          Call for the fastest response, or send your space basics and priorities. We will confirm
+          scope and send a clear written quote.
         </p>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row">
           <a class="btn-secondary w-full sm:w-auto" href={href('industries/')}>

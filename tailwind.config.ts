@@ -15,7 +15,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          'Inter',
+          '"Space Grotesk"',
           'ui-sans-serif',
           'system-ui',
           '-apple-system',
@@ -26,7 +26,7 @@ export default {
           'Noto Sans',
           'sans-serif',
         ],
-        serif: ['"Playfair Display"', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
+        serif: ['"Fraunces"', 'ui-serif', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
       },
       colors: {
         border: 'hsl(var(--border))',

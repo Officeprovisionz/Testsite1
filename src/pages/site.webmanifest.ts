@@ -15,9 +15,9 @@ export async function GET() {
     start_url: base,
     scope: base,
     display: 'standalone',
-    background_color: '#ffffff',
-    // Teal-500 from the design system
-    theme_color: '#00B4A6',
+    background_color: '#0b0d11',
+    // Champagne accent from the design system
+    theme_color: '#e8b069',
     icons: [
       {
         src: `${base}favicon.svg`,

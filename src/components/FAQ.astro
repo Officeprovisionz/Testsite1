@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
+import { makeHref } from '@/lib/nav';
 
 type Props = {
   id?: string;
@@ -22,6 +23,7 @@ const faqs = await getCollection('faqs');
 const items = faqs.map((f) => f.data);
 
 const searchId = `${id}-search`;
+const href = makeHref(import.meta.env.BASE_URL);
 
 const faqJsonLd = (() => {
   const data = {
@@ -123,21 +125,17 @@ const faqJsonLd = (() => {
         <p class="mt-1 text-sm text-muted">Tell us what you need and we’ll reply quickly.</p>
         <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <a
-            class="bg-brand text-brand-foreground hover:bg-brand/90 tap-target inline-flex items-center justify-center rounded-xl px-4 py-3 text-sm font-semibold shadow-sm transition"
-            href="/contact"
-            data-haptic="true"
-          >
-            Request a quote
-          </a>
-          <a
-            class="border-app/50 text-strong tap-target inline-flex items-center justify-center rounded-xl border bg-surface/60 px-4 py-3 text-sm font-semibold shadow-sm transition hover:bg-surface/80"
+            class="btn-primary w-full sm:w-auto"
             href={`tel:${siteConfig.contact.phoneE164}`}
             data-haptic="true"
           >
             Call now
           </a>
+          <a class="btn-secondary w-full sm:w-auto" href={href('contact/')} data-haptic="true">
+            Request a quote
+          </a>
           <a
-            class="border-app/50 text-strong tap-target inline-flex items-center justify-center rounded-xl border bg-surface/60 px-4 py-3 text-sm font-semibold shadow-sm transition hover:bg-surface/80"
+            class="btn-secondary w-full sm:w-auto"
             href={`sms:${siteConfig.contact.phoneE164}`}
             data-haptic="true"
           >

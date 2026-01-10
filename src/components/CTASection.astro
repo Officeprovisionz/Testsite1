@@ -95,31 +95,26 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               {description ?? "Request a quote and we'll confirm scope, then send clear pricing."}
             </p>
 
-            <div class="mt-8 flex flex-col items-center justify-center gap-4 sm:flex-row">
-              <a
-                href={href('contact/')}
-                class="btn-accent w-full sm:w-auto"
-                data-track="cta_click"
-                data-location="cta_section_centered"
-                data-action="quote"
-                data-label="cta_centered_quote"
-              >
-                Get a Free Quote
-              </a>
+            <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <a
                 href={telHref}
-                class:list={[
-                  'text-sm font-medium transition-colors',
-                  background === 'accent'
-                    ? 'text-white/85 hover:text-white'
-                    : 'hover:text-brand text-muted',
-                ]}
+                class="btn-primary w-full sm:w-auto"
                 data-track="cta_click"
                 data-location="cta_section_centered"
                 data-action="call"
                 data-label="cta_centered_call"
               >
-                Or call us directly: {siteConfig.contact.phoneDisplay}
+                Call now
+              </a>
+              <a
+                href={href('contact/')}
+                class="btn-secondary w-full sm:w-auto"
+                data-track="cta_click"
+                data-location="cta_section_centered"
+                data-action="quote"
+                data-label="cta_centered_quote"
+              >
+                Request a quote
               </a>
             </div>
 
@@ -129,7 +124,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
                 background === 'accent' ? 'text-white/70' : 'text-subtle',
               ]}
             >
-              Clear scope. Consistent checklists. Fast follow-up.
+              Clear scope. Checklist-driven service. Fast follow-up.
             </p>
           </div>
         </div>
@@ -184,6 +179,26 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
             </div>
 
             <div class="flex flex-col gap-3 md:justify-self-end">
+              <a
+                class="btn-primary w-full sm:w-auto md:justify-self-end"
+                href={telHref}
+                data-track="cta_click"
+                data-location="cta_section_split"
+                data-action="call"
+                data-label="cta_split_call"
+              >
+                Call now
+              </a>
+              <a
+                class="btn-secondary w-full sm:w-auto md:justify-self-end"
+                href={href('contact/')}
+                data-track="cta_click"
+                data-location="cta_section_split"
+                data-action="quote"
+                data-label="cta_split_quote"
+              >
+                Request a quote
+              </a>
               {showChecklist ? (
                 <a
                   class="btn-secondary w-full sm:w-auto md:justify-self-end"

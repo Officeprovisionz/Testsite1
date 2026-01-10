@@ -4,3 +4,8 @@ node_modules/
 pnpm-lock.yaml
 bun.lockb
 bun.lock
+
+# Binary assets (Prettier can't format these)
+public/**/*.{jpg,jpeg,png,avif,webp,gif,ico}
+public/**/*.{mp4,webm}
+public/**/*.{woff,woff2,ttf,otf,eot}

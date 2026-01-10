@@ -608,6 +608,137 @@ const navItems = [
 
 <script>
   (() => {
+    // Liquid-glass header refraction (progressive enhancement)
+    // - Updates CSS vars on the header: --glass-tilt-x / --glass-tilt-y (0..1)
+    // - Uses device orientation when available; falls back to pointer movement
+    // - Avoids extra work for reduced-motion users
+    const root = document.documentElement;
+    if (root.dataset.headerGlassInit === 'true') return;
+    root.dataset.headerGlassInit = 'true';
+
+    const prefersReducedMotion = (() => {
+      try {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } catch {
+        return false;
+      }
+    })();
+
+    if (prefersReducedMotion) return;
+
+    const getHeader = () =>
+      document.querySelector('header[data-site-header]') as HTMLElement | null;
+
+    const clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n));
+
+    let raf = 0;
+    let targetX = 0.5;
+    let targetY = 0.5;
+
+    const apply = () => {
+      raf = 0;
+      const header = getHeader();
+      if (!header) return;
+
+      // Only run when the header uses the glass style (avoid doing work on fully transparent hero headers).
+      const isGlass =
+        header.classList.contains('app-bar') && !header.classList.contains('header-transparent');
+      if (!isGlass) return;
+
+      header.style.setProperty('--glass-tilt-x', String(targetX));
+      header.style.setProperty('--glass-tilt-y', String(targetY));
+    };
+
+    const schedule = () => {
+      if (raf) return;
+      raf = window.requestAnimationFrame(apply);
+    };
+
+    // Pointer fallback (desktop / laptops)
+    const onPointerMove = (e: PointerEvent) => {
+      const w = window.innerWidth || 1;
+      const h = window.innerHeight || 1;
+      targetX = clamp(e.clientX / w, 0, 1);
+      targetY = clamp(e.clientY / h, 0, 1);
+      schedule();
+    };
+
+    // Device orientation (mobile): gamma = left/right tilt, beta = front/back tilt
+    let lastOriTs = 0;
+    const ORI_THROTTLE_MS = 40;
+
+    const onOrientation = (ev: DeviceOrientationEvent) => {
+      const now = performance.now();
+      if (now - lastOriTs < ORI_THROTTLE_MS) return;
+      lastOriTs = now;
+
+      const g = typeof ev.gamma === 'number' ? ev.gamma : 0;
+      const b = typeof ev.beta === 'number' ? ev.beta : 0;
+
+      // Clamp to a pleasant range; normalize into 0..1.
+      // These ranges are intentionally conservative to keep the effect premium, not gimmicky.
+      targetX = clamp(g, -30, 30) / 60 + 0.5;
+      targetY = clamp(b, -30, 30) / 60 + 0.5;
+      schedule();
+    };
+
+    const enableOrientation = async () => {
+      // Some browsers (notably iOS) require explicit permission.
+      // We only request this after a user gesture.
+      try {
+        const anyDO = DeviceOrientationEvent as unknown as {
+          requestPermission?: () => Promise<'granted' | 'denied'>;
+        };
+
+        if (typeof anyDO?.requestPermission === 'function') {
+          const res = await anyDO.requestPermission();
+          if (res !== 'granted') return;
+        }
+
+        window.addEventListener('deviceorientation', onOrientation, { passive: true });
+      } catch {
+        // ignore
+      }
+    };
+
+    // On iOS, orientation permission must be requested in a gesture handler.
+    // We'll hook a one-time gesture on the header itself.
+    const bind = () => {
+      const header = getHeader();
+      if (!header) return;
+
+      // Desktop pointer fallback is always safe.
+      if (header.dataset.glassPointerInit !== 'true') {
+        header.dataset.glassPointerInit = 'true';
+        window.addEventListener('pointermove', onPointerMove, { passive: true });
+      }
+
+      if (header.dataset.glassOriGestureInit !== 'true') {
+        header.dataset.glassOriGestureInit = 'true';
+
+        const onFirstGesture = () => {
+          enableOrientation();
+          header.removeEventListener('pointerdown', onFirstGesture);
+          header.removeEventListener('touchstart', onFirstGesture);
+        };
+
+        header.addEventListener('pointerdown', onFirstGesture, { passive: true });
+        header.addEventListener('touchstart', onFirstGesture, { passive: true });
+      }
+
+      // Set initial values (centered).
+      targetX = 0.5;
+      targetY = 0.5;
+      schedule();
+    };
+
+    bind();
+    document.addEventListener('astro:page-load', bind);
+  })();
+</script>
+
+<script>
+  (() => {
     const btns = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode-toggle]'));
     if (!btns.length) return;
 

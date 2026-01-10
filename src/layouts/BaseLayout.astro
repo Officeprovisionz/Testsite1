@@ -9,6 +9,7 @@ import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
 import BottomTabBar from '@/components/BottomTabBar.astro';
 import FloatingActionButton from '@/components/FloatingActionButton.astro';
+import Schema from '@/components/Schema.astro';
 import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
 type Props = {
@@ -43,115 +44,6 @@ const analyticsEnabled = siteConfig.analytics.enabled;
 const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import.meta.env.PROD })
   // Prevent accidental "</script>" injection via safe escaping.
   .replace(/</g, '\\u003c');
-
-const jsonLd = (() => {
-  const [localityRaw, regionRaw] = siteConfig.brand.city.split(',').map((s) => s.trim());
-  const addressLocality = localityRaw || undefined;
-  const addressRegion = regionRaw || undefined;
-  const url = Astro.site ? new URL(import.meta.env.BASE_URL, Astro.site).toString() : undefined;
-
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    name: siteConfig.brand.name,
-    description: siteConfig.seo.description,
-    url,
-    image: url ? `${url}og-image.png` : undefined,
-    telephone: siteConfig.contact.phoneE164,
-    email: siteConfig.contact.email,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality,
-      addressRegion,
-      addressCountry: 'US',
-    },
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: 37.7749,
-      longitude: -122.4194,
-    },
-    openingHoursSpecification: siteConfig.hours.structured.map((h) => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: h.day,
-      opens: h.opens,
-      closes: h.closes,
-    })),
-    sameAs: Object.values(siteConfig.social),
-    priceRange: '$$',
-    areaServed: siteConfig.areasServed.items.map((item) => ({
-      '@type': 'City',
-      name: item,
-    })),
-  };
-
-  // Prevent accidental "</script>" injection via safe escaping.
-  return JSON.stringify(data).replace(/</g, '\\u003c');
-})();
-
-const breadcrumbJsonLd = (() => {
-  const site = Astro.site;
-  const pathname = Astro.url.pathname;
-
-  const basePath = import.meta.env.BASE_URL;
-  const relative = pathname.startsWith(basePath)
-    ? pathname.slice(basePath.length)
-    : pathname.replace(/^\/+/, '');
-
-  const segments = relative.split('/').filter(Boolean);
-
-  const labelMap: Record<string, string> = {
-    about: 'About',
-    services: 'Services',
-    industries: 'Industries',
-    resources: 'Resources',
-    pricing: 'Scope & Pricing',
-    checklist: 'Checklist',
-    results: 'Results',
-    contact: 'Contact',
-    thanks: 'Thanks',
-  };
-
-  const defaultLabel = (seg: string) => {
-    try {
-      const decoded = decodeURIComponent(seg);
-      return decoded
-        .replace(/[-_]+/g, ' ')
-        .replace(/\b\w/g, (m) => m.toUpperCase())
-        .slice(0, 80);
-    } catch {
-      return seg.slice(0, 80);
-    }
-  };
-
-  const crumbs = [
-    { name: 'Home', path: '' },
-    ...segments.map((seg, idx) => ({
-      name: labelMap[seg] ?? defaultLabel(seg),
-      path: `${segments.slice(0, idx + 1).join('/')}/`,
-    })),
-  ];
-
-  const itemListElement = crumbs.map((c, idx) => {
-    const rel = `${basePath}${c.path}`;
-    const item = site ? new URL(rel, site).toString() : rel;
-
-    return {
-      '@type': 'ListItem',
-      position: idx + 1,
-      name: c.name,
-      item,
-    };
-  });
-
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement,
-  };
-
-  // Prevent accidental "</script>" injection via safe escaping.
-  return JSON.stringify(data).replace(/</g, '\\u003c');
-})();
 ---
 
 <!doctype html>
@@ -534,9 +426,7 @@ const breadcrumbJsonLd = (() => {
     />
     <meta name="ICBM" content={`${siteConfig.seo.geo.latitude}, ${siteConfig.seo.geo.longitude}`} />
 
-    <script type="application/ld+json" is:inline set:html={jsonLd} />
-
-    <script type="application/ld+json" is:inline set:html={breadcrumbJsonLd} />
+    <Schema />
 
     <script>
       const root = document.documentElement;

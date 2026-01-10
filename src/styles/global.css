@@ -1771,7 +1771,8 @@
        - Kept subtle; purely decorative; safe to ignore when unsupported */
     --glass-tilt-x: 0.5;
     --glass-tilt-y: 0.5;
-    --glass-strength: 0;
+    /* Visible by default (otherwise it looks like “nothing changed” until scroll). */
+    --glass-strength: 0.28;
     isolation: isolate;
   }
 
@@ -1801,7 +1802,20 @@
         rgb(255 255 255 / 0.06),
         transparent 45%,
         rgb(var(--color-brand) / 0.06)
-      );
+      ),
+      var(--asset-noise);
+
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+    background-size:
+      auto,
+      auto,
+      auto,
+      220px 220px;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
 
     /* A hint of “refraction drift” without heavy filters. */
     transform: translate3d(
@@ -1810,7 +1824,15 @@
       0
     );
 
-    mix-blend-mode: overlay;
+    /* Default: conservative compositing that looks consistent across browsers.
+       If a browser supports blend modes well, we can enhance it below. */
+    mix-blend-mode: normal;
+  }
+
+  @supports (mix-blend-mode: overlay) {
+    header[data-site-header].app-bar::after {
+      mix-blend-mode: overlay;
+    }
   }
 
   header[data-site-header].header-transparent.app-bar {
@@ -1827,7 +1849,8 @@
     -webkit-backdrop-filter: blur(24px);
     backdrop-filter: blur(24px);
     box-shadow: var(--shadow-soft);
-    --glass-strength: 1;
+    /* Stronger once we have a solid surface behind it. */
+    --glass-strength: 0.52;
   }
 
   :root[data-mode='dark'] .app-bar {
@@ -1848,7 +1871,20 @@
         rgb(var(--color-brand) / 0.1),
         transparent 72%
       ),
-      linear-gradient(90deg, rgb(255 255 255 / 0.05), transparent 45%, rgb(255 255 255 / 0.03));
+      linear-gradient(90deg, rgb(255 255 255 / 0.05), transparent 45%, rgb(255 255 255 / 0.03)),
+      var(--asset-noise);
+
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat;
+    background-size:
+      auto,
+      auto,
+      auto,
+      220px 220px;
+    background-position:
+      0 0,
+      0 0,
+      0 0,
+      0 0;
   }
 
   :root[data-mode='dark'] header[data-site-header].is-scrolled.app-bar {

@@ -305,3 +305,100 @@ const servicesErrorId = `${servicesHelpId}-error`;
     </p>
   </form>
 </div>
+
+<script>
+  function initContactForm() {
+    const forms = Array.from(document.querySelectorAll<HTMLFormElement>('form[data-contact-form]'));
+    if (!forms.length) return;
+
+    forms.forEach((form) => {
+      if (form.dataset.servicesInit === 'true') return;
+      form.dataset.servicesInit = 'true';
+
+      const errorEl = form.querySelector<HTMLElement>('[data-services-error]');
+      const box = form.querySelector<HTMLElement>('[data-services-box]');
+      const submitBtn = form.querySelector<HTMLButtonElement>('[data-contact-submit]');
+      const inputs = Array.from(
+        form.querySelectorAll<HTMLInputElement>('input[type="checkbox"][name="servicesNeeded"]')
+      );
+
+      if (!errorEl || !box || !inputs.length) return;
+
+      const hasAnyChecked = () => inputs.some((i) => i.checked);
+      const showError = () => {
+        errorEl.classList.remove('hidden');
+        box.setAttribute('data-invalid', 'true');
+      };
+      const hideError = () => {
+        errorEl.classList.add('hidden');
+        box.removeAttribute('data-invalid');
+      };
+
+      // IMPORTANT: The native browser validation UI can prevent the `submit` event from firing
+      // when other required fields are missing.
+      // To ensure our checkbox-group validation is visible, validate on the submit button click.
+      if (submitBtn) {
+        submitBtn.addEventListener(
+          'click',
+          (e) => {
+            if (hasAnyChecked()) {
+              hideError();
+              return;
+            }
+
+            // Block submission when the services group is empty.
+            // (Even if other fields are invalid, we still want this error to be visible.)
+            e.preventDefault();
+            showError();
+
+            // If other required fields are missing, prompt the browser to show their hints too.
+            try {
+              if (!form.checkValidity()) form.reportValidity();
+            } catch {
+              // ignore
+            }
+
+            try {
+              box.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            } catch {
+              // ignore
+            }
+            inputs[0]?.focus?.();
+          },
+          { passive: false }
+        );
+      }
+
+      // Hide as soon as the user selects something.
+      inputs.forEach((i) => {
+        i.addEventListener('change', () => {
+          if (hasAnyChecked()) hideError();
+        });
+      });
+
+      // Validate on submit.
+      form.addEventListener(
+        'submit',
+        (e) => {
+          if (hasAnyChecked()) {
+            hideError();
+            return;
+          }
+          e.preventDefault();
+          showError();
+          // Move focus to the group so screen readers announce the error.
+          try {
+            box.scrollIntoView({ block: 'center', behavior: 'smooth' });
+          } catch {
+            // ignore
+          }
+          inputs[0]?.focus?.();
+        },
+        { passive: false }
+      );
+    });
+  }
+
+  document.addEventListener('astro:page-load', initContactForm);
+  initContactForm();
+</script>

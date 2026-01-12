@@ -1,0 +1,133 @@
+---
+/**
+ * ParallaxOrbs
+ * Decorative depth layer (non-interactive).
+ * - Progressive enhancement: uses scroll-driven animations when supported.
+ * - Disabled under WebDriver (visual regression stability).
+ */
+
+type Props = {
+  class?: string;
+  tone?: 'brand' | 'accent' | 'mixed';
+};
+
+const { class: className, tone = 'mixed' } = Astro.props as Props;
+
+const toneClass =
+  tone === 'brand' ? 'parallax-orbs--brand' : tone === 'accent' ? 'parallax-orbs--accent' : '';
+---
+
+<div class:list={['parallax-orbs', toneClass, className]} aria-hidden="true">
+  <div class="parallax-orbs__orb parallax-orbs__orb--a"></div>
+  <div class="parallax-orbs__orb parallax-orbs__orb--b"></div>
+  <div class="parallax-orbs__orb parallax-orbs__orb--c"></div>
+</div>
+
+<style>
+  .parallax-orbs {
+    position: absolute;
+    inset: -12% -6% -24%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    filter: saturate(110%);
+  }
+
+  .parallax-orbs__orb {
+    position: absolute;
+    width: clamp(260px, 28vw, 520px);
+    height: clamp(260px, 28vw, 520px);
+    border-radius: 999px;
+    opacity: 0.55;
+    filter: blur(36px);
+    transform: translate3d(0, 0, 0);
+    will-change: transform;
+  }
+
+  .parallax-orbs__orb--a {
+    left: -6%;
+    top: 8%;
+    background: radial-gradient(closest-side, rgb(var(--color-brand) / 0.22), transparent 70%);
+  }
+
+  .parallax-orbs__orb--b {
+    right: -8%;
+    top: 0%;
+    background: radial-gradient(closest-side, rgb(var(--color-accent) / 0.2), transparent 68%);
+  }
+
+  .parallax-orbs__orb--c {
+    left: 22%;
+    bottom: -12%;
+    width: clamp(320px, 36vw, 680px);
+    height: clamp(320px, 36vw, 680px);
+    opacity: 0.45;
+    background: radial-gradient(closest-side, rgb(var(--color-brand-900) / 0.22), transparent 72%);
+  }
+
+  .parallax-orbs--brand .parallax-orbs__orb--b {
+    background: radial-gradient(closest-side, rgb(var(--color-brand) / 0.18), transparent 70%);
+  }
+
+  .parallax-orbs--accent .parallax-orbs__orb--a {
+    background: radial-gradient(closest-side, rgb(var(--color-accent) / 0.18), transparent 70%);
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .parallax-orbs__orb--a {
+      animation: orbFloatA linear both;
+      animation-timeline: scroll();
+      animation-range: 0% 100%;
+    }
+
+    .parallax-orbs__orb--b {
+      animation: orbFloatB linear both;
+      animation-timeline: scroll();
+      animation-range: 0% 100%;
+    }
+
+    .parallax-orbs__orb--c {
+      animation: orbFloatC linear both;
+      animation-timeline: scroll();
+      animation-range: 0% 100%;
+    }
+  }
+
+  @keyframes orbFloatA {
+    from {
+      transform: translate3d(0, 0px, 0);
+    }
+    to {
+      transform: translate3d(0, 60px, 0);
+    }
+  }
+
+  @keyframes orbFloatB {
+    from {
+      transform: translate3d(0, 0px, 0);
+    }
+    to {
+      transform: translate3d(0, -70px, 0);
+    }
+  }
+
+  @keyframes orbFloatC {
+    from {
+      transform: translate3d(0, 0px, 0);
+    }
+    to {
+      transform: translate3d(0, 90px, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .parallax-orbs__orb {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  :global(html[data-webdriver='true']) .parallax-orbs {
+    display: none !important;
+  }
+</style>

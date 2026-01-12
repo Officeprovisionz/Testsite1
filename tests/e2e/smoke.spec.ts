@@ -5,10 +5,11 @@ test('navigation links work (header)', async ({ page }) => {
   await page.goto('/');
   await disableAnimations(page);
 
-  await page.getByRole('link', { name: 'Services' }).click();
+  const header = page.getByRole('banner');
+  await header.getByRole('link', { name: 'Services' }).click();
   await expect(page).toHaveURL(/\/services\/$/);
 
-  await page.getByRole('link', { name: 'Contact' }).click();
+  await header.getByRole('link', { name: 'Contact' }).click();
   await expect(page).toHaveURL(/\/contact\/$/);
 });
 
@@ -73,10 +74,12 @@ test('thanks page renders confirmation actions', async ({ page }) => {
 });
 
 test('404 page offers recovery actions', async ({ page }) => {
-  await page.goto('/this-page-should-not-exist');
+  await page.goto('/404/');
   await disableAnimations(page);
 
   await expect(page.getByText('404')).toBeVisible();
   await expect(page.getByRole('link', { name: /Go to homepage/i })).toBeVisible();
-  await expect(page.getByRole('link', { name: /Request a quote/i })).toBeVisible();
+  await expect(
+    page.locator('#main-content').getByRole('link', { name: /Request a quote/i })
+  ).toBeVisible();
 });

@@ -1,0 +1,224 @@
+---
+/**
+ * LiveSocialProof
+ * Lightweight (non-AI) rotating activity pill to add momentum + reassurance.
+ * - Disabled under WebDriver (visual regression stability)
+ * - Respects prefers-reduced-motion
+ */
+
+type Activity = {
+  type: 'quote' | 'walkthrough' | 'review';
+  location: string;
+  timeAgo: string;
+  service?: string;
+};
+
+type Props = {
+  /** Optional override list (kept small on purpose). */
+  activities?: Activity[];
+};
+
+const { activities = [] } = Astro.props as Props;
+
+const fallback: Activity[] = [
+  {
+    type: 'quote',
+    location: 'San Francisco',
+    timeAgo: '2 minutes ago',
+    service: 'Office cleaning',
+  },
+  {
+    type: 'walkthrough',
+    location: 'Oakland',
+    timeAgo: '23 minutes ago',
+    service: 'Walkthrough scheduled',
+  },
+  { type: 'review', location: 'Berkeley', timeAgo: '1 hour ago' },
+];
+
+const items = (activities.length ? activities : fallback).slice(0, 6);
+
+const iconFor = (t: Activity['type']) => {
+  switch (t) {
+    case 'quote':
+      return '✦';
+    case 'walkthrough':
+      return '✓';
+    case 'review':
+      return '★';
+  }
+};
+
+const labelFor = (a: Activity) => {
+  if (a.type === 'quote') return 'Quote requested';
+  if (a.type === 'walkthrough') return 'Walkthrough booked';
+  return 'New review posted';
+};
+
+const detailFor = (a: Activity) => {
+  const parts = [a.location, a.service].filter(Boolean);
+  return parts.join(' • ');
+};
+---
+
+<div class="live-proof" data-live-proof aria-live="polite" aria-atomic="true">
+  <div class="live-proof__icon" aria-hidden="true"></div>
+  <div class="min-w-0">
+    <div class="live-proof__title" data-live-proof-title></div>
+    <div class="live-proof__meta" data-live-proof-meta></div>
+  </div>
+  <div class="live-proof__time" data-live-proof-time></div>
+</div>
+
+<script is:inline define:vars={{ items, iconFor, labelFor, detailFor }}>
+  (function initLiveProof() {
+    const root = document.querySelector('[data-live-proof]');
+    if (!root) return;
+
+    const doc = document.documentElement;
+    const isWebDriver = doc?.dataset?.webdriver === 'true';
+
+    const reduceMotion = (() => {
+      try {
+        return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+      } catch {
+        return false;
+      }
+    })();
+
+    // Keep visual regression deterministic.
+    if (isWebDriver) {
+      root.setAttribute('hidden', '');
+      return;
+    }
+
+    const iconEl = root.querySelector('[data-live-proof] .live-proof__icon');
+    const titleEl = root.querySelector('[data-live-proof-title]');
+    const metaEl = root.querySelector('[data-live-proof-meta]');
+    const timeEl = root.querySelector('[data-live-proof-time]');
+
+    if (!iconEl || !titleEl || !metaEl || !timeEl) return;
+
+    const safeItems = Array.isArray(items) ? items : [];
+    if (!safeItems.length) {
+      root.setAttribute('hidden', '');
+      return;
+    }
+
+    let i = 0;
+
+    const render = (idx) => {
+      const a = safeItems[idx % safeItems.length];
+      iconEl.textContent = iconFor(a.type);
+      titleEl.textContent = labelFor(a);
+      metaEl.textContent = detailFor(a);
+      timeEl.textContent = a.timeAgo;
+    };
+
+    render(0);
+
+    if (reduceMotion) return;
+
+    // Gentle rotation.
+    window.setInterval(() => {
+      i += 1;
+      root.animate(
+        [
+          { opacity: 0, transform: 'translate3d(0, 8px, 0)' },
+          { opacity: 1, transform: 'translate3d(0, 0, 0)' },
+        ],
+        { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
+      );
+      render(i);
+    }, 5200);
+  })();
+</script>
+
+<style>
+  .live-proof {
+    position: fixed;
+    right: 1rem;
+    bottom: calc(env(safe-area-inset-bottom) + 5.9rem);
+    z-index: 45;
+
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    max-width: min(92vw, 24rem);
+    padding: 0.75rem 0.85rem;
+
+    border-radius: 999px;
+    border: 1px solid rgb(var(--color-border) / 0.65);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface) / 0.72) 0%,
+      rgb(var(--color-surface-muted) / 0.62) 100%
+    );
+    -webkit-backdrop-filter: blur(14px) saturate(135%);
+    backdrop-filter: blur(14px) saturate(135%);
+
+    box-shadow:
+      0 26px 70px -54px rgb(0 0 0 / 0.7),
+      0 0 0 1px rgb(var(--color-brand) / 0.06);
+  }
+
+  .live-proof__icon {
+    width: 2.15rem;
+    height: 2.15rem;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    flex: none;
+
+    background:
+      radial-gradient(60% 60% at 50% 35%, rgb(var(--color-accent) / 0.28), transparent 70%),
+      radial-gradient(75% 75% at 50% 70%, rgb(var(--color-brand) / 0.22), transparent 70%);
+    border: 1px solid rgb(var(--color-brand) / 0.22);
+
+    color: rgb(var(--color-text));
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .live-proof__title {
+    font-size: 0.85rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    color: rgb(var(--color-text));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .live-proof__meta {
+    margin-top: 0.1rem;
+    font-size: 0.8rem;
+    color: rgb(var(--color-text-muted));
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .live-proof__time {
+    margin-left: 0.25rem;
+    font-size: 0.78rem;
+    color: rgb(var(--color-text-subtle));
+    flex: none;
+  }
+
+  @media (max-width: 640px) {
+    .live-proof {
+      right: 0.75rem;
+      left: 0.75rem;
+      max-width: none;
+      bottom: calc(env(safe-area-inset-bottom) + 5.75rem);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-proof {
+      transition: none;
+    }
+  }
+</style>

@@ -8,7 +8,6 @@ import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
 import BottomTabBar from '@/components/BottomTabBar.astro';
-import FloatingActionButton from '@/components/FloatingActionButton.astro';
 import Schema from '@/components/Schema.astro';
 import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
@@ -463,6 +462,32 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
         }
       })();
 
+      const isWebDriver = (() => {
+        try {
+          return (navigator as Navigator & { webdriver?: boolean }).webdriver === true;
+        } catch {
+          return false;
+        }
+      })();
+
+      // Helpful for conditional styling in visual regression tests.
+      if (isWebDriver) root.dataset.webdriver = 'true';
+
+      // Non-AI personalization: restore the last selected audience segment (if any).
+      // This is intentionally disabled under WebDriver to keep visual regression deterministic.
+      if (!isWebDriver) {
+        try {
+          const saved = window.localStorage.getItem('damra_audience') || '';
+          if (saved === 'office' || saved === 'medical' || saved === 'retail') {
+            root.dataset.audience = saved;
+          } else {
+            delete root.dataset.audience;
+          }
+        } catch {
+          // ignore
+        }
+      }
+
       const isTouchLike = (() => {
         try {
           return (
@@ -474,7 +499,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
         }
       })();
 
-      if (prefersReducedMotion || isTouchLike) {
+      if (prefersReducedMotion || isWebDriver || isTouchLike) {
         // Respect OS/user preference: avoid forced smooth scrolling.
       } else {
         if (root.dataset.lenisInit !== 'true') {
@@ -748,11 +773,11 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     <!-- Mobile Bottom Tab Bar (persistent navigation) -->
     <BottomTabBar />
 
-    <!-- Floating Action Button (mobile speed dial) -->
-    <FloatingActionButton />
+    <!-- Mobile CTAs are consolidated into the BottomTabBar to reduce cognitive load. -->
 
     <script>
       import { initScrollTracking, captureUTMs } from '@/lib/tracking';
+      import { hapticFeedback } from '@/lib/haptics';
       // Initialize analytics and tracking
       captureUTMs();
       initScrollTracking();
@@ -780,14 +805,8 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
             const el = isHapticEl(e.target);
             if (!el) return;
 
-            // Physical tactile feedback for 2026 mobile devices (12-15ms is "soft click")
-            if (typeof navigator !== 'undefined' && 'vibrate' in navigator) {
-              try {
-                navigator.vibrate(12);
-              } catch {
-                /* block */
-              }
-            }
+            // Physical tactile feedback for 2026 mobile devices.
+            hapticFeedback('tap', 'light');
 
             try {
               el.animate(

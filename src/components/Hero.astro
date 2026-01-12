@@ -3,6 +3,7 @@ import { siteConfig } from '@/data/siteConfig';
 import Spotlight from './ui/Spotlight.astro';
 import { getImagePositionClass } from '@/lib/utils';
 import { makeTelHref } from '@/lib/links';
+import AudienceNudge from './AudienceNudge.astro';
 
 type Props = {
   /** Optional fully-qualified (BASE_URL-prefixed) hero image URL. */
@@ -161,22 +162,42 @@ const heroStats = [
         class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
         data-hero-subhead
       >
-        Discreet, checklist-driven commercial cleaning for{' '}
-        <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
-        workplaces.
+        <span data-audience-copy="default">
+          Discreet, checklist-driven commercial cleaning for{' '}
+          <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
+          workplaces.
+        </span>
+        <span data-audience-copy="office">
+          Discreet, checklist-driven office cleaning for{' '}
+          <span class="font-bold text-white">{siteConfig.brand.city}</span> teams that move fast.
+        </span>
+        <span data-audience-copy="medical">
+          Discreet, checklist-driven cleaning for{' '}
+          <span class="font-bold text-white">{siteConfig.brand.city}</span> medical suites where compliance
+          matters.
+        </span>
+        <span data-audience-copy="retail">
+          Discreet, checklist-driven cleaning for{' '}
+          <span class="font-bold text-white">{siteConfig.brand.city}</span> storefronts that need to shine
+          daily.
+        </span>
       </p>
+
+      <AudienceNudge class="animate-slide-up [animation-delay:280ms]" />
       <div
         class="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5"
       >
         <a
           href={telHref}
-          class="btn-primary shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          class="btn-primary btn-premium shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          data-haptic="true"
         >
           Call now
         </a>
         <a
           href={`${base}contact/`}
-          class="btn-secondary w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          class="btn-secondary btn-premium w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
+          data-haptic="true"
         >
           Request a quote
         </a>
@@ -265,7 +286,9 @@ const heroStats = [
     const hero = document.querySelector<HTMLElement>('[data-hero-section]');
     if (!hero) return;
 
-    const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+    const isWebDriver = (navigator as Navigator & { webdriver?: boolean }).webdriver === true;
+    const reduceMotion =
+      (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false) || isWebDriver;
     const headline = hero.querySelector<HTMLElement>('[data-hero-headline]');
     const subhead = hero.querySelector<HTMLElement>('[data-hero-subhead]');
     const swipe = hero.querySelector<HTMLElement>('[data-hero-swipe]');
@@ -358,3 +381,33 @@ const heroStats = [
   document.addEventListener('astro:page-load', initVideo);
   document.addEventListener('astro:page-load', initHeroMotion);
 </script>
+
+<style>
+  /* Audience-aware copy (non-AI): swap text based on <html data-audience="..."> */
+  [data-audience-copy] {
+    display: none;
+  }
+
+  /* Default when nothing is selected */
+  :global(html:not([data-audience])) [data-audience-copy='default'] {
+    display: inline;
+  }
+
+  :global(html[data-audience='office']) [data-audience-copy='office'] {
+    display: inline;
+  }
+  :global(html[data-audience='medical']) [data-audience-copy='medical'] {
+    display: inline;
+  }
+  :global(html[data-audience='retail']) [data-audience-copy='retail'] {
+    display: inline;
+  }
+
+  /* WebDriver: keep copy stable (avoid hidden localStorage affecting snapshots). */
+  :global(html[data-webdriver='true']) [data-audience-copy='default'] {
+    display: inline;
+  }
+  :global(html[data-webdriver='true']) [data-audience-copy]:not([data-audience-copy='default']) {
+    display: none;
+  }
+</style>

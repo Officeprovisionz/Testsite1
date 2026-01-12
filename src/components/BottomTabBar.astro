@@ -29,6 +29,34 @@ const href = makeHref(base);
 const isActive = makeIsActive(Astro.url.pathname, base);
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 
+const normalizedPath = (() => {
+  const raw = Astro.url.pathname || '/';
+  const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
+  const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
+  return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+})();
+
+const primaryIntentPage =
+  normalizedPath.startsWith('/services/') ||
+  normalizedPath.startsWith('/industries/') ||
+  normalizedPath.startsWith('/pricing/') ||
+  normalizedPath.startsWith('/resources/') ||
+  normalizedPath.startsWith('/checklist/');
+
+const primaryAction = primaryIntentPage
+  ? {
+      key: 'quote',
+      label: 'Quote',
+      href: href('contact/'),
+      icon: 'lucide:send',
+    }
+  : {
+      key: 'call',
+      label: 'Call',
+      href: telHref,
+      icon: 'lucide:phone',
+    };
+
 const items: TabItem[] = [
   {
     key: 'home',
@@ -46,10 +74,10 @@ const items: TabItem[] = [
     active: () => isActive(href('services/')) || isActive(href('industries/')),
   },
   {
-    key: 'call',
-    label: 'Call',
-    href: telHref,
-    icon: 'lucide:phone',
+    key: primaryAction.key,
+    label: primaryAction.label,
+    href: primaryAction.href,
+    icon: primaryAction.icon,
     active: () => false,
     primary: true,
   },
@@ -68,13 +96,6 @@ const items: TabItem[] = [
     action: 'open-menu',
   },
 ];
-
-const normalizedPath = (() => {
-  const raw = Astro.url.pathname || '/';
-  const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
-  const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
-  return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
-})();
 
 const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
 ---

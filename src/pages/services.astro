@@ -8,6 +8,7 @@ import ServicesSection from '@/components/Services.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import RelatedLinks from '@/components/RelatedLinks.astro';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getCollection } from 'astro:content';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -85,6 +86,129 @@ const heroImageMobile = heroSecondary
   />
 
   <ServicesGrid />
+
+  <section class="section section-muted section-creative scroll-mt-20" id="service-details">
+    <div class="container-page">
+      <SectionHeader
+        align="center"
+        eyebrow="What it looks like"
+        heading="Details that keep the day running"
+        description="This is the kind of support teams ask for most—clear scope, repeatable checklists, and the extras that remove friction."
+      />
+
+      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
+        <article class="card card-hover p-6 sm:p-7">
+          <p class="text-strong text-lg font-semibold">Routine clean</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Your workspace deserves to shine. Our routine commercial cleaning handles it all—from
+            counters to floors. We remove trash, mop (wet and dry), wipe down counters, clean and
+            polish appliances, reset chairs, and spot clean glass and entryways. Dependable service
+            that keeps your office looking its best.
+          </p>
+        </article>
+
+        <article class="card card-hover p-6 sm:p-7">
+          <p class="text-strong text-lg font-semibold">Deep clean</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Ready for a deeper clean? Our thorough service tackles what routine cleaning misses—
+            dusting baseboards and ceilings, carefully cleaning personal offices and monitors,
+            disinfecting and sanitizing throughout, and polishing stainless steel appliances to
+            perfection.
+          </p>
+        </article>
+
+        <article class="card card-hover p-6 sm:p-7">
+          <p class="text-strong text-lg font-semibold">Specialty care</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Beyond routine care—specialty cleaning that transforms your space. Whether you need
+            post-construction cleanup, sparkling windows, deep carpet and furniture extraction, or
+            glossy polished floors, we bring professional equipment and expertise to every unique
+            challenge.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-creative scroll-mt-20" id="breakroom">
+    <div class="container-page">
+      <SectionHeader
+        align="center"
+        eyebrow="Breakroom & operations"
+        heading="Your office partner (not just cleaning)"
+        description="We can support pantry, coffee, and day-to-day office needs—so your team stays focused and the space stays ready."
+      />
+
+      <div class="mt-10 grid gap-6 lg:mt-12 lg:grid-cols-2">
+        <article class="card card-hover relative overflow-hidden p-6 sm:p-7">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
+          >
+          </div>
+          <div class="relative">
+            <p class="text-strong text-lg font-semibold">Snacks, drinks, pantry essentials</p>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              Your break room is our priority. We’re your office partner for snacks, drinks, coffee,
+              and everything that keeps your day running efficiently—without the hassle.
+            </p>
+            <p class="mt-3 text-sm leading-relaxed text-muted">
+              Your team is unique, and your pantry should be too. We’ll work with you to create a
+              customized selection that balances health-conscious choices with everyone’s
+              favorites—because satisfaction matters.
+            </p>
+          </div>
+        </article>
+
+        <article class="card card-hover p-6 sm:p-7">
+          <p class="text-strong text-lg font-semibold">Coffee program</p>
+          <p class="mt-3 text-sm leading-relaxed text-muted">
+            Fresh, locally roasted coffee meets the right machine for your space. We’re experts in
+            everything from traditional espresso setups to fully automated systems and classic
+            coffee machines—plus we source all the essentials: milk, non-dairy alternatives,
+            creamers, sweeteners, and every finishing touch your team wants.
+          </p>
+        </article>
+      </div>
+
+      <div class="mt-6 grid gap-6 md:grid-cols-2 lg:mt-8 lg:grid-cols-4">
+        <article class="card card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Furniture services</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Need furniture built or rearranged? We provide professional furniture assembly and
+            moving services that transform your office space efficiently.
+          </p>
+        </article>
+        <article class="card card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Office organization</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Is clutter holding your business back? We create order that lasts—from storage rooms to
+            disorganized inventory.
+          </p>
+        </article>
+        <article class="card card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Air filter replacement</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            Scheduled filter changes to support healthier air quality—so you never have to think
+            about it.
+          </p>
+        </article>
+        <article class="card card-hover p-6">
+          <p class="text-strong text-sm font-semibold">Event & assistant support</p>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            From company meetings to special celebrations, we help with the details so everything
+            runs smoothly.
+          </p>
+        </article>
+      </div>
+
+      <p class="mx-auto mt-6 max-w-3xl text-center text-sm text-muted">
+        A well-maintained office doesn’t just look better—it performs better. Our dedicated
+        maintenance team provides comprehensive solutions that keep your workplace organized,
+        functional, and running at peak efficiency.
+      </p>
+    </div>
+  </section>
 
   <ServicesSection
     id="specialty"

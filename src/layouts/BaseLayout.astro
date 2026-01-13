@@ -7,7 +7,6 @@ import frauncesVariableUrl from '@fontsource-variable/fraunces/files/fraunces-la
 import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
-import BottomTabBar from '@/components/BottomTabBar.astro';
 import Schema from '@/components/Schema.astro';
 import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
@@ -746,7 +745,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 
     <slot name="header" />
 
-    <main id="main-content" class="pb-24 md:pb-0">
+    <main id="main-content">
       <slot />
     </main>
 
@@ -754,11 +753,6 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 
     <!-- Toast Notification System -->
     <Toaster client:load transition:persist />
-
-    <!-- Mobile Bottom Tab Bar (persistent navigation) -->
-    <BottomTabBar />
-
-    <!-- Mobile CTAs are consolidated into the BottomTabBar to reduce cognitive load. -->
 
     <script>
       import { initScrollTracking, captureUTMs } from '@/lib/tracking';

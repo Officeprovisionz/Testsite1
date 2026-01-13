@@ -163,7 +163,7 @@ const getImgAttrs = (src: string) => {
                     height={attrs.height}
                     sizes={attrs.sizes ?? '(min-width: 1024px) 50vw, 100vw'}
                     alt={item.alt}
-                    loading="lazy"
+                    loading="eager"
                     decoding="async"
                     class="h-full w-full object-cover transition-transform duration-1000 ease-out group-hover:scale-[1.05]"
                   />
@@ -205,28 +205,10 @@ const getImgAttrs = (src: string) => {
 
 <style>
   .expertise-card {
-    /* Baseline entrance (fallback when scroll-driven timelines aren't supported) */
+    /* Baseline entrance (kept intentionally simple for mobile stability) */
     animation: fadeSlideUp 0.6s ease-out both;
     position: relative;
     z-index: 1;
-
-    /* Scroll-reveal tuning (each card sets --i). */
-    --i: 0;
-    --stack-y: calc(34px + (var(--i) * 12px));
-    --stack-z: calc(14px + (var(--i) * 7px));
-    --stack-rot: calc((var(--i) - 1.5) * 1.25deg);
-  }
-
-  /* Scroll-driven “card stack reveal” (progressively enhanced) */
-  @supports (animation-timeline: view()) {
-    .expertise-card {
-      animation: cardStackReveal linear both;
-      animation-timeline: view();
-      /* Starts just before it enters the viewport; finishes while it's mostly visible. */
-      animation-range: entry -10% cover 40%;
-      will-change: transform, opacity, filter;
-      transform-style: preserve-3d;
-    }
   }
 
   /* 2026 Polish: Sheer refractive overlay that reacts to movement/hover */
@@ -265,20 +247,6 @@ const getImgAttrs = (src: string) => {
     }
   }
 
-  @keyframes cardStackReveal {
-    from {
-      opacity: 0;
-      transform: perspective(1200px) translateY(var(--stack-y)) rotateX(14deg)
-        rotateZ(var(--stack-rot)) translateZ(calc(var(--stack-z) * -1));
-      filter: blur(10px);
-    }
-    to {
-      opacity: 1;
-      transform: perspective(1200px) translateY(0) rotateX(0deg) rotateZ(0deg) translateZ(0px);
-      filter: blur(0px);
-    }
-  }
-
   /* Smooth hover lift - only on hover-capable devices */
   @media (hover: hover) and (pointer: fine) {
     .expertise-card:hover {
@@ -290,7 +258,6 @@ const getImgAttrs = (src: string) => {
   @media (hover: none) {
     .expertise-card {
       transform: none !important;
-      filter: none !important;
     }
     .expertise-card img {
       transform: none !important;

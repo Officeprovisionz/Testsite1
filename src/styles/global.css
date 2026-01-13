@@ -611,10 +611,12 @@
      This can reduce main-thread work on long pages while keeping layout stable.
      https://web.dev/articles/content-visibility
   */
-  @supports (content-visibility: auto) {
-    .section {
-      content-visibility: auto;
-      contain-intrinsic-size: 900px;
+  @media (min-width: 768px) {
+    @supports (content-visibility: auto) {
+      .section {
+        content-visibility: auto;
+        contain-intrinsic-size: 900px;
+      }
     }
   }
 
@@ -1702,105 +1704,6 @@
     }
   }
 
-  /* --- Mobile Bottom Tab Bar --- */
-  .bottom-tab-bar {
-    /* Glassy surface with safe-area padding; matches the header "app-bar" vibe. */
-    background-color: rgb(var(--color-bg) / 0.78);
-    -webkit-backdrop-filter: blur(18px) saturate(130%);
-    backdrop-filter: blur(18px) saturate(130%);
-    border-top: 1px solid rgb(var(--color-border) / 0.6);
-    box-shadow: 0 -16px 40px -24px rgba(2, 6, 23, 0.45);
-    padding-bottom: env(safe-area-inset-bottom);
-  }
-
-  :root[data-mode='dark'] .bottom-tab-bar {
-    background-color: rgb(var(--color-bg) / 0.85);
-    border-top: 1px solid rgb(var(--color-border) / 0.65);
-    box-shadow: 0 -18px 46px -26px rgba(0, 0, 0, 0.7);
-  }
-
-  .bottom-tab-bar__inner {
-    display: grid;
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-    gap: 0.25rem;
-    padding: 0.5rem 0.6rem;
-  }
-
-  .bottom-tab-bar__item {
-    display: grid;
-    grid-auto-flow: row;
-    justify-items: center;
-    align-items: center;
-    gap: 0.15rem;
-    height: 3.5rem;
-    border-radius: 1.1rem;
-    color: rgb(var(--color-text-muted));
-    text-decoration: none;
-    -webkit-tap-highlight-color: transparent;
-    transition:
-      background-color 160ms cubic-bezier(0.4, 0, 0.2, 1),
-      color 160ms cubic-bezier(0.4, 0, 0.2, 1),
-      transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
-  }
-
-  .bottom-tab-bar__label {
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-  }
-
-  .bottom-tab-bar__item.is-active {
-    background-color: rgb(var(--color-brand-100) / 0.75);
-    color: rgb(var(--color-brand-700));
-    /* 2026 Polish: Interactive "Springy" inner pill */
-    position: relative;
-  }
-
-  .bottom-tab-bar__item.is-active::after {
-    content: '';
-    position: absolute;
-    inset: 4px;
-    border-radius: 8px;
-    background: rgb(var(--color-brand-500) / 0.08);
-    pointer-events: none;
-    animation: damra-active-pill 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-
-  @keyframes damra-active-pill {
-    from {
-      transform: scale(0.85);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  :root[data-mode='dark'] .bottom-tab-bar__item.is-active {
-    background-color: rgb(var(--color-brand-900) / 0.35);
-    color: rgb(var(--color-brand-200));
-  }
-
-  /* The center tab is the primary action: stronger weight + subtle pop. */
-  .bottom-tab-bar__item.is-primary {
-    color: rgb(var(--color-text));
-  }
-
-  .bottom-tab-bar__item.is-primary.is-active {
-    background-color: rgb(var(--color-accent) / 0.25);
-    color: rgb(var(--color-text));
-  }
-
-  :root[data-mode='dark'] .bottom-tab-bar__item.is-primary {
-    color: rgb(var(--color-text));
-  }
-
-  :root[data-mode='dark'] .bottom-tab-bar__item.is-primary.is-active {
-    background-color: rgb(var(--color-accent) / 0.35);
-    color: rgb(var(--color-text));
-  }
-
   /* --- Micro-interactions: "haptic" press simulation --- */
   [data-haptic='true'] {
     touch-action: manipulation;
@@ -1811,10 +1714,6 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .bottom-tab-bar__item {
-      transition: none;
-    }
-
     [data-haptic='true']:active {
       transform: none;
     }

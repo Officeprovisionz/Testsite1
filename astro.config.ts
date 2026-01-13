@@ -122,6 +122,11 @@ export default defineConfig({
         access: 'public',
         default: 'https://plausible.io/js/script.js',
       }),
+      PUBLIC_BOOKING_URL: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
       PUBLIC_SENTRY_DSN: envField.string({
         context: 'client',
         access: 'public',

@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
 import ContactSection from '@/components/Contact.astro';
+import QuoteWizard from '@/components/QuoteWizard.astro';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { makeHref } from '@/lib/nav';
@@ -19,6 +20,21 @@ const href = makeHref(import.meta.env.BASE_URL);
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 const vcardHref = href('office-provisionz.vcf');
+const bookingUrl = (import.meta.env.PUBLIC_BOOKING_URL ?? '').trim() || undefined;
+
+const industryOptions = [...siteConfig.industries.map((i) => i.title), 'Other / Not listed'];
+
+const serviceOptions = [
+  'Recurring Janitorial (Nightly/Weekly)',
+  'Office Cleaning',
+  'Deep / Detail Cleaning',
+  'Day Porter / Daytime Upkeep',
+  'Supplies & Restocking',
+  'Facilities Support',
+  'Move-In / Move-Out (Office Turnovers)',
+  'Post-Construction Cleanup',
+  'Other / Not sure',
+];
 
 const heroItems = pickGalleryItems('contact-hero', 2);
 const heroPrimary = heroItems[0];
@@ -51,6 +67,12 @@ const heroImageMobile = heroSecondary
     imageSrcSetMobile={heroImageMobile.srcSet}
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 40%"
+  />
+
+  <QuoteWizard
+    bookingUrl={bookingUrl}
+    industryOptions={industryOptions}
+    serviceOptions={serviceOptions}
   />
 
   <section class="section section-creative hidden scroll-mt-20" id="thanks" data-thanks-panel>

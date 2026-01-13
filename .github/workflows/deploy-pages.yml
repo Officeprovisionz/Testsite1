@@ -44,6 +44,11 @@ jobs:
           # If you ever switch back to a project Pages URL (/<repo>/), restore the previous values.
           PUBLIC_SITE_BASE: /
           SITE_URL: https://officeprovisionz.com/
+          # Static form endpoint (Formspree/Basin/etc.).
+          # Add this in GitHub repo settings: Settings → Secrets and variables → Actions.
+          # Name: PUBLIC_FORM_ENDPOINT
+          # Value: https://formspree.io/f/xxxxxxxx (example)
+          PUBLIC_FORM_ENDPOINT: ${{ secrets.PUBLIC_FORM_ENDPOINT }}
           ASTRO_TELEMETRY_DISABLED: 1
         run: bun run build
 

@@ -73,7 +73,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
             srcset={imageSrcSet}
             sizes={imageSrcSet ? imageSizes : undefined}
             class:list={[
-              'h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]',
+              'h-full w-full object-cover opacity-[0.82] sm:opacity-[0.88]',
               imagePositionClass,
             ]}
             loading="eager"
@@ -89,7 +89,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           srcset={imageSrcSet}
           sizes={imageSrcSet ? imageSizes : undefined}
           class:list={[
-            'h-full w-full object-cover opacity-[0.62] sm:opacity-[0.72]',
+            'h-full w-full object-cover opacity-[0.82] sm:opacity-[0.88]',
             imagePositionClass,
           ]}
           loading="eager"
@@ -121,7 +121,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
 
     {/* Mobile-first readability veil with brand-tinted overlay (token-based for consistency). */}
     <div
-      class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.6] via-[rgb(var(--color-text))/0.32] to-[rgb(var(--color-brand))/0.1] dark:from-[rgb(var(--color-text))/0.72] dark:via-[rgb(var(--color-text-subtle))/0.36] sm:from-[rgb(var(--color-text))/0.45] sm:via-[rgb(var(--color-text))/0.2]"
+      class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.45] via-[rgb(var(--color-text))/0.22] to-[rgb(var(--color-brand))/0.08] dark:from-[rgb(var(--color-text))/0.6] dark:via-[rgb(var(--color-text-subtle))/0.3] sm:from-[rgb(var(--color-text))/0.38] sm:via-[rgb(var(--color-text))/0.18]"
     >
     </div>
   </div>
@@ -137,15 +137,15 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
         class="heading-1 animate-slide-up text-balance font-serif text-white drop-shadow-md lg:text-5xl xl:text-6xl"
         data-hero-headline
       >
-        <span class="hero-shine">Precision cleaning for spaces that lead.</span>
+        <span>Real people keeping your office steady.</span>
       </h1>
       <p
         class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
         data-hero-subhead
       >
-        Discreet, checklist-driven commercial cleaning for{' '}
-        <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
-        workplaces.
+        Local, owner-led cleaning in <span class="font-bold text-white"
+          >{siteConfig.brand.city}</span
+        >. Same crew, photo updates, and a real person answering when you call.
       </p>
       <div
         class="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5"
@@ -165,9 +165,180 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           Request a quote
         </a>
       </div>
+      <div
+        class="mt-9 grid animate-slide-up gap-4 text-left [animation-delay:520ms] lg:mt-12 lg:grid-cols-[1.1fr_0.9fr] lg:items-stretch lg:gap-6"
+      >
+        <div class="owner-note">
+          <p class="owner-note__eyebrow">Owner note</p>
+          <p class="owner-note__body">
+            "We show up with the same faces, walk the space with you, and send a quick text with a
+            photo when we're done. If something feels off, you call and I pick up."
+          </p>
+          <div class="owner-note__meta">
+            <span class="owner-note__dot" aria-hidden="true"></span>
+            <span>Owner-led crew</span>
+            <span class="owner-note__divider" aria-hidden="true">•</span>
+            <span>Direct: {siteConfig.contact.phoneDisplay}</span>
+          </div>
+        </div>
+        <div class="visit-promise">
+          <p class="visit-promise__title">What stays consistent</p>
+          <ul class="visit-promise__list">
+            <li>Walkthrough before the first clean</li>
+            <li>Photos + notes after each visit</li>
+            <li>Supply restock reminders you can reply to</li>
+          </ul>
+          <div class="visit-promise__footnote">
+            No bots, no gimmicks-just a reliable crew you can text.
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
+
+<style>
+  .owner-note {
+    position: relative;
+    border-radius: 1rem;
+    padding: 1.25rem 1.25rem 1.5rem;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface)) 0%,
+      rgb(var(--color-accent-50)) 110%
+    );
+    border: 1px solid rgb(var(--color-border) / 0.7);
+    box-shadow: 0 16px 50px -32px rgb(0 0 0 / 0.7);
+    color: rgb(var(--color-text));
+    overflow: hidden;
+  }
+
+  .owner-note::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--asset-noise);
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .owner-note__eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgb(var(--color-brand-700));
+  }
+
+  .owner-note__eyebrow::before {
+    content: '';
+    width: 1.5rem;
+    height: 1px;
+    background: rgb(var(--color-brand));
+    display: inline-block;
+  }
+
+  .owner-note__body {
+    margin-top: 0.45rem;
+    font-size: 1.02rem;
+    line-height: 1.6;
+    font-weight: 600;
+    color: rgb(var(--color-text));
+  }
+
+  .owner-note__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.85rem;
+    font-size: 0.92rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  .owner-note__dot {
+    width: 0.65rem;
+    height: 0.65rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgb(var(--color-accent-500)), rgb(var(--color-brand-500)));
+    box-shadow: 0 0 0 4px rgb(var(--color-accent-200) / 0.4);
+  }
+
+  .owner-note__divider {
+    color: rgb(var(--color-text-subtle));
+    opacity: 0.6;
+  }
+
+  .visit-promise {
+    position: relative;
+    padding: 1.25rem 1.25rem 1.35rem;
+    background:
+      linear-gradient(
+        120deg,
+        rgb(var(--color-accent-100) / 0.7),
+        rgb(var(--color-accent-200) / 0.4)
+      ),
+      linear-gradient(180deg, rgb(var(--color-surface) / 0.96), rgb(var(--color-surface)));
+    border-radius: 1rem;
+    color: rgb(var(--color-text));
+    border: 1px solid rgb(var(--color-border) / 0.7);
+  }
+
+  .visit-promise__title {
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-weight: 800;
+    color: rgb(var(--color-brand-800));
+  }
+
+  .visit-promise__list {
+    margin-top: 0.65rem;
+    display: grid;
+    gap: 0.45rem;
+    padding-left: 0;
+    list-style: none;
+  }
+
+  .visit-promise__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    gap: 0.55rem;
+    font-weight: 600;
+    line-height: 1.5;
+  }
+
+  .visit-promise__list li::before {
+    content: '✓';
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 999px;
+    background: rgb(var(--color-brand-100));
+    color: rgb(var(--color-brand-800));
+    font-weight: 800;
+    box-shadow: 0 6px 14px -10px rgb(0 0 0 / 0.35);
+  }
+
+  .visit-promise__footnote {
+    margin-top: 0.85rem;
+    font-size: 0.92rem;
+    color: rgb(var(--color-text-muted));
+  }
+
+  @media (max-width: 640px) {
+    .owner-note,
+    .visit-promise {
+      box-shadow: 0 16px 40px -28px rgb(0 0 0 / 0.85);
+    }
+  }
+</style>
 
 <script>
   // Progressive video enhancement

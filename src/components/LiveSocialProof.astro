@@ -24,16 +24,16 @@ const fallback: Activity[] = [
   {
     type: 'quote',
     location: 'San Francisco',
-    timeAgo: '2 minutes ago',
+    timeAgo: 'just now',
     service: 'Office cleaning',
   },
   {
     type: 'walkthrough',
-    location: 'Oakland',
-    timeAgo: '23 minutes ago',
-    service: 'Walkthrough scheduled',
+    location: 'SoMa',
+    timeAgo: 'today 3:15pm',
+    service: 'First visit walkthrough',
   },
-  { type: 'review', location: 'Berkeley', timeAgo: '1 hour ago' },
+  { type: 'review', location: 'Berkeley', timeAgo: 'this week' },
 ];
 
 const items = (activities.length ? activities : fallback).slice(0, 6);
@@ -41,11 +41,11 @@ const items = (activities.length ? activities : fallback).slice(0, 6);
 const iconFor = (t: Activity['type']) => {
   switch (t) {
     case 'quote':
-      return '✦';
+      return '🗒';
     case 'walkthrough':
-      return '✓';
+      return '👟';
     case 'review':
-      return '★';
+      return '⭐';
   }
 };
 
@@ -57,7 +57,7 @@ const labelFor = (a: Activity) => {
 
 const detailFor = (a: Activity) => {
   const parts = [a.location, a.service].filter(Boolean);
-  return parts.join(' • ');
+  return parts.join(' · ');
 };
 ---
 
@@ -76,11 +76,11 @@ const detailFor = (a: Activity) => {
     if (!root) return;
 
     const doc = document.documentElement;
-    const isWebDriver = doc?.dataset?.webdriver === 'true';
+    const isWebDriver = doc.dataset.webdriver === 'true';
 
     const reduceMotion = (() => {
       try {
-        return window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       } catch {
         return false;
       }
@@ -137,53 +137,52 @@ const detailFor = (a: Activity) => {
 <style>
   .live-proof {
     position: fixed;
+    left: 1rem;
     right: 1rem;
-    bottom: calc(env(safe-area-inset-bottom) + 5.9rem);
+    bottom: calc(env(safe-area-inset-bottom) + 1.1rem);
     z-index: 45;
 
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 0.75rem;
 
-    max-width: min(92vw, 24rem);
-    padding: 0.75rem 0.85rem;
+    max-width: 28rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0.95rem 1rem;
 
-    border-radius: 999px;
-    border: 1px solid rgb(var(--color-border) / 0.65);
-    background: linear-gradient(
-      180deg,
-      rgb(var(--color-surface) / 0.72) 0%,
-      rgb(var(--color-surface-muted) / 0.62) 100%
-    );
-    -webkit-backdrop-filter: blur(14px) saturate(135%);
-    backdrop-filter: blur(14px) saturate(135%);
+    border-radius: 1rem;
+    border: 1px solid rgb(var(--color-border) / 0.75);
+    background:
+      var(--asset-noise),
+      linear-gradient(180deg, rgb(var(--color-surface)) 0%, rgb(var(--color-accent-50) / 0.8) 100%);
+    background-blend-mode: soft-light, normal;
 
     box-shadow:
-      0 26px 70px -54px rgb(0 0 0 / 0.7),
-      0 0 0 1px rgb(var(--color-brand) / 0.06);
+      0 18px 48px -30px rgb(0 0 0 / 0.65),
+      0 1px 0 0 rgb(255 255 255 / 0.6) inset;
   }
 
   .live-proof__icon {
-    width: 2.15rem;
-    height: 2.15rem;
-    border-radius: 999px;
+    width: 2.05rem;
+    height: 2.05rem;
+    border-radius: 0.75rem;
     display: grid;
     place-items: center;
     flex: none;
-
-    background:
-      radial-gradient(60% 60% at 50% 35%, rgb(var(--color-accent) / 0.28), transparent 70%),
-      radial-gradient(75% 75% at 50% 70%, rgb(var(--color-brand) / 0.22), transparent 70%);
-    border: 1px solid rgb(var(--color-brand) / 0.22);
-
+    background: rgb(var(--color-accent-100));
+    border: 1px dashed rgb(var(--color-border) / 0.9);
     color: rgb(var(--color-text));
     font-weight: 800;
+    font-size: 1.1rem;
     letter-spacing: -0.02em;
+    box-shadow: 0 10px 24px -18px rgb(0 0 0 / 0.35);
   }
 
   .live-proof__title {
-    font-size: 0.85rem;
-    font-weight: 650;
+    font-size: 0.9rem;
+    font-weight: 750;
     letter-spacing: -0.01em;
     color: rgb(var(--color-text));
     white-space: nowrap;
@@ -193,7 +192,7 @@ const detailFor = (a: Activity) => {
 
   .live-proof__meta {
     margin-top: 0.1rem;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     color: rgb(var(--color-text-muted));
     white-space: nowrap;
     overflow: hidden;
@@ -202,14 +201,20 @@ const detailFor = (a: Activity) => {
 
   .live-proof__time {
     margin-left: 0.25rem;
-    font-size: 0.78rem;
+    font-size: 0.8rem;
+    font-weight: 700;
     color: rgb(var(--color-text-subtle));
     flex: none;
   }
 
   @media (max-width: 640px) {
     .live-proof {
-      display: none;
+      position: static;
+      max-width: none;
+      margin: 1.25rem auto 0;
+      width: 100%;
+      padding: 0.9rem 1rem;
+      box-shadow: 0 16px 38px -28px rgb(0 0 0 / 0.7);
     }
   }
 

@@ -167,11 +167,18 @@
     width: 100%;
     height: 100%;
     z-index: -1;
-    /* Clean luxury glow: cool brand + warm accent at low opacity. */
+    /* Warm paper texture instead of heavy neon glows. */
     background:
-      radial-gradient(1200px 640px at 85% -10%, rgb(var(--color-accent) / 0.18), transparent 65%),
-      radial-gradient(980px 560px at 12% -10%, rgb(var(--color-brand) / 0.22), transparent 62%),
-      radial-gradient(900px 640px at 50% 120%, rgb(var(--color-brand-900) / 0.25), transparent 70%);
+      var(--asset-noise),
+      radial-gradient(820px 520px at 85% -6%, rgb(var(--color-accent) / 0.16), transparent 60%),
+      radial-gradient(760px 520px at 12% -8%, rgb(var(--color-brand) / 0.16), transparent 58%),
+      linear-gradient(
+        180deg,
+        rgb(var(--color-bg)) 0%,
+        rgb(var(--color-surface)) 40%,
+        rgb(var(--color-bg)) 100%
+      );
+    background-blend-mode: soft-light, normal, normal, normal;
     pointer-events: none;
   }
 

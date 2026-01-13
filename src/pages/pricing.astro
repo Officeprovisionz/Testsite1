@@ -6,7 +6,6 @@ import PageHero from '@/components/PageHero.astro';
 import PricingGrid from '@/components/PricingGrid.astro';
 import ScopeSection from '@/components/Scope.astro';
 import FAQ from '@/components/FAQ.astro';
-import ConversionStrip from '@/components/ConversionStrip.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -67,13 +66,6 @@ const heroImageMobile = heroSecondary
   <ScopeSection id="scope" heading="Service levels" />
 
   <FAQ />
-
-  <ConversionStrip
-    tone="muted"
-    eyebrow="Options"
-    heading="Prefer a quick walkthrough?"
-    description="Call for the fastest response. We will confirm scope, access, frequency, and add-ons, then send a clear written quote."
-  />
 
   <Footer slot="footer" />
 </BaseLayout>

@@ -3,7 +3,6 @@ import { siteConfig } from '@/data/siteConfig';
 import Spotlight from './ui/Spotlight.astro';
 import { getImagePositionClass } from '@/lib/utils';
 import { makeTelHref } from '@/lib/links';
-import AudienceNudge from './AudienceNudge.astro';
 
 type Props = {
   /** Optional fully-qualified (BASE_URL-prefixed) hero image URL. */
@@ -46,24 +45,6 @@ const imagePositionClass = getImagePositionClass(imagePosition);
 
 const heroVideoWebm = `${base}media/hero-cleaning.webm`;
 const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
-
-const heroStats = [
-  {
-    label: 'Checklist pillars',
-    value: siteConfig.whatIncluded?.length ?? 6,
-    note: 'Documented, consistent, verified',
-  },
-  {
-    label: 'Service coverage',
-    value: siteConfig.services?.length ?? 5,
-    note: 'Cleaning, restocking, facilities',
-  },
-  {
-    label: 'Process steps',
-    value: siteConfig.processSteps?.length ?? 4,
-    note: 'Scope, checklist, delivery',
-  },
-];
 ---
 
 <section
@@ -162,28 +143,10 @@ const heroStats = [
         class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
         data-hero-subhead
       >
-        <span data-audience-copy="default">
-          Discreet, checklist-driven commercial cleaning for{' '}
-          <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
-          workplaces.
-        </span>
-        <span data-audience-copy="office">
-          Discreet, checklist-driven office cleaning for{' '}
-          <span class="font-bold text-white">{siteConfig.brand.city}</span> teams that move fast.
-        </span>
-        <span data-audience-copy="medical">
-          Discreet, checklist-driven cleaning for{' '}
-          <span class="font-bold text-white">{siteConfig.brand.city}</span> medical suites where compliance
-          matters.
-        </span>
-        <span data-audience-copy="retail">
-          Discreet, checklist-driven cleaning for{' '}
-          <span class="font-bold text-white">{siteConfig.brand.city}</span> storefronts that need to shine
-          daily.
-        </span>
+        Discreet, checklist-driven commercial cleaning for{' '}
+        <span class="font-bold text-white">{siteConfig.brand.city}</span>'s most demanding
+        workplaces.
       </p>
-
-      <AudienceNudge class="animate-slide-up [animation-delay:280ms]" />
       <div
         class="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5"
       >
@@ -201,23 +164,6 @@ const heroStats = [
         >
           Request a quote
         </a>
-      </div>
-
-      <div
-        class="mx-auto mt-10 grid max-w-3xl animate-slide-up gap-3 [animation-delay:550ms] sm:mt-12 sm:grid-cols-3 sm:gap-4"
-        data-hero-stats
-      >
-        {
-          heroStats.map((stat) => (
-            <div class="hero-stat" data-haptic="true">
-              <div class="hero-stat__value" data-countup data-target={String(stat.value)}>
-                0
-              </div>
-              <div class="hero-stat__label">{stat.label}</div>
-              <div class="hero-stat__note">{stat.note}</div>
-            </div>
-          ))
-        }
       </div>
     </div>
   </div>
@@ -318,60 +264,6 @@ const heroStats = [
       window.addEventListener('resize', onScroll);
       onScroll();
     }
-
-    // Scroll-triggered stat counters.
-    const counters = Array.from(hero.querySelectorAll<HTMLElement>('[data-countup]'));
-    if (!counters.length) return;
-
-    const fmt = new Intl.NumberFormat(undefined, { maximumFractionDigits: 0 });
-    const setText = (el: HTMLElement, n: number) => {
-      el.textContent = fmt.format(Math.round(n));
-    };
-
-    const animate = (el: HTMLElement, to: number) => {
-      if (reduceMotion) {
-        setText(el, to);
-        return;
-      }
-
-      const from = 0;
-      const duration = 900;
-      const start = performance.now();
-
-      const tick = (now: number) => {
-        const t = clamp((now - start) / duration, 0, 1);
-        // EaseOutCubic.
-        const eased = 1 - Math.pow(1 - t, 3);
-        setText(el, from + (to - from) * eased);
-        if (t < 1) window.requestAnimationFrame(tick);
-      };
-
-      window.requestAnimationFrame(tick);
-    };
-
-    const run = () => {
-      counters.forEach((el) => {
-        if (el.dataset.done === 'true') return;
-        el.dataset.done = 'true';
-        const target = Number(el.dataset.target ?? 0);
-        animate(el, Number.isFinite(target) ? target : 0);
-      });
-    };
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        const e = entries[0];
-        if (!e) return;
-        if (e.isIntersecting) {
-          run();
-          io.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    const statsRoot = hero.querySelector<HTMLElement>('[data-hero-stats]') ?? hero;
-    io.observe(statsRoot);
   };
 
   // Run on load
@@ -381,33 +273,3 @@ const heroStats = [
   document.addEventListener('astro:page-load', initVideo);
   document.addEventListener('astro:page-load', initHeroMotion);
 </script>
-
-<style>
-  /* Audience-aware copy (non-AI): swap text based on <html data-audience="..."> */
-  [data-audience-copy] {
-    display: none;
-  }
-
-  /* Default when nothing is selected */
-  :global(html:not([data-audience])) [data-audience-copy='default'] {
-    display: inline;
-  }
-
-  :global(html[data-audience='office']) [data-audience-copy='office'] {
-    display: inline;
-  }
-  :global(html[data-audience='medical']) [data-audience-copy='medical'] {
-    display: inline;
-  }
-  :global(html[data-audience='retail']) [data-audience-copy='retail'] {
-    display: inline;
-  }
-
-  /* WebDriver: keep copy stable (avoid hidden localStorage affecting snapshots). */
-  :global(html[data-webdriver='true']) [data-audience-copy='default'] {
-    display: inline;
-  }
-  :global(html[data-webdriver='true']) [data-audience-copy]:not([data-audience-copy='default']) {
-    display: none;
-  }
-</style>

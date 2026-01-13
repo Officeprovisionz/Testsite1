@@ -4,9 +4,7 @@ import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
-import Testimonials from '@/components/Testimonials.astro';
 import LiveSocialProof from '@/components/LiveSocialProof.astro';
-import ConversionStrip from '@/components/ConversionStrip.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { getCollection } from 'astro:content';
@@ -78,18 +76,7 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
 
   <ExpertiseGallery />
 
-  <Testimonials />
-
   <LiveSocialProof />
-
-  <ConversionStrip
-    tone="surface"
-    eyebrow="Next step"
-    heading="Talk to a local specialist"
-    description="Call for the fastest response, or send your space basics. We'll confirm scope and reply with a clear, written quote."
-    showChecklist={true}
-    showEmail={false}
-  />
 
   <FAQ />
 

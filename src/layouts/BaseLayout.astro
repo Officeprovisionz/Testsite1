@@ -473,21 +473,6 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
       // Helpful for conditional styling in visual regression tests.
       if (isWebDriver) root.dataset.webdriver = 'true';
 
-      // Non-AI personalization: restore the last selected audience segment (if any).
-      // This is intentionally disabled under WebDriver to keep visual regression deterministic.
-      if (!isWebDriver) {
-        try {
-          const saved = window.localStorage.getItem('damra_audience') || '';
-          if (saved === 'office' || saved === 'medical' || saved === 'retail') {
-            root.dataset.audience = saved;
-          } else {
-            delete root.dataset.audience;
-          }
-        } catch {
-          // ignore
-        }
-      }
-
       const isTouchLike = (() => {
         try {
           return (

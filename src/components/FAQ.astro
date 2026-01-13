@@ -2,8 +2,6 @@
 import { getCollection } from 'astro:content';
 import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
-import { siteConfig } from '@/data/siteConfig';
-import { makeHref } from '@/lib/nav';
 
 type Props = {
   id?: string;
@@ -23,7 +21,6 @@ const faqs = await getCollection('faqs');
 const items = faqs.map((f) => f.data);
 
 const searchId = `${id}-search`;
-const href = makeHref(import.meta.env.BASE_URL);
 
 const faqJsonLd = (() => {
   const data = {
@@ -116,32 +113,6 @@ const faqJsonLd = (() => {
         data-faq-empty
       >
         No matches. Try a different keyword (e.g. “pricing”, “supplies”, “after-hours”).
-      </div>
-
-      <div
-        class="border-app/40 mt-6 rounded-2xl border bg-surface/70 px-5 py-5 backdrop-blur-sm lg:px-7"
-      >
-        <p class="text-strong font-medium">Still have a question?</p>
-        <p class="mt-1 text-sm text-muted">Tell us what you need and we’ll reply quickly.</p>
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
-          <a
-            class="btn-primary w-full sm:w-auto"
-            href={`tel:${siteConfig.contact.phoneE164}`}
-            data-haptic="true"
-          >
-            Call now
-          </a>
-          <a class="btn-secondary w-full sm:w-auto" href={href('contact/')} data-haptic="true">
-            Request a quote
-          </a>
-          <a
-            class="btn-secondary w-full sm:w-auto"
-            href={`sms:${siteConfig.contact.phoneE164}`}
-            data-haptic="true"
-          >
-            Text us
-          </a>
-        </div>
       </div>
     </div>
   </div>

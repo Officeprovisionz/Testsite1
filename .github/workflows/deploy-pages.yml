@@ -17,6 +17,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -60,10 +61,37 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Diagnostics (Pages config)
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            try {
+              const pages = await github.rest.repos.getPages({ owner, repo });
+              core.info('Pages config:');
+              core.info(JSON.stringify(pages.data, null, 2));
+            } catch (e) {
+              core.warning(`getPages failed: ${e?.message ?? e}`);
+            }
+
+            try {
+              const latest = await github.rest.repos.getLatestPagesBuild({ owner, repo });
+              core.info('Latest Pages build:');
+              core.info(JSON.stringify(latest.data, null, 2));
+            } catch (e) {
+              core.warning(`getLatestPagesBuild failed: ${e?.message ?? e}`);
+            }
+
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4

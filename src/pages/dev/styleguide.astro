@@ -8,11 +8,8 @@ import { makeHref } from '@/lib/nav';
 const href = makeHref(import.meta.env.BASE_URL);
 const isDev = import.meta.env.DEV;
 
-// This page is for internal visual QA only.
-// In production builds, redirect away so it isn't publicly reachable.
-if (!isDev) {
-  return Astro.redirect(href(''));
-}
+const homeHref = href('');
+const shouldRedirect = !isDev;
 
 const title = `Styleguide (Dev) | ${siteConfig.brand.name}`;
 const description = 'Dev-only styleguide to preview tokens, typography, and common components.';
@@ -21,144 +18,146 @@ const description = 'Dev-only styleguide to preview tokens, typography, and comm
 <BaseLayout title={title} description={description} noIndex>
   <Header slot="header" />
 
-  <section class="section section-creative">
-    <div class="container-page">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Dev tools</p>
-          <h1 class="heading-2 mt-2">Styleguide</h1>
-          <p class="lede">
-            Quick visual QA for colors, type, buttons, cards, and form controls.
-            {!isDev ? ' (Note: you are viewing this in production.)' : ''}
-          </p>
-        </div>
-
-        <div class="flex flex-col gap-2 sm:items-end">
-          <a class="btn-secondary" href={href('')}>Home</a>
-          <a class="btn-secondary" href={href('contact/')}>Contact</a>
-        </div>
-      </div>
-
-      <div class="mt-10 grid gap-8">
-        <div class="panel p-6">
-          <h2 class="heading-4">Typography</h2>
-          <div class="mt-4 grid gap-3">
-            <p class="heading-1">Heading 1 - Premium, clean, confident.</p>
-            <p class="heading-2">Heading 2 - Clear hierarchy.</p>
-            <p class="heading-3">Heading 3 - Section titles.</p>
-            <p class="text-body">
-              Body text: readable, calm, and professional. This should feel like a modern product
-              site but still like a service business.
+  {
+    shouldRedirect ? (
+      <section class="section section-creative">
+        <div class="container-narrow">
+          <div class="card p-6 sm:p-8">
+            <h1 class="heading-3">Not available</h1>
+            <p class="mt-2 text-sm text-muted">This page is for internal visual QA only.</p>
+            <p class="mt-4">
+              <a class="btn-secondary" href={homeHref}>
+                Go to homepage
+              </a>
             </p>
-            <p class="text-body-sm">Small text: supporting details and helper copy.</p>
-            <p class="text-caption">Caption: subtle metadata.</p>
-            <p class="eyebrow">Eyebrow label</p>
           </div>
         </div>
-
-        <div class="panel p-6">
-          <h2 class="heading-4">Buttons</h2>
-          <div class="mt-4 flex flex-wrap gap-3">
-            <a class="btn-primary" href="#">Primary (Call)</a>
-            <a class="btn-secondary" href="#">Secondary</a>
-            <a class="btn-accent" href="#">Accent</a>
-            <a class="btn-invert" href="#">Invert</a>
-            <a class="link link-muted" href="#">Text link</a>
-          </div>
-        </div>
-
-        <div class="panel p-6">
-          <h2 class="heading-4">Surfaces</h2>
-          <div class="mt-4 grid gap-4 md:grid-cols-3">
-            <div class="card p-5">
-              <p class="text-strong font-semibold">Card</p>
-              <p class="mt-2 text-sm text-muted">Default card surface with soft shadow.</p>
+      </section>
+    ) : (
+      <section class="section section-creative">
+        <div class="container-page">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Dev tools</p>
+              <h1 class="heading-2 mt-2">Styleguide</h1>
+              <p class="lede">
+                Quick visual QA for colors, type, buttons, cards, and form controls.
+              </p>
             </div>
-            <div class="card card-hover p-5">
-              <p class="text-strong font-semibold">Card Hover</p>
-              <p class="mt-2 text-sm text-muted">Interactive card with hover effect.</p>
-            </div>
-            <div class="panel panel-muted p-5">
-              <p class="text-strong font-semibold">Panel Muted</p>
-              <p class="mt-2 text-sm text-muted">Subtle background for secondary info.</p>
+
+            <div class="flex flex-col gap-2 sm:items-end">
+              <a class="btn-secondary" href={href('')}>
+                Home
+              </a>
+              <a class="btn-secondary" href={href('contact/')}>
+                Contact
+              </a>
             </div>
           </div>
-        </div>
 
-        <div class="panel p-6">
-          <h2 class="heading-4">Form controls</h2>
-          <div class="mt-4 grid gap-4 md:grid-cols-2">
-            <label class="grid gap-1 text-sm">
-              <span class="text-strong font-semibold">Text input</span>
-              <input class="input" placeholder="Type here..." />
-            </label>
-            <label class="grid gap-1 text-sm">
-              <span class="text-strong font-semibold">Select</span>
-              <select class="select">
-                <option>Option A</option>
-                <option>Option B</option>
-              </select>
-            </label>
-            <label class="grid gap-1 text-sm md:col-span-2">
-              <span class="text-strong font-semibold">Textarea</span>
-              <textarea class="textarea" placeholder="Details..."></textarea>
-            </label>
+          <div class="mt-10 grid gap-8">
+            <div class="panel p-6">
+              <h2 class="heading-4">Typography</h2>
+              <div class="mt-4 grid gap-3">
+                <p class="heading-1">Heading 1 - Premium, clean, confident.</p>
+                <p class="heading-2">Heading 2 - Clear hierarchy.</p>
+                <p class="heading-3">Heading 3 - Section titles.</p>
+                <p class="text-body">
+                  Body text: readable, calm, and professional. This should feel like a modern
+                  product site but still like a service business.
+                </p>
+                <p class="text-body-sm">Small text: supporting details and helper copy.</p>
+                <p class="text-caption">Caption: subtle metadata.</p>
+                <p class="eyebrow">Eyebrow label</p>
+              </div>
+            </div>
+
+            <div class="panel p-6">
+              <h2 class="heading-4">Buttons</h2>
+              <div class="mt-4 flex flex-wrap gap-3">
+                <a class="btn-primary" href="#">
+                  Primary (Call)
+                </a>
+                <a class="btn-secondary" href="#">
+                  Secondary
+                </a>
+                <a class="btn-accent" href="#">
+                  Accent
+                </a>
+                <a class="btn-invert" href="#">
+                  Invert
+                </a>
+                <a class="link link-muted" href="#">
+                  Text link
+                </a>
+              </div>
+            </div>
+
+            <div class="panel p-6">
+              <h2 class="heading-4">Surfaces</h2>
+              <div class="mt-4 grid gap-4 md:grid-cols-3">
+                <div class="card p-5">
+                  <p class="text-strong font-semibold">Card</p>
+                  <p class="mt-2 text-sm text-muted">Default card surface with soft shadow.</p>
+                </div>
+                <div class="card card-hover p-5">
+                  <p class="text-strong font-semibold">Card Hover</p>
+                  <p class="mt-2 text-sm text-muted">Interactive card with hover effect.</p>
+                </div>
+                <div class="panel panel-muted p-5">
+                  <p class="text-strong font-semibold">Panel Muted</p>
+                  <p class="mt-2 text-sm text-muted">Subtle background for secondary info.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel p-6">
+              <h2 class="heading-4">Form controls</h2>
+              <div class="mt-4 grid gap-4 md:grid-cols-2">
+                <label class="grid gap-1 text-sm">
+                  <span class="text-strong font-semibold">Text input</span>
+                  <input class="input" placeholder="Type here..." />
+                </label>
+                <label class="grid gap-1 text-sm">
+                  <span class="text-strong font-semibold">Select</span>
+                  <select class="select">
+                    <option>Option A</option>
+                    <option>Option B</option>
+                  </select>
+                </label>
+                <label class="grid gap-1 text-sm md:col-span-2">
+                  <span class="text-strong font-semibold">Textarea</span>
+                  <textarea class="textarea" placeholder="Details..." />
+                </label>
+              </div>
+            </div>
+
+            <div class="panel p-6">
+              <h2 class="heading-4">Breakpoint indicator</h2>
+              <p class="mt-2 text-sm text-muted">
+                Useful while designing mobile-first. Resize the window and this label updates.
+              </p>
+              <div class="border-app mt-4 rounded-xl border bg-surface/60 p-4 text-sm">
+                <span class="font-semibold">Breakpoint:</span>
+                <span class="ml-2 font-mono">
+                  <span class="inline sm:hidden">base (&lt;640)</span>
+                  <span class="hidden sm:inline md:hidden">sm (≥640)</span>
+                  <span class="hidden md:inline lg:hidden">md (≥768)</span>
+                  <span class="hidden lg:inline xl:hidden">lg (≥1024)</span>
+                  <span class="hidden xl:inline">xl (≥1280)</span>
+                </span>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="panel p-6">
-          <h2 class="heading-4">Breakpoint indicator</h2>
-          <p class="mt-2 text-sm text-muted">
-            Useful while designing mobile-first. Resize the window and this label updates.
+          <p class="text-caption mt-10">
+            Tip: this page is meant for internal QA. If you want it hidden in production, we can
+            wire a build-time guard to render a 404.
           </p>
-          <div class="border-app mt-4 rounded-xl border bg-surface/60 p-4 text-sm">
-            <span class="font-semibold">Breakpoint:</span>
-            <span class="ml-2" data-bp>unknown</span>
-          </div>
         </div>
-      </div>
-
-      <p class="text-caption mt-10">
-        Tip: this page is meant for internal QA. If you want it hidden in production, we can wire a
-        build-time guard to render a 404.
-      </p>
-    </div>
-
-    <script is:inline>
-      (() => {
-        const init = () => {
-          const el = document.querySelector('[data-bp]');
-          if (!el) return;
-          if (el.dataset.bpInit === 'true') return;
-          el.dataset.bpInit = 'true';
-
-          const getBp = () => {
-            const w = window.innerWidth;
-            if (w >= 1280) return 'xl (>=1280)';
-            if (w >= 1024) return 'lg (>=1024)';
-            if (w >= 768) return 'md (>=768)';
-            if (w >= 640) return 'sm (>=640)';
-            return 'base (<640)';
-          };
-
-          const update = () => {
-            el.textContent = getBp();
-          };
-
-          update();
-          window.addEventListener('resize', update);
-        };
-
-        const doc = document.documentElement;
-        if (doc.dataset.bpListen !== 'true') {
-          doc.dataset.bpListen = 'true';
-          document.addEventListener('astro:page-load', init);
-        }
-
-        init();
-      })();
-    </script>
-  </section>
+      </section>
+    )
+  }
 
   <Footer slot="footer" />
 </BaseLayout>

@@ -31,7 +31,7 @@ const mailtoTo = siteConfig.contact.email;
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 const sourcePath = Astro.url.pathname;
 const base = import.meta.env.BASE_URL;
-const successRedirect = `${base}thanks/`;
+const successRedirect = `${base}contact/?thanks=1#thanks`;
 
 const industryOptions = [...siteConfig.industries.map((i) => i.title), 'Other / Not listed'];
 

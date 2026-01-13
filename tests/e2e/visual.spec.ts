@@ -16,9 +16,9 @@ test.describe('visual regression', () => {
     await expect(page).toHaveScreenshot('services.png', { fullPage: true });
   });
 
-  test('industries page', async ({ page }) => {
-    await page.goto('/industries/');
+  test('about page', async ({ page }) => {
+    await page.goto('/about/');
     await disableAnimations(page);
-    await expect(page).toHaveScreenshot('industries.png', { fullPage: true });
+    await expect(page).toHaveScreenshot('about.png', { fullPage: true });
   });
 });

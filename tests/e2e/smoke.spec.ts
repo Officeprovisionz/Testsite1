@@ -9,6 +9,9 @@ test('navigation links work (header)', async ({ page }) => {
   await header.getByRole('link', { name: 'Services' }).click();
   await expect(page).toHaveURL(/\/services\/$/);
 
+  await header.getByRole('link', { name: 'About' }).click();
+  await expect(page).toHaveURL(/\/about\/$/);
+
   await header.getByRole('link', { name: 'Contact' }).click();
   await expect(page).toHaveURL(/\/contact\/$/);
 });
@@ -61,8 +64,8 @@ test('contact form is present and validates required fields', async ({ page }) =
   expect(isValid).toBe(true);
 });
 
-test('thanks page renders confirmation actions', async ({ page }) => {
-  await page.goto('/thanks/');
+test('thanks panel renders confirmation actions (contact)', async ({ page }) => {
+  await page.goto('/contact/?thanks=1#thanks');
   await disableAnimations(page);
 
   await expect(page.getByRole('heading', { name: /Thanks/i })).toBeVisible();

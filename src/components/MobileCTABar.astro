@@ -44,7 +44,7 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
     if (!bar) return;
 
     // Hide on specific pages
-    const hiddenPaths = ['/contact/', '/thanks/'];
+    const hiddenPaths = ['/contact/'];
     const pathname = window.location.pathname;
     const normalizedPath = (() => {
       const raw = pathname || '/';

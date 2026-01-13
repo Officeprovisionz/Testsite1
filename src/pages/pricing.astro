@@ -1,71 +1,17 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import PageHero from '@/components/PageHero.astro';
-import PricingGrid from '@/components/PricingGrid.astro';
-import ScopeSection from '@/components/Scope.astro';
-import FAQ from '@/components/FAQ.astro';
-import SectionHeader from '@/components/ui/SectionHeader.astro';
-import { siteConfig } from '@/data/siteConfig';
-import { getPublicResponsiveImage } from '@/lib/publicImages';
-import { pickGalleryItems } from '@/data/gallery';
-
-const title = `Scope & process | ${siteConfig.brand.name}`;
-const description =
-  'How service scope works: walkthrough, checklist, access, frequency, and add-ons. Get a clear scope and a written quote before service.';
-
-const heroItems = pickGalleryItems('pricing-hero', 2);
-const heroPrimary = heroItems[0];
-const heroSecondary = heroItems[1] ?? heroPrimary;
-
-const heroImage = heroPrimary
-  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : { src: '', srcSet: undefined, sizes: '100vw' };
-
-const heroImageMobile = heroSecondary
-  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : heroImage;
+const to = `${import.meta.env.BASE_URL}services/#scope-process`;
 ---
 
-<BaseLayout title={title} description={description}>
-  <Header slot="header" />
-
-  <PageHero
-    title="Scope & process"
-    description="We confirm what’s included before service. Share your space and schedule and we’ll send a clear written quote."
-    imageSrc={heroPrimary?.src}
-    imageSrcMobile={heroSecondary?.src}
-    imageAlt={heroPrimary?.alt ?? ''}
-    imageSrcSet={heroImage.srcSet}
-    imageSizes={heroImage.sizes}
-    imageSrcSetMobile={heroImageMobile.srcSet}
-    imageSizesMobile={heroImageMobile.sizes}
-    imagePosition="50% 45%"
-  />
-
-  <section class="section section-creative scroll-mt-20 pb-0">
-    <div class="container-page">
-      <div class="mb-12">
-        <SectionHeader
-          align="center"
-          eyebrow="Scope"
-          heading="How scope works"
-          description="Scope depends on your space and service frequency. We confirm what’s included first—then send a clear, written quote."
-        />
-      </div>
-
-      <PricingGrid />
-    </div>
-  </section>
-
-  <ScopeSection id="scope" heading="Service levels" />
-
-  <FAQ />
-
-  <Footer slot="footer" />
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Redirecting…</title>
+    <link rel="canonical" href={to} />
+  </head>
+  <body>
+    <p>Redirecting… <a href={to}>Continue</a></p>
+  </body>
+</html>

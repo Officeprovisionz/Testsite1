@@ -9,18 +9,7 @@ test.describe('accessibility', () => {
   // Run serially to avoid flakiness/timeouts from overloading the web server.
   test.describe.configure({ mode: 'serial' });
 
-  for (const path of [
-    '/',
-    '/about/',
-    '/services/',
-    '/contact/',
-    '/industries/',
-    '/pricing/',
-    '/resources/',
-    '/checklist/',
-    '/results/',
-    '/404/',
-  ]) {
+  for (const path of ['/', '/about/', '/services/', '/contact/', '/404/']) {
     test(`no serious/critical axe violations on ${path}`, async ({ page }) => {
       test.setTimeout(90_000);
 

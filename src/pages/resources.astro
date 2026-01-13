@@ -1,135 +1,17 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import PageHero from '@/components/PageHero.astro';
-import SectionHeader from '@/components/ui/SectionHeader.astro';
-import Eyebrow from '@/components/ui/Eyebrow.astro';
-import { siteConfig } from '@/data/siteConfig';
-import { makeHref } from '@/lib/nav';
-import { getPublicResponsiveImage } from '@/lib/publicImages';
-import { pickGalleryItems } from '@/data/gallery';
-
-const title = `Resources | ${siteConfig.brand.name}`;
-const description =
-  'Checklists and practical guides for office cleaning scope, walkthroughs, and setting expectations. Print-friendly and built for busy teams.';
-
-const href = makeHref(import.meta.env.BASE_URL);
-
-const heroItems = pickGalleryItems('resources-hero', 2);
-const heroPrimary = heroItems[0];
-const heroSecondary = heroItems[1] ?? heroPrimary;
-
-const heroImage = heroPrimary
-  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : { src: '', srcSet: undefined, sizes: '100vw' };
-
-const heroImageMobile = heroSecondary
-  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : heroImage;
-
-const resources = [
-  {
-    eyebrow: 'Checklist',
-    title: 'Office cleaning checklist',
-    desc: 'Use for walkthroughs, vendor comparisons, and ongoing quality checks.',
-    href: href('checklist/'),
-    cta: 'View checklist',
-  },
-  {
-    eyebrow: 'Scope',
-    title: 'Scope & process',
-    desc: 'How scope works: walkthrough, frequency, add-ons, and service levels.',
-    href: href('pricing/'),
-    cta: 'See scope',
-  },
-  {
-    eyebrow: 'Proof',
-    title: 'What clean looks like',
-    desc: 'Examples and standards—what we mean by “done”.',
-    href: href('about/#proof'),
-    cta: 'See proof',
-  },
-  {
-    eyebrow: 'Services',
-    title: 'Services overview',
-    desc: 'Cleaning, supplies/restocking, facilities support, and specialty add-ons.',
-    href: href('services/'),
-    cta: 'Explore services',
-  },
-];
+const to = `${import.meta.env.BASE_URL}services/#tools`;
 ---
 
-<BaseLayout title={title} description={description}>
-  <Header slot="header" />
-
-  <PageHero
-    title="Resources"
-    description="Print-friendly tools to scope cleaning, set expectations, and keep quality consistent—without extra meetings."
-    imageSrc={heroPrimary?.src}
-    imageSrcMobile={heroSecondary?.src}
-    imageAlt={heroPrimary?.alt ?? ''}
-    imageSrcSet={heroImage.srcSet}
-    imageSizes={heroImage.sizes}
-    imageSrcSetMobile={heroImageMobile.srcSet}
-    imageSizesMobile={heroImageMobile.sizes}
-    imagePosition="50% 45%"
-  />
-
-  <section class="section section-creative">
-    <div class="container-page">
-      <SectionHeader
-        align="center"
-        eyebrow="Tools"
-        heading="Make scope feel effortless"
-        description="Short, printable tools for walkthroughs, vendor comparisons, and keeping expectations crystal clear."
-      >
-        <a slot="actions" class="btn-secondary w-full sm:w-auto" href={href('services/')}>
-          See services
-        </a>
-      </SectionHeader>
-
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {
-          resources.map((r) => (
-            <article class="card card-hover relative overflow-hidden p-6 sm:p-7">
-              <div
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
-              />
-              <div class="relative">
-                <Eyebrow>{r.eyebrow}</Eyebrow>
-                <h2 class="text-strong mt-2 text-xl font-semibold tracking-tight">{r.title}</h2>
-                <p class="mt-2 text-sm leading-relaxed text-muted">{r.desc}</p>
-                <div class="mt-5">
-                  <a class="btn-secondary w-full sm:w-auto" href={r.href}>
-                    {r.cta}
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))
-        }
-      </div>
-
-      <div class="panel panel-muted mt-10 p-5 sm:p-6">
-        <p class="text-strong text-sm font-semibold">Want a walkthrough-ready quote?</p>
-        <p class="mt-2 text-sm text-muted">
-          Call for the fastest response, or send your space basics and priorities. We will confirm
-          scope and send a clear written quote.
-        </p>
-        <div class="mt-4 flex flex-col gap-3 sm:flex-row">
-          <a class="btn-secondary w-full sm:w-auto" href={href('industries/')}>
-            Industries we serve
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <Footer slot="footer" />
-</BaseLayout>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Redirecting…</title>
+    <link rel="canonical" href={to} />
+  </head>
+  <body>
+    <p>Redirecting… <a href={to}>Continue</a></p>
+  </body>
+</html>

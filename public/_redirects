@@ -1,0 +1,12 @@
+# Redirect legacy pages to the consolidated 4-page information architecture.
+# Format: from  to  status
+
+/industries/       /services/#industries     301
+/resources/        /services/#tools          301
+/checklist/        /services/#checklist      301
+/pricing/          /services/#scope-process  301
+/thanks/           /contact/?thanks=1#thanks 302
+/results/          /about/#proof             301
+
+# Old anchors (if bookmarked)
+/company/          /about/                   301

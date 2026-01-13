@@ -363,7 +363,7 @@ const heroTimeline = {
 
 **React Three Fiber Enhancement** (Optional for Premium Feel):
 
-```typescript
+```tsx
 // 3D card tilt on hover (subtle, not gimmicky)
 import { Canvas } from '@react-three/fiber';
 import { Float } from '@react-three/drei';
@@ -372,12 +372,7 @@ function ServiceCard3D({ children }) {
   return (
     <div className="relative aspect-[4/3]">
       <Canvas>
-        <Float
-          speed={2}
-          rotationIntensity={0.3}
-          floatIntensity={0.5}
-          floatingRange={[-0.1, 0.1]}
-        >
+        <Float speed={2} rotationIntensity={0.3} floatIntensity={0.5} floatingRange={[-0.1, 0.1]}>
           {children}
         </Float>
       </Canvas>
@@ -394,7 +389,7 @@ function ServiceCard3D({ children }) {
 
 **Strategic Upgrade**: Count-up animation triggered by scroll visibility
 
-```typescript
+```tsx
 // src/components/AnimatedCounter.tsx
 import { useEffect, useRef, useState } from 'react';
 
@@ -409,7 +404,7 @@ export function AnimatedCounter({
   end,
   duration = 2000,
   suffix = '',
-  prefix = ''
+  prefix = '',
 }: AnimatedCounterProps) {
   const [count, setCount] = useState(0);
   const elementRef = useRef<HTMLDivElement>(null);
@@ -427,9 +422,7 @@ export function AnimatedCounter({
             const progress = Math.min(elapsed / duration, 1);
 
             // Ease-out-expo for satisfying deceleration
-            const eased = progress === 1
-              ? 1
-              : 1 - Math.pow(2, -10 * progress);
+            const eased = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
 
             setCount(Math.floor(eased * end));
 
@@ -457,10 +450,12 @@ export function AnimatedCounter({
       className="stat-number font-bold tabular-nums"
       style={{
         fontVariantNumeric: 'tabular-nums',
-        fontFeatureSettings: '"tnum"'
+        fontFeatureSettings: '"tnum"',
       }}
     >
-      {prefix}{count.toLocaleString()}{suffix}
+      {prefix}
+      {count.toLocaleString()}
+      {suffix}
     </div>
   );
 }
@@ -700,7 +695,7 @@ export function AnimatedCounter({
 
 **Enhancement**: Add cursor-based glass distortion
 
-```typescript
+```tsx
 // src/components/GlassRefractionCanvas.tsx
 import { useEffect, useRef } from 'react';
 
@@ -771,7 +766,7 @@ export function GlassRefractionCanvas() {
 
 #### Step 1: Consolidate into Smart Bottom Bar
 
-```typescript
+```tsx
 // src/components/SmartBottomNav.tsx
 import { useState, useEffect } from 'react';
 
@@ -810,7 +805,7 @@ export function SmartBottomNav() {
   }, [scrollDepth]);
 
   return (
-    <nav className="fixed bottom-0 inset-x-0 z-50 md:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-50 md:hidden">
       <div className="glass-card border-t">
         {context === 'browsing' && <BrowsingNav />}
         {context === 'converting' && <ConvertingNav />}
@@ -871,7 +866,7 @@ function ExploringNav() {
 
 **Strategic Upgrade**: Multi-step form with progress indication
 
-```typescript
+```tsx
 // src/components/SmartContactForm.tsx
 import { useState } from 'react';
 
@@ -880,26 +875,26 @@ const steps = [
     id: 'service',
     title: 'What do you need help with?',
     fields: ['services'],
-    icon: 'briefcase'
+    icon: 'briefcase',
   },
   {
     id: 'details',
     title: 'Tell us about your facility',
     fields: ['industry', 'facility_size', 'message'],
-    icon: 'building'
+    icon: 'building',
   },
   {
     id: 'contact',
     title: 'How can we reach you?',
     fields: ['name', 'email', 'phone'],
-    icon: 'user'
+    icon: 'user',
   },
   {
     id: 'timing',
     title: 'When do you need service?',
     fields: ['preferred_date', 'urgency'],
-    icon: 'calendar'
-  }
+    icon: 'calendar',
+  },
 ];
 
 export function SmartContactForm() {
@@ -909,16 +904,18 @@ export function SmartContactForm() {
   const progress = ((currentStep + 1) / steps.length) * 100;
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="mx-auto max-w-2xl">
       {/* Progress indicator */}
       <div className="mb-8">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-muted">Step {currentStep + 1} of {steps.length}</span>
-          <span className="text-sm font-medium text-brand">{Math.round(progress)}% Complete</span>
+        <div className="mb-2 flex items-center justify-between">
+          <span className="text-sm text-muted">
+            Step {currentStep + 1} of {steps.length}
+          </span>
+          <span className="text-brand text-sm font-medium">{Math.round(progress)}% Complete</span>
         </div>
-        <div className="h-2 bg-surface rounded-full overflow-hidden">
+        <div className="h-2 overflow-hidden rounded-full bg-surface">
           <div
-            className="h-full bg-gradient-to-r from-brand to-accent transition-all duration-500 ease-out"
+            className="from-brand h-full bg-gradient-to-r to-accent transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -926,9 +923,9 @@ export function SmartContactForm() {
 
       {/* Current step content */}
       <div className="space-y-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center">
-            <Icon name={steps[currentStep].icon} className="w-6 h-6 text-brand" />
+        <div className="mb-6 flex items-center gap-3">
+          <div className="bg-brand/10 flex h-12 w-12 items-center justify-center rounded-full">
+            <Icon name={steps[currentStep].icon} className="text-brand h-6 w-6" />
           </div>
           <h3 className="text-2xl font-bold">{steps[currentStep].title}</h3>
         </div>
@@ -938,10 +935,10 @@ export function SmartContactForm() {
       </div>
 
       {/* Navigation */}
-      <div className="flex gap-3 mt-8">
+      <div className="mt-8 flex gap-3">
         {currentStep > 0 && (
           <button
-            onClick={() => setCurrentStep(prev => prev - 1)}
+            onClick={() => setCurrentStep((prev) => prev - 1)}
             className="btn btn-secondary flex-1"
           >
             Previous
@@ -950,7 +947,7 @@ export function SmartContactForm() {
         <button
           onClick={() => {
             if (currentStep < steps.length - 1) {
-              setCurrentStep(prev => prev + 1);
+              setCurrentStep((prev) => prev + 1);
             } else {
               // Submit form
               handleSubmit(formData);
@@ -1055,7 +1052,7 @@ export function SmartContactForm() {
 
 ### 2. Card Hover with Magnetic Attraction
 
-```typescript
+```tsx
 // src/components/MagneticCard.tsx
 import { useRef, useState } from 'react';
 
@@ -1073,8 +1070,8 @@ export function MagneticCard({ children }) {
     const centerX = rect.width / 2;
     const centerY = rect.height / 2;
 
-    const rotateX = (y - centerY) / centerY * -10; // Max 10deg
-    const rotateY = (x - centerX) / centerX * 10;   // Max 10deg
+    const rotateX = ((y - centerY) / centerY) * -10; // Max 10deg
+    const rotateY = ((x - centerX) / centerX) * 10; // Max 10deg
 
     setRotation({ x: rotateX, y: rotateY });
   };
@@ -1090,7 +1087,7 @@ export function MagneticCard({ children }) {
       onMouseLeave={handleMouseLeave}
       style={{
         transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-        transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)'
+        transition: 'transform 0.3s cubic-bezier(0.23, 1, 0.32, 1)',
       }}
       className="transform-gpu will-change-transform"
     >
@@ -1160,7 +1157,7 @@ export function MagneticCard({ children }) {
 
 ### 4. Enhanced Haptic Feedback Patterns
 
-```typescript
+```tsx
 // src/lib/haptics.ts
 
 type HapticIntensity = 'light' | 'medium' | 'heavy';
@@ -1208,7 +1205,7 @@ export function hapticFeedback(
 
 ### Emotional Journey Map
 
-```typescript
+```tsx
 // src/data/emotionalJourney.ts
 
 export const emotionalJourney = {
@@ -1396,7 +1393,7 @@ import { hapticFeedback } from '../lib/haptics';
 
 **Strategic Upgrade**: Video testimonials + real-time social proof
 
-```typescript
+```tsx
 // src/components/LiveSocialProof.tsx
 import { useEffect, useState } from 'react';
 
@@ -1409,9 +1406,19 @@ interface Activity {
 
 // Simulate real-time activity feed (in production, connect to real API)
 const activities: Activity[] = [
-  { type: 'quote_requested', location: 'San Francisco, CA', timeAgo: '2 minutes ago', service: 'Office Cleaning' },
-  { type: 'service_booked', location: 'Oakland, CA', timeAgo: '15 minutes ago', service: 'Post-Construction' },
-  { type: 'review_posted', location: 'Berkeley, CA', timeAgo: '1 hour ago' }
+  {
+    type: 'quote_requested',
+    location: 'San Francisco, CA',
+    timeAgo: '2 minutes ago',
+    service: 'Office Cleaning',
+  },
+  {
+    type: 'service_booked',
+    location: 'Oakland, CA',
+    timeAgo: '15 minutes ago',
+    service: 'Post-Construction',
+  },
+  { type: 'review_posted', location: 'Berkeley, CA', timeAgo: '1 hour ago' },
 ];
 
 export function LiveSocialProof() {
@@ -1423,7 +1430,7 @@ export function LiveSocialProof() {
       setIsVisible(false);
 
       setTimeout(() => {
-        setCurrentActivity(prev => (prev + 1) % activities.length);
+        setCurrentActivity((prev) => (prev + 1) % activities.length);
         setIsVisible(true);
       }, 500);
     }, 5000);
@@ -1436,31 +1443,25 @@ export function LiveSocialProof() {
   const icons = {
     quote_requested: '📋',
     service_booked: '✅',
-    review_posted: '⭐'
+    review_posted: '⭐',
   };
 
   const messages = {
     quote_requested: `Someone in ${activity.location} just requested a quote for ${activity.service}`,
     service_booked: `${activity.location} just booked ${activity.service}`,
-    review_posted: `New 5-star review from ${activity.location}`
+    review_posted: `New 5-star review from ${activity.location}`,
   };
 
   return (
     <div className="fixed bottom-24 left-4 z-40 md:bottom-4">
       <div
-        className={`
-          glass-card px-4 py-3 max-w-sm
-          transition-all duration-500
-          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}
-        `}
+        className={`glass-card max-w-sm px-4 py-3 transition-all duration-500 ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'} `}
       >
         <div className="flex items-start gap-3">
           <span className="text-2xl">{icons[activity.type]}</span>
-          <div className="flex-1 min-w-0">
-            <p className="text-sm font-medium text-foreground">
-              {messages[activity.type]}
-            </p>
-            <p className="text-xs text-muted mt-1">{activity.timeAgo}</p>
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-foreground">{messages[activity.type]}</p>
+            <p className="mt-1 text-xs text-muted">{activity.timeAgo}</p>
           </div>
         </div>
       </div>
@@ -1477,7 +1478,7 @@ export function LiveSocialProof() {
 
 **Strategic Upgrade**: Interactive pricing calculator with psychology
 
-```typescript
+```tsx
 // src/components/PricingCalculator.tsx
 import { useState } from 'react';
 
@@ -1673,7 +1674,7 @@ Based on 2026 best practices and competitive analysis, add these conversion-driv
 
 ### 1. **Instant Chat Widget with AI Pre-qualification**
 
-```typescript
+```tsx
 // src/components/SmartChatWidget.tsx
 import { useState } from 'react';
 
@@ -1682,15 +1683,16 @@ export function SmartChatWidget() {
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
-      content: "Hi! I'm here to help you find the perfect cleaning solution. What type of facility do you manage?"
-    }
+      content:
+        "Hi! I'm here to help you find the perfect cleaning solution. What type of facility do you manage?",
+    },
   ]);
 
   const quickReplies = [
     { label: 'Office Building', value: 'office' },
     { label: 'Medical Facility', value: 'medical' },
     { label: 'Retail Space', value: 'retail' },
-    { label: 'School/University', value: 'education' }
+    { label: 'School/University', value: 'education' },
   ];
 
   return (
@@ -1698,22 +1700,22 @@ export function SmartChatWidget() {
       {/* Chat button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-24 right-4 z-50 w-14 h-14 rounded-full bg-gradient-to-br from-brand to-brand-600 text-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
+        className="from-brand fixed bottom-24 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br to-brand-600 text-white shadow-lg transition-transform hover:scale-110"
       >
         {isOpen ? '✕' : '💬'}
       </button>
 
       {/* Chat window */}
       {isOpen && (
-        <div className="fixed bottom-40 right-4 z-50 w-96 max-w-[calc(100vw-2rem)] h-[500px] glass-card flex flex-col">
+        <div className="glass-card fixed bottom-40 right-4 z-50 flex h-[500px] w-96 max-w-[calc(100vw-2rem)] flex-col">
           {/* Header */}
-          <div className="bg-gradient-to-r from-brand to-brand-600 text-white p-4 rounded-t-lg">
+          <div className="from-brand rounded-t-lg bg-gradient-to-r to-brand-600 p-4 text-white">
             <h4 className="font-semibold">Need Help? Chat With Us</h4>
             <p className="text-xs opacity-90">Typically responds in under 2 minutes</p>
           </div>
 
           {/* Messages */}
-          <div className="flex-1 overflow-y-auto p-4 space-y-3">
+          <div className="flex-1 space-y-3 overflow-y-auto p-4">
             {messages.map((msg, i) => (
               <div
                 key={i}
@@ -1721,9 +1723,7 @@ export function SmartChatWidget() {
               >
                 <div
                   className={`max-w-[80%] rounded-lg px-4 py-2 ${
-                    msg.role === 'user'
-                      ? 'bg-brand text-white'
-                      : 'bg-surface text-foreground'
+                    msg.role === 'user' ? 'bg-brand text-white' : 'bg-surface text-foreground'
                   }`}
                 >
                   {msg.content}
@@ -1734,15 +1734,15 @@ export function SmartChatWidget() {
 
           {/* Quick replies */}
           {messages.length <= 1 && (
-            <div className="px-4 pb-2 flex flex-wrap gap-2">
-              {quickReplies.map(reply => (
+            <div className="flex flex-wrap gap-2 px-4 pb-2">
+              {quickReplies.map((reply) => (
                 <button
                   key={reply.value}
                   onClick={() => {
-                    setMessages(prev => [...prev, { role: 'user', content: reply.label }]);
+                    setMessages((prev) => [...prev, { role: 'user', content: reply.label }]);
                     // Trigger next step in conversation
                   }}
-                  className="text-sm px-3 py-1.5 rounded-full border border-brand text-brand hover:bg-brand hover:text-white transition-colors"
+                  className="border-brand text-brand hover:bg-brand rounded-full border px-3 py-1.5 text-sm transition-colors hover:text-white"
                 >
                   {reply.label}
                 </button>
@@ -1751,11 +1751,11 @@ export function SmartChatWidget() {
           )}
 
           {/* Input */}
-          <div className="p-4 border-t">
+          <div className="border-t p-4">
             <input
               type="text"
               placeholder="Type your message..."
-              className="w-full px-4 py-2 rounded-full border border-border focus:border-brand focus:outline-none"
+              className="focus:border-brand w-full rounded-full border border-border px-4 py-2 focus:outline-none"
             />
           </div>
         </div>
@@ -1773,7 +1773,7 @@ export function SmartChatWidget() {
 
 **Enhancement**: Add ML-powered difference highlighting
 
-```typescript
+```tsx
 // Highlight specific improvement areas
 // Using image diff algorithms to auto-detect cleaned regions
 // Show percentage improvement score
@@ -1784,7 +1784,7 @@ export function SmartChatWidget() {
 
 ### 3. **Virtual Facility Tour Builder**
 
-```typescript
+```tsx
 // Let prospects upload their facility photos
 // AI suggests appropriate services based on image recognition
 // Generate preliminary quote based on visual assessment
@@ -1823,7 +1823,7 @@ export function SmartChatWidget() {
 
 ### 5. **ROI Calculator for Businesses**
 
-```typescript
+```tsx
 // Calculate cost of poor cleanliness:
 // - Employee sick days (CDC data)
 // - Reduced productivity (research-backed)
@@ -1839,7 +1839,7 @@ export function SmartChatWidget() {
 
 ### 6. **Customizable Service Checklist Generator**
 
-```typescript
+```tsx
 // Interactive checklist builder:
 // - Select facility type
 // - Check required tasks
@@ -1858,7 +1858,7 @@ export function SmartChatWidget() {
 
 ### 7. **Video Testimonials with Emotion Detection**
 
-```typescript
+```tsx
 // Upgrade static testimonials to video
 // Use facial coding to show genuine emotion
 // Add "verified client" badges
@@ -1872,7 +1872,7 @@ export function SmartChatWidget() {
 
 ### 8. **Seasonal Service Recommendations**
 
-```typescript
+```tsx
 // Context-aware service suggestions based on:
 // - Current season
 // - Weather conditions
@@ -1890,7 +1890,7 @@ export function SmartChatWidget() {
 
 ### 1. **Swipe-Based Service Browser**
 
-```typescript
+```tsx
 // Tinder-style swipe interface for mobile service selection
 // Swipe right: Interested
 // Swipe left: Not needed
@@ -1902,7 +1902,7 @@ export function SmartChatWidget() {
 
 ### 2. **Voice-Activated Quote Request**
 
-```typescript
+```tsx
 // src/components/VoiceQuoteRequest.tsx
 import { useState } from 'react';
 
@@ -1958,7 +1958,7 @@ export function VoiceQuoteRequest() {
 
 ### 3. **Augmented Reality Room Scanner**
 
-```typescript
+```tsx
 // Use device camera + AR to:
 // - Measure room dimensions automatically
 // - Identify surface types (carpet, tile, glass)
@@ -1972,7 +1972,7 @@ export function VoiceQuoteRequest() {
 
 ### 4. **Gesture Navigation Shortcuts**
 
-```typescript
+```tsx
 // Advanced touch gestures:
 // - Swipe right from edge: Open menu
 // - Swipe left from edge: Go back
@@ -2103,7 +2103,7 @@ p {
 
 ### 2. Exit-Intent Popup (Non-Intrusive)
 
-```typescript
+```tsx
 // src/components/ExitIntentOffer.tsx
 import { useEffect, useState } from 'react';
 
@@ -2127,33 +2127,31 @@ export function ExitIntentOffer() {
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fade-in">
-      <div className="glass-card max-w-md mx-4 p-8 animate-scale-in">
+    <div className="fixed inset-0 z-[100] flex animate-fade-in items-center justify-center bg-black/50 backdrop-blur-sm">
+      <div className="glass-card animate-scale-in mx-4 max-w-md p-8">
         <button
           onClick={() => setIsVisible(false)}
-          className="absolute top-4 right-4 text-muted hover:text-foreground"
+          className="absolute right-4 top-4 text-muted hover:text-foreground"
         >
           ✕
         </button>
 
-        <h3 className="text-2xl font-bold mb-3">Wait! Before You Go...</h3>
-        <p className="text-muted mb-6">
-          Get <span className="text-accent font-bold">15% off your first month</span> when
-          you schedule a free facility assessment this week.
+        <h3 className="mb-3 text-2xl font-bold">Wait! Before You Go...</h3>
+        <p className="mb-6 text-muted">
+          Get <span className="font-bold text-accent">15% off your first month</span> when you
+          schedule a free facility assessment this week.
         </p>
 
         <form className="space-y-3">
           <input
             type="email"
             placeholder="Enter your email"
-            className="w-full px-4 py-3 rounded-lg border border-border focus:border-brand"
+            className="focus:border-brand w-full rounded-lg border border-border px-4 py-3"
           />
-          <button className="btn-primary w-full">
-            Claim My 15% Discount
-          </button>
+          <button className="btn-primary w-full">Claim My 15% Discount</button>
         </form>
 
-        <p className="text-xs text-muted mt-4 text-center">
+        <p className="mt-4 text-center text-xs text-muted">
           No credit card required. Cancel anytime.
         </p>
       </div>
@@ -2166,7 +2164,7 @@ export function ExitIntentOffer() {
 
 ### 3. Scarcity & Urgency (Ethical Implementation)
 
-```typescript
+```tsx
 // Show real-time availability (not fake countdown timers)
 
 // Example 1: Service capacity
@@ -2217,28 +2215,16 @@ export function ExitIntentOffer() {
 
 ### 1. Image Optimization Beyond Current
 
-```typescript
+```tsx
 // src/lib/imageOptimization.ts
 
 // Current: Sharp + responsive srcset
 // Add: AVIF format with WebP fallback
 
 <picture>
-  <source
-    srcset="/images/hero.avif 1x, /images/hero@2x.avif 2x"
-    type="image/avif"
-  />
-  <source
-    srcset="/images/hero.webp 1x, /images/hero@2x.webp 2x"
-    type="image/webp"
-  />
-  <img
-    src="/images/hero.jpg"
-    loading="lazy"
-    decoding="async"
-    fetchpriority="low"
-    alt="..."
-  />
+  <source srcset="/images/hero.avif 1x, /images/hero@2x.avif 2x" type="image/avif" />
+  <source srcset="/images/hero.webp 1x, /images/hero@2x.webp 2x" type="image/webp" />
+  <img src="/images/hero.jpg" loading="lazy" decoding="async" fetchpriority="low" alt="..." />
 </picture>
 
 // Use fetchpriority="high" ONLY for hero image
@@ -2345,7 +2331,7 @@ export default defineConfig({
 
 ### 1. Enhanced Event Tracking
 
-```typescript
+```tsx
 // src/lib/tracking.ts
 
 export const trackingEvents = {
@@ -2393,7 +2379,7 @@ export const trackingEvents = {
 
 ### 2. A/B Testing Framework
 
-```typescript
+```tsx
 // src/lib/experiments.ts
 
 interface Experiment {

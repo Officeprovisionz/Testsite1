@@ -1,137 +1,17 @@
 ---
-import BaseLayout from '@/layouts/BaseLayout.astro';
-import Header from '@/components/Header.astro';
-import Footer from '@/components/Footer.astro';
-import PageHero from '@/components/PageHero.astro';
-import SectionHeader from '@/components/ui/SectionHeader.astro';
-import { siteConfig } from '@/data/siteConfig';
-import { getPublicResponsiveImage } from '@/lib/publicImages';
-import { pickGalleryItems } from '@/data/gallery';
-
-const title = `Office cleaning checklist | ${siteConfig.brand.name}`;
-const description =
-  'A practical office cleaning checklist you can use for walkthroughs, vendor comparisons, and ongoing quality checks.';
-
-const heroItems = pickGalleryItems('checklist-hero', 2);
-const heroPrimary = heroItems[0];
-const heroSecondary = heroItems[1] ?? heroPrimary;
-
-const heroImage = heroPrimary
-  ? getPublicResponsiveImage(heroPrimary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : { src: '', srcSet: undefined, sizes: '100vw' };
-
-const heroImageMobile = heroSecondary
-  ? getPublicResponsiveImage(heroSecondary.src, import.meta.env.BASE_URL, {
-      sizes: '100vw',
-    })
-  : heroImage;
-
-const core = siteConfig.whatIncluded;
-const addOns = [
-  'Glass and interior partitions (as scoped)',
-  'High-touch deep focus (as needed)',
-  'Floor detailing / spot treatment',
-  'Kitchenette detail pass (microwave exterior, counters, sink)',
-  'Supply restocking checklist (paper goods, soap)',
-  'Walkthrough notes + follow-up items',
-];
+const to = `${import.meta.env.BASE_URL}services/#checklist`;
 ---
 
-<BaseLayout title={title} description={description}>
-  <Header slot="header" />
-
-  <PageHero
-    title="Office cleaning checklist"
-    description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
-    imageSrc={heroPrimary?.src}
-    imageSrcMobile={heroSecondary?.src}
-    imageAlt={heroPrimary?.alt ?? ''}
-    imageSrcSet={heroImage.srcSet}
-    imageSizes={heroImage.sizes}
-    imageSrcSetMobile={heroImageMobile.srcSet}
-    imageSizesMobile={heroImageMobile.sizes}
-    imagePosition="50% 45%"
-  />
-
-  <section class="section section-creative">
-    <div class="container-narrow">
-      <div class="card p-6 sm:p-8">
-        <SectionHeader
-          eyebrow="Resource"
-          heading="A checklist built for real walkthroughs"
-          description="Print it, save it, or bring it to your next walkthrough. Adjust to your building rules and what your team considers done."
-        >
-          <button slot="actions" type="button" class="btn-secondary w-full sm:w-auto" data-print>
-            Print
-          </button>
-        </SectionHeader>
-
-        <div class="mt-8 grid gap-8">
-          <div>
-            <h3 class="heading-3">Core items (standard visit)</h3>
-            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
-              {
-                core.map((item) => (
-                  <li>
-                    <span class="check-icon check-icon--sm" aria-hidden="true">
-                      ✓
-                    </span>
-                    <span class="text-muted">{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="heading-3">Common add-ons (scope-dependent)</h3>
-            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
-              {
-                addOns.map((item) => (
-                  <li>
-                    <span class="check-icon check-icon--sm" aria-hidden="true">
-                      ✓
-                    </span>
-                    <span class="text-muted">{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div class="panel panel-muted p-5">
-            <p class="text-strong text-sm font-semibold">Pro tip</p>
-            <p class="mt-2 text-sm text-muted">
-              During a walkthrough, decide what “good” looks like for restrooms, breakrooms, and
-              floors. A clear definition of done prevents missed expectations later.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <Footer slot="footer" />
-</BaseLayout>
-
-<script>
-  (() => {
-    const init = () => {
-      const btn = document.querySelector('[data-print]') as HTMLElement | null;
-      if (!btn) return;
-      if (btn.dataset.printInit === 'true') return;
-      btn.dataset.printInit = 'true';
-      btn.addEventListener('click', () => window.print());
-    };
-
-    const doc = document.documentElement;
-    if (doc.dataset.printListen !== 'true') {
-      doc.dataset.printListen = 'true';
-      document.addEventListener('astro:page-load', init);
-    }
-
-    init();
-  })();
-</script>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content={`0; url=${to}`} />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Redirecting…</title>
+    <link rel="canonical" href={to} />
+  </head>
+  <body>
+    <p>Redirecting… <a href={to}>Continue</a></p>
+  </body>
+</html>

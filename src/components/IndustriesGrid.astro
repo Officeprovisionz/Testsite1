@@ -4,12 +4,30 @@ import { makeContactHref } from '@/lib/routes';
 import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { ArrowRight } from 'lucide-react';
 
+type PrecisionCardItem = {
+  title: string;
+  description: string;
+  /** Optional explicit destination; falls back to a contact link prefilling the service name. */
+  link?: string;
+  /** Optional CTA label; defaults to "Get a quote". */
+  cta?: string;
+};
+
+const { extraItems = [] } = Astro.props as { extraItems?: PrecisionCardItem[] };
+
 const contactHref = makeContactHref(import.meta.env.BASE_URL);
 
 const items = siteConfig.industries.map((industry) => ({
   title: industry.title,
   description: industry.description,
   link: contactHref({ industry: industry.title }),
+}));
+
+const extraCards = extraItems.map((item) => ({
+  title: item.title,
+  description: item.description,
+  link: item.link ?? contactHref({ service: item.title }),
+  cta: item.cta ?? 'Get a quote',
 }));
 ---
 
@@ -50,6 +68,34 @@ const items = siteConfig.industries.map((industry) => ({
           ))
         }
       </div>
+
+      {
+        extraCards.length ? (
+          <div class="grid grid-cols-1 gap-5 pb-8 md:grid-cols-2 lg:gap-6">
+            {extraCards.map((item) => (
+              <a
+                href={item.link}
+                class="card card-hover group relative block h-full w-full overflow-hidden p-2 transition-all duration-300 sm:p-4"
+              >
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-brand)/0.16)] via-transparent to-[rgb(var(--color-accent)/0.18)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <div class="relative z-10 flex h-full flex-col p-4">
+                  <h3 class="text-strong text-xl font-bold tracking-wide">{item.title}</h3>
+                  <p class="mt-4 flex-grow text-sm leading-relaxed tracking-wide text-muted">
+                    {item.description}
+                  </p>
+
+                  <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                    {item.cta} <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                </div>
+              </a>
+            ))}
+          </div>
+        ) : null
+      }
     </div>
   </div>
 </section>

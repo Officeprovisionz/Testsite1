@@ -1,7 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { Sparkles, Building, Coffee, Wrench } from 'lucide-react';
-import Eyebrow from '@/components/ui/Eyebrow.astro';
 
 const icons = {
   'Office Cleaning': Sparkles,
@@ -13,15 +12,6 @@ const icons = {
 
 <section class="section section-creative" id="services">
   <div class="container-page">
-    <div class="mb-12 text-center">
-      <Eyebrow class="mx-auto">Service architecture</Eyebrow>
-      <h2 class="heading-2 mt-4">Designed to stay invisible</h2>
-      <p class="mx-auto mt-4 max-w-2xl text-lg text-muted">
-        The work blends into your day: clear scope, consistent checklists, and a calm, reliable
-        routine.
-      </p>
-    </div>
-
     {/* Bento Grid Layout - Hand-rolled to remove React dependency */}
     <div class="mx-auto grid max-w-6xl grid-cols-1 gap-6 md:auto-rows-[16.5rem] md:grid-cols-2">
       {

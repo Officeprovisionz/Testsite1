@@ -86,7 +86,30 @@ const heroImageMobile = heroSecondary
   <ServicesGrid />
 
   <!-- Industries page merged here (no information removed) -->
-  <IndustriesGrid />
+  <IndustriesGrid
+    extraItems={[
+      {
+        title: 'Furniture services',
+        description:
+          'Need furniture built or rearranged? We provide professional furniture assembly and moving services that transform your office space efficiently.',
+      },
+      {
+        title: 'Office organization',
+        description:
+          'Is clutter holding your business back? We create order that lasts—from storage rooms to disorganized inventory.',
+      },
+      {
+        title: 'Air filter replacement',
+        description:
+          'Scheduled filter changes to support healthier air quality—so you never have to think about it.',
+      },
+      {
+        title: 'Event & assistant support',
+        description:
+          'From company meetings to special celebrations, we help with the details so everything runs smoothly.',
+      },
+    ]}
+  />
   <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
 
   <section class="section section-muted section-creative scroll-mt-20" id="service-details">
@@ -169,37 +192,6 @@ const heroImageMobile = heroSecondary
             everything from traditional espresso setups to fully automated systems and classic
             coffee machines—plus we source all the essentials: milk, non-dairy alternatives,
             creamers, sweeteners, and every finishing touch your team wants.
-          </p>
-        </article>
-      </div>
-
-      <div class="mt-6 grid gap-6 md:grid-cols-2 lg:mt-8 lg:grid-cols-4">
-        <article class="card card-hover p-6">
-          <p class="text-strong text-sm font-semibold">Furniture services</p>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            Need furniture built or rearranged? We provide professional furniture assembly and
-            moving services that transform your office space efficiently.
-          </p>
-        </article>
-        <article class="card card-hover p-6">
-          <p class="text-strong text-sm font-semibold">Office organization</p>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            Is clutter holding your business back? We create order that lasts—from storage rooms to
-            disorganized inventory.
-          </p>
-        </article>
-        <article class="card card-hover p-6">
-          <p class="text-strong text-sm font-semibold">Air filter replacement</p>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            Scheduled filter changes to support healthier air quality—so you never have to think
-            about it.
-          </p>
-        </article>
-        <article class="card card-hover p-6">
-          <p class="text-strong text-sm font-semibold">Event & assistant support</p>
-          <p class="mt-2 text-sm leading-relaxed text-muted">
-            From company meetings to special celebrations, we help with the details so everything
-            runs smoothly.
           </p>
         </article>
       </div>

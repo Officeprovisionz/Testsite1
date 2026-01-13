@@ -910,14 +910,15 @@
   }
 
   .hero-stat {
-    border-radius: 1rem;
+    border-radius: var(--radius-card);
     padding: 0.9rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.16);
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.06));
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 18px 40px -26px rgba(0, 0, 0, 0.55);
-    color: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    /* Crisper + less “AI glass”: keep readability without looking like a template badge. */
+    background: rgba(8, 10, 14, 0.52);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 16px 34px -24px rgba(0, 0, 0, 0.55);
+    color: rgba(255, 255, 255, 0.94);
   }
 
   .hero-stat__value {
@@ -1249,7 +1250,7 @@
       rgb(var(--color-brand) / 0.6),
       rgb(var(--color-accent) / 0.9)
     );
-    border-radius: 999px;
+    border-radius: var(--radius-control);
   }
 
   .heading-1 {
@@ -1400,7 +1401,8 @@
   }
 
   .pill {
-    @apply inline-flex items-center rounded-lg border px-3 py-1 text-xs font-medium;
+    @apply inline-flex items-center border px-3 py-1 text-xs font-medium;
+    border-radius: var(--radius-control);
     border-color: rgb(var(--color-border));
     background-color: rgb(var(--color-surface));
     color: rgb(var(--color-text-muted));
@@ -1565,14 +1567,14 @@
     align-items: center;
     gap: 0.35rem;
     padding: 0.35rem 0.6rem;
-    border-radius: 999px;
+    border-radius: var(--radius-control);
     font-size: 0.75rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     color: white;
-    background: rgba(0, 0, 0, 0.45);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+    background: rgba(0, 0, 0, 0.5);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
     border: 1px solid rgba(255, 255, 255, 0.18);
   }
 

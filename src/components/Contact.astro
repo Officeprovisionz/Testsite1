@@ -28,11 +28,9 @@ const base = import.meta.env.BASE_URL;
 
 // Endpoint precedence:
 // 1) PUBLIC_FORM_ENDPOINT (e.g. Formspree/Basin)
-// 2) Built-in Cloudflare Pages Function (/api/contact) in production
-// 3) Undefined in dev -> mailto fallback
+// 2) Built-in Cloudflare Pages Function (/api/contact)
 const builtInEndpoint = `${base}api/contact`;
-const formEndpoint =
-  import.meta.env.PUBLIC_FORM_ENDPOINT || (import.meta.env.PROD ? builtInEndpoint : undefined);
+const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || builtInEndpoint;
 const isDev = import.meta.env.DEV;
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoTo = siteConfig.contact.email;
@@ -759,7 +757,31 @@ const serviceOptions = [
             });
 
             if (!res.ok) {
-              throw new Error('Could not send message. Please try again.');
+              const details = await (async () => {
+                try {
+                  const data = (await res.json()) as unknown;
+                  if (data && typeof data === 'object') {
+                    const msg = (data as Record<string, unknown>).error;
+                    if (typeof msg === 'string' && msg.trim()) return msg.trim();
+                  }
+                } catch {
+                  // ignore
+                }
+                try {
+                  const t = await res.text();
+                  return t.trim() || '';
+                } catch {
+                  return '';
+                }
+              })();
+
+              if (res.status === 404 && endpointUrl.includes('/api/contact')) {
+                throw new Error(
+                  'Automatic sending is only available when /api/contact exists (Cloudflare Pages Functions). Locally, Astro dev does not run Functions — deploy to Pages or set PUBLIC_FORM_ENDPOINT.'
+                );
+              }
+
+              throw new Error(details || 'Could not send message. Please try again.');
             }
 
             setBusy(false);

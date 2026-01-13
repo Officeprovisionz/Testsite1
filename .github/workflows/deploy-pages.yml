@@ -39,17 +39,44 @@ jobs:
       - name: Copy/encoding check
         run: bun run check:copy
 
+      - name: Prepare build env (Pages vs custom domain)
+        shell: bash
+        env:
+          SITE_URL_OVERRIDE: ${{ vars['SITE_URL'] }}
+          PUBLIC_SITE_BASE_OVERRIDE: ${{ vars['PUBLIC_SITE_BASE'] }}
+          PUBLIC_FORM_ENDPOINT_SECRET: ${{ secrets['PUBLIC_FORM_ENDPOINT'] }}
+        run: |
+          set -euo pipefail
+
+          # Defaults that work for GitHub project Pages:
+          #   https://<owner>.github.io/<repo>/
+          # and base '/<repo>/'
+          default_site_url="https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+
+          # Optional overrides (recommended):
+          # - Repo variables (Settings → Secrets and variables → Actions → Variables)
+          #     SITE_URL=https://officeprovisionz.com/
+          #     PUBLIC_SITE_BASE=/
+          # - Secret (for static form providers)
+          #     PUBLIC_FORM_ENDPOINT=https://formspree.io/f/xxxxxxx
+
+          if [ -n "${SITE_URL_OVERRIDE}" ]; then
+            echo "SITE_URL=${SITE_URL_OVERRIDE}" >> "$GITHUB_ENV"
+          else
+            echo "SITE_URL=${default_site_url}" >> "$GITHUB_ENV"
+          fi
+
+          # Only set PUBLIC_SITE_BASE when provided; otherwise Astro will infer it during Actions builds.
+          if [ -n "${PUBLIC_SITE_BASE_OVERRIDE}" ]; then
+            echo "PUBLIC_SITE_BASE=${PUBLIC_SITE_BASE_OVERRIDE}" >> "$GITHUB_ENV"
+          fi
+
+          if [ -n "${PUBLIC_FORM_ENDPOINT_SECRET}" ]; then
+            echo "PUBLIC_FORM_ENDPOINT=${PUBLIC_FORM_ENDPOINT_SECRET}" >> "$GITHUB_ENV"
+          fi
+
       - name: Build (static)
         env:
-          # Custom domain deployment (root).
-          # If you ever switch back to a project Pages URL (/<repo>/), restore the previous values.
-          PUBLIC_SITE_BASE: /
-          SITE_URL: https://officeprovisionz.com/
-          # Static form endpoint (Formspree/Basin/etc.).
-          # Add this in GitHub repo settings: Settings → Secrets and variables → Actions.
-          # Name: PUBLIC_FORM_ENDPOINT
-          # Value: https://formspree.io/f/xxxxxxxx (example)
-          PUBLIC_FORM_ENDPOINT: ${{ secrets.PUBLIC_FORM_ENDPOINT }}
           ASTRO_TELEMETRY_DISABLED: 1
         run: bun run build
 

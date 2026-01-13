@@ -92,6 +92,28 @@ jobs:
               core.warning(`getLatestPagesBuild failed: ${e?.message ?? e}`);
             }
 
+            // Environment protection rules can block deployments indefinitely.
+            // If the repo has required reviewers for the `github-pages` environment, it can appear stuck.
+            try {
+              const env = await github.rest.repos.getEnvironment({
+                owner,
+                repo,
+                environment_name: 'github-pages',
+              });
+              core.info('Environment config (github-pages):');
+              core.info(JSON.stringify(env.data, null, 2));
+            } catch (e) {
+              core.warning(`getEnvironment failed: ${e?.message ?? e}`);
+            }
+
+      - name: Diagnostics (GitHub API connectivity)
+        run: |
+          set -euo pipefail
+          echo "Testing connectivity to GitHub API..."
+          curl -fsSLI --max-time 20 https://api.github.com | head -n 20
+          echo "Testing connectivity to GitHub..."
+          curl -fsSLI --max-time 20 https://github.com | head -n 20
+
       - name: Deploy (attempt 1)
         id: deploy_1
         uses: actions/deploy-pages@v4

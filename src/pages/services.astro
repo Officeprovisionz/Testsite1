@@ -3,10 +3,8 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
-import ServicesGrid from '@/components/ServicesGrid.astro';
 import ServicesSection from '@/components/Services.astro';
 import IndustriesGrid from '@/components/IndustriesGrid.astro';
-import HowItWorks from '@/components/HowItWorks.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
@@ -83,8 +81,6 @@ const heroImageMobile = heroSecondary
     imagePosition="50% 45%"
   />
 
-  <ServicesGrid />
-
   <!-- Industries page merged here (no information removed) -->
   <IndustriesGrid
     extraItems={[
@@ -110,50 +106,6 @@ const heroImageMobile = heroSecondary
       },
     ]}
   />
-  <HowItWorks id="process" heading="A process built for operations" waveTone="surface-muted" />
-
-  <section class="section section-muted section-creative scroll-mt-20" id="service-details">
-    <div class="container-page">
-      <SectionHeader
-        align="center"
-        eyebrow="What it looks like"
-        heading="Details that keep the day running"
-        description="This is the kind of support teams ask for most—clear scope, repeatable checklists, and the extras that remove friction."
-      />
-
-      <div class="mt-10 grid gap-6 md:grid-cols-2 lg:mt-12 lg:grid-cols-3">
-        <article class="card card-hover p-6 sm:p-7">
-          <p class="text-strong text-lg font-semibold">Routine clean</p>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
-            Your workspace deserves to shine. Our routine commercial cleaning handles it all—from
-            counters to floors. We remove trash, mop (wet and dry), wipe down counters, clean and
-            polish appliances, reset chairs, and spot clean glass and entryways. Dependable service
-            that keeps your office looking its best.
-          </p>
-        </article>
-
-        <article class="card card-hover p-6 sm:p-7">
-          <p class="text-strong text-lg font-semibold">Deep clean</p>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
-            Ready for a deeper clean? Our thorough service tackles what routine cleaning misses—
-            dusting baseboards and ceilings, carefully cleaning personal offices and monitors,
-            disinfecting and sanitizing throughout, and polishing stainless steel appliances to
-            perfection.
-          </p>
-        </article>
-
-        <article class="card card-hover p-6 sm:p-7">
-          <p class="text-strong text-lg font-semibold">Specialty care</p>
-          <p class="mt-3 text-sm leading-relaxed text-muted">
-            Beyond routine care—specialty cleaning that transforms your space. Whether you need
-            post-construction cleanup, sparkling windows, deep carpet and furniture extraction, or
-            glossy polished floors, we bring professional equipment and expertise to every unique
-            challenge.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
 
   <section class="section section-creative scroll-mt-20" id="breakroom">
     <div class="container-page">

@@ -1,7 +1,6 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
 import { getImagePositionClass } from '@/lib/utils';
-import { makeTelHref } from '@/lib/links';
 
 type Props = {
   /** Optional fully-qualified (BASE_URL-prefixed) hero image URL. */
@@ -33,7 +32,6 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
-const telHref = makeTelHref(siteConfig.contact.phoneE164);
 // Opt-in only: avoids 404 network requests when the optional hero videos are not present.
 const heroVideoOptIn =
   String(import.meta.env.PUBLIC_ENABLE_HERO_VIDEO ?? '').toLowerCase() === 'true';
@@ -143,24 +141,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           >{siteConfig.brand.city}</span
         >. Same crew, photo updates, and a real person answering when you call.
       </p>
-      <div
-        class="mt-10 flex animate-slide-up flex-col items-center justify-center gap-4 [animation-delay:400ms] sm:flex-row lg:mt-12 lg:gap-5"
-      >
-        <a
-          href={telHref}
-          class="btn-primary btn-premium shadow-accent-900/30 w-full min-w-[180px] shadow-lg sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
-          data-haptic="true"
-        >
-          Call now
-        </a>
-        <a
-          href={`${base}contact/`}
-          class="btn-secondary btn-premium w-full min-w-[180px] sm:w-auto lg:min-w-[200px] lg:px-8 lg:py-4 lg:text-base"
-          data-haptic="true"
-        >
-          Request a quote
-        </a>
-      </div>
     </div>
   </div>
 </section>

@@ -20,7 +20,6 @@ const href = makeHref(import.meta.env.BASE_URL);
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 const vcardHref = href('office-provisionz.vcf');
-const bookingUrl = (import.meta.env.PUBLIC_BOOKING_URL ?? '').trim();
 
 const industryOptions = [...siteConfig.industries.map((i) => i.title), 'Other / Not listed'];
 
@@ -69,11 +68,7 @@ const heroImageMobile = heroSecondary
     imagePosition="50% 40%"
   />
 
-  <QuoteWizard
-    bookingUrl={bookingUrl}
-    industryOptions={industryOptions}
-    serviceOptions={serviceOptions}
-  />
+  <QuoteWizard industryOptions={industryOptions} serviceOptions={serviceOptions} />
 
   <section class="section section-creative hidden scroll-mt-20" id="thanks" data-thanks-panel>
     <div class="container-narrow">
@@ -155,21 +150,13 @@ const heroImageMobile = heroSecondary
             <div class="panel p-5">
               <p class="text-strong text-sm font-semibold">While you wait</p>
               <p class="mt-1 text-sm text-muted">
-                Save our contact, or add a quick follow-up reminder.
+                Save our contact so it's easy to follow up if needed.
               </p>
 
               <div class="mt-4 grid gap-3 sm:grid-cols-2">
                 <a class="btn-secondary w-full" href={vcardHref} data-haptic="true">
                   Save our contact (vCard)
                 </a>
-                <button
-                  type="button"
-                  class="btn-secondary w-full"
-                  data-add-calendar
-                  data-haptic="true"
-                >
-                  Add follow‑up reminder
-                </button>
               </div>
             </div>
 
@@ -362,55 +349,6 @@ const heroImageMobile = heroSecondary
             }
           });
         }
-      }
-
-      const addCal = panel.querySelector('[data-add-calendar]');
-      if (addCal instanceof HTMLButtonElement) {
-        addCal.addEventListener('click', () => {
-          try {
-            const now = new Date();
-            const start = new Date(now.getTime());
-            start.setDate(start.getDate() + 1);
-            start.setHours(10, 0, 0, 0);
-            const end = new Date(start.getTime() + 15 * 60 * 1000);
-
-            const pad = (n) => String(n).padStart(2, '0');
-            const fmt = (d) =>
-              `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
-
-            const uid = `${Date.now()}@officeprovisionz`;
-            const summaryTxt = 'Office Provisionz — quote follow-up';
-            const desc = 'Reply / follow up on the quote request.';
-
-            const ics =
-              'BEGIN:VCALENDAR\r\n' +
-              'VERSION:2.0\r\n' +
-              'PRODID:-//Office Provisionz//DAMRA//EN\r\n' +
-              'CALSCALE:GREGORIAN\r\n' +
-              'METHOD:PUBLISH\r\n' +
-              'BEGIN:VEVENT\r\n' +
-              `UID:${uid}\r\n` +
-              `DTSTAMP:${fmt(new Date())}\r\n` +
-              `DTSTART:${fmt(start)}\r\n` +
-              `DTEND:${fmt(end)}\r\n` +
-              `SUMMARY:${summaryTxt}\r\n` +
-              `DESCRIPTION:${desc}\r\n` +
-              'END:VEVENT\r\n' +
-              'END:VCALENDAR\r\n';
-
-            const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'office-provisionz-follow-up.ics';
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-          } catch {
-            // ignore
-          }
-        });
       }
     };
 

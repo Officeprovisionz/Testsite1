@@ -85,6 +85,102 @@
       "command": "bun",
       "args": ["typecheck"],
       "problemMatcher": []
+    },
+    {
+      "label": "gh: pages deploy status",
+      "type": "shell",
+      "command": "gh",
+      "args": [
+        "run",
+        "view",
+        "20971115319",
+        "--repo",
+        "Officeprovisionz/Testsite1",
+        "--json",
+        "status,conclusion,updatedAt,headSha,url"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "gh: pages deploy status (fullpath)",
+      "type": "shell",
+      "command": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "args": [
+        "run",
+        "view",
+        "20971115319",
+        "--repo",
+        "Officeprovisionz/Testsite1",
+        "--json",
+        "status,conclusion,updatedAt,headSha,url"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "gh: pages config",
+      "type": "shell",
+      "command": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "args": [
+        "api",
+        "-H",
+        "Accept: application/vnd.github+json",
+        "repos/Officeprovisionz/Testsite1/pages"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "gh: pages config summary",
+      "type": "shell",
+      "command": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "args": [
+        "api",
+        "-H",
+        "Accept: application/vnd.github+json",
+        "repos/Officeprovisionz/Testsite1/pages",
+        "--jq",
+        "{html_url:.html_url,cname:.cname,build_type:.build_type,status:.status,https_enforced:.https_enforced,public_url:.public_url}"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "gh: pages config summary (jq)",
+      "type": "shell",
+      "command": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "args": [
+        "api",
+        "-H",
+        "Accept: application/vnd.github+json",
+        "repos/Officeprovisionz/Testsite1/pages",
+        "--jq",
+        "{html_url:.html_url,cname:.cname,build_type:.build_type,status:.status,https_enforced:.https_enforced,public_url:.public_url}"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
+    },
+    {
+      "label": "gh: pages config summary (jq quoted)",
+      "type": "shell",
+      "command": "C:\\Program Files\\GitHub CLI\\gh.exe",
+      "args": [
+        "api",
+        "-H",
+        "Accept: application/vnd.github+json",
+        "repos/Officeprovisionz/Testsite1/pages",
+        "--jq",
+        "'{html_url:.html_url,cname:.cname,build_type:.build_type,status:.status,https_enforced:.https_enforced,public_url:.public_url}'"
+      ],
+      "isBackground": false,
+      "problemMatcher": [],
+      "group": "none"
     }
   ]
 }

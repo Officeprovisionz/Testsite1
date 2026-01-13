@@ -7,7 +7,6 @@ interface ImportMetaEnv {
   readonly PUBLIC_PLAUSIBLE_DOMAIN?: string;
   readonly PUBLIC_PLAUSIBLE_SRC?: string;
   readonly PUBLIC_SENTRY_DSN?: string;
-  readonly PUBLIC_BOOKING_URL?: string;
   readonly SITE_URL?: string;
   readonly PUBLIC_SITE_BASE?: string;
   readonly GALLERY_SHUFFLE_SEED?: string;

@@ -2,12 +2,11 @@
 import type { SiteConfig } from '@/data/siteConfig';
 
 type Props = {
-  bookingUrl?: string;
   industryOptions: SiteConfig['industries'][number]['title'][];
   serviceOptions: string[];
 };
 
-const { bookingUrl, industryOptions, serviceOptions } = Astro.props;
+const { industryOptions, serviceOptions } = Astro.props;
 const frequencyOptions = [
   'One-time',
   'Weekly',
@@ -41,23 +40,6 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
               review, edit, and send - no duplicate typing.
             </p>
           </div>
-
-          {
-            bookingUrl && (
-              <a
-                class="btn-secondary w-full sm:w-auto"
-                href={bookingUrl}
-                target="_blank"
-                rel="noreferrer"
-                data-track="cta_click"
-                data-location="quote_wizard"
-                data-action="book_walkthrough"
-                data-label="Book a walkthrough"
-              >
-                Book a walkthrough
-              </a>
-            )
-          }
         </div>
 
         <div class="flex flex-wrap items-center gap-3" role="list" aria-label="Progress">
@@ -145,7 +127,7 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
               <p id="wizard-services-help" class="text-subtle text-xs">
                 Pick all that apply. We'll confirm scope during quoting.
               </p>
-              <div class="rounded-xl border p-3" data-wizard-services>
+              <div class="wizard-services-box border p-3" data-wizard-services>
                 <div class="grid gap-2 sm:grid-cols-2">
                   {
                     serviceOptions.map((opt) => (
@@ -231,22 +213,6 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
               >
                 Prefill contact form
               </button>
-              {
-                bookingUrl && (
-                  <a
-                    class="btn-secondary w-full sm:w-auto"
-                    href={bookingUrl}
-                    target="_blank"
-                    rel="noreferrer"
-                    data-track="cta_click"
-                    data-location="quote_wizard"
-                    data-action="book_walkthrough"
-                    data-label="Book from step 3"
-                  >
-                    Book a walkthrough
-                  </a>
-                )
-              }
             </div>
 
             <p class="text-subtle text-xs">
@@ -272,15 +238,15 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.35rem 0.5rem;
-    border-radius: 999px;
-    border: 1px solid rgb(var(--color-border) / 0.7);
-    background: linear-gradient(
-      180deg,
-      rgb(var(--color-surface) / 0.75) 0%,
-      rgb(var(--color-surface-muted) / 0.72) 100%
-    );
-    box-shadow: 0 12px 30px -18px rgb(0 0 0 / 0.35);
+    padding: 0.42rem 0.6rem;
+    border-radius: var(--radius-control);
+    border: 1px solid rgb(var(--color-border) / 0.85);
+    background-color: rgb(var(--color-surface) / 0.7);
+  }
+
+  .wizard-stepper[data-active='true'] {
+    border-color: rgb(var(--color-brand) / 0.35);
+    background-color: rgb(var(--color-brand-50) / 0.72);
   }
 
   .wizard-stepper__dot {
@@ -291,17 +257,21 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     place-items: center;
     font-weight: 700;
     color: rgb(var(--color-text));
-    background:
-      radial-gradient(60% 60% at 50% 35%, rgb(var(--color-accent) / 0.24), transparent 70%),
-      radial-gradient(75% 75% at 50% 70%, rgb(var(--color-brand) / 0.22), transparent 70%);
-    border: 1px solid rgb(var(--color-brand) / 0.2);
+    background-color: rgb(var(--color-surface));
+    border: 1px solid rgb(var(--color-border) / 0.9);
   }
   .wizard-stepper[data-active='true'] .wizard-stepper__dot {
-    border-color: rgb(var(--color-brand) / 0.6);
-    box-shadow: 0 0 0 6px rgb(var(--color-brand) / 0.12);
+    border-color: rgb(var(--color-brand) / 0.55);
+    background-color: rgb(var(--color-brand-50) / 0.9);
+    box-shadow: 0 0 0 4px rgb(var(--color-brand) / 0.12);
   }
   .wizard-stepper[data-active='true'] .wizard-stepper__label {
     color: rgb(var(--color-text));
+  }
+
+  .wizard-services-box {
+    border-radius: var(--radius-control);
+    background-color: rgb(var(--color-surface) / 0.6);
   }
 </style>
 

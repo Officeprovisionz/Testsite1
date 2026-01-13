@@ -293,34 +293,6 @@ export const siteConfig = {
       ],
     },
   ] satisfies Service[],
-  scope: {
-    note: 'Scope depends on your layout, frequency, access window, and any add-ons. We confirm what’s included before service and provide a clear written quote.',
-    levels: [
-      {
-        name: 'Essential',
-        bestFor: 'Small offices & steady upkeep',
-        includes: ['Work areas', 'Restrooms', 'Breakroom', 'Floors + trash'],
-        note: 'A clean baseline with clear checklist scope.',
-      },
-      {
-        name: 'Standard',
-        bestFor: 'Larger spaces & multi-room suites',
-        includes: ['More time per visit', 'Detail work', 'High-touch focus'],
-        note: 'Great for client-facing spaces and shared breakrooms.',
-      },
-      {
-        name: 'Managed',
-        bestFor: 'Cleaning + restocking + facilities support',
-        includes: [
-          'Cleaning plan',
-          'Restocking checklist',
-          'Walkthrough cadence',
-          'Priority support',
-        ],
-        note: 'Best for teams that want one reliable point of contact.',
-      },
-    ] satisfies ServiceLevel[],
-  },
   areasServed: {
     title: 'Areas served around San Francisco',
     items: [

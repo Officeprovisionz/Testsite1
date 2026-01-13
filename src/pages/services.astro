@@ -7,64 +7,17 @@ import ServicesGrid from '@/components/ServicesGrid.astro';
 import ServicesSection from '@/components/Services.astro';
 import IndustriesGrid from '@/components/IndustriesGrid.astro';
 import HowItWorks from '@/components/HowItWorks.astro';
-import PricingGrid from '@/components/PricingGrid.astro';
-import ScopeSection from '@/components/Scope.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
-import Eyebrow from '@/components/ui/Eyebrow.astro';
 import { siteConfig } from '@/data/siteConfig';
 import { getCollection } from 'astro:content';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
-import { makeHref } from '@/lib/nav';
 
 const title = `Services | ${siteConfig.brand.name}`;
 const description =
   'Office cleaning, janitorial services, supplies/restocking, and facilities support—built for busy teams in San Francisco.';
-
-const hrefNav = makeHref(import.meta.env.BASE_URL);
-
-const checklistCore = siteConfig.whatIncluded;
-const checklistAddOns = [
-  'Glass and interior partitions (as scoped)',
-  'High-touch deep focus (as needed)',
-  'Floor detailing / spot treatment',
-  'Kitchenette detail pass (microwave exterior, counters, sink)',
-  'Supply restocking checklist (paper goods, soap)',
-  'Walkthrough notes + follow-up items',
-];
-
-const resources = [
-  {
-    eyebrow: 'Checklist',
-    title: 'Office cleaning checklist',
-    desc: 'Use for walkthroughs, vendor comparisons, and ongoing quality checks.',
-    href: hrefNav('services/#checklist'),
-    cta: 'View checklist',
-  },
-  {
-    eyebrow: 'Scope',
-    title: 'Scope & process',
-    desc: 'How scope works: walkthrough, frequency, add-ons, and service levels.',
-    href: hrefNav('services/#scope-process'),
-    cta: 'See scope',
-  },
-  {
-    eyebrow: 'Proof',
-    title: 'What clean looks like',
-    desc: 'Examples and standards—what we mean by “done”.',
-    href: hrefNav('about/#proof'),
-    cta: 'See proof',
-  },
-  {
-    eyebrow: 'Contact',
-    title: 'Request a quote',
-    desc: 'Share basics and priorities. We’ll confirm scope + access and send a clear written quote.',
-    href: hrefNav('contact/#quote'),
-    cta: 'Request a quote',
-  },
-];
 
 const allServices = await getCollection('services');
 const specialtyServices = allServices
@@ -259,118 +212,6 @@ const heroImageMobile = heroSecondary
     </div>
   </section>
 
-  <!-- Resources page merged here (no information removed) -->
-  <section class="section section-creative scroll-mt-20" id="tools">
-    <div class="container-page">
-      <SectionHeader
-        align="center"
-        eyebrow="Tools"
-        heading="Make scope feel effortless"
-        description="Short, printable tools for walkthroughs, vendor comparisons, and keeping expectations crystal clear."
-      />
-
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        {
-          resources.map((r) => (
-            <article class="card card-hover relative overflow-hidden p-6 sm:p-7">
-              <div
-                aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
-              />
-              <div class="relative">
-                <Eyebrow>{r.eyebrow}</Eyebrow>
-                <h2 class="text-strong mt-2 text-xl font-semibold tracking-tight">{r.title}</h2>
-                <p class="mt-2 text-sm leading-relaxed text-muted">{r.desc}</p>
-                <div class="mt-5">
-                  <a class="btn-secondary w-full sm:w-auto" href={r.href}>
-                    {r.cta}
-                  </a>
-                </div>
-              </div>
-            </article>
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <!-- Checklist page merged here (no information removed) -->
-  <section class="section section-creative scroll-mt-20" id="checklist">
-    <div class="container-narrow">
-      <div class="card p-6 sm:p-8">
-        <SectionHeader
-          eyebrow="Resource"
-          heading="Office cleaning checklist"
-          description="Use this checklist to scope a walkthrough, compare vendors, and keep service consistent across visits."
-        >
-          <button slot="actions" type="button" class="btn-secondary w-full sm:w-auto" data-print>
-            Print
-          </button>
-        </SectionHeader>
-
-        <div class="mt-8 grid gap-8">
-          <div>
-            <h3 class="heading-3">Core items (standard visit)</h3>
-            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
-              {
-                checklistCore.map((item) => (
-                  <li>
-                    <span class="check-icon check-icon--sm" aria-hidden="true">
-                      ✓
-                    </span>
-                    <span class="text-muted">{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div>
-            <h3 class="heading-3">Common add-ons (scope-dependent)</h3>
-            <ul class="check-list check-list--compact text-sm sm:grid-cols-2">
-              {
-                checklistAddOns.map((item) => (
-                  <li>
-                    <span class="check-icon check-icon--sm" aria-hidden="true">
-                      ✓
-                    </span>
-                    <span class="text-muted">{item}</span>
-                  </li>
-                ))
-              }
-            </ul>
-          </div>
-
-          <div class="panel panel-muted p-5">
-            <p class="text-strong text-sm font-semibold">Pro tip</p>
-            <p class="mt-2 text-sm text-muted">
-              During a walkthrough, decide what “good” looks like for restrooms, breakrooms, and
-              floors. A clear definition of done prevents missed expectations later.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pricing/Scope page merged here (no information removed) -->
-  <section class="section section-creative scroll-mt-20 pb-0" id="scope-process">
-    <div class="container-page">
-      <div class="mb-12">
-        <SectionHeader
-          align="center"
-          eyebrow="Scope"
-          heading="How scope works"
-          description="Scope depends on your space and service frequency. We confirm what’s included first—then send a clear, written quote."
-        />
-      </div>
-
-      <PricingGrid />
-    </div>
-  </section>
-
-  <ScopeSection id="scope" heading="Service levels" />
-
   <ServicesSection
     id="specialty"
     heading="Specialty & add-on services"
@@ -385,23 +226,3 @@ const heroImageMobile = heroSecondary
 
   <Footer slot="footer" />
 </BaseLayout>
-
-<script is:inline>
-  (() => {
-    const init = () => {
-      const btn = document.querySelector('[data-print]');
-      if (!(btn instanceof HTMLButtonElement)) return;
-      if (btn.dataset.printInit === 'true') return;
-      btn.dataset.printInit = 'true';
-      btn.addEventListener('click', () => window.print());
-    };
-
-    const doc = document.documentElement;
-    if (doc.dataset.printListen !== 'true') {
-      doc.dataset.printListen = 'true';
-      document.addEventListener('astro:page-load', init);
-    }
-
-    init();
-  })();
-</script>

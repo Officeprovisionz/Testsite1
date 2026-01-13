@@ -30,7 +30,6 @@ type Props = {
    * `surface` uses the default page surface.
    */
   tone?: 'muted' | 'surface' | undefined;
-  showChecklist?: boolean | undefined;
   showEmail?: boolean | undefined;
 };
 
@@ -49,7 +48,6 @@ const {
   // ctaText/ctaHref intentionally not destructured (no CTAs rendered)
 
   tone = 'muted',
-  showChecklist = true,
   showEmail = true,
 } = Astro.props;
 
@@ -147,7 +145,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               <h2 class="heading-2 mt-2 lg:text-4xl">{heading ?? 'Ready to scope your space?'}</h2>
               <p class="lede lg:text-lg">
                 {description ??
-                  'Preview our checklist and review scope details. When you’re ready, use the phone number above or request a quote from the top menu.'}
+                  'When you’re ready, use the phone number above or request a quote from the top menu.'}
               </p>
 
               <ul class="check-list check-list--compact text-subtle text-sm sm:grid-cols-2">
@@ -199,19 +197,6 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               >
                 Request a quote
               </a>
-              {showChecklist ? (
-                <a
-                  class="btn-secondary w-full sm:w-auto md:justify-self-end"
-                  href={href('services/#checklist')}
-                  data-track="cta_click"
-                  data-location="cta_section_split"
-                  data-action="checklist"
-                  data-label="cta_split_checklist"
-                >
-                  Preview checklist
-                </a>
-              ) : null}
-
               {showEmail ? (
                 <div class="text-subtle mt-1 text-xs">
                   <a

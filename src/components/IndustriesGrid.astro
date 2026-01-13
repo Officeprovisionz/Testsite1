@@ -13,7 +13,13 @@ type PrecisionCardItem = {
   cta?: string;
 };
 
-const { extraItems = [] } = Astro.props as { extraItems?: PrecisionCardItem[] };
+type Props = {
+  extraItems?: PrecisionCardItem[];
+  /** Whether to show the per-card CTA line (e.g. "Get a quote"). Defaults to true. */
+  showCta?: boolean;
+};
+
+const { extraItems = [], showCta = true } = Astro.props as Props;
 
 const contactHref = makeContactHref(import.meta.env.BASE_URL);
 
@@ -60,9 +66,11 @@ const extraCards = extraItems.map((item) => ({
                   {item.description}
                 </p>
 
-                <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
-                  Get a quote <ArrowRight className="ml-1 h-4 w-4" />
-                </div>
+                {showCta ? (
+                  <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                    Get a quote <ArrowRight className="ml-1 h-4 w-4" />
+                  </div>
+                ) : null}
               </div>
             </a>
           ))
@@ -87,9 +95,11 @@ const extraCards = extraItems.map((item) => ({
                     {item.description}
                   </p>
 
-                  <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
-                    {item.cta} <ArrowRight className="ml-1 h-4 w-4" />
-                  </div>
+                  {showCta ? (
+                    <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                      {item.cta} <ArrowRight className="ml-1 h-4 w-4" />
+                    </div>
+                  ) : null}
                 </div>
               </a>
             ))}

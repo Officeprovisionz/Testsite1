@@ -167,17 +167,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       </div>
     </div>
   </div>
-
-  <a
-    class="hero-swipe"
-    href="#expertise"
-    aria-label="Swipe up to discover the next section"
-    data-haptic="true"
-    data-hero-swipe
-  >
-    <span class="hero-swipe__text">Swipe up to discover</span>
-    <span class="hero-swipe__arrow" aria-hidden="true"></span>
-  </a>
 </section>
 
 <script>
@@ -237,7 +226,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false) || isWebDriver;
     const headline = hero.querySelector<HTMLElement>('[data-hero-headline]');
     const subhead = hero.querySelector<HTMLElement>('[data-hero-subhead]');
-    const swipe = hero.querySelector<HTMLElement>('[data-hero-swipe]');
 
     // Parallax text overlay (subtle, mobile-first). Disabled for reduced motion.
     if (!reduceMotion && headline && subhead) {
@@ -254,9 +242,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           const pY = progress * -12;
           headline.style.transform = `translate3d(0, ${hY}px, 0)`;
           subhead.style.transform = `translate3d(0, ${pY}px, 0)`;
-
-          // Fade the swipe affordance once the user scrolls.
-          if (swipe) swipe.style.opacity = String(clamp(1 - progress * 1.6, 0, 1));
         });
       };
 

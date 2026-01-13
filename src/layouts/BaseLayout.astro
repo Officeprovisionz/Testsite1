@@ -8,6 +8,7 @@ import { siteConfig } from '@/data/siteConfig';
 import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
 import Schema from '@/components/Schema.astro';
+import BottomTabBar from '@/components/BottomTabBar.astro';
 import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
 
 type Props = {
@@ -750,6 +751,8 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     </main>
 
     <slot name="footer" />
+
+    <BottomTabBar />
 
     <!-- Toast Notification System -->
     <Toaster client:load transition:persist />

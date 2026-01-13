@@ -1647,6 +1647,97 @@
     }
   }
 
+  /* --- Mobile Bottom Tab Bar --- */
+  .bottom-tab-bar {
+    /* Glassy surface with safe-area padding; matches the header "app-bar" vibe. */
+    background-color: rgb(var(--color-surface) / 0.86);
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    border-top: 1px solid rgb(var(--color-border) / 0.55);
+    box-shadow: 0 -10px 30px -22px rgba(2, 6, 23, 0.35);
+    padding-bottom: env(safe-area-inset-bottom);
+    transition:
+      transform 400ms cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 400ms ease;
+  }
+
+  .bottom-tab-bar.is-hidden {
+    transform: translateY(100%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  :root[data-mode='dark'] .bottom-tab-bar {
+    background-color: rgb(var(--color-surface) / 0.8);
+    border-top: 1px solid rgb(var(--color-border) / 0.55);
+    box-shadow: 0 -12px 34px -22px rgba(0, 0, 0, 0.6);
+  }
+
+  .bottom-tab-bar__inner {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.25rem;
+    padding: 0.5rem 0.6rem;
+  }
+
+  .bottom-tab-bar__item {
+    display: grid;
+    grid-auto-flow: row;
+    justify-items: center;
+    align-items: center;
+    gap: 0.15rem;
+    height: 3.5rem;
+    border-radius: 0.95rem;
+    color: rgb(var(--color-text-muted));
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      background-color 160ms cubic-bezier(0.4, 0, 0.2, 1),
+      color 160ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 140ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+
+  .bottom-tab-bar__label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .bottom-tab-bar__item.is-active {
+    background-color: rgb(var(--color-brand-50) / 0.78);
+    color: rgb(var(--color-brand-700));
+  }
+
+  :root[data-mode='dark'] .bottom-tab-bar__item.is-active {
+    background-color: rgb(var(--color-brand-900) / 0.32);
+    color: rgb(var(--color-brand-200));
+  }
+
+  /* The center tab is the primary action: stronger weight + subtle pop. */
+  .bottom-tab-bar__item.is-primary {
+    color: rgb(var(--color-text));
+  }
+
+  .bottom-tab-bar__item.is-primary.is-active {
+    background-color: rgb(var(--color-brand) / 0.12);
+    color: rgb(var(--color-brand-800));
+  }
+
+  :root[data-mode='dark'] .bottom-tab-bar__item.is-primary {
+    color: rgb(var(--color-text));
+  }
+
+  :root[data-mode='dark'] .bottom-tab-bar__item.is-primary.is-active {
+    background-color: rgb(var(--color-brand) / 0.18);
+    color: rgb(var(--color-brand-100));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bottom-tab-bar__item {
+      transition: none;
+    }
+  }
+
   /* --- Micro-interactions: "haptic" press simulation --- */
   [data-haptic='true'] {
     touch-action: manipulation;

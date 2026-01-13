@@ -1,10 +1,199 @@
 ---
-/**
- * BottomTabBar
- *
- * Removed: This mobile-only UI was causing confusion and (on some mobile browsers) could
- * contribute to scroll/paint artifacts due to heavy backdrop-filter effects.
- *
- * This file remains as a no-op component to avoid breakage if any stale references exist.
- */
+import { Icon } from 'astro-icon/components';
+import { makeHref, makeIsActive } from '@/lib/nav';
+import { makeTelHref } from '@/lib/links';
+import { siteConfig } from '@/data/siteConfig';
+
+type Props = {
+  /** Hide the bar on specific routes (e.g., contact/thanks). */
+  hiddenPaths?: string[];
+};
+
+type TabItem = {
+  key: string;
+  label: string;
+  icon: string;
+  active: () => boolean;
+  /** Navigation href. If omitted, this item is treated as an action button. */
+  href?: string;
+  /** Primary (center) action styling. */
+  primary?: boolean;
+  /** Optional action identifier. */
+  action?: 'open-menu';
+};
+
+const { hiddenPaths = [] } = Astro.props as Props;
+
+const base = import.meta.env.BASE_URL;
+const href = makeHref(base);
+const isActive = makeIsActive(Astro.url.pathname, base);
+const telHref = makeTelHref(siteConfig.contact.phoneE164);
+
+const normalizedPath = (() => {
+  const raw = Astro.url.pathname || '/';
+  const stripped = base !== '/' && raw.startsWith(base) ? `/${raw.slice(base.length)}` : raw;
+  const withLeading = stripped.startsWith('/') ? stripped : `/${stripped}`;
+  return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
+})();
+
+const primaryIntentPage = normalizedPath.startsWith('/services/');
+
+const primaryAction = primaryIntentPage
+  ? {
+      key: 'quote',
+      label: 'Quote',
+      href: href('contact/'),
+      icon: 'lucide:send',
+    }
+  : {
+      key: 'call',
+      label: 'Call',
+      href: telHref,
+      icon: 'lucide:phone',
+    };
+
+const items: TabItem[] = [
+  {
+    key: 'home',
+    label: 'Home',
+    href: href(''),
+    icon: 'lucide:home',
+    active: () => isActive(href('')),
+  },
+  {
+    key: 'services',
+    label: 'Services',
+    href: href('services/'),
+    icon: 'lucide:sparkles',
+    active: () => isActive(href('services/')),
+  },
+  {
+    key: primaryAction.key,
+    label: primaryAction.label,
+    href: primaryAction.href,
+    icon: primaryAction.icon,
+    active: () => false,
+    primary: true,
+  },
+  {
+    key: 'results',
+    label: 'Results',
+    href: href('about/#proof'),
+    icon: 'lucide:images',
+    active: () => isActive(href('about/')),
+  },
+  {
+    key: 'more',
+    label: 'More',
+    icon: 'lucide:menu',
+    active: () => false,
+    action: 'open-menu',
+  },
+];
+
+const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
 ---
+
+{
+  !shouldHide && (
+    <nav
+      class="bottom-tab-bar border-app fixed inset-x-0 bottom-0 z-40 md:hidden"
+      aria-label="Primary"
+      data-bottom-tab-bar
+    >
+      <div class="bottom-tab-bar__inner">
+        {items.map((it) => {
+          const active = it.active();
+          const isPrimary = Boolean(it.primary);
+
+          if (it.action === 'open-menu') {
+            return (
+              <button
+                type="button"
+                class:list={[
+                  'bottom-tab-bar__item tap-target',
+                  active ? 'is-active' : '',
+                  isPrimary ? 'is-primary' : '',
+                ]}
+                aria-label="Open menu"
+                data-open-mobile-menu
+                aria-current={active ? 'page' : undefined}
+                data-haptic="true"
+              >
+                <span class="bottom-tab-bar__icon" aria-hidden="true">
+                  <Icon name={it.icon} class="h-5 w-5" />
+                </span>
+                <span class="bottom-tab-bar__label">{it.label}</span>
+              </button>
+            );
+          }
+
+          return (
+            <a
+              href={it.href}
+              class:list={[
+                'bottom-tab-bar__item tap-target',
+                active ? 'is-active' : '',
+                isPrimary ? 'is-primary' : '',
+              ]}
+              aria-current={active ? 'page' : undefined}
+              data-haptic="true"
+              data-astro-prefetch="tap"
+            >
+              <span class="bottom-tab-bar__icon" aria-hidden="true">
+                <Icon name={it.icon} class="h-5 w-5" />
+              </span>
+              <span class="bottom-tab-bar__label">{it.label}</span>
+            </a>
+          );
+        })}
+      </div>
+    </nav>
+  )
+}
+
+<script is:inline define:vars={{ base }}>
+  function initBottomTabBar() {
+    // Hook the "More" tab into the existing header drawer.
+    const openBtn = document.querySelector('[data-open-mobile-menu]');
+    if (openBtn && !openBtn.dataset.init) {
+      openBtn.dataset.init = 'true';
+      const openMenu = () => {
+        const menu = document.querySelector('details[data-mobile-menu]');
+        if (menu && menu instanceof HTMLDetailsElement) {
+          menu.open = true;
+          return;
+        }
+        try {
+          const url = new URL(`${base}about/`, window.location.origin);
+          window.location.href = url.toString();
+        } catch {
+          window.location.href = '/about/';
+        }
+      };
+      openBtn.addEventListener('click', openMenu);
+    }
+
+    // Auto-hide when contact form is in view
+    const bar = document.querySelector('[data-bottom-tab-bar]');
+    const contactSection = document.querySelector('#contact, [data-contact-form]');
+    if (bar && contactSection) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              bar.classList.add('is-hidden');
+            } else {
+              bar.classList.remove('is-hidden');
+            }
+          });
+        },
+        { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      );
+      observer.observe(contactSection);
+    }
+  }
+
+  document.addEventListener('astro:page-load', initBottomTabBar);
+  initBottomTabBar();
+</script>

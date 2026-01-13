@@ -308,19 +308,21 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
 <script is:inline>
   (() => {
     const wizard = document.querySelector('[data-quote-wizard]');
-    if (!wizard) return;
+    if (!(wizard instanceof HTMLElement)) return;
     if (wizard.dataset.jsEnabled === 'true') return;
     wizard.dataset.jsEnabled = 'true';
 
-    const steps = Array.from(wizard.querySelectorAll<HTMLElement>('[data-step]'));
+    const steps = Array.from(wizard.querySelectorAll('[data-step]')).filter(
+      (el) => el instanceof HTMLElement
+    );
     let current = 0;
 
+    const section = wizard.closest('[id="quick-quote"]');
     const progress = Array.from(
-      wizard.closest('[id="quick-quote"]')?.querySelectorAll<HTMLElement>('[data-progress-step]') ??
-        []
-    );
+      section ? section.querySelectorAll('[data-progress-step]') : []
+    ).filter((el) => el instanceof HTMLElement);
 
-    const setStep = (idx: number) => {
+    const setStep = (idx) => {
       current = Math.max(0, Math.min(idx, steps.length - 1));
       steps.forEach((step, i) => {
         step.dataset.active = i === current ? 'true' : 'false';
@@ -330,14 +332,17 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
       });
     };
 
-    const validateStep = (idx: number) => {
+    const validateStep = (idx) => {
       const step = steps[idx];
       if (!step) return false;
-      const required = Array.from(
-        step.querySelectorAll<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-          '[required]'
-        )
+
+      const required = Array.from(step.querySelectorAll('[required]')).filter(
+        (el) =>
+          el instanceof HTMLInputElement ||
+          el instanceof HTMLSelectElement ||
+          el instanceof HTMLTextAreaElement
       );
+
       for (const field of required) {
         if (!field.value || !field.checkValidity()) {
           field.reportValidity();
@@ -348,19 +353,20 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
 
       // Custom check: at least one service
       if (step.dataset.step === '2') {
-        const services = Array.from(
-          step.querySelectorAll<HTMLInputElement>('input[name="wizard-services"]')
+        const services = Array.from(step.querySelectorAll('input[name="wizard-services"]')).filter(
+          (el) => el instanceof HTMLInputElement
         );
         if (!services.some((s) => s.checked)) {
-          const box = step.querySelector<HTMLElement>('[data-wizard-services]');
-          box?.classList.add('border-destructive/40');
-          services[0]?.focus();
+          const box = step.querySelector('[data-wizard-services]');
+          if (box instanceof HTMLElement) box.classList.add('border-destructive/40');
+          if (services[0]) services[0].focus();
           return false;
         } else {
-          const box = step.querySelector<HTMLElement>('[data-wizard-services]');
-          box?.classList.remove('border-destructive/40');
+          const box = step.querySelector('[data-wizard-services]');
+          if (box instanceof HTMLElement) box.classList.remove('border-destructive/40');
         }
       }
+
       return true;
     };
 
@@ -391,51 +397,67 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
           }
         }
         prefillContactForm();
-        return;
       }
     });
 
-    const readValue = (name: string) => {
-      const input = wizard.querySelector<
-        HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-      >(`[name="${name}"]`);
-      return (input?.value || '').trim();
+    const readValue = (name) => {
+      const input = wizard.querySelector(`[name="${name}"]`);
+      if (
+        input instanceof HTMLInputElement ||
+        input instanceof HTMLSelectElement ||
+        input instanceof HTMLTextAreaElement
+      ) {
+        return (input.value || '').trim();
+      }
+      return '';
     };
 
     const readServices = () => {
-      return Array.from(
-        wizard.querySelectorAll<HTMLInputElement>('input[name="wizard-services"]:checked')
-      ).map((i) => i.value);
+      return Array.from(wizard.querySelectorAll('input[name="wizard-services"]:checked'))
+        .filter((el) => el instanceof HTMLInputElement)
+        .map((i) => i.value);
     };
 
     const cssEscape =
       typeof CSS !== 'undefined' && CSS.escape
         ? CSS.escape
-        : (v: string) => v.replace(/[^a-zA-Z0-9_-]/g, '_');
+        : (v) => String(v).replace(/[^a-zA-Z0-9_-]/g, '_');
 
-    const setFieldValue = (form: HTMLFormElement, name: string, value: string) => {
+    const setFieldValue = (form, name, value) => {
       if (!value) return;
-      const field = form.querySelector<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>(
-        `[name="${name}"]`
-      );
-      if (!field) return;
+      if (!(form instanceof HTMLFormElement)) return;
+
+      const field = form.querySelector(`[name="${name}"]`);
+      if (
+        !(
+          field instanceof HTMLInputElement ||
+          field instanceof HTMLSelectElement ||
+          field instanceof HTMLTextAreaElement
+        )
+      ) {
+        return;
+      }
 
       if (field instanceof HTMLSelectElement) {
-        const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, '');
+        const norm = (s) =>
+          String(s)
+            .toLowerCase()
+            .replace(/[^a-z0-9]/g, '');
         const match = Array.from(field.options).find((o) => norm(o.value) === norm(value));
         field.value = match ? match.value : value;
       } else {
         field.value = value;
       }
+
       field.dispatchEvent(new Event('input', { bubbles: true }));
       field.dispatchEvent(new Event('change', { bubbles: true }));
     };
 
     const prefillContactForm = () => {
-      const form = document.querySelector<HTMLFormElement>('form[data-contact-form]');
-      if (!form) return;
+      const form = document.querySelector('form[data-contact-form]');
+      if (!(form instanceof HTMLFormElement)) return;
 
-      const map: Record<string, string> = {
+      const map = {
         companyName: readValue('wizard-company'),
         location: readValue('wizard-location'),
         industry: readValue('wizard-industry'),
@@ -446,15 +468,15 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
         phone: readValue('wizard-phone'),
       };
 
-      Object.entries(map).forEach(([name, value]) => setFieldValue(form, name, value));
+      Object.entries(map).forEach(([key, value]) => setFieldValue(form, key, value));
 
       const services = readServices();
       if (services.length) {
         services.forEach((value) => {
-          const box = form.querySelector<HTMLInputElement>(
+          const box = form.querySelector(
             `input[type="checkbox"][name="servicesNeeded"][value="${cssEscape(value)}"]`
           );
-          if (box) {
+          if (box instanceof HTMLInputElement) {
             box.checked = true;
             box.dispatchEvent(new Event('change', { bubbles: true }));
           }
@@ -473,8 +495,8 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
         notes ? `Notes: ${notes}` : '',
       ].filter(Boolean);
 
-      const message = form.querySelector<HTMLTextAreaElement>('textarea[name="message"]');
-      if (message && summaryParts.length) {
+      const message = form.querySelector('textarea[name="message"]');
+      if (message instanceof HTMLTextAreaElement && summaryParts.length) {
         const base = 'Quick quote summary:\n';
         message.value = base + summaryParts.join('\n');
         message.dispatchEvent(new Event('input', { bubbles: true }));
@@ -486,8 +508,8 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
         // ignore
       }
 
-      const consent = form.querySelector<HTMLInputElement>('input[name="consent"]');
-      consent?.focus();
+      const consent = form.querySelector('input[name="consent"]');
+      if (consent instanceof HTMLInputElement) consent.focus();
 
       if (typeof window.damraTrack === 'function') {
         window.damraTrack('quote_wizard_prefill', {

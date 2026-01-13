@@ -54,7 +54,7 @@ const extraCards = extraItems.map((item) => ({
           items.map((item) => (
             <a
               href={item.link}
-              class="card card-hover group relative block h-full w-full overflow-hidden p-2 transition-all duration-300 sm:p-4"
+              class="card card-hover group relative block h-full w-full overflow-hidden p-2 sm:p-4"
             >
               <div
                 aria-hidden="true"
@@ -67,7 +67,7 @@ const extraCards = extraItems.map((item) => ({
                 </p>
 
                 {showCta ? (
-                  <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                  <div class="text-strong group-hover:text-brand mt-6 flex items-center text-sm font-medium transition-colors">
                     Get a quote <ArrowRight className="ml-1 h-4 w-4" />
                   </div>
                 ) : null}
@@ -83,7 +83,7 @@ const extraCards = extraItems.map((item) => ({
             {extraCards.map((item) => (
               <a
                 href={item.link}
-                class="card card-hover group relative block h-full w-full overflow-hidden p-2 transition-all duration-300 sm:p-4"
+                class="card card-hover group relative block h-full w-full overflow-hidden p-2 sm:p-4"
               >
                 <div
                   aria-hidden="true"
@@ -96,7 +96,7 @@ const extraCards = extraItems.map((item) => ({
                   </p>
 
                   {showCta ? (
-                    <div class="text-strong mt-6 flex items-center text-sm font-medium transition-transform group-hover:translate-x-1">
+                    <div class="text-strong group-hover:text-brand mt-6 flex items-center text-sm font-medium transition-colors">
                       {item.cta} <ArrowRight className="ml-1 h-4 w-4" />
                     </div>
                   ) : null}

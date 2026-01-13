@@ -21,10 +21,7 @@ const { heading, items } = Astro.props;
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {
         items.map((item) => (
-          <a
-            href={item.href}
-            class="card card-hover group relative flex flex-col p-6 transition-all"
-          >
+          <a href={item.href} class="card card-hover group relative flex flex-col p-6">
             <div
               aria-hidden="true"
               class="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-[rgb(var(--color-brand)/0.14)] via-transparent to-[rgb(var(--color-accent)/0.16)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
@@ -35,7 +32,7 @@ const { heading, items } = Astro.props;
               </h3>
               <Icon
                 name="lucide:arrow-right"
-                class="relative z-10 h-5 w-5 text-muted transition-transform group-hover:translate-x-1"
+                class="group-hover:text-brand relative z-10 h-5 w-5 text-muted transition-colors"
               />
             </div>
             <p class="relative z-10 mt-3 text-sm leading-relaxed text-muted">{item.description}</p>

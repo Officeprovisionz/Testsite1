@@ -682,7 +682,12 @@
   }
 
   .card {
-    @apply border transition-all duration-300;
+    @apply border;
+    transition:
+      transform 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      border-color 220ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 220ms cubic-bezier(0.4, 0, 0.2, 1);
     border-color: rgb(var(--color-border) / 0.85);
     background: linear-gradient(
       180deg,
@@ -1048,7 +1053,14 @@
   }
 
   .btn {
-    @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold transition-all duration-200;
+    @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold;
+    transition:
+      color 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      border-color 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 200ms cubic-bezier(0.22, 1, 0.36, 1),
+      filter 180ms cubic-bezier(0.4, 0, 0.2, 1),
+      transform 140ms cubic-bezier(0.22, 1, 0.36, 1);
     border-radius: var(--radius-control);
     letter-spacing: 0.02em;
     position: relative;

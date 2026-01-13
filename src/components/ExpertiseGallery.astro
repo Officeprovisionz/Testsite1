@@ -7,7 +7,6 @@
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { getShuffledGalleryItems } from '@/data/gallery';
 import Eyebrow from './ui/Eyebrow.astro';
-import ParallaxOrbs from './ParallaxOrbs.astro';
 import galleryMetadataRaw from '@/data/gallery-metadata.json';
 
 const galleryMetadata = galleryMetadataRaw as Record<
@@ -120,7 +119,6 @@ const getImgAttrs = (src: string) => {
 ---
 
 <section id={id} class="section section-creative relative overflow-hidden">
-  <ParallaxOrbs tone="mixed" />
   <div class="container-page">
     <!-- Header -->
     <div class="mb-12 text-center md:mb-16 lg:mb-20">

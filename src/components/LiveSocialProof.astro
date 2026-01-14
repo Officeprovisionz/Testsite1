@@ -121,7 +121,8 @@ const detailFor = (a: Activity) => {
     if (reduceMotion) return;
 
     // Gentle rotation (with cleanup so we don't accumulate intervals across navigations).
-    let intervalId: number | undefined;
+    /** @type {number | undefined} */
+    let intervalId;
 
     const tick = () => {
       i += 1;

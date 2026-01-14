@@ -6,6 +6,7 @@ type Props = {
 const { class: className } = Astro.props;
 
 // Stylized Golden Gate Bridge divider (lightweight SVG)
+const internationalOrange = '#C0362C';
 const deckY = 62;
 const anchorY = 22;
 const towerTopY = 10;
@@ -50,7 +51,7 @@ const cablePath = (offset = 0) => {
 
 <div class:list={['pointer-events-none py-8 md:py-10 lg:py-12', className]} aria-hidden="true">
   <div class="container-page">
-    <div class="text-brand/40 dark:text-brand/30">
+    <div style={`color: ${internationalOrange};`} class="opacity-90 dark:opacity-75">
       <svg
         width="100%"
         height="70"
@@ -59,26 +60,70 @@ const cablePath = (offset = 0) => {
         role="presentation"
         class="opacity-95"
       >
+        <defs>
+          <!-- Keep everything within International Orange, but add a touch of depth. -->
+          <linearGradient
+            id="gg-stroke"
+            x1="0"
+            y1="0"
+            x2="1000"
+            y2="0"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stop-color="#B73227"></stop>
+            <stop offset="50%" stop-color="#D34A3B"></stop>
+            <stop offset="100%" stop-color="#B73227"></stop>
+          </linearGradient>
+          <linearGradient
+            id="gg-stroke-soft"
+            x1="0"
+            y1="0"
+            x2="0"
+            y2="70"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0%" stop-color="#D95A49" stop-opacity="0.95"></stop>
+            <stop offset="100%" stop-color="#A92A20" stop-opacity="0.95"></stop>
+          </linearGradient>
+        </defs>
+
+        <!-- Anchorages (hint of the massive concrete blocks) -->
+        <g fill="currentColor" opacity="0.12">
+          <path d={`M 0 ${anchorY + 7} L 64 ${anchorY + 5} L 86 ${deckY} L 0 ${deckY} Z`}></path>
+          <path d={`M 1000 ${anchorY + 7} L 936 ${anchorY + 5} L 914 ${deckY} L 1000 ${deckY} Z`}
+          ></path>
+        </g>
+
         <!-- Main suspension cable -->
         <path
           d={cablePath(0)}
           fill="none"
-          stroke="currentColor"
+          stroke="url(#gg-stroke)"
           stroke-width="2.5"
           stroke-linecap="round"
-          class="text-brand/60"></path>
+          opacity="0.9"></path>
 
         <!-- Secondary cable (depth) -->
         <path
           d={cablePath(5)}
           fill="none"
-          stroke="currentColor"
+          stroke="url(#gg-stroke-soft)"
           stroke-width="1.4"
           stroke-linecap="round"
-          class="text-brand/35"></path>
+          opacity="0.55"></path>
+
+        <!-- Cable saddles on tower tops -->
+        <g stroke="currentColor" fill="none" opacity="0.55" stroke-linecap="round">
+          <path
+            d={`M ${leftTowerX - 26} ${towerTopY + 2} Q ${leftTowerX} ${towerTopY - 2} ${leftTowerX + 26} ${towerTopY + 2}`}
+            stroke-width="1.1"></path>
+          <path
+            d={`M ${rightTowerX - 26} ${towerTopY + 2} Q ${rightTowerX} ${towerTopY - 2} ${rightTowerX + 26} ${towerTopY + 2}`}
+            stroke-width="1.1"></path>
+        </g>
 
         <!-- Towers (iconic silhouette) -->
-        <g stroke="currentColor" fill="none" stroke-linecap="round" class="text-brand/45">
+        <g stroke="url(#gg-stroke-soft)" fill="none" stroke-linecap="round" opacity="0.75">
           <!-- Left tower -->
           <g stroke-width="2">
             <line x1={leftTowerX - 18} y1={towerTopY + 2} x2={leftTowerX - 18} y2={deckY}></line>
@@ -91,6 +136,18 @@ const cablePath = (offset = 0) => {
             ></line>
             <line x1={leftTowerX - 14} y1={towerTopY + 18} x2={leftTowerX - 14} y2={deckY}></line>
             <line x1={leftTowerX + 14} y1={towerTopY + 18} x2={leftTowerX + 14} y2={deckY}></line>
+          </g>
+
+          <!-- Left tower internal bracing -->
+          <g stroke="currentColor" opacity="0.25" stroke-width="1">
+            <line x1={leftTowerX - 14} y1={towerTopY + 18} x2={leftTowerX + 14} y2={towerTopY + 32}
+            ></line>
+            <line x1={leftTowerX + 14} y1={towerTopY + 18} x2={leftTowerX - 14} y2={towerTopY + 32}
+            ></line>
+            <line x1={leftTowerX - 14} y1={towerTopY + 34} x2={leftTowerX + 14} y2={deckY - 10}
+            ></line>
+            <line x1={leftTowerX + 14} y1={towerTopY + 34} x2={leftTowerX - 14} y2={deckY - 10}
+            ></line>
           </g>
 
           <!-- Right tower -->
@@ -112,10 +169,28 @@ const cablePath = (offset = 0) => {
             <line x1={rightTowerX - 14} y1={towerTopY + 18} x2={rightTowerX - 14} y2={deckY}></line>
             <line x1={rightTowerX + 14} y1={towerTopY + 18} x2={rightTowerX + 14} y2={deckY}></line>
           </g>
+
+          <!-- Right tower internal bracing -->
+          <g stroke="currentColor" opacity="0.25" stroke-width="1">
+            <line
+              x1={rightTowerX - 14}
+              y1={towerTopY + 18}
+              x2={rightTowerX + 14}
+              y2={towerTopY + 32}></line>
+            <line
+              x1={rightTowerX + 14}
+              y1={towerTopY + 18}
+              x2={rightTowerX - 14}
+              y2={towerTopY + 32}></line>
+            <line x1={rightTowerX - 14} y1={towerTopY + 34} x2={rightTowerX + 14} y2={deckY - 10}
+            ></line>
+            <line x1={rightTowerX + 14} y1={towerTopY + 34} x2={rightTowerX - 14} y2={deckY - 10}
+            ></line>
+          </g>
         </g>
 
         <!-- Vertical hangers (skip tower bays) -->
-        <g stroke="currentColor" stroke-width="0.7" class="text-brand/25">
+        <g stroke="currentColor" stroke-width="0.75" opacity="0.35">
           {
             Array.from({ length: 60 }).map((_, i) => {
               const x = 30 + i * 16;
@@ -128,15 +203,21 @@ const cablePath = (offset = 0) => {
               if (y >= deckY - 1) return null;
               // Slight variation helps it feel less "computer-perfect".
               const jitter = (i % 3) * 0.25;
-              return <line x1={x} y1={y + jitter} x2={x} y2={deckY - 1} />;
+              return (
+                <g>
+                  <line x1={x} y1={y + jitter} x2={x} y2={deckY - 1} />
+                  {/* Small clamp dot at the deck connection */}
+                  <circle cx={x} cy={deckY - 1} r="0.85" fill="currentColor" opacity="0.45" />
+                </g>
+              );
             })
           }
         </g>
 
         <!-- Road deck + subtle truss -->
-        <g stroke="currentColor" fill="none" class="text-brand/20">
-          <line x1="0" y1={deckY} x2="1000" y2={deckY} stroke-width="2.6"></line>
-          <line x1="0" y1={deckY + 3} x2="1000" y2={deckY + 3} stroke-width="1.2" opacity="0.7"
+        <g stroke="currentColor" fill="none" opacity="0.22">
+          <line x1="0" y1={deckY} x2="1000" y2={deckY} stroke-width="2.6" opacity="0.95"></line>
+          <line x1="0" y1={deckY + 3} x2="1000" y2={deckY + 3} stroke-width="1.2" opacity="0.85"
           ></line>
           <path
             d={`M 0 ${deckY + 3} L 60 ${deckY + 1} L 120 ${deckY + 3} L 180 ${deckY + 1} L 240 ${deckY + 3} L 300 ${deckY + 1} L 360 ${deckY + 3} L 420 ${deckY + 1} L 480 ${deckY + 3} L 540 ${deckY + 1} L 600 ${deckY + 3} L 660 ${deckY + 1} L 720 ${deckY + 3} L 780 ${deckY + 1} L 840 ${deckY + 3} L 900 ${deckY + 1} L 960 ${deckY + 3} L 1000 ${deckY + 1}`}

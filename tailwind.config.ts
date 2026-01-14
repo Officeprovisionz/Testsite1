@@ -91,6 +91,31 @@ export default {
           800: 'rgb(var(--color-accent-800) / <alpha-value>)',
           900: 'rgb(var(--color-accent-900) / <alpha-value>)',
         },
+
+        mint: {
+          50: 'rgb(var(--color-mint-50) / <alpha-value>)',
+          100: 'rgb(var(--color-mint-100) / <alpha-value>)',
+          200: 'rgb(var(--color-mint-200) / <alpha-value>)',
+          300: 'rgb(var(--color-mint-300) / <alpha-value>)',
+          400: 'rgb(var(--color-mint-400) / <alpha-value>)',
+          500: 'rgb(var(--color-mint-500) / <alpha-value>)',
+          600: 'rgb(var(--color-mint-600) / <alpha-value>)',
+          700: 'rgb(var(--color-mint-700) / <alpha-value>)',
+          800: 'rgb(var(--color-mint-800) / <alpha-value>)',
+          900: 'rgb(var(--color-mint-900) / <alpha-value>)',
+        },
+
+        success: {
+          50: 'rgb(var(--color-success-50) / <alpha-value>)',
+          500: 'rgb(var(--color-success-500) / <alpha-value>)',
+          700: 'rgb(var(--color-success-700) / <alpha-value>)',
+        },
+
+        warning: {
+          50: 'rgb(var(--color-warning-50) / <alpha-value>)',
+          500: 'rgb(var(--color-warning-500) / <alpha-value>)',
+          700: 'rgb(var(--color-warning-700) / <alpha-value>)',
+        },
       },
       borderRadius: {
         lg: 'var(--radius)',
@@ -99,6 +124,15 @@ export default {
       },
       boxShadow: {
         soft: '0 10px 40px -10px rgba(0,0,0,0.08)',
+        'elev-1': '0 10px 28px -18px rgba(2, 6, 23, 0.22)',
+        'elev-2': '0 18px 52px -28px rgba(2, 6, 23, 0.32)',
+        'elev-3': '0 32px 80px -42px rgba(2, 6, 23, 0.42)',
+      },
+
+      transitionTimingFunction: {
+        'out-expo': 'var(--ease-out-expo)',
+        'out-quart': 'var(--ease-out-quart)',
+        spring: 'var(--ease-spring)',
       },
       animation: {
         spotlight: 'spotlight 2s ease .75s 1 forwards',

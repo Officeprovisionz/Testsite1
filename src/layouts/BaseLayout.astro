@@ -752,7 +752,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 
     <slot name="footer" />
 
-    <BottomTabBar />
+    <BottomTabBar hiddenPaths={['/contact/', '/thanks/']} />
 
     <!-- Toast Notification System -->
     <Toaster client:idle transition:persist />

@@ -8,14 +8,14 @@ const { class: className } = Astro.props;
 // Stylized Golden Gate Bridge divider (lightweight SVG)
 const internationalOrange = '#C0362C';
 const viewWidth = 1000;
-const deckY = 62;
+const deckY = 64;
 // Anchorages sit higher than the deck; keep them fairly high so the side spans read correctly.
-const anchorY = 16;
+const anchorY = 18;
 // Towers should feel tall within this short viewBox.
 const towerTopY = 6;
 // Wider separation makes the main span feel like the real Golden Gate.
-const leftTowerX = 170;
-const rightTowerX = 830;
+const leftTowerX = 150;
+const rightTowerX = 850;
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
@@ -23,10 +23,10 @@ const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 const cableY = (x: number, offset = 0) => {
   // Piecewise curve: side spans (anchors -> towers) + main span (tower -> tower).
   const o = offset;
-  const sideSag = 8;
+  const sideSag = 7;
   // Deep enough to read like the Golden Gate, but never touches the deck.
-  const mainSag = 54;
-  const catenaryK = 2.55;
+  const mainSag = 56;
+  const catenaryK = 2.05;
   if (x <= leftTowerX) {
     const t = clamp01(x / leftTowerX);
     // Side span: mostly a line, with a small sag to avoid looking like a straight ramp.
@@ -50,16 +50,42 @@ const cableY = (x: number, offset = 0) => {
   return towerTopY + o + mainSag * (1 - ratio);
 };
 
-const cablePath = (offset = 0) => {
-  // Generate a path from sampled points so the visible cable exactly matches `cableY`.
-  const step = 10;
-  let d = `M 0 ${cableY(0, offset)}`;
-  for (let x = step; x < viewWidth; x += step) {
-    d += ` L ${x} ${cableY(x, offset)}`;
+type Pt = { x: number; y: number };
+
+const cablePoints = (offset = 0): Pt[] => {
+  const xs = new Set<number>();
+  const step = 18;
+  for (let x = 0; x <= viewWidth; x += step) xs.add(x);
+  // Ensure key silhouette points are always included.
+  xs.add(leftTowerX);
+  xs.add(rightTowerX);
+  xs.add((leftTowerX + rightTowerX) / 2);
+
+  return Array.from(xs)
+    .sort((a, b) => a - b)
+    .map((x) => ({ x, y: cableY(x, offset) }));
+};
+
+const catmullRomToBezierPath = (pts: Pt[]) => {
+  const first = pts[0];
+  if (!first || pts.length < 2) return '';
+  let d = `M ${first.x} ${first.y}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p1 = pts[i]!;
+    const p2 = pts[i + 1]!;
+    const p0 = pts[i - 1] ?? p1;
+    const p3 = pts[i + 2] ?? p2;
+
+    const c1x = p1.x + (p2.x - p0.x) / 6;
+    const c1y = p1.y + (p2.y - p0.y) / 6;
+    const c2x = p2.x - (p3.x - p1.x) / 6;
+    const c2y = p2.y - (p3.y - p1.y) / 6;
+    d += ` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2.x} ${p2.y}`;
   }
-  d += ` L ${viewWidth} ${cableY(viewWidth, offset)}`;
   return d;
 };
+
+const cablePath = (offset = 0) => catmullRomToBezierPath(cablePoints(offset));
 ---
 
 <div class:list={['pointer-events-none py-8 md:py-10 lg:py-12', className]} aria-hidden="true">
@@ -67,11 +93,10 @@ const cablePath = (offset = 0) => {
     <div style={`color: ${internationalOrange};`} class="opacity-90 dark:opacity-75">
       <svg
         width="100%"
-        height="70"
         viewBox="0 0 1000 70"
         preserveAspectRatio="none"
         role="presentation"
-        class="opacity-95"
+        class="h-[78px] w-full opacity-95 sm:h-[86px] md:h-[102px] lg:h-[112px]"
       >
         <defs>
           <!-- Keep everything within International Orange, but add a touch of depth. -->

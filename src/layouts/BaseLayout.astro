@@ -755,7 +755,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     <BottomTabBar />
 
     <!-- Toast Notification System -->
-    <Toaster client:load transition:persist />
+    <Toaster client:idle transition:persist />
 
     <script>
       import { initScrollTracking, captureUTMs } from '@/lib/tracking';

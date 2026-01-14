@@ -30,8 +30,8 @@ const fallback: Activity[] = [
   {
     type: 'walkthrough',
     location: 'SoMa',
-    timeAgo: 'today 3:15pm',
-    service: 'First visit walkthrough',
+    timeAgo: 'today',
+    service: 'First-visit walkthrough',
   },
   { type: 'review', location: 'Berkeley', timeAgo: 'this week' },
 ];
@@ -51,7 +51,8 @@ const iconFor = (t: Activity['type']) => {
 
 const labelFor = (a: Activity) => {
   if (a.type === 'quote') return 'Quote requested';
-  if (a.type === 'walkthrough') return 'Walkthrough booked';
+  // Avoid appointment/scheduling language.
+  if (a.type === 'walkthrough') return 'Walkthrough requested';
   return 'New review posted';
 };
 
@@ -119,8 +120,10 @@ const detailFor = (a: Activity) => {
 
     if (reduceMotion) return;
 
-    // Gentle rotation.
-    window.setInterval(() => {
+    // Gentle rotation (with cleanup so we don't accumulate intervals across navigations).
+    let intervalId: number | undefined;
+
+    const tick = () => {
       i += 1;
       root.animate(
         [
@@ -130,7 +133,36 @@ const detailFor = (a: Activity) => {
         { duration: 260, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' }
       );
       render(i);
-    }, 5200);
+    };
+
+    const start = () => {
+      if (typeof intervalId === 'number') return;
+      intervalId = window.setInterval(tick, 5200);
+    };
+
+    const stop = () => {
+      if (typeof intervalId === 'number') window.clearInterval(intervalId);
+      intervalId = undefined;
+    };
+
+    const onVisibility = () => {
+      if (document.hidden) stop();
+      else start();
+    };
+
+    const cleanup = () => {
+      stop();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
+
+    // Use a variable to ensure we hit the generic `addEventListener(type: string, ...)` overload.
+    const ASTRO_BEFORE_SWAP = 'astro:before-swap';
+
+    document.addEventListener('visibilitychange', onVisibility);
+    document.addEventListener(ASTRO_BEFORE_SWAP, cleanup, { once: true });
+    window.addEventListener('pagehide', cleanup, { passive: true, once: true });
+
+    start();
   })();
 </script>
 

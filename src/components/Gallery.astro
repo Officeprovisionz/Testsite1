@@ -402,13 +402,30 @@ const getImgAttrs = (src: string) => {
             scheduleResume();
           };
 
+          const onVisibility = () => {
+            if (document.hidden) stop();
+            else start();
+          };
+
+          const cleanup = () => {
+            stop();
+            if (typeof resumeTimer === 'number') window.clearTimeout(resumeTimer);
+            resumeTimer = undefined;
+            root.removeEventListener('pointerdown', onUserIntent);
+            root.removeEventListener('touchstart', onUserIntent);
+            root.removeEventListener('wheel', onUserIntent);
+            document.removeEventListener('visibilitychange', onVisibility);
+          };
+
+          // Use a variable to ensure we hit the generic `addEventListener(type: string, ...)` overload.
+          const ASTRO_BEFORE_SWAP = 'astro:before-swap';
+
           root.addEventListener('pointerdown', onUserIntent, { passive: true });
           root.addEventListener('touchstart', onUserIntent, { passive: true });
           root.addEventListener('wheel', onUserIntent, { passive: true });
-          document.addEventListener('visibilitychange', () => {
-            if (document.hidden) stop();
-            else start();
-          });
+          document.addEventListener('visibilitychange', onVisibility);
+          document.addEventListener(ASTRO_BEFORE_SWAP, cleanup, { once: true });
+          window.addEventListener('pagehide', cleanup, { passive: true, once: true });
 
           // Start after first paint.
           window.setTimeout(start, 600);

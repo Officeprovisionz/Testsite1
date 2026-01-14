@@ -7,45 +7,67 @@ const { class: className } = Astro.props;
 
 // Stylized Golden Gate Bridge divider (lightweight SVG)
 const internationalOrange = '#C0362C';
+const viewWidth = 1000;
 const deckY = 62;
-const anchorY = 22;
-const towerTopY = 10;
-const leftTowerX = 300;
-const rightTowerX = 700;
+// Anchorages sit higher than the deck; keep them fairly high so the side spans read correctly.
+const anchorY = 16;
+// Towers should feel tall within this short viewBox.
+const towerTopY = 8;
+// Wider separation makes the main span feel like the real Golden Gate.
+const leftTowerX = 240;
+const rightTowerX = 760;
+
+const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
+const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 
 const cableY = (x: number, offset = 0) => {
   // Piecewise curve: side spans (anchors -> towers) + main span (tower -> tower).
   const o = offset;
+  const sideSag = 9;
+  const mainSag = 44;
   if (x <= leftTowerX) {
-    const t = Math.min(1, Math.max(0, x / leftTowerX));
-    // Start lower at the anchor, rise to tower top with a gentle belly.
-    const line = (anchorY + o) * (1 - t) + (towerTopY + o) * t;
-    return line + 6 * t * (1 - t);
+    const t = clamp01(x / leftTowerX);
+    // Side span: mostly a line, with a small sag to avoid looking like a straight ramp.
+    const line = lerp(anchorY + o, towerTopY + o, t);
+    return line + sideSag * 4 * t * (1 - t);
   }
 
   if (x >= rightTowerX) {
-    const t = Math.min(1, Math.max(0, (1000 - x) / (1000 - rightTowerX)));
-    const line = (anchorY + o) * (1 - t) + (towerTopY + o) * t;
-    return line + 6 * t * (1 - t);
+    const t = clamp01((viewWidth - x) / (viewWidth - rightTowerX));
+    const line = lerp(anchorY + o, towerTopY + o, t);
+    return line + sideSag * 4 * t * (1 - t);
   }
 
   const mid = (leftTowerX + rightTowerX) / 2;
   const half = (rightTowerX - leftTowerX) / 2;
-  const sag = 32;
   const n = (x - mid) / half;
-  // Parabola: lowest point at mid span.
-  return towerTopY + o + sag * (1 - n * n);
+  // Parabola (catenary-like): lowest point at mid span.
+  return towerTopY + o + mainSag * (1 - n * n);
 };
 
 const cablePath = (offset = 0) => {
   const o = offset;
-  // Smooth cubic approximation through key points.
-  const p0 = `M 0 ${anchorY + o}`;
-  const p1 = `C 110 ${anchorY + o - 2}, 210 ${towerTopY + o + 10}, ${leftTowerX} ${towerTopY + o}`;
-  const p2 = `C 380 ${towerTopY + o + 8}, 440 ${towerTopY + o + 34}, 500 ${towerTopY + o + 32}`;
-  const p3 = `C 560 ${towerTopY + o + 34}, 620 ${towerTopY + o + 8}, ${rightTowerX} ${towerTopY + o}`;
-  const p4 = `C 790 ${towerTopY + o + 10}, 890 ${anchorY + o - 2}, 1000 ${anchorY + o}`;
-  return `${p0} ${p1} ${p2} ${p3} ${p4}`;
+  // Cubic spline through: left anchorage -> left tower -> mid sag -> right tower -> right anchorage.
+  const midX = (leftTowerX + rightTowerX) / 2;
+  const y0 = anchorY + o;
+  const yT = towerTopY + o;
+  const yMid = cableY(midX, offset);
+  const mainSpan = rightTowerX - leftTowerX;
+
+  const p0 = `M 0 ${y0}`;
+
+  // Left side span
+  const l1 = `C ${leftTowerX * 0.32} ${y0 - 1}, ${leftTowerX * 0.72} ${yT + 12}, ${leftTowerX} ${yT}`;
+
+  // Main span (two cubics to emphasize the dip)
+  const a = mainSpan * 0.18;
+  const m1 = `C ${leftTowerX + a} ${yT + (yMid - yT) * 0.18}, ${midX - a} ${yMid}, ${midX} ${yMid}`;
+  const m2 = `C ${midX + a} ${yMid}, ${rightTowerX - a} ${yT + (yMid - yT) * 0.18}, ${rightTowerX} ${yT}`;
+
+  // Right side span
+  const r1 = `C ${rightTowerX + (viewWidth - rightTowerX) * 0.28} ${yT + 12}, ${rightTowerX + (viewWidth - rightTowerX) * 0.68} ${y0 - 1}, ${viewWidth} ${y0}`;
+
+  return `${p0} ${l1} ${m1} ${m2} ${r1}`;
 };
 ---
 
@@ -85,12 +107,22 @@ const cablePath = (offset = 0) => {
             <stop offset="0%" stop-color="#D95A49" stop-opacity="0.95"></stop>
             <stop offset="100%" stop-color="#A92A20" stop-opacity="0.95"></stop>
           </linearGradient>
+
+          <!-- Neutral fog band (keeps the bridge orange but adds SF vibe). -->
+          <linearGradient id="gg-fog" x1="0" y1="38" x2="0" y2="70" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#ffffff" stop-opacity="0"></stop>
+            <stop offset="100%" stop-color="#ffffff" stop-opacity="0.12"></stop>
+          </linearGradient>
         </defs>
+
+        <!-- Fog / atmosphere layer behind the structure -->
+        <rect x="0" y="34" width={viewWidth} height="36" fill="url(#gg-fog)"></rect>
 
         <!-- Anchorages (hint of the massive concrete blocks) -->
         <g fill="currentColor" opacity="0.12">
-          <path d={`M 0 ${anchorY + 7} L 64 ${anchorY + 5} L 86 ${deckY} L 0 ${deckY} Z`}></path>
-          <path d={`M 1000 ${anchorY + 7} L 936 ${anchorY + 5} L 914 ${deckY} L 1000 ${deckY} Z`}
+          <path d={`M 0 ${anchorY + 9} L 76 ${anchorY + 6} L 98 ${deckY} L 0 ${deckY} Z`}></path>
+          <path
+            d={`M ${viewWidth} ${anchorY + 9} L ${viewWidth - 76} ${anchorY + 6} L ${viewWidth - 98} ${deckY} L ${viewWidth} ${deckY} Z`}
           ></path>
         </g>
 
@@ -138,6 +170,12 @@ const cablePath = (offset = 0) => {
             <line x1={leftTowerX + 14} y1={towerTopY + 18} x2={leftTowerX + 14} y2={deckY}></line>
           </g>
 
+          <!-- Left tower portals (openings) -->
+          <g stroke="currentColor" opacity="0.28" stroke-width="1.2">
+            <rect x={leftTowerX - 11} y={towerTopY + 22} width="22" height="10" rx="2"></rect>
+            <rect x={leftTowerX - 11} y={towerTopY + 38} width="22" height="16" rx="2"></rect>
+          </g>
+
           <!-- Left tower internal bracing -->
           <g stroke="currentColor" opacity="0.25" stroke-width="1">
             <line x1={leftTowerX - 14} y1={towerTopY + 18} x2={leftTowerX + 14} y2={towerTopY + 32}
@@ -170,6 +208,12 @@ const cablePath = (offset = 0) => {
             <line x1={rightTowerX + 14} y1={towerTopY + 18} x2={rightTowerX + 14} y2={deckY}></line>
           </g>
 
+          <!-- Right tower portals (openings) -->
+          <g stroke="currentColor" opacity="0.28" stroke-width="1.2">
+            <rect x={rightTowerX - 11} y={towerTopY + 22} width="22" height="10" rx="2"></rect>
+            <rect x={rightTowerX - 11} y={towerTopY + 38} width="22" height="16" rx="2"></rect>
+          </g>
+
           <!-- Right tower internal bracing -->
           <g stroke="currentColor" opacity="0.25" stroke-width="1">
             <line
@@ -192,11 +236,14 @@ const cablePath = (offset = 0) => {
         <!-- Vertical hangers (skip tower bays) -->
         <g stroke="currentColor" stroke-width="0.75" opacity="0.35">
           {
-            Array.from({ length: 60 }).map((_, i) => {
-              const x = 30 + i * 16;
+            Array.from({ length: 78 }).map((_, i) => {
+              const start = 44;
+              const end = viewWidth - 44;
+              const step = (end - start) / 77;
+              const x = start + i * step;
               // Avoid drawing hangers through the tower legs.
-              const nearLeftTower = Math.abs(x - leftTowerX) < 24;
-              const nearRightTower = Math.abs(x - rightTowerX) < 24;
+              const nearLeftTower = Math.abs(x - leftTowerX) < 30;
+              const nearRightTower = Math.abs(x - rightTowerX) < 30;
               if (nearLeftTower || nearRightTower) return null;
               const y = cableY(x, 0);
               // Only draw if above deck (sanity guard).

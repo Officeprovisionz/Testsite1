@@ -112,6 +112,13 @@ export default defineConfig({
   // Type-safe environment variables
   env: {
     schema: {
+      // Optional external form provider endpoint (Formspree/Basin/etc.).
+      // If unset, the site falls back to the built-in Pages Function (/api/contact) when available.
+      PUBLIC_FORM_ENDPOINT: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
       PUBLIC_PLAUSIBLE_DOMAIN: envField.string({
         context: 'client',
         access: 'public',

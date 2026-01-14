@@ -36,21 +36,14 @@ const normalizedPath = (() => {
   return withLeading.endsWith('/') ? withLeading : `${withLeading}/`;
 })();
 
-const primaryIntentPage = normalizedPath.startsWith('/services/');
-
-const primaryAction = primaryIntentPage
-  ? {
-      key: 'quote',
-      label: 'Quote',
-      href: href('contact/'),
-      icon: 'lucide:send',
-    }
-  : {
-      key: 'call',
-      label: 'Call',
-      href: telHref,
-      icon: 'lucide:phone',
-    };
+// Keep the primary (center) action consistent across pages.
+// Other conversion actions (like requesting a quote) are already available via the header/menu.
+const primaryAction = {
+  key: 'call',
+  label: 'Call',
+  href: telHref,
+  icon: 'lucide:phone',
+};
 
 const items: TabItem[] = [
   {

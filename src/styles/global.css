@@ -134,52 +134,9 @@
     color-scheme: light;
   }
 
-  body {
-    @apply relative min-h-screen font-sans antialiased;
-    background-color: rgb(var(--color-bg));
-    color: rgb(var(--color-text));
-    min-height: 100dvh;
-    letter-spacing: 0.01em;
-    line-height: 1.7;
-    font-optical-sizing: auto;
-    font-kerning: normal;
-    font-feature-settings:
-      'kern' 1,
-      'liga' 1,
-      'calt' 1;
-    text-rendering: optimizeLegibility;
-  }
-
-  html {
-    scroll-padding-top: calc(var(--header-sticky, 5rem) + 1rem);
-  }
-
   [id] {
-    scroll-margin-top: calc(var(--header-sticky, 5rem) + 1rem);
-  }
-
-  /* Global Background Image - Simplified */
-  body::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    /* Warm paper texture instead of heavy neon glows. */
-    background:
-      var(--asset-noise),
-      radial-gradient(820px 520px at 85% -6%, rgb(var(--color-accent) / 0.16), transparent 60%),
-      radial-gradient(760px 520px at 12% -8%, rgb(var(--color-brand) / 0.16), transparent 58%),
-      linear-gradient(
-        180deg,
-        rgb(var(--color-bg)) 0%,
-        rgb(var(--color-surface)) 40%,
-        rgb(var(--color-bg)) 100%
-      );
-    background-blend-mode: soft-light, normal, normal, normal;
-    pointer-events: none;
+    /* Keep anchors clear of sticky header + section nav (mobile) with a little breathing room. */
+    scroll-margin-top: calc(var(--header-sticky, 5rem) + var(--section-nav-sticky, 3.25rem) + 1rem);
   }
 
   /* Remove excessive backdrop blurs to reduce visual noise */
@@ -395,19 +352,6 @@
 
   * {
     -webkit-tap-highlight-color: transparent;
-  }
-
-  body {
-    @apply min-h-screen font-sans antialiased;
-    background-color: rgb(var(--color-bg));
-    color: rgb(var(--color-text));
-    letter-spacing: -0.01em;
-    line-height: 1.6;
-    text-rendering: optimizeLegibility;
-    font-feature-settings:
-      'kern' 1,
-      'liga' 1,
-      'calt' 1;
   }
 
   ::selection {

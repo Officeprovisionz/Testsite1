@@ -14,8 +14,8 @@ const anchorY = 16;
 // Towers should feel tall within this short viewBox.
 const towerTopY = 8;
 // Wider separation makes the main span feel like the real Golden Gate.
-const leftTowerX = 240;
-const rightTowerX = 760;
+const leftTowerX = 190;
+const rightTowerX = 810;
 
 const clamp01 = (n: number) => Math.min(1, Math.max(0, n));
 const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
@@ -23,8 +23,8 @@ const lerp = (a: number, b: number, t: number) => a * (1 - t) + b * t;
 const cableY = (x: number, offset = 0) => {
   // Piecewise curve: side spans (anchors -> towers) + main span (tower -> tower).
   const o = offset;
-  const sideSag = 9;
-  const mainSag = 44;
+  const sideSag = 8;
+  const mainSag = 52;
   if (x <= leftTowerX) {
     const t = clamp01(x / leftTowerX);
     // Side span: mostly a line, with a small sag to avoid looking like a straight ramp.
@@ -57,15 +57,15 @@ const cablePath = (offset = 0) => {
   const p0 = `M 0 ${y0}`;
 
   // Left side span
-  const l1 = `C ${leftTowerX * 0.32} ${y0 - 1}, ${leftTowerX * 0.72} ${yT + 12}, ${leftTowerX} ${yT}`;
+  const l1 = `C ${leftTowerX * 0.26} ${y0 - 1}, ${leftTowerX * 0.72} ${yT + 12}, ${leftTowerX} ${yT}`;
 
   // Main span (two cubics to emphasize the dip)
-  const a = mainSpan * 0.18;
-  const m1 = `C ${leftTowerX + a} ${yT + (yMid - yT) * 0.18}, ${midX - a} ${yMid}, ${midX} ${yMid}`;
-  const m2 = `C ${midX + a} ${yMid}, ${rightTowerX - a} ${yT + (yMid - yT) * 0.18}, ${rightTowerX} ${yT}`;
+  const a = mainSpan * 0.2;
+  const m1 = `C ${leftTowerX + a} ${yT + (yMid - yT) * 0.16}, ${midX - a} ${yMid}, ${midX} ${yMid}`;
+  const m2 = `C ${midX + a} ${yMid}, ${rightTowerX - a} ${yT + (yMid - yT) * 0.16}, ${rightTowerX} ${yT}`;
 
   // Right side span
-  const r1 = `C ${rightTowerX + (viewWidth - rightTowerX) * 0.28} ${yT + 12}, ${rightTowerX + (viewWidth - rightTowerX) * 0.68} ${y0 - 1}, ${viewWidth} ${y0}`;
+  const r1 = `C ${rightTowerX + (viewWidth - rightTowerX) * 0.28} ${yT + 12}, ${rightTowerX + (viewWidth - rightTowerX) * 0.74} ${y0 - 1}, ${viewWidth} ${y0}`;
 
   return `${p0} ${l1} ${m1} ${m2} ${r1}`;
 };
@@ -127,22 +127,32 @@ const cablePath = (offset = 0) => {
         </g>
 
         <!-- Main suspension cable -->
+        <!-- Rear cable (subtle depth, close to main) -->
+        <path
+          d={cablePath(2)}
+          fill="none"
+          stroke="url(#gg-stroke-soft)"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          opacity="0.28"></path>
+
+        <!-- Main suspension cable -->
         <path
           d={cablePath(0)}
           fill="none"
           stroke="url(#gg-stroke)"
-          stroke-width="2.5"
+          stroke-width="3"
           stroke-linecap="round"
-          opacity="0.9"></path>
+          opacity="0.92"></path>
 
-        <!-- Secondary cable (depth) -->
+        <!-- Cable highlight (adds roundness without changing color family) -->
         <path
-          d={cablePath(5)}
+          d={cablePath(-0.8)}
           fill="none"
-          stroke="url(#gg-stroke-soft)"
-          stroke-width="1.4"
+          stroke="#F07B69"
+          stroke-width="1"
           stroke-linecap="round"
-          opacity="0.55"></path>
+          opacity="0.14"></path>
 
         <!-- Cable saddles on tower tops -->
         <g stroke="currentColor" fill="none" opacity="0.55" stroke-linecap="round">
@@ -242,8 +252,8 @@ const cablePath = (offset = 0) => {
               const step = (end - start) / 77;
               const x = start + i * step;
               // Avoid drawing hangers through the tower legs.
-              const nearLeftTower = Math.abs(x - leftTowerX) < 30;
-              const nearRightTower = Math.abs(x - rightTowerX) < 30;
+              const nearLeftTower = Math.abs(x - leftTowerX) < 34;
+              const nearRightTower = Math.abs(x - rightTowerX) < 34;
               if (nearLeftTower || nearRightTower) return null;
               const y = cableY(x, 0);
               // Only draw if above deck (sanity guard).

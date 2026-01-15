@@ -20,10 +20,13 @@ const testimonials = siteConfig.testimonials;
       </a>
     </SectionHeader>
 
-    <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8">
+    <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8" data-reveal-stagger="90">
       {
         testimonials.map((t) => (
-          <figure class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8">
+          <figure
+            class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8"
+            data-reveal="up"
+          >
             <div
               aria-hidden="true"
               class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"

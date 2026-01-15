@@ -4,6 +4,7 @@ import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
+import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
 import { pickGalleryItems } from '@/data/gallery';
@@ -58,6 +59,8 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
   <BridgeDivider />
 
   <ExpertiseGallery />
+
+  <FAQ />
 
   <Footer slot="footer" />
 </BaseLayout>

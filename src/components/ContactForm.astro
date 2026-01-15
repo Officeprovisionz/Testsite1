@@ -324,14 +324,41 @@ const servicesErrorId = `${servicesHelpId}-error`;
 
       if (!errorEl || !box || !inputs.length) return;
 
+      const prefersReducedMotion = () => {
+        try {
+          return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch {
+          return false;
+        }
+      };
+
+      const shake = (el: HTMLElement) => {
+        if (prefersReducedMotion()) return;
+        el.classList.remove('damra-shake');
+        // Force reflow so the animation can restart reliably.
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        el.offsetWidth;
+        el.classList.add('damra-shake');
+        el.addEventListener(
+          'animationend',
+          () => {
+            el.classList.remove('damra-shake');
+          },
+          { once: true }
+        );
+      };
+
       const hasAnyChecked = () => inputs.some((i) => i.checked);
       const showError = () => {
         errorEl.classList.remove('hidden');
         box.setAttribute('data-invalid', 'true');
+        box.setAttribute('aria-invalid', 'true');
+        shake(box);
       };
       const hideError = () => {
         errorEl.classList.add('hidden');
         box.removeAttribute('data-invalid');
+        box.removeAttribute('aria-invalid');
       };
 
       // IMPORTANT: The native browser validation UI can prevent the `submit` event from firing

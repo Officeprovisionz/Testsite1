@@ -1016,6 +1016,65 @@
     animation: damraFadeIn 520ms ease-out;
   }
 
+  /* Scroll-triggered reveal (opt-in via `data-reveal`) */
+  [data-reveal] {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity var(--duration-slow) var(--ease-out-expo),
+      transform var(--duration-slow) var(--ease-out-expo);
+    will-change: opacity, transform;
+  }
+
+  [data-reveal='fade'] {
+    transform: none;
+  }
+
+  [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-reveal] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+
+  /* Premium invalid-submit cue (respect reduced motion) */
+  @keyframes damraShake {
+    0% {
+      transform: translate3d(0, 0, 0);
+    }
+    20% {
+      transform: translate3d(-6px, 0, 0);
+    }
+    40% {
+      transform: translate3d(6px, 0, 0);
+    }
+    60% {
+      transform: translate3d(-5px, 0, 0);
+    }
+    80% {
+      transform: translate3d(5px, 0, 0);
+    }
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .damra-shake {
+    animation: damraShake 360ms var(--ease-out-expo);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .damra-shake {
+      animation: none;
+    }
+  }
+
   /* Shimmer animation for skeleton loaders */
   @keyframes shimmer {
     0% {

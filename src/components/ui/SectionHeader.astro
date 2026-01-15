@@ -36,6 +36,7 @@ const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'he
     align === 'center' ? 'text-center sm:flex-col sm:items-center' : '',
     className,
   ]}
+  data-reveal="up"
 >
   <div class:list={[align === 'center' ? 'mx-auto max-w-2xl lg:max-w-3xl' : '']}>
     {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}

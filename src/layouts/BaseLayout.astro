@@ -809,6 +809,70 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
           { passive: true }
         );
       })();
+
+      // Scroll-triggered reveal (opt-in via `data-reveal`).
+      (() => {
+        if (typeof window === 'undefined') return;
+
+        const prefersReducedMotion = () => {
+          try {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          } catch {
+            return false;
+          }
+        };
+
+        const initReveal = () => {
+          const els = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]')).filter(
+            (el) => el.dataset.revealInit !== 'true'
+          );
+          if (!els.length) return;
+
+          // Mark init early to avoid double-wiring on rapid transitions.
+          els.forEach((el) => {
+            el.dataset.revealInit = 'true';
+          });
+
+          if (prefersReducedMotion()) {
+            els.forEach((el) => el.classList.add('is-revealed'));
+            return;
+          }
+
+          const getDelayMs = (el: HTMLElement) => {
+            const baseDelay = Number(el.dataset.revealDelay ?? '0') || 0;
+            const group = el.closest<HTMLElement>('[data-reveal-stagger]');
+            if (!group) return baseDelay;
+            const step = Number(group.dataset.revealStagger ?? '0') || 0;
+            if (!step) return baseDelay;
+            const groupEls = Array.from(group.querySelectorAll<HTMLElement>('[data-reveal]'));
+            const idx = Math.max(0, groupEls.indexOf(el));
+            return baseDelay + idx * step;
+          };
+
+          const revealNow = (el: HTMLElement) => {
+            const delay = getDelayMs(el);
+            if (delay) el.style.transitionDelay = `${delay}ms`;
+            el.classList.add('is-revealed');
+          };
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                const el = entry.target as HTMLElement;
+                if (!entry.isIntersecting) return;
+                revealNow(el);
+                observer.unobserve(el);
+              });
+            },
+            { root: null, threshold: 0.14, rootMargin: '0px 0px -8% 0px' }
+          );
+
+          els.forEach((el) => observer.observe(el));
+        };
+
+        document.addEventListener('astro:page-load', initReveal);
+        initReveal();
+      })();
     </script>
   </body>
 </html>

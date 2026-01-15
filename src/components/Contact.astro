@@ -403,6 +403,31 @@ const serviceOptions = [
         el?.focus?.();
       };
 
+      const prefersReducedMotion = () => {
+        try {
+          return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch {
+          return false;
+        }
+      };
+
+      const shake = (el: HTMLElement | null) => {
+        if (!el) return;
+        if (prefersReducedMotion()) return;
+        el.classList.remove('damra-shake');
+        // Force reflow so the animation can restart reliably.
+        // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+        el.offsetWidth;
+        el.classList.add('damra-shake');
+        el.addEventListener(
+          'animationend',
+          () => {
+            el.classList.remove('damra-shake');
+          },
+          { once: true }
+        );
+      };
+
       const setFieldInvalid = (name: string, invalid: boolean) => {
         const el = form.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(
           `[name="${escapeName(name)}"]`
@@ -416,8 +441,10 @@ const serviceOptions = [
         if (servicesBox) {
           if (invalid) {
             servicesBox.setAttribute('aria-invalid', 'true');
+            servicesBox.setAttribute('data-invalid', 'true');
           } else {
             servicesBox.removeAttribute('aria-invalid');
+            servicesBox.removeAttribute('data-invalid');
           }
         }
         if (servicesError) {
@@ -695,6 +722,10 @@ const serviceOptions = [
           setFieldInvalid('message', !message);
           setFieldInvalid('consent', !consent);
           setServicesInvalid(!servicesNeeded.length);
+
+          // Premium feedback: a subtle shake to reinforce that submission was blocked.
+          shake(form);
+          if (!servicesNeeded.length) shake(servicesBox);
 
           setStatus(
             'Please fill in the required fields (company, contact name, email, location, industry, frequency, services needed, consent, and notes).',

@@ -105,12 +105,16 @@ const imagePositionClass = getImagePositionClass(imagePosition);
           class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/50 via-60% to-[rgb(var(--color-accent)/0.35)] dark:from-black/65 dark:via-black/55 dark:to-black/70"
           aria-hidden="true"
         />
+        <div
+          class="absolute inset-0 bg-[radial-gradient(80%_70%_at_50%_35%,transparent_0%,rgba(2,6,23,0.28)_70%,rgba(2,6,23,0.55)_100%)]"
+          aria-hidden="true"
+        />
       </div>
     )
   }
 
   <Spotlight class="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
-  <div class="container-page relative z-10 py-16 text-center md:py-20 lg:py-24">
+  <div class="container-page relative z-10 py-12 text-center sm:py-16 md:py-20 lg:py-24">
     <div class={cn(resolvedImageSrc ? 'mx-auto max-w-3xl px-2 sm:px-6 lg:max-w-4xl' : undefined)}>
       <h1
         class={cn(
@@ -122,7 +126,7 @@ const imagePositionClass = getImagePositionClass(imagePosition);
       </h1>
       <p
         class={cn(
-          'mx-auto mt-6 max-w-2xl text-balance text-lg font-medium leading-relaxed [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)] sm:text-xl lg:mt-8',
+          'mx-auto mt-4 max-w-2xl text-balance text-base font-medium leading-relaxed [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)] sm:mt-5 sm:text-lg lg:mt-8',
           resolvedImageSrc ? 'text-white/95' : 'text-muted'
         )}
       >

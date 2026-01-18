@@ -14,23 +14,23 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
   class="fixed inset-x-0 bottom-0 z-40 translate-y-full transition-transform duration-300 md:hidden"
 >
   <div
-    class="border-app flex items-center border-t bg-[rgb(var(--color-bg)/0.92)] shadow-[0_-6px_18px_rgba(0,0,0,0.18)] backdrop-blur-sm"
+    class="border-app flex items-center border-t bg-[rgb(var(--color-surface)/0.92)] shadow-[0_-10px_26px_rgba(2,6,23,0.18)] backdrop-blur-sm"
   >
     <a
       href={telHref}
       id="cta-bar-call"
-      class="flex h-16 flex-1 items-center justify-center gap-2 border-r border-[rgb(var(--color-border)/0.6)] bg-[rgb(var(--color-accent))] px-4 font-semibold text-[rgb(12_14_18)] transition-colors active:bg-[rgb(var(--color-accent-500))]"
+      class="flex h-16 flex-1 items-center justify-center gap-2 border-r border-[rgb(var(--color-border)/0.7)] bg-[rgb(var(--color-accent))] px-4 text-sm font-semibold tracking-tight text-[rgb(12_14_18)] transition-colors active:bg-[rgb(var(--color-accent-500))]"
     >
       <Icon name="lucide:phone" class="h-5 w-5 text-[rgb(12_14_18)]" />
-      <span>Call now</span>
+      <span>Call</span>
     </a>
     <a
       href={contactHref}
       id="cta-bar-quote"
-      class="flex h-16 flex-[1.2] items-center justify-center gap-2 bg-[rgb(var(--color-surface)/0.65)] px-4 font-bold text-[rgb(var(--color-text))] transition-colors active:bg-[rgb(var(--color-surface))]"
+      class="flex h-16 flex-[1.2] items-center justify-center gap-2 bg-[rgb(var(--color-surface))] px-4 text-sm font-bold tracking-tight text-[rgb(var(--color-text))] transition-colors active:bg-[rgb(var(--color-surface-muted))]"
     >
       <Icon name="lucide:file-text" class="h-5 w-5" />
-      <span>Request a quote</span>
+      <span>Get Quote</span>
     </a>
   </div>
 </div>

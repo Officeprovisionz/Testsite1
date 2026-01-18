@@ -34,8 +34,8 @@ const businessSchema = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 37.7749, // Should ideally be in siteConfig
-    longitude: -122.4194, // Should ideally be in siteConfig
+    latitude: siteConfig.seo.geo.latitude,
+    longitude: siteConfig.seo.geo.longitude,
   },
   openingHoursSpecification: siteConfig.hours.structured.map((h) => ({
     '@type': 'OpeningHoursSpecification',
@@ -44,7 +44,7 @@ const businessSchema = {
     closes: h.closes,
   })),
   sameAs: Object.values(siteConfig.social),
-  priceRange: '$$',
+  priceRange: siteConfig.seo.priceRange,
   areaServed: siteConfig.areasServed.items.map((item) => ({
     '@type': 'City',
     name: item,

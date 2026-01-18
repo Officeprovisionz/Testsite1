@@ -360,10 +360,11 @@ export const siteConfig = {
       width: 1200,
       height: 630,
     },
+    priceRange: '$$',
     /** Geographic coordinates for local business SEO (San Francisco) */
     geo: {
-      latitude: '37.7749',
-      longitude: '-122.4194',
+      latitude: 37.7749,
+      longitude: -122.4194,
       region: 'US-CA',
       placename: 'San Francisco',
     },

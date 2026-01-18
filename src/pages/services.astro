@@ -3,6 +3,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
+import TrustBar from '@/components/TrustBar.astro';
 import ServicesSection from '@/components/Services.astro';
 import IndustriesGrid from '@/components/IndustriesGrid.astro';
 import AreasServed from '@/components/AreasServed.astro';
@@ -80,6 +81,8 @@ const heroImageMobile = heroSecondary
     imageSizesMobile={heroImageMobile.sizes}
     imagePosition="50% 45%"
   />
+
+  <TrustBar />
 
   <!-- Industries page merged here (no information removed) -->
   <IndustriesGrid

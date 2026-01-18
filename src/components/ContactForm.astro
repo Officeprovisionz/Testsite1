@@ -49,7 +49,16 @@ const servicesErrorId = `${servicesHelpId}-error`;
             <p class="text-strong font-semibold">We’ll reply fast</p>
             <p class="mt-1 text-muted">
               When you submit, this form will open your email app with the message filled in. If you
-              prefer, call/text us instead.
+              prefer, call/text us instead, or{' '}
+              <button
+                type="button"
+                class="inline-block font-semibold hover:underline"
+                data-copy-email
+                data-email={mailtoTo}
+              >
+                copy our email address
+              </button>
+              .
             </p>
           </>
         )}
@@ -409,6 +418,47 @@ const servicesErrorId = `${servicesHelpId}-error`;
         (e) => {
           if (hasAnyChecked()) {
             hideError();
+
+            // Handle mailto fallback if no endpoint is configured
+            const endpoint = form.dataset.formEndpoint;
+            const mailtoTo = form.dataset.mailtoTo;
+
+            if ((!endpoint || endpoint === '#') && mailtoTo) {
+              e.preventDefault();
+              const data = new FormData(form);
+              const get = (n: string) => data.get(n)?.toString() || '';
+              const getAll = (n: string) =>
+                data
+                  .getAll(n)
+                  .map((v) => v.toString())
+                  .join(', ');
+
+              const company = get('companyName');
+              const name = get('name');
+              const subject = `Quote request from ${company || name}`;
+              const body = `Hi Office Provisionz,
+
+I’d like to request a quote.
+
+Name: ${name}
+Company: ${company}
+Email: ${get('email')}
+Phone: ${get('phone')}
+Location: ${get('location')}
+Industry: ${get('industry')}
+Frequency: ${get('frequency')}
+Timing: ${get('startTiming')}
+
+Services:
+${getAll('servicesNeeded')}
+
+Notes:
+${get('message')}
+`;
+              window.location.href = `mailto:${mailtoTo}?subject=${encodeURIComponent(
+                subject
+              )}&body=${encodeURIComponent(body)}`;
+            }
             return;
           }
           e.preventDefault();
@@ -428,4 +478,23 @@ const servicesErrorId = `${servicesHelpId}-error`;
 
   document.addEventListener('astro:page-load', initContactForm);
   initContactForm();
+
+  // Handle copy email buttons globally (outside the init scope to catch any)
+  document.addEventListener('astro:page-load', () => {
+    const copyBtns = document.querySelectorAll<HTMLElement>('[data-copy-email]');
+    copyBtns.forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const email = btn.dataset.email;
+        if (!email) return;
+        try {
+          await navigator.clipboard.writeText(email);
+          const original = btn.innerText;
+          btn.innerText = 'Copied!';
+          setTimeout(() => (btn.innerText = original), 2000);
+        } catch (err) {
+          console.error('Failed to copy', err);
+        }
+      });
+    });
+  });
 </script>

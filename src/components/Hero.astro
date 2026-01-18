@@ -121,10 +121,16 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.45] via-[rgb(var(--color-text))/0.22] to-[rgb(var(--color-brand))/0.08] dark:from-[rgb(var(--color-text))/0.6] dark:via-[rgb(var(--color-text-subtle))/0.3] sm:from-[rgb(var(--color-text))/0.38] sm:via-[rgb(var(--color-text))/0.18]"
     >
     </div>
+
+    {/* Subtle vignette for edge contrast */}
+    <div
+      class="absolute inset-0 bg-[radial-gradient(80%_70%_at_50%_35%,transparent_0%,rgba(2,6,23,0.22)_65%,rgba(2,6,23,0.5)_100%)]"
+    >
+    </div>
   </div>
 
   <div
-    class="container-page relative z-10 pb-20 pt-24 sm:pb-24 sm:pt-28 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48"
+    class="container-page sm:pb-22 sm:pt-26 md:pt-30 relative z-10 pb-16 pt-20 md:pb-24 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48"
   >
     <div class="mx-auto max-w-4xl text-center lg:max-w-5xl">
       <h1
@@ -134,7 +140,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
         <span>For spaces shaped by ambition and expectation.</span>
       </h1>
       <p
-        class="mx-auto mt-6 max-w-2xl animate-slide-up text-balance text-lg font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
+        class="mx-auto mt-4 max-w-2xl animate-slide-up text-balance text-base font-medium leading-relaxed text-white/90 drop-shadow-sm [animation-delay:200ms] sm:mt-6 sm:text-lg md:text-xl lg:mt-8 lg:max-w-3xl lg:text-2xl"
         data-hero-subhead
       >
         Local, owner-led cleaning in <span class="font-bold text-white"

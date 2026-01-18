@@ -1,0 +1,25 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const badges = [
+  { icon: 'lucide:badge-check', label: 'Owner‑operated' },
+  { icon: 'lucide:shield-check', label: 'Licensed + insured' },
+  { icon: 'lucide:star', label: '5‑star feedback' },
+  { icon: 'lucide:leaf', label: 'Eco‑aware options' },
+];
+---
+
+<section class="section">
+  <div class="container-page">
+    <div class="badge-row">
+      {
+        badges.map((badge) => (
+          <div class="badge">
+            <Icon name={badge.icon} class="badge__icon" />
+            <span>{badge.label}</span>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

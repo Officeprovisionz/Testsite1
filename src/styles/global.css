@@ -1527,6 +1527,77 @@
     color: rgb(var(--color-text-muted));
   }
 
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-2 border px-3 py-1.5 text-xs font-semibold;
+    border-radius: var(--radius-control);
+    border-color: rgb(var(--color-border) / 0.8);
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-surface)) 0%,
+      rgb(var(--color-surface-muted)) 140%
+    );
+    color: rgb(var(--color-text));
+    box-shadow: 0 12px 28px -24px rgb(0 0 0 / 0.55);
+  }
+
+  .badge__icon {
+    width: 1.1rem;
+    height: 1.1rem;
+    color: rgb(var(--color-accent-500));
+  }
+
+  @media (max-width: 640px) {
+    .badge {
+      font-size: 0.72rem;
+    }
+  }
+
+  .feature-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid rgb(var(--color-accent) / 0.35);
+    background: rgb(var(--color-accent) / 0.18);
+    color: rgb(12 14 18);
+    box-shadow: 0 10px 22px -18px rgb(0 0 0 / 0.4);
+  }
+
+  .feature-icon__glyph {
+    width: 1.35rem;
+    height: 1.35rem;
+    color: rgb(var(--color-accent-500));
+  }
+
+  .step-card {
+    position: relative;
+  }
+
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 1.25rem;
+    bottom: 1.25rem;
+    left: 0.9rem;
+    width: 3px;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-accent-300) / 0.6),
+      rgb(var(--color-brand-400) / 0.35)
+    );
+    opacity: 0.8;
+  }
+
   /* Shared “check list” pattern (used in About, scope panels, etc.). */
   .check-list {
     @apply mt-6 grid gap-3;

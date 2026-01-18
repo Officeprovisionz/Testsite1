@@ -41,7 +41,7 @@ const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'he
   <div class:list={[align === 'center' ? 'mx-auto max-w-2xl lg:max-w-3xl' : '']}>
     {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
     <HeadingTag class={headingClass}>{heading}</HeadingTag>
-    {description ? <p class="lede mt-4 lg:mt-5 lg:text-lg">{description}</p> : null}
+    {description ? <p class="lede mt-3 sm:mt-4 lg:mt-5 lg:text-lg">{description}</p> : null}
   </div>
 
   <div

@@ -5,6 +5,8 @@ import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import ServicesSection from '@/components/Services.astro';
+import ServiceComparisonMatrix from '@/components/ServiceComparisonMatrix.astro';
+import ServiceDeepDivePanels from '@/components/ServiceDeepDivePanels.astro';
 import IndustriesGrid from '@/components/IndustriesGrid.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import FAQ from '@/components/FAQ.astro';
@@ -167,6 +169,10 @@ const heroImageMobile = heroSecondary
     presentation="dropdown"
     items={specialtyServices}
   />
+
+  <ServiceDeepDivePanels />
+
+  <ServiceComparisonMatrix />
 
   <AreasServed />
 

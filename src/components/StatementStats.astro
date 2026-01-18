@@ -1,0 +1,25 @@
+---
+const stats = [
+  { value: '100+', label: 'Recurring offices served', accent: true },
+  { value: '98%', label: 'Client satisfaction' },
+  { value: '24hr', label: 'Average response time' },
+  { value: '15+', label: 'Years of experience' },
+];
+---
+
+<section class="section">
+  <div class="container-page">
+    <div class="mx-auto grid max-w-6xl gap-6 text-center sm:grid-cols-2 lg:grid-cols-4">
+      {
+        stats.map((stat) => (
+          <div class="card card-hover flex flex-col items-center gap-3 p-5 sm:p-6">
+            <div class:list={['statement-number', stat.accent ? 'statement-number--accent' : '']}>
+              {stat.value}
+            </div>
+            <p class="label text-[0.75rem] text-muted">{stat.label}</p>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -4,6 +4,8 @@ import Header from '@/components/Header.astro';
 import Hero from '@/components/Hero.astro';
 import TrustBar from '@/components/TrustBar.astro';
 import TrustBadges from '@/components/TrustBadges.astro';
+import StatementStats from '@/components/StatementStats.astro';
+import TrustedBy from '@/components/TrustedBy.astro';
 import LiveSocialProof from '@/components/LiveSocialProof.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
@@ -62,6 +64,10 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
   <TrustBar />
 
   <TrustBadges />
+
+  <StatementStats />
+
+  <TrustedBy />
 
   <LiveSocialProof />
 

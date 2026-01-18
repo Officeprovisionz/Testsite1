@@ -1,0 +1,116 @@
+---
+const steps = [
+  {
+    title: 'Walkthrough + scope',
+    description:
+      'Tell us your space and goals. We confirm details, lock the scope, and send a clear written quote.',
+  },
+  {
+    title: 'Checklist cleaning',
+    description: 'We use a consistent checklist so the important details don’t get missed.',
+  },
+  {
+    title: 'Communication',
+    description: 'We let you know when we arrive and leave, and flag any issues immediately.',
+  },
+];
+---
+
+<div class="timeline">
+  {
+    steps.map((step, idx) => (
+      <div class:list={['timeline__item', idx % 2 === 1 ? 'is-right' : 'is-left']}>
+        <div class="timeline__marker" aria-hidden="true">
+          {idx + 1}
+        </div>
+        <div class="timeline__content card card-hover">
+          <p class="label text-[0.7rem] text-muted">Step {idx + 1}</p>
+          <h3 class="heading-4 mt-2">{step.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
+        </div>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .timeline {
+    position: relative;
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 1.25rem;
+    top: 0.5rem;
+    bottom: 0.5rem;
+    width: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--color-accent-300) / 0.6),
+      rgb(var(--color-brand-400) / 0.4)
+    );
+  }
+
+  .timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+
+  .timeline__marker {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.9rem;
+    border: 1px solid rgb(var(--color-accent) / 0.4);
+    background: rgb(var(--color-accent) / 0.2);
+    color: rgb(12 14 18);
+    font-weight: 700;
+    box-shadow: 0 12px 26px -20px rgb(0 0 0 / 0.45);
+    z-index: 1;
+  }
+
+  .timeline__content {
+    padding: 1rem 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .timeline {
+      gap: 2rem;
+    }
+
+    .timeline::before {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .timeline__item {
+      grid-template-columns: 1fr auto 1fr;
+    }
+
+    .timeline__item.is-left .timeline__content {
+      grid-column: 1 / 2;
+      text-align: right;
+      justify-self: end;
+    }
+
+    .timeline__item.is-right .timeline__content {
+      grid-column: 3 / 4;
+      text-align: left;
+      justify-self: start;
+    }
+
+    .timeline__item.is-left .timeline__marker,
+    .timeline__item.is-right .timeline__marker {
+      grid-column: 2 / 3;
+      justify-self: center;
+    }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import { getCollection } from 'astro:content';
+
+const allServices = await getCollection('services');
+const standardServices = allServices
+  .filter((s) => s.data.category === 'standard')
+  .map((s) => s.data);
+---
+
+<section class="section section-creative" id="service-deep-dive">
+  <div class="container-page">
+    <div class="text-center">
+      <p class="label text-[0.75rem] text-muted">Service deep‑dives</p>
+      <h2 class="heading-2 mt-3">Explore what’s included</h2>
+      <p class="lede mx-auto mt-3 max-w-2xl">
+        Expand a service to see the checklist, what’s included, and how we schedule it with your
+        building rules.
+      </p>
+    </div>
+
+    <div class="mt-10 grid gap-4">
+      {
+        standardServices.map((service, idx) => (
+          <details class="card group overflow-hidden" open={idx === 0}>
+            <summary class="flex cursor-pointer items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5">
+              <div>
+                <p class="text-strong text-base font-semibold">{service.title}</p>
+                <p class="mt-1 text-sm text-muted">{service.description}</p>
+              </div>
+              <span
+                class="inline-flex h-10 w-10 flex-none items-center justify-center rounded-xl border border-[rgb(var(--color-accent)/0.35)] bg-[rgb(var(--color-accent)/0.2)] text-[rgb(12_14_18)] shadow-md"
+                aria-hidden="true"
+              >
+                ▾
+              </span>
+            </summary>
+            <div class="border-app border-t px-5 py-4 sm:px-6 sm:py-5">
+              <ul class="check-list check-list--compact text-sm text-muted sm:grid-cols-2">
+                {service.bullets.map((bullet) => (
+                  <li>
+                    <span class="check-icon check-icon--sm" aria-hidden="true">
+                      ✓
+                    </span>
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+              <p class="text-subtle mt-4 text-xs">
+                We confirm access windows, security procedures, and building rules before
+                scheduling.
+              </p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -22,9 +22,12 @@ const testimonials = siteConfig.testimonials;
 
     <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8" data-reveal-stagger="90">
       {
-        testimonials.map((t) => (
+        testimonials.map((t, idx) => (
           <figure
-            class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8"
+            class:list={[
+              'card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8',
+              idx === 0 ? 'md:col-span-2 lg:col-span-2' : '',
+            ]}
             data-reveal="up"
           >
             <div
@@ -32,7 +35,12 @@ const testimonials = siteConfig.testimonials;
               class="from-brand/5 to-brand/10 pointer-events-none absolute inset-0 bg-gradient-to-br via-transparent"
             />
             <div class="relative">
-              <blockquote class="text-sm leading-relaxed text-muted lg:text-base lg:leading-relaxed">
+              <blockquote
+                class:list={[
+                  'text-sm leading-relaxed text-muted lg:text-base lg:leading-relaxed',
+                  idx === 0 ? 'pull-quote text-strong' : '',
+                ]}
+              >
                 <span aria-hidden="true" class="text-strong mr-1">
                   “
                 </span>
@@ -60,5 +68,56 @@ const testimonials = siteConfig.testimonials;
         ))
       }
     </div>
+
+    <div class="testimonial-marquee mt-10" aria-hidden="true">
+      <div class="testimonial-marquee__track">
+        {
+          testimonials.concat(testimonials).map((t) => (
+            <div class="testimonial-marquee__item">
+              “{t.quote}” — {t.name}
+            </div>
+          ))
+        }
+      </div>
+    </div>
   </div>
 </section>
+
+<style>
+  .testimonial-marquee {
+    overflow: hidden;
+  }
+
+  .testimonial-marquee__track {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+    animation: testimonialMarquee 28s linear infinite;
+  }
+
+  .testimonial-marquee__item {
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--color-border) / 0.7);
+    background: rgb(var(--color-surface));
+    font-size: 0.82rem;
+    color: rgb(var(--color-text-muted));
+    white-space: nowrap;
+    box-shadow: 0 12px 28px -24px rgb(0 0 0 / 0.45);
+  }
+
+  @keyframes testimonialMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .testimonial-marquee__track {
+      animation: none;
+    }
+  }
+</style>

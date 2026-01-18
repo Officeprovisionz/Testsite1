@@ -1,0 +1,117 @@
+---
+const tiers = [
+  {
+    name: 'Core Clean',
+    highlight: false,
+    features: [
+      'Checklist cleaning',
+      'Restrooms + kitchen',
+      'Trash + recycling',
+      'Dusting + wipe-downs',
+    ],
+  },
+  {
+    name: 'Standard',
+    highlight: true,
+    features: [
+      'Everything in Core',
+      'High-touch disinfection',
+      'Floor care (weekly)',
+      'Reporting + follow-ups',
+    ],
+  },
+  {
+    name: 'Full Support',
+    highlight: false,
+    features: [
+      'Everything in Standard',
+      'Restocking + pantry',
+      'Light facilities support',
+      'Priority scheduling',
+    ],
+  },
+];
+
+const matrix = [
+  { label: 'Checklist cleaning', values: [true, true, true] },
+  { label: 'High-touch disinfection', values: [false, true, true] },
+  { label: 'Floor care (weekly)', values: [false, true, true] },
+  { label: 'Restocking + pantry', values: [false, false, true] },
+  { label: 'Facilities support', values: [false, false, true] },
+  { label: 'Reporting + follow-ups', values: [false, true, true] },
+];
+---
+
+<section class="section section-creative">
+  <div class="container-page">
+    <div class="mx-auto max-w-6xl">
+      <div class="text-center">
+        <p class="label text-[0.75rem] text-muted">Service tiers</p>
+        <h2 class="heading-2 mt-3">Compare cleaning coverage</h2>
+        <p class="lede mx-auto mt-3 max-w-2xl">
+          Choose a baseline, then add the support you need. We’ll confirm scope and access during
+          the walkthrough.
+        </p>
+      </div>
+
+      <div
+        class="mt-10 overflow-hidden rounded-[var(--radius-card)] border border-[rgb(var(--color-border)/0.7)]"
+      >
+        <div class="grid grid-cols-3 bg-[rgb(var(--color-surface))] text-center">
+          {
+            tiers.map((tier) => (
+              <div
+                class:list={[
+                  'px-4 py-4 text-sm font-semibold',
+                  tier.highlight ? 'bg-[rgb(var(--color-highlight-100))]' : '',
+                ]}
+              >
+                <span class="text-strong">{tier.name}</span>
+                {tier.highlight ? (
+                  <span class="ml-2 rounded-full bg-[rgb(var(--color-highlight-500))] px-2 py-0.5 text-[0.65rem] font-semibold text-black">
+                    Best fit
+                  </span>
+                ) : null}
+              </div>
+            ))
+          }
+        </div>
+        <div class="divide-y divide-[rgb(var(--color-border)/0.7)]">
+          {
+            matrix.map((row) => (
+              <div class="grid grid-cols-3 items-center text-center">
+                {row.values.map((value) => (
+                  <div class="px-4 py-3 text-sm">
+                    {value ? (
+                      <span class="text-strong">✓</span>
+                    ) : (
+                      <span class="text-subtle">—</span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-5 sm:grid-cols-3">
+        {
+          tiers.map((tier) => (
+            <div class="card card-hover p-5 sm:p-6">
+              <p class="label text-[0.72rem] text-muted">{tier.name}</p>
+              <ul class="mt-3 space-y-2 text-sm text-muted">
+                {tier.features.map((feature) => (
+                  <li class="flex items-start gap-2">
+                    <span class="text-strong">•</span>
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

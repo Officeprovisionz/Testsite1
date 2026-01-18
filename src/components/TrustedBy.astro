@@ -1,0 +1,72 @@
+---
+const logos = [
+  'SoMa Tech Suites',
+  'Bayview Dental',
+  'Mission Realty',
+  'North Beach Studios',
+  'Financial District Law',
+  'Embarcadero Labs',
+];
+---
+
+<section class="section section-muted">
+  <div class="container-page">
+    <div class="text-center">
+      <p class="label text-[0.75rem] text-muted">Trusted by local teams</p>
+    </div>
+    <div class="trusted-strip mt-6">
+      <div class="trusted-strip__track">
+        {logos.concat(logos).map((logo) => <div class="trusted-strip__logo">{logo}</div>)}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .trusted-strip {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .trusted-strip__track {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    width: max-content;
+    animation: trustedMarquee 22s linear infinite;
+  }
+
+  .trusted-strip__logo {
+    padding: 0.6rem 1rem;
+    border-radius: 999px;
+    border: 1px solid rgb(var(--color-border) / 0.8);
+    background: rgb(var(--color-surface));
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgb(var(--color-text-muted));
+    white-space: nowrap;
+    box-shadow: 0 12px 30px -26px rgb(0 0 0 / 0.45);
+  }
+
+  @keyframes trustedMarquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .trusted-strip__track {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .trusted-strip__logo {
+      font-size: 0.78rem;
+      padding: 0.5rem 0.85rem;
+    }
+  }
+</style>

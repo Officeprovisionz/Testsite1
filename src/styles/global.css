@@ -49,6 +49,13 @@
     --color-accent-900: 98 52 31; /* #62341F */
     --color-accent-950: 64 34 22; /* #402216 */
 
+    /* Highlight (Electric Lime) - use sparingly for visual punctuation */
+    --color-highlight-50: 243 255 232; /* #F3FFE8 */
+    --color-highlight-100: 224 255 196; /* #E0FFC4 */
+    --color-highlight-300: 176 255 92; /* #B0FF5C */
+    --color-highlight-500: 142 255 26; /* #8EFF1A */
+    --color-highlight-700: 98 196 0; /* #62C400 */
+
     /* Minted wellness accent (optional secondary accent) */
     --color-mint-50: 241 252 250;
     --color-mint-100: 218 247 240;
@@ -673,11 +680,9 @@
       box-shadow 260ms cubic-bezier(0.22, 1, 0.36, 1),
       background-color 220ms cubic-bezier(0.4, 0, 0.2, 1);
     border-color: rgb(var(--color-border) / 0.85);
-    background: linear-gradient(
-      180deg,
-      rgb(var(--color-surface)) 0%,
-      rgb(var(--color-surface-muted)) 140%
-    );
+    background:
+      radial-gradient(ellipse at 20% 0%, rgb(var(--color-brand-100) / 0.35), transparent 70%),
+      linear-gradient(180deg, rgb(var(--color-surface)) 0%, rgb(var(--color-surface-muted)) 140%);
     border-radius: var(--radius-card);
     box-shadow:
       0 20px 52px -46px rgb(0 0 0 / 0.5),
@@ -1227,6 +1232,7 @@
     filter: brightness(1.04);
     box-shadow:
       0 24px 50px -30px rgb(var(--color-accent-500) / 0.9),
+      0 0 40px rgb(var(--color-brand-400) / 0.3),
       0 1px 0 0 rgb(255 255 255 / 0.7) inset;
   }
 
@@ -1353,6 +1359,13 @@
     color: rgb(var(--color-text));
   }
 
+  .display-hero {
+    font-size: clamp(3rem, 8vw, 6rem);
+    letter-spacing: -0.03em;
+    font-weight: 700;
+    font-variation-settings: 'opsz' 72;
+  }
+
   .heading-2 {
     @apply text-balance font-serif font-semibold;
     font-size: clamp(1.8rem, 2.1vw + 1.05rem, 2.85rem);
@@ -1418,6 +1431,47 @@
     line-height: 1.55;
     color: rgb(var(--color-text-muted));
     text-wrap: pretty;
+  }
+
+  .label {
+    @apply font-semibold uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.7rem;
+    color: rgb(var(--color-text-subtle));
+  }
+
+  .statement-number {
+    font-family: var(--font-serif, 'Fraunces', serif);
+    font-size: clamp(3.5rem, 8vw, 7.5rem);
+    line-height: 0.95;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    color: rgb(var(--color-text));
+  }
+
+  .statement-number--accent {
+    color: rgb(var(--color-accent-500));
+  }
+
+  .pull-quote {
+    position: relative;
+    font-family: var(--font-serif, 'Fraunces', serif);
+    font-style: italic;
+    font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+    line-height: 1.55;
+    color: rgb(var(--color-text));
+  }
+
+  .pull-quote::before {
+    content: '“';
+    position: absolute;
+    left: -0.6rem;
+    top: -0.2rem;
+    font-size: 2.2rem;
+    color: rgb(var(--color-accent-400));
+    opacity: 0.7;
   }
 
   @media (max-width: 640px) {

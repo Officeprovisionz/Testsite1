@@ -20,7 +20,10 @@ const testimonials = siteConfig.testimonials;
       </a>
     </SectionHeader>
 
-    <div class="mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8" data-reveal-stagger="90">
+    <div
+      class="testimonials-grid mt-10 grid gap-6 md:grid-cols-3 lg:mt-14 lg:gap-8"
+      data-reveal-stagger="90"
+    >
       {
         testimonials.map((t, idx) => (
           <figure
@@ -84,6 +87,20 @@ const testimonials = siteConfig.testimonials;
 </section>
 
 <style>
+  @media (max-width: 767px) {
+    .testimonials-grid {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(16rem, 1fr);
+      overflow-x: auto;
+      padding-bottom: 0.5rem;
+      scroll-snap-type: x mandatory;
+    }
+
+    .testimonials-grid > * {
+      scroll-snap-align: start;
+    }
+  }
   .testimonial-marquee {
     overflow: hidden;
   }

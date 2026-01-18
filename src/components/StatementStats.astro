@@ -13,7 +13,11 @@ const stats = [
       {
         stats.map((stat) => (
           <div class="card card-hover flex flex-col items-center gap-3 p-5 sm:p-6">
-            <div class:list={['statement-number', stat.accent ? 'statement-number--accent' : '']}>
+            <div
+              class:list={['statement-number', stat.accent ? 'statement-number--accent' : '']}
+              data-stat-value={stat.value}
+              data-stat-animated="false"
+            >
               {stat.value}
             </div>
             <p class="label text-[0.75rem] text-muted">{stat.label}</p>
@@ -23,3 +27,64 @@ const stats = [
     </div>
   </div>
 </section>
+
+<script>
+  const animateStats = () => {
+    const stats = Array.from(document.querySelectorAll<HTMLElement>('[data-stat-value]'));
+    if (!stats.length) return;
+
+    const prefersReduced = (() => {
+      try {
+        return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      } catch {
+        return false;
+      }
+    })();
+
+    const parseValue = (raw: string) => {
+      const match = raw.match(/([0-9.]+)/);
+      const num = match ? Number(match[1]) : 0;
+      const prefix = raw.trim().startsWith('+') ? '+' : '';
+      const suffix = raw.replace(/^[0-9.]+/, '').replace(/^[+]/, '');
+      return { num, prefix, suffix };
+    };
+
+    const animate = (el: HTMLElement) => {
+      if (el.dataset.statAnimated === 'true') return;
+      el.dataset.statAnimated = 'true';
+      const { num, prefix, suffix } = parseValue(el.dataset.statValue ?? '');
+      if (prefersReduced) {
+        el.textContent = `${prefix}${num}${suffix}`;
+        return;
+      }
+
+      const start = performance.now();
+      const duration = 1200;
+      const from = 0;
+
+      const tick = (now: number) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const current = Math.round(from + (num - from) * eased);
+        el.textContent = `${prefix}${current}${suffix}`;
+        if (progress < 1) requestAnimationFrame(tick);
+      };
+
+      requestAnimationFrame(tick);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) animate(entry.target as HTMLElement);
+        });
+      },
+      { threshold: 0.4 }
+    );
+
+    stats.forEach((el) => observer.observe(el));
+  };
+
+  document.addEventListener('astro:page-load', animateStats);
+  animateStats();
+</script>

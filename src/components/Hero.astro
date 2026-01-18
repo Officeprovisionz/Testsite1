@@ -45,7 +45,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
 ---
 
 <section
-  class="hero-splash hero-photo relative w-full overflow-hidden antialiased"
+  class="hero-splash hero-photo hero-split relative w-full overflow-hidden antialiased"
   data-hero-section
 >
   {/* Top-down gradient overlay for header readability */}
@@ -132,7 +132,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
   <div
     class="container-page sm:pb-22 sm:pt-26 md:pt-30 relative z-10 pb-16 pt-20 md:pb-24 lg:pb-36 lg:pt-44 xl:pb-40 xl:pt-48"
   >
-    <div class="mx-auto max-w-4xl text-center lg:max-w-5xl">
+    <div class="hero-split__content mx-auto max-w-4xl text-center lg:max-w-5xl lg:text-left">
       <h1
         class="heading-1 display-hero animate-slide-up text-balance font-serif text-white drop-shadow-md"
         data-hero-headline
@@ -147,6 +147,20 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           >{siteConfig.brand.city}</span
         >. Same crew, photo updates, and a real person answering when you call.
       </p>
+    </div>
+
+    <div class="hero-split__spacer" aria-hidden="true"></div>
+
+    <div class="hero-float" aria-hidden="true">
+      <div class="hero-float__badge">
+        <span class="hero-float__label">24hr response</span>
+      </div>
+      <div class="hero-float__badge hero-float__badge--accent">
+        <span class="hero-float__label">Insured + bonded</span>
+      </div>
+      <div class="hero-float__badge">
+        <span class="hero-float__label">Eco‑aware options</span>
+      </div>
     </div>
   </div>
 </section>

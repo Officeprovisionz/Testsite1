@@ -4,7 +4,6 @@ import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
 import PageHero from '@/components/PageHero.astro';
 import ProcessTimeline from '@/components/ProcessTimeline.astro';
-import ProcessJourneyMap from '@/components/ProcessJourneyMap.astro';
 import AreasServed from '@/components/AreasServed.astro';
 import Gallery from '@/components/Gallery.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
@@ -51,6 +50,16 @@ const heroImageMobile = heroSecondary
     imagePosition="50% 40%"
   />
 
+  <Gallery
+    id="proof"
+    heading="Recent results"
+    description="A quick look at the spaces we support. Real work, consistent checklists, and clean results."
+    items={galleryItems}
+    showTip={false}
+    showItemText={false}
+    showLightboxText={false}
+  />
+
   <section class="section section-creative scroll-mt-20 pb-0" id="how-we-work">
     <div class="container-page">
       <div class="mb-12">
@@ -65,8 +74,6 @@ const heroImageMobile = heroSecondary
       <ProcessTimeline />
     </div>
   </section>
-
-  <ProcessJourneyMap />
 
   <section class="section section-muted section-creative scroll-mt-20" id="expect">
     <div class="container-page">
@@ -165,16 +172,6 @@ const heroImageMobile = heroSecondary
   </section>
 
   <AreasServed />
-
-  <Gallery
-    id="proof"
-    heading="Recent results"
-    description="A quick look at the spaces we support. Real work, consistent checklists, and clean results."
-    items={galleryItems}
-    showTip={false}
-    showItemText={false}
-    showLightboxText={false}
-  />
 
   <Footer slot="footer" />
 </BaseLayout>

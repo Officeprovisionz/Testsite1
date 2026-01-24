@@ -508,29 +508,6 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
         }
       }
 
-      // Track scroll progress for the progress bar
-      let scrollRaf = 0;
-      const updateScrollProgress = () => {
-        scrollRaf = 0;
-        const scrollTop = window.scrollY || document.documentElement.scrollTop;
-        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-        root.style.setProperty('--scroll-progress', `${progress}%`);
-      };
-
-      const requestScrollProgress = () => {
-        if (scrollRaf) return;
-        scrollRaf = window.requestAnimationFrame(updateScrollProgress);
-      };
-
-      if (root.dataset.scrollProgressInit !== 'true') {
-        root.dataset.scrollProgressInit = 'true';
-        window.addEventListener('scroll', requestScrollProgress, { passive: true });
-        window.addEventListener('resize', requestScrollProgress);
-        document.addEventListener('astro:page-load', requestScrollProgress);
-      }
-
-      requestScrollProgress();
     </script>
 
     <script is:inline>
@@ -731,7 +708,6 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     }
   </head>
   <body id="top">
-    <div class="scroll-progress" aria-hidden="true"></div>
     <div class="route-progress" aria-hidden="true" data-route-progress data-state="idle"></div>
 
     <!-- Screen-reader friendly navigation status (matches the visual route progress bar). -->

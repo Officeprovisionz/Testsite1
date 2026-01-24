@@ -510,22 +510,6 @@
     }
   }
 
-  /* Scroll Progress Indicator — CSS-only, fixed at top */
-  .scroll-progress {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    z-index: 9999;
-    background: linear-gradient(
-      to right,
-      rgb(var(--color-brand)) var(--scroll-progress, 0%),
-      transparent var(--scroll-progress, 0%)
-    );
-    pointer-events: none;
-  }
-
   /* Route Progress Indicator — triggered on client-side navigations (Astro View Transitions). */
   .route-progress {
     position: fixed;
@@ -2641,7 +2625,6 @@
   /* Hide non-essential UI elements. */
   header[data-site-header],
   footer,
-  .scroll-progress,
   .wave-divider,
   [aria-hidden='true']:not(img),
   details[data-mobile-menu],
@@ -2687,36 +2670,9 @@
   /* Show URLs after links (except for internal anchors). */
   a[href^='http']::after {
     content: ' (' attr(href) ')';
-    font-size: 0.8em;
-    font-weight: normal;
-    word-wrap: break-word;
   }
 
-  a[href^='#']::after,
-  a[href^='javascript:']::after {
+  a[href^='#']::after {
     content: '';
-  }
-
-  /* Basic table styling for print. */
-  table {
-    border-collapse: collapse;
-  }
-
-  th,
-  td {
-    border: 1px solid #ccc;
-    padding: 0.5em;
-  }
-
-  /* Simplify sections for print. */
-  .section {
-    padding: 1rem 0 !important;
-  }
-
-  .container-page,
-  .container-narrow {
-    max-width: 100% !important;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
   }
 }

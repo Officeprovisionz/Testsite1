@@ -18,8 +18,7 @@ const {
   steps = siteConfig.processSteps,
   qaEyebrow = 'Quality assurance',
   qaHeading = 'Checklist-based scope. Quick follow-through.',
-  qaDescription =
-    'We keep scope clear and consistent with checklists—so you can delegate cleaning without babysitting it.',
+  qaDescription = 'We keep scope clear and consistent with checklists—so you can delegate cleaning without babysitting it.',
   qaBullets = [
     'Clear inclusions + add-ons (no surprises)',
     'Single point of contact for requests',
@@ -85,12 +84,16 @@ const safeWaveTone =
           </p>
         </div>
         <ul class="check-list check-list--compact text-sm text-muted lg:text-base">
-          {(Array.isArray(qaBullets) ? qaBullets : []).map((b) => (
-            <li>
-              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-              <span>{b}</span>
-            </li>
-          ))}
+          {
+            (Array.isArray(qaBullets) ? qaBullets : []).map((b) => (
+              <li>
+                <span class="check-icon check-icon--sm" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{b}</span>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>

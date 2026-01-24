@@ -4,13 +4,39 @@ import WaveDivider from '@/components/WaveDivider.astro';
 import SectionHeader from '@/components/ui/SectionHeader.astro';
 import Eyebrow from './ui/Eyebrow.astro';
 
+type Step = {
+  title: string;
+  description: string;
+};
+
 const {
   id,
   heading = 'How it works',
   description = 'A simple, repeatable process that keeps service consistent across visits.',
   showWave = true,
   waveTone = 'bg',
-} = Astro.props;
+  steps = siteConfig.processSteps,
+  qaEyebrow = 'Quality assurance',
+  qaHeading = 'Checklist-based scope. Quick follow-through.',
+  qaDescription =
+    'We keep scope clear and consistent with checklists—so you can delegate cleaning without babysitting it.',
+  qaBullets = [
+    'Clear inclusions + add-ons (no surprises)',
+    'Single point of contact for requests',
+    'Walkthrough notes + quick follow-up',
+  ],
+} = Astro.props as {
+  id?: string;
+  heading?: string;
+  description?: string;
+  showWave?: boolean;
+  waveTone?: 'surface' | 'surface-muted' | 'bg';
+  steps?: Step[];
+  qaEyebrow?: string;
+  qaHeading?: string;
+  qaDescription?: string;
+  qaBullets?: string[];
+};
 
 const safeWaveTone =
   waveTone === 'surface' || waveTone === 'surface-muted' || waveTone === 'bg' ? waveTone : 'bg';
@@ -22,7 +48,7 @@ const safeWaveTone =
 
     <ol class="mt-10 grid gap-6 lg:mt-14 lg:grid-cols-4 lg:gap-8">
       {
-        siteConfig.processSteps.map((s, idx) => (
+        (Array.isArray(steps) ? steps : []).map((s, idx) => (
           <li class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8">
             <div
               aria-hidden="true"
@@ -50,28 +76,21 @@ const safeWaveTone =
     <div class="card mt-10 overflow-hidden p-6 sm:p-8 lg:mt-14 lg:p-10">
       <div class="grid gap-6 md:grid-cols-2 md:items-center lg:gap-10">
         <div>
-          <Eyebrow>Quality assurance</Eyebrow>
+          <Eyebrow>{qaEyebrow}</Eyebrow>
           <p class="text-strong mt-2 text-lg font-bold lg:text-xl">
-            Checklist-based scope. Fast fixes.
+            {qaHeading}
           </p>
           <p class="mt-2 text-sm leading-relaxed text-muted lg:text-base">
-            We keep scope clear and consistent with checklists—so you can delegate cleaning without
-            babysitting it.
+            {qaDescription}
           </p>
         </div>
         <ul class="check-list check-list--compact text-sm text-muted lg:text-base">
-          <li>
-            <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-            <span>Clear inclusions + add-ons (no surprises)</span>
-          </li>
-          <li>
-            <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-            <span>Single point of contact for requests</span>
-          </li>
-          <li>
-            <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
-            <span>Walkthrough notes + quick follow-up</span>
-          </li>
+          {(Array.isArray(qaBullets) ? qaBullets : []).map((b) => (
+            <li>
+              <span class="check-icon check-icon--sm" aria-hidden="true">✓</span>
+              <span>{b}</span>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

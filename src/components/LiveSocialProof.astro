@@ -172,7 +172,7 @@ const detailFor = (a: Activity) => {
     position: fixed;
     left: 1rem;
     right: 1rem;
-    bottom: calc(env(safe-area-inset-bottom) + 1.1rem);
+    bottom: calc(env(safe-area-inset-bottom) + var(--bottom-tab-bar-height, 0px) + 1.1rem);
     z-index: 45;
 
     display: grid;

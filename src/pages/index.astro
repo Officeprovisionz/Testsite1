@@ -5,6 +5,8 @@ import Hero from '@/components/Hero.astro';
 import LiveSocialProof from '@/components/LiveSocialProof.astro';
 import ExpertiseGallery from '@/components/ExpertiseGallery.astro';
 import BridgeDivider from '@/components/BridgeDivider.astro';
+import HowItWorks from '@/components/HowItWorks.astro';
+import Testimonials from '@/components/Testimonials.astro';
 import FAQ from '@/components/FAQ.astro';
 import Footer from '@/components/Footer.astro';
 import { getPublicResponsiveImage } from '@/lib/publicImages';
@@ -62,6 +64,43 @@ const siteUrl = Astro.site?.toString() ?? 'https://officeprovisionz.com';
   <BridgeDivider />
 
   <ExpertiseGallery />
+
+  <HowItWorks
+    heading="How we keep your office consistent"
+    description="A calm, repeatable process: walkthrough, checklist, the same crew, and responsive follow-through."
+    showWave={false}
+    steps={[
+      {
+        title: 'Walkthrough + priorities',
+        description:
+          'We learn what matters most, capture building requirements, and confirm the scope before we start.',
+      },
+      {
+        title: 'Checklist + schedule',
+        description:
+          'We document inclusions and optional add-ons, then align timing so your team isn’t disrupted.',
+      },
+      {
+        title: 'Repeatable visits',
+        description:
+          'Each visit follows the checklist—restrooms, common areas, floors—done the same way every time.',
+      },
+      {
+        title: 'Owner follow‑up',
+        description:
+          'One point of contact for requests, adjustments, and close-the-loop follow‑through.',
+      },
+    ]}
+    qaHeading="Checklist scope. Owner follow‑up."
+    qaDescription="Clear scope, documented expectations, and a consistent routine so cleaning stays off your plate."
+    qaBullets={[
+      'Walkthrough notes captured once, reused every visit',
+      'Photo updates available when needed',
+      'If something’s off, we correct it and close the loop',
+    ]}
+  />
+
+  <Testimonials />
 
   <FAQ />
 

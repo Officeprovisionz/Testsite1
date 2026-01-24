@@ -6,7 +6,7 @@ Production-grade, mobile-first business site built with **Astro + Tailwind + Typ
 
 ### Node + package manager (recommended)
 
-This repo is standardized on **Node 22 LTS**.
+This repo is standardized on **Node 24**.
 
 - Windows: use **Volta** (supports multiple Node versions side-by-side)
 - WSL/Linux/macOS: use **nvm**

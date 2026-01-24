@@ -13,11 +13,7 @@ concurrency:
 jobs:
   ci:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        node: [22, 24]
-    name: CI (Node ${{ matrix.node }})
+    name: CI (Node 24)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,7 +24,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node }}
+          node-version: 24
 
       - name: Install
         run: bun install

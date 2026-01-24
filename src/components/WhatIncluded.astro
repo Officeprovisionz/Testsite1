@@ -36,12 +36,12 @@ const safeItems = Array.isArray(items) ? items.filter(Boolean) : [];
       >
     </SectionHeader>
 
-    <div class="mx-auto mt-10 grid max-w-4xl gap-6 lg:mt-14">
-      <div class="card overflow-hidden p-6 sm:p-8 lg:p-10">
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 lg:mt-14" data-reveal-stagger="60">
+      <div class="card overflow-hidden p-6 sm:p-8 lg:p-10" data-reveal="up">
         <ul class="check-list text-sm text-muted lg:text-base">
           {
             safeItems.map((label) => (
-              <li>
+              <li data-reveal="up">
                 <span class="check-icon" aria-hidden="true">
                   ✓
                 </span>

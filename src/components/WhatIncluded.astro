@@ -1,0 +1,66 @@
+---
+import { siteConfig } from '@/data/siteConfig';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
+import { makeHref } from '@/lib/nav';
+
+type Props = {
+  id?: string;
+  heading?: string;
+  description?: string;
+  items?: string[];
+};
+
+const {
+  id = 'included',
+  heading = "What's included",
+  description = 'A clear baseline scope—so you know what to expect every visit. Add-ons are available if you need them.',
+  items = siteConfig.whatIncluded,
+} = Astro.props as Props;
+
+const href = makeHref(import.meta.env.BASE_URL);
+const safeItems = Array.isArray(items) ? items.filter(Boolean) : [];
+---
+
+<section id={id} class="section section-creative">
+  <div class="container-page relative lg:max-w-6xl">
+    <SectionHeader
+      eyebrow="Scope"
+      heading={heading}
+      description={description}
+      align="center"
+      class="mx-auto max-w-3xl"
+    >
+      <a slot="actions" class="btn-primary w-full sm:w-auto" href={href('contact/')}>Get a quote</a>
+      <a slot="actions" class="btn-secondary w-full sm:w-auto" href={href('services/')}
+        >See services</a
+      >
+    </SectionHeader>
+
+    <div class="mx-auto mt-10 grid max-w-4xl gap-6 lg:mt-14">
+      <div class="card overflow-hidden p-6 sm:p-8 lg:p-10">
+        <ul class="check-list text-sm text-muted lg:text-base">
+          {
+            safeItems.map((label) => (
+              <li>
+                <span class="check-icon" aria-hidden="true">
+                  ✓
+                </span>
+                <span>{label}</span>
+              </li>
+            ))
+          }
+        </ul>
+
+        <div
+          class="mt-8 rounded-2xl border border-[rgb(var(--color-border)/0.7)] bg-[rgb(var(--color-surface-muted)/0.55)] p-4 sm:p-5"
+        >
+          <p class="text-strong text-sm font-semibold">Want something handled differently?</p>
+          <p class="mt-1 text-sm text-muted">
+            Tell us your priorities during the walkthrough—we’ll tailor the checklist and confirm
+            add-ons before quoting.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

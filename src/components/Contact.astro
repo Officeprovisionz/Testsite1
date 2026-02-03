@@ -200,7 +200,6 @@ const serviceOptions = [
 </div>
 
 <script>
-  // () => {
   const root = document.documentElement;
 
   const init = () => {
@@ -233,6 +232,7 @@ const serviceOptions = [
       }
 
       // Populate UTMs from sessionStorage or URL
+      // Note: Keep in sync with UTM_KEYS in src/lib/tracking.ts
       const utmKeys = [
         'utm_source',
         'utm_medium',
@@ -242,7 +242,7 @@ const serviceOptions = [
         'gclid',
         'fbclid',
         'msclkid',
-      ];
+      ] as const;
       const params = getParams();
       utmKeys.forEach((key) => {
         const input = form.querySelector<HTMLInputElement>(`input[name="${key}"]`);
@@ -647,11 +647,9 @@ const serviceOptions = [
         const name = String(fd.get('name') ?? '').trim();
         const email = String(fd.get('email') ?? '').trim();
         const phone = String(fd.get('phone') ?? '').trim();
-        // const contactMethod = String(fd.get('contactMethod') ?? '').trim();
         const location = String(fd.get('location') ?? '').trim();
         const industry = String(fd.get('industry') ?? '').trim();
         const frequency = String(fd.get('frequency') ?? '').trim();
-        // const startTiming = String(fd.get('startTiming') ?? '').trim();
         const servicesNeeded = fd
           .getAll('servicesNeeded')
           .map((v) => String(v).trim())
@@ -905,5 +903,4 @@ const serviceOptions = [
   }
 
   init();
-  // })();
 </script>

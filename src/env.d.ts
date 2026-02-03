@@ -22,12 +22,6 @@ interface ImportMeta {
  */
 type DamraTrackFn = (event: string, props?: Record<string, unknown>) => void;
 
-interface Window {
-  plausible?: (event: string, options?: { props?: Record<string, unknown> }) => void;
-  damraTrack?: DamraTrackFn;
-  dataLayer?: Record<string, unknown>[];
-}
-
 /**
  * Extended Window interface with custom globals.
  */

@@ -18,7 +18,9 @@ test.describe('accessibility', () => {
       await page.waitForLoadState('networkidle', { timeout: 15_000 }).catch(() => undefined);
       await disableAnimations(page);
 
-      const results = await new AxeBuilder({ page }).analyze();
+      // Type assertion needed due to Playwright/axe-core version mismatch
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const results = await new AxeBuilder({ page: page as any }).analyze();
       const bad = results.violations.filter((v) => v.impact && disallowedImpacts.has(v.impact));
 
       // Keep output readable when it fails.

@@ -2,6 +2,23 @@
  * Tracking utilities for Plausible and custom events.
  */
 
+/**
+ * Standard UTM and click-ID parameter keys used for campaign attribution.
+ * Shared across tracking, form population, and analytics.
+ */
+export const UTM_KEYS = [
+  'utm_source',
+  'utm_medium',
+  'utm_campaign',
+  'utm_term',
+  'utm_content',
+  'gclid',
+  'fbclid',
+  'msclkid',
+] as const;
+
+export type UtmKey = (typeof UTM_KEYS)[number];
+
 export const trackEvent = (eventName: string, props?: Record<string, unknown>) => {
   if (typeof window !== 'undefined' && window.plausible) {
     window.plausible(eventName, props ? { props } : undefined);
@@ -47,18 +64,8 @@ export const captureUTMs = () => {
 
   const params = new URLSearchParams(window.location.search);
   const utms: Record<string, string> = {};
-  const utmKeys: string[] = [
-    'utm_source',
-    'utm_medium',
-    'utm_campaign',
-    'utm_term',
-    'utm_content',
-    'gclid',
-    'fbclid',
-    'msclkid',
-  ];
 
-  utmKeys.forEach((key: string) => {
+  UTM_KEYS.forEach((key) => {
     const value = params.get(key);
     if (value) {
       utms[key] = value;
@@ -87,17 +94,7 @@ export const captureUTMs = () => {
 export const getSavedUTMs = () => {
   if (typeof window === 'undefined') return {};
   const utms: Record<string, string> = {};
-  const utmKeys: string[] = [
-    'utm_source',
-    'utm_medium',
-    'utm_campaign',
-    'utm_term',
-    'utm_content',
-    'gclid',
-    'fbclid',
-    'msclkid',
-  ];
-  utmKeys.forEach((key: string) => {
+  UTM_KEYS.forEach((key) => {
     try {
       const value = sessionStorage.getItem(key);
       if (value) utms[key] = value;

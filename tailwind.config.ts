@@ -120,14 +120,29 @@ export default {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+        card: 'var(--radius-card)',
+        control: 'var(--radius-control)',
       },
       boxShadow: {
+        // Unified elevation scale
         soft: '0 10px 40px -10px rgba(0,0,0,0.08)',
         'elev-1': '0 10px 28px -18px rgba(2, 6, 23, 0.22)',
         'elev-2': '0 18px 52px -28px rgba(2, 6, 23, 0.32)',
         'elev-3': '0 32px 80px -42px rgba(2, 6, 23, 0.42)',
+        'elev-4': '0 34px 86px -52px rgba(2, 6, 23, 0.52)',
+        // Card-specific shadows
+        card: '0 18px 46px -36px rgba(2, 6, 23, 0.22), 0 1px 0 0 rgba(255, 255, 255, 0.06) inset',
+        'card-hover':
+          '0 28px 70px -52px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(var(--color-brand), 0.05)',
       },
 
+      // Standardized transition durations (match CSS variables)
+      transitionDuration: {
+        instant: 'var(--duration-instant)',
+        fast: 'var(--duration-fast)',
+        normal: 'var(--duration-normal)',
+        slow: 'var(--duration-slow)',
+      },
       transitionTimingFunction: {
         'out-expo': 'var(--ease-out-expo)',
         'out-quart': 'var(--ease-out-quart)',
@@ -138,10 +153,10 @@ export default {
         marquee: 'marquee var(--duration) linear infinite',
         'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
         'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear',
-        'accordion-down': 'accordion-down 0.2s ease-out',
-        'accordion-up': 'accordion-up 0.2s ease-out',
-        'fade-in': 'fade-in 0.6s ease-out forwards',
-        'slide-up': 'slide-up 0.8s ease-out forwards',
+        'accordion-down': 'accordion-down var(--duration-normal) var(--ease-out-quart)',
+        'accordion-up': 'accordion-up var(--duration-normal) var(--ease-out-quart)',
+        'fade-in': 'fade-in var(--duration-slow) var(--ease-out-expo) forwards',
+        'slide-up': 'slide-up var(--duration-slow) var(--ease-out-expo) forwards',
       },
       keyframes: {
         'accordion-down': {

@@ -72,12 +72,12 @@ const testimonials = siteConfig.testimonials;
       }
     </div>
 
-    <div class="testimonial-marquee mt-10" aria-hidden="true">
-      <div class="testimonial-marquee__track">
+    <div class="mt-10 overflow-hidden" aria-hidden="true">
+      <div class="marquee-track">
         {
           testimonials.concat(testimonials).map((t) => (
-            <div class="testimonial-marquee__item">
-              “{t.quote}” — {t.name}
+            <div class="marquee-item">
+              "{t.quote}" — {t.name}
             </div>
           ))
         }
@@ -91,50 +91,25 @@ const testimonials = siteConfig.testimonials;
     .testimonials-grid {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(16rem, 1fr);
+      grid-auto-columns: minmax(16rem, 85%);
       overflow-x: auto;
       padding-bottom: 0.5rem;
+      margin-inline: -1rem;
+      padding-inline: 1rem;
       scroll-snap-type: x mandatory;
+      scroll-padding-inline: 1rem;
+      overscroll-behavior-x: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .testimonials-grid::after {
+      content: '';
+      width: 1rem;
+      flex-shrink: 0;
     }
 
     .testimonials-grid > * {
       scroll-snap-align: start;
-    }
-  }
-  .testimonial-marquee {
-    overflow: hidden;
-  }
-
-  .testimonial-marquee__track {
-    display: flex;
-    gap: 1rem;
-    width: max-content;
-    animation: testimonialMarquee 28s linear infinite;
-  }
-
-  .testimonial-marquee__item {
-    padding: 0.6rem 1rem;
-    border-radius: 999px;
-    border: 1px solid rgb(var(--color-border) / 0.7);
-    background: rgb(var(--color-surface));
-    font-size: 0.82rem;
-    color: rgb(var(--color-text-muted));
-    white-space: nowrap;
-    box-shadow: 0 12px 28px -24px rgb(0 0 0 / 0.45);
-  }
-
-  @keyframes testimonialMarquee {
-    0% {
-      transform: translateX(0);
-    }
-    100% {
-      transform: translateX(-50%);
-    }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .testimonial-marquee__track {
-      animation: none;
     }
   }
 </style>

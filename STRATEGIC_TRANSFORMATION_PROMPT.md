@@ -526,8 +526,8 @@ export function AnimatedCounter({
 <section class="parallax-scene relative min-h-screen">
   <!-- Background: Slow-moving gradient orbs -->
   <div class="parallax-bg absolute inset-0 -z-10">
-    <div class="bg-brand/10 absolute left-1/4 top-1/4 h-96 w-96 rounded-full blur-3xl"></div>
-    <div class="absolute bottom-1/4 right-1/4 h-80 w-80 rounded-full bg-accent/10 blur-3xl"></div>
+    <div class="bg-brand/10 absolute top-1/4 left-1/4 h-96 w-96 rounded-full blur-3xl"></div>
+    <div class="bg-accent/10 absolute right-1/4 bottom-1/4 h-80 w-80 rounded-full blur-3xl"></div>
   </div>
 
   <!-- Mid-ground: Content -->
@@ -537,7 +537,7 @@ export function AnimatedCounter({
 
   <!-- Foreground: Decorative elements -->
   <div class="parallax-fg pointer-events-none absolute inset-0">
-    <svg class="text-brand/5 absolute right-0 top-0 h-64 w-64">
+    <svg class="text-brand/5 absolute top-0 right-0 h-64 w-64">
       <!-- Decorative SVG pattern -->
     </svg>
   </div>
@@ -1326,18 +1326,18 @@ import { hapticFeedback } from '../lib/haptics';
       </div>
 
       <!-- Animated stats (trust indicators) -->
-      <div class="mt-12 grid grid-cols-3 gap-8 border-t border-border/30 pt-8">
+      <div class="border-border/30 mt-12 grid grid-cols-3 gap-8 border-t pt-8">
         <div class="text-center">
           <AnimatedCounter end={500} suffix="+" class="text-brand text-4xl font-bold" />
-          <p class="mt-2 text-sm text-muted">Businesses Served</p>
+          <p class="text-muted mt-2 text-sm">Businesses Served</p>
         </div>
         <div class="text-center">
           <AnimatedCounter end={15} suffix=" Years" class="text-brand text-4xl font-bold" />
-          <p class="mt-2 text-sm text-muted">Industry Experience</p>
+          <p class="text-muted mt-2 text-sm">Industry Experience</p>
         </div>
         <div class="text-center">
           <AnimatedCounter end={98} suffix="%" class="text-brand text-4xl font-bold" />
-          <p class="mt-2 text-sm text-muted">Client Satisfaction</p>
+          <p class="text-muted mt-2 text-sm">Client Satisfaction</p>
         </div>
       </div>
     </div>
@@ -1346,7 +1346,7 @@ import { hapticFeedback } from '../lib/haptics';
   <!-- Scroll indicator with bounce animation -->
   <div class="absolute bottom-8 left-1/2 -translate-x-1/2">
     <div class="animate-bounce-slow flex flex-col items-center">
-      <span class="mb-2 text-xs text-muted">Scroll to explore</span>
+      <span class="text-muted mb-2 text-xs">Scroll to explore</span>
       <svg class="text-brand h-6 w-6" * down arrow *></svg>
     </div>
   </div>
@@ -1808,12 +1808,12 @@ export function SmartChatWidget() {
   <div id="service-map" class="absolute inset-0"></div>
 
   <!-- Overlay with stats -->
-  <div class="glass-card absolute left-4 top-4 p-4">
+  <div class="glass-card absolute top-4 left-4 p-4">
     <h4 class="mb-2 font-semibold">Your Area: San Francisco</h4>
     <div class="space-y-1 text-sm">
       <div>Average Response: <span class="text-brand font-bold">2.3 hours</span></div>
       <div>Crews Available: <span class="text-brand font-bold">8</span></div>
-      <div>Next Available: <span class="font-bold text-accent">Today 3:00 PM</span></div>
+      <div>Next Available: <span class="text-accent font-bold">Today 3:00 PM</span></div>
     </div>
   </div>
 </div>
@@ -2192,19 +2192,19 @@ export function ExitIntentOffer() {
   <div class="glass-card p-4 text-center">
     <div class="mb-2 text-3xl">💯</div>
     <h4 class="text-sm font-semibold">100% Satisfaction</h4>
-    <p class="text-xs text-muted">Or we re-clean free</p>
+    <p class="text-muted text-xs">Or we re-clean free</p>
   </div>
 
   <div class="glass-card p-4 text-center">
     <div class="mb-2 text-3xl">🔒</div>
     <h4 class="text-sm font-semibold">No Lock-In</h4>
-    <p class="text-xs text-muted">Cancel anytime</p>
+    <p class="text-muted text-xs">Cancel anytime</p>
   </div>
 
   <div class="glass-card p-4 text-center">
     <div class="mb-2 text-3xl">⚡</div>
     <h4 class="text-sm font-semibold">Same-Day Service</h4>
-    <p class="text-xs text-muted">When available</p>
+    <p class="text-muted text-xs">When available</p>
   </div>
 </div>
 ```

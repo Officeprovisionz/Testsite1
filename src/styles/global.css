@@ -1,6 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@config '../../tailwind.config.ts';
+
+/* v3 Compatibility Layer - Preserve default behaviors from Tailwind v3 */
+@layer base {
+  /* Preserve v3 default border color (gray-200 instead of currentColor) */
+  *,
+  ::after,
+  ::before,
+  ::backdrop {
+    border-color: var(--color-gray-200, currentColor);
+  }
+
+  /* Preserve v3 button cursor (pointer instead of default) */
+  button:not(:disabled),
+  [role='button']:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Preserve v3 placeholder color */
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-gray-400);
+  }
+}
 
 @layer base {
   :root {
@@ -196,7 +219,7 @@
 
   /* Sticky header needs blur */
   header.sticky {
-    @apply bg-surface/80 backdrop-blur-md dark:bg-surface/80;
+    @apply bg-surface/80 dark:bg-surface/80 backdrop-blur-md;
   }
   /* Forced dark mode */
   :root[data-mode='dark'] {
@@ -535,7 +558,7 @@
 
   /* Links with underline-offset and smooth transitions */
   .link-underline {
-    @apply underline decoration-brand-500/40 underline-offset-4 transition-colors;
+    @apply decoration-brand-500/40 underline underline-offset-4 transition-colors;
   }
 
   .link-underline:hover {
@@ -784,7 +807,7 @@
   }
 
   .link:focus-visible {
-    @apply outline-none ring-2 ring-[rgb(var(--color-brand))] ring-offset-2;
+    @apply ring-2 ring-[rgb(var(--color-brand))] ring-offset-2 outline-none;
   }
 
   .link-muted {
@@ -1167,7 +1190,7 @@
   }
 
   .btn {
-    @apply inline-flex min-h-12 touch-manipulation select-none items-center justify-center gap-2 px-7 py-3 text-sm font-semibold;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 px-7 py-3 text-sm font-semibold select-none;
     transition:
       color var(--duration-fast) var(--ease-out-quart),
       background-color var(--duration-fast) var(--ease-out-quart),
@@ -1270,11 +1293,22 @@
   }
 
   .btn:focus-visible {
-    @apply outline-none ring-2 ring-brand-500 ring-offset-2 ring-offset-[rgb(var(--color-bg))];
+    @apply ring-brand-500 ring-2 ring-offset-2 ring-offset-[rgb(var(--color-bg))] outline-none;
   }
 
   .btn-primary {
-    @apply btn;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 px-7 py-3 text-sm font-semibold select-none;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      background-color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
+      filter var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-expo);
+    border-radius: var(--radius-control);
+    letter-spacing: 0.015em;
+    position: relative;
+    overflow: hidden;
     color: rgb(12 14 18);
     background: linear-gradient(
       180deg,
@@ -1306,7 +1340,18 @@
 
   /* Accent button - warm coral for important CTAs */
   .btn-accent {
-    @apply btn text-white shadow-sm;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 px-7 py-3 text-sm font-semibold text-white shadow-sm select-none;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      background-color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
+      filter var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-expo);
+    border-radius: var(--radius-control);
+    letter-spacing: 0.015em;
+    position: relative;
+    overflow: hidden;
     background: linear-gradient(
       120deg,
       rgb(var(--color-brand-400)) 0%,
@@ -1323,7 +1368,18 @@
   }
 
   .btn-secondary {
-    @apply btn border;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 border px-7 py-3 text-sm font-semibold select-none;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      background-color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
+      filter var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-expo);
+    border-radius: var(--radius-control);
+    letter-spacing: 0.015em;
+    position: relative;
+    overflow: hidden;
     border-color: rgb(var(--color-border) / 0.9);
     background-color: transparent;
     color: rgb(var(--color-text));
@@ -1354,7 +1410,18 @@
 
   /* For dark hero / media overlays (keeps text readable on dark backgrounds). */
   .btn-invert {
-    @apply btn border;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 border px-7 py-3 text-sm font-semibold select-none;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      background-color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
+      filter var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-expo);
+    border-radius: var(--radius-control);
+    letter-spacing: 0.015em;
+    position: relative;
+    overflow: hidden;
     border-color: rgb(255 255 255 / 0.3);
     background-color: rgb(255 255 255 / 0.08);
     color: rgb(255 255 255);
@@ -1366,7 +1433,24 @@
   }
 
   .icon-btn {
-    @apply btn-secondary tap-target px-0;
+    @apply inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 border px-0 py-3 text-sm font-semibold select-none;
+    min-width: 44px;
+    min-height: 44px;
+    transition:
+      color var(--duration-fast) var(--ease-out-quart),
+      background-color var(--duration-fast) var(--ease-out-quart),
+      border-color var(--duration-fast) var(--ease-out-quart),
+      box-shadow var(--duration-normal) var(--ease-out-expo),
+      filter var(--duration-fast) var(--ease-out-quart),
+      transform var(--duration-fast) var(--ease-out-expo);
+    border-radius: var(--radius-control);
+    letter-spacing: 0.015em;
+    position: relative;
+    overflow: hidden;
+    border-color: rgb(var(--color-border) / 0.9);
+    background-color: transparent;
+    color: rgb(var(--color-text));
+    box-shadow: 0 12px 26px -22px rgb(0 0 0 / 0.45);
     width: 3rem;
   }
 
@@ -1411,7 +1495,7 @@
   }
 
   .heading-1 {
-    @apply text-balance font-serif font-semibold;
+    @apply font-serif font-semibold text-balance;
     font-size: clamp(2.55rem, 4.2vw + 1.05rem, 4.6rem);
     line-height: 0.99;
     letter-spacing: -0.045em;
@@ -1428,7 +1512,7 @@
   }
 
   .heading-2 {
-    @apply text-balance font-serif font-semibold;
+    @apply font-serif font-semibold text-balance;
     font-size: clamp(1.8rem, 2.1vw + 1.05rem, 2.85rem);
     line-height: 1.08;
     letter-spacing: -0.03em;
@@ -1437,7 +1521,7 @@
   }
 
   .heading-3 {
-    @apply text-balance font-semibold;
+    @apply font-semibold text-balance;
     font-size: clamp(1.35rem, 1.25vw + 1.05rem, 2.1rem);
     line-height: 1.18;
     letter-spacing: -0.02em;
@@ -1446,7 +1530,7 @@
   }
 
   .heading-4 {
-    @apply text-balance font-semibold;
+    @apply font-semibold text-balance;
     font-size: clamp(1.15rem, 0.7vw + 1rem, 1.45rem);
     line-height: 1.2;
     letter-spacing: -0.01em;
@@ -1567,7 +1651,7 @@
     color: rgb(var(--color-text));
     box-shadow: 0 1px 0 0 rgb(255 255 255 / 0.06) inset;
     --tw-ring-offset-color: rgb(var(--color-surface));
-    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2;
+    @apply focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2 focus-visible:outline-none;
     @apply transition-colors;
   }
 
@@ -2338,7 +2422,9 @@
   }
 
   .menu-link {
-    @apply tap-target block rounded-lg px-4 py-3.5 text-sm font-medium;
+    @apply block rounded-lg px-4 py-3.5 text-sm font-medium;
+    min-width: 44px;
+    min-height: 44px;
     color: rgb(var(--color-text-muted));
   }
 

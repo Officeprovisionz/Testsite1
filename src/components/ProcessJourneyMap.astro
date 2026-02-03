@@ -22,7 +22,7 @@ const steps = [
 <section class="section" id="journey-map">
   <div class="container-page">
     <div class="text-center">
-      <p class="label text-[0.75rem] text-muted">Journey map</p>
+      <p class="label text-muted text-[0.75rem]">Journey map</p>
       <h2 class="heading-2 mt-3">What it feels like to work with us</h2>
       <p class="lede mx-auto mt-3 max-w-2xl">
         A swipeable, step‑by‑step view that makes the process feel simple on mobile.
@@ -33,9 +33,9 @@ const steps = [
       {
         steps.map((step, idx) => (
           <article class="journey__card card card-hover">
-            <p class="label text-[0.7rem] text-muted">Step {idx + 1}</p>
+            <p class="label text-muted text-[0.7rem]">Step {idx + 1}</p>
             <h3 class="heading-4 mt-2">{step.title}</h3>
-            <p class="mt-2 text-sm leading-relaxed text-muted">{step.description}</p>
+            <p class="text-muted mt-2 text-sm leading-relaxed">{step.description}</p>
           </article>
         ))
       }

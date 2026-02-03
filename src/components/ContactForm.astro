@@ -37,17 +37,17 @@ const servicesErrorId = `${servicesHelpId}-error`;
         {isDev ? (
           <>
             <p class="text-strong font-semibold">Form endpoint not configured</p>
-            <p class="mt-1 text-muted">
-              Set <code class="rounded bg-surface px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
-              <code class="rounded bg-surface px-1.5 py-0.5">.env</code> (see
-              <code class="rounded bg-surface px-1.5 py-0.5">.env.example</code>) to enable
+            <p class="text-muted mt-1">
+              Set <code class="bg-surface rounded px-1.5 py-0.5">PUBLIC_FORM_ENDPOINT</code> in
+              <code class="bg-surface rounded px-1.5 py-0.5">.env</code> (see
+              <code class="bg-surface rounded px-1.5 py-0.5">.env.example</code>) to enable
               submissions. For now, this form will open your email app with the details filled in.
             </p>
           </>
         ) : (
           <>
             <p class="text-strong font-semibold">We’ll reply fast</p>
-            <p class="mt-1 text-muted">
+            <p class="text-muted mt-1">
               When you submit, this form will open your email app with the message filled in. If you
               prefer, call/text us instead, or{' '}
               <button
@@ -103,7 +103,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
       />
     </div>
 
-    <p id={helpId} class="text-sm text-muted">
+    <p id={helpId} class="text-muted text-sm">
       Fields marked with <span class="font-semibold">*</span> are required.
     </p>
 
@@ -264,7 +264,7 @@ const servicesErrorId = `${servicesHelpId}-error`;
 
       <p
         id={servicesErrorId}
-        class="hidden text-xs text-destructive"
+        class="text-destructive hidden text-xs"
         data-services-error
         aria-live="assertive"
       >

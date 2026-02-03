@@ -12,7 +12,7 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
 ---
 
 <footer class="footer-surface">
-  <div class="container-page safe-bottom-pad pb-20 pt-10 md:py-12 lg:py-16">
+  <div class="container-page safe-bottom-pad pt-10 pb-20 md:py-12 lg:py-16">
     <div class="grid gap-8 md:grid-cols-4 md:gap-9 lg:gap-12">
       <!-- Brand Column -->
       <div class="md:col-span-1">
@@ -32,7 +32,7 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
           />
           <span class="text-strong text-lg font-bold tracking-tight">{siteConfig.brand.name}</span>
         </a>
-        <p class="mt-2 text-sm leading-relaxed text-muted">{siteConfig.brand.tagline}</p>
+        <p class="text-muted mt-2 text-sm leading-relaxed">{siteConfig.brand.tagline}</p>
         <p class="text-subtle mt-3 text-sm">Serving {siteConfig.brand.city}</p>
 
         <div class="mt-4 flex flex-col gap-2 sm:flex-row">
@@ -60,7 +60,7 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
 
         <div class="mt-4 space-y-1">
           <a
-            class="hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm text-muted transition-all duration-200 hover:shadow-sm dark:hover:bg-surface-muted/60 dark:active:bg-surface-muted/75"
+            class="hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/60 dark:active:bg-surface-muted/75 -mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm transition-all duration-200 hover:shadow-sm"
             href={telHref}
             data-track="cta_click"
             data-location="footer"
@@ -84,7 +84,7 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
             {siteConfig.contact.phoneDisplay}
           </a>
           <a
-            class="hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm text-muted transition-all duration-200 hover:shadow-sm dark:hover:bg-surface-muted/60 dark:active:bg-surface-muted/75"
+            class="hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/60 dark:active:bg-surface-muted/75 -mx-2 flex items-center gap-2 rounded-lg px-2 py-2.5 text-sm transition-all duration-200 hover:shadow-sm"
             href={mailtoHref}
             data-track="cta_click"
             data-location="footer"
@@ -114,10 +114,10 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
       <div class="md:hidden">
         <div class="mt-2 grid gap-3">
           <details
-            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 rounded-[var(--radius-card)] border bg-surface/85 p-4 shadow-sm transition-all duration-200 open:bg-surface open:shadow-md"
+            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 bg-surface/85 open:bg-surface rounded-[var(--radius-card)] border p-4 shadow-sm transition-all duration-200 open:shadow-md"
           >
             <summary
-              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
+              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))] focus-visible:outline-none"
             >
               Services
               <span
@@ -127,25 +127,25 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
             </summary>
             <nav class="mt-3 grid gap-1" aria-label="Footer Services">
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('services/')}>Overview</a
               >
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('services/#industries')}>Industries served</a
               >
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('services/#specialty')}>Specialty + add-ons</a
               >
             </nav>
           </details>
 
           <details
-            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 rounded-[var(--radius-card)] border bg-surface/85 p-4 shadow-sm transition-all duration-200 open:bg-surface open:shadow-md"
+            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 bg-surface/85 open:bg-surface rounded-[var(--radius-card)] border p-4 shadow-sm transition-all duration-200 open:shadow-md"
           >
             <summary
-              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
+              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))] focus-visible:outline-none"
             >
               Company
               <span
@@ -155,25 +155,25 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
             </summary>
             <nav class="mt-3 grid gap-1" aria-label="Footer Company">
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('about/')}>About</a
               >
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('about/#proof')}>Results</a
               >
               <a
-                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm text-muted transition-colors duration-200 dark:hover:bg-surface-muted/30"
+                class="tap-target hover:bg-brand/5 hover:text-brand active:bg-brand/10 dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30 -mx-2 rounded-[var(--radius-control)] px-2 py-2 text-sm transition-colors duration-200"
                 href={href('contact/')}>Contact</a
               >
             </nav>
           </details>
 
           <details
-            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 rounded-[var(--radius-card)] border bg-surface/85 p-4 shadow-sm transition-all duration-200 open:bg-surface open:shadow-md"
+            class="border-brand/10 open:border-brand/20 dark:border-brand/20 dark:open:border-brand/30 bg-surface/85 open:bg-surface rounded-[var(--radius-card)] border p-4 shadow-sm transition-all duration-200 open:shadow-md"
           >
             <summary
-              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))]"
+              class="text-strong hover:text-brand dark:hover:text-brand flex min-h-11 cursor-pointer touch-manipulation list-none items-center justify-between gap-3 rounded-[var(--radius-control)] py-1.5 text-sm font-semibold transition-colors focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand)/0.5)] focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--color-bg))] focus-visible:outline-none"
             >
               Hours
               <span
@@ -181,13 +181,13 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
                 >+</span
               >
             </summary>
-            <ul class="mt-3 space-y-1.5 text-sm text-muted">
+            <ul class="text-muted mt-3 space-y-1.5 text-sm">
               {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
             </ul>
 
             <a
               href="#top"
-              class="tap-target border-brand/20 text-brand hover:border-brand/40 dark:border-brand/20 dark:text-brand dark:hover:border-brand/40 mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border bg-surface/85 px-4 py-2.5 text-sm font-medium shadow-sm transition-colors duration-200 hover:bg-surface dark:bg-surface-muted/50 dark:hover:bg-surface-muted/80"
+              class="tap-target border-brand/20 text-brand hover:border-brand/40 dark:border-brand/20 dark:text-brand dark:hover:border-brand/40 bg-surface/85 hover:bg-surface dark:bg-surface-muted/50 dark:hover:bg-surface-muted/80 mt-4 inline-flex w-full items-center justify-center gap-2 rounded-[var(--radius-control)] border px-4 py-2.5 text-sm font-medium shadow-sm transition-colors duration-200"
             >
               <svg
                 class="h-4 w-4"
@@ -208,54 +208,54 @@ const logoOrbSrc = `${base}brand/logo-orb.svg`;
 
       <!-- Services Column -->
       <nav class="hidden space-y-3 md:block" aria-label="Footer Services">
-        <p class="text-brand dark:text-brand text-xs font-semibold uppercase tracking-wider">
+        <p class="text-brand dark:text-brand text-xs font-semibold tracking-wider uppercase">
           Services
         </p>
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('services/')}>Overview</a
         >
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('services/#industries')}>Industries served</a
         >
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('services/#specialty')}>Specialty + add-ons</a
         >
       </nav>
 
       <!-- Company Column -->
       <nav class="hidden space-y-3 md:block" aria-label="Footer Company">
-        <p class="text-brand dark:text-brand text-xs font-semibold uppercase tracking-wider">
+        <p class="text-brand dark:text-brand text-xs font-semibold tracking-wider uppercase">
           Company
         </p>
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('about/')}>About</a
         >
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('about/#proof')}>Results</a
         >
         <a
-          class="hover:text-brand dark:hover:text-brand block text-sm text-muted transition-colors duration-200"
+          class="hover:text-brand dark:hover:text-brand text-muted block text-sm transition-colors duration-200"
           href={href('contact/')}>Contact</a
         >
       </nav>
 
       <!-- Hours Column -->
       <div class="hidden md:block">
-        <p class="text-brand dark:text-brand text-xs font-semibold uppercase tracking-wider">
+        <p class="text-brand dark:text-brand text-xs font-semibold tracking-wider uppercase">
           Hours
         </p>
-        <ul class="mt-3 space-y-1.5 text-sm text-muted">
+        <ul class="text-muted mt-3 space-y-1.5 text-sm">
           {siteConfig.hours.lines.map((h) => <li>{h}</li>)}
         </ul>
 
         <a
           href="#top"
-          class="border-brand/20 text-brand hover:border-brand/40 dark:border-brand/20 dark:text-brand dark:hover:border-brand/40 mt-6 inline-flex items-center gap-2 rounded-[var(--radius-control)] border bg-surface/85 px-4 py-2 text-sm font-medium shadow-sm transition-colors duration-200 hover:bg-surface dark:bg-surface-muted/50 dark:hover:bg-surface-muted/80"
+          class="border-brand/20 text-brand hover:border-brand/40 dark:border-brand/20 dark:text-brand dark:hover:border-brand/40 bg-surface/85 hover:bg-surface dark:bg-surface-muted/50 dark:hover:bg-surface-muted/80 mt-6 inline-flex items-center gap-2 rounded-[var(--radius-control)] border px-4 py-2 text-sm font-medium shadow-sm transition-colors duration-200"
         >
           <svg
             class="h-4 w-4"

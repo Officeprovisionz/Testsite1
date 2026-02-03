@@ -42,7 +42,7 @@ export function CardSkeleton() {
   return (
     <div className="card overflow-hidden">
       {/* Image skeleton */}
-      <Skeleton className="h-48 w-full rounded-b-none rounded-t-xl" />
+      <Skeleton className="h-48 w-full rounded-t-xl rounded-b-none" />
 
       {/* Content skeleton */}
       <div className="space-y-3 p-6">

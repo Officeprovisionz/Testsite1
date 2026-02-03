@@ -31,11 +31,11 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
       <div class="relative flex flex-col gap-6">
         <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <p class="text-subtle text-xs font-semibold uppercase tracking-[0.08em]">
+            <p class="text-subtle text-xs font-semibold tracking-[0.08em] uppercase">
               3-step quote wizard
             </p>
             <h2 class="heading-3 mt-1">Get scoped fast</h2>
-            <p class="text-sm text-muted">
+            <p class="text-muted text-sm">
               Capture the essentials in three steps. We'll prefill the full contact form so you can
               review, edit, and send - no duplicate typing.
             </p>
@@ -49,7 +49,7 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
                 <span class="wizard-stepper__dot" aria-hidden="true">
                   {idx + 1}
                 </span>
-                <span class="wizard-stepper__label text-xs font-semibold text-muted">{label}</span>
+                <span class="wizard-stepper__label text-muted text-xs font-semibold">{label}</span>
               </div>
             ))
           }

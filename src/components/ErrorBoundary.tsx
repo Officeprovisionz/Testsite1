@@ -63,23 +63,23 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex min-h-[400px] items-center justify-center p-6">
           <div className="max-w-md text-center">
-            <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-destructive/10">
-              <AlertTriangle className="h-8 w-8 text-destructive" aria-hidden="true" />
+            <div className="bg-destructive/10 mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full">
+              <AlertTriangle className="text-destructive h-8 w-8" aria-hidden="true" />
             </div>
 
             <h2 className="heading-3 mb-2">Something went wrong</h2>
 
-            <p className="mb-6 text-muted">
+            <p className="text-muted mb-6">
               We're sorry for the inconvenience. Please try refreshing the page or contact us if the
               problem persists.
             </p>
 
             {import.meta.env.DEV && this.state.error && (
               <details className="mb-6 text-left">
-                <summary className="hover:text-strong cursor-pointer text-sm text-muted">
+                <summary className="hover:text-strong text-muted cursor-pointer text-sm">
                   Error details (dev only)
                 </summary>
-                <pre className="mt-2 overflow-auto rounded-lg bg-destructive/5 p-4 text-xs">
+                <pre className="bg-destructive/5 mt-2 overflow-auto rounded-lg p-4 text-xs">
                   {this.state.error.toString()}
                   {'\n\n'}
                   {this.state.error.stack}

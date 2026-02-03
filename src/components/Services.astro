@@ -73,7 +73,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
           <summary class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 sm:px-6 sm:py-5 lg:px-8 lg:py-6">
             <div class="min-w-0">
               <p class="text-strong text-base font-semibold lg:text-lg">View specialty services</p>
-              <p class="mt-1 text-sm text-muted lg:text-base">
+              <p class="text-muted mt-1 text-sm lg:text-base">
                 Expand to see what we can add on—each item is scoped and scheduled to your building
                 rules.
               </p>
@@ -88,13 +88,13 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
           <div class="border-app border-t px-5 py-4 sm:px-6 lg:px-8 lg:py-6">
             {items.length === 0 ? (
-              <p class="text-sm text-muted">No specialty services are listed yet.</p>
+              <p class="text-muted text-sm">No specialty services are listed yet.</p>
             ) : (
               <div class="border-app divide-y">
                 {items.map((s) => (
                   <div class="py-4 lg:py-5">
                     <p class="text-strong font-semibold lg:text-lg">{s.title}</p>
-                    <p class="mt-1 text-sm text-muted lg:text-base">{s.description}</p>
+                    <p class="text-muted mt-1 text-sm lg:text-base">{s.description}</p>
                   </div>
                 ))}
               </div>
@@ -111,7 +111,7 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
               >
                 {ctaLabel}
               </a>
-              <p class="text-xs text-muted sm:self-center">
+              <p class="text-muted text-xs sm:self-center">
                 Not sure what you need? Tell us the goal—we’ll recommend the right add-ons.
               </p>
             </div>
@@ -220,13 +220,13 @@ const iconTypeFor = (title: string): 'sparkle' | 'supplies' | 'facility' | 'defa
 
                     <div class="min-w-0">
                       <h3 class="text-strong text-lg font-bold">{s.title}</h3>
-                      <p class="mt-2 text-sm text-muted">{s.description}</p>
+                      <p class="text-muted mt-2 text-sm">{s.description}</p>
                     </div>
                   </div>
 
                   <ul
                     class:list={[
-                      'check-list check-list--compact text-sm text-muted',
+                      'check-list check-list--compact text-muted text-sm',
                       isFeatured ? 'sm:grid-cols-2' : '',
                     ]}
                   >

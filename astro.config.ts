@@ -1,9 +1,9 @@
 import { defineConfig, envField } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
-import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import partytown from '@astrojs/partytown';
 import icon from 'astro-icon';
+import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 
 function normalizeBase(input: string | undefined): string {
@@ -33,7 +33,6 @@ const base = normalizeBase(
 const site = process.env.SITE_URL;
 
 const integrations = [
-  tailwind({ applyBaseStyles: false }),
   react(),
   partytown({
     // Adds dataLayer.push as a forwarded-event.
@@ -53,6 +52,8 @@ export default defineConfig({
   base,
   ...(site ? { site } : {}),
   vite: {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    plugins: [tailwindcss() as any],
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./src', import.meta.url)),

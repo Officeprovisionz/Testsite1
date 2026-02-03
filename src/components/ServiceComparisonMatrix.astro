@@ -46,7 +46,7 @@ const matrix = [
   <div class="container-page">
     <div class="mx-auto max-w-6xl">
       <div class="text-center">
-        <p class="label text-[0.75rem] text-muted">Service tiers</p>
+        <p class="label text-muted text-[0.75rem]">Service tiers</p>
         <h2 class="heading-2 mt-3">Compare cleaning coverage</h2>
         <p class="lede mx-auto mt-3 max-w-2xl">
           Choose a baseline, then add the support you need. We’ll confirm scope and access during
@@ -99,8 +99,8 @@ const matrix = [
         {
           tiers.map((tier) => (
             <div class="card card-hover p-5 sm:p-6">
-              <p class="label text-[0.72rem] text-muted">{tier.name}</p>
-              <ul class="mt-3 space-y-2 text-sm text-muted">
+              <p class="label text-muted text-[0.72rem]">{tier.name}</p>
+              <ul class="text-muted mt-3 space-y-2 text-sm">
                 {tier.features.map((feature) => (
                   <li class="flex items-start gap-2">
                     <span class="text-strong">•</span>

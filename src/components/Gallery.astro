@@ -231,7 +231,7 @@ const getImgAttrs = (src: string) => {
                   <p class="text-strong text-sm font-semibold lg:text-base">
                     {it.caption ?? 'Project photo'}
                   </p>
-                  <p class="mt-1 text-sm text-muted lg:text-base">{it.alt}</p>
+                  <p class="text-muted mt-1 text-sm lg:text-base">{it.alt}</p>
                 </div>
               ) : null}
             </a>
@@ -307,7 +307,7 @@ const getImgAttrs = (src: string) => {
         />
         {
           showLightboxText ? (
-            <figcaption class="text-sm text-muted" data-lightbox-caption data-lightbox-chrome />
+            <figcaption class="text-muted text-sm" data-lightbox-caption data-lightbox-chrome />
           ) : null
         }
         <p class="sr-only" aria-live="polite" data-lightbox-toast></p>
@@ -315,8 +315,8 @@ const getImgAttrs = (src: string) => {
     </dialog>
   </div>
 
-  <div class="relative -mb-px mt-12">
-    <WaveDivider tone="surface-muted" class="absolute bottom-0 left-0 right-0" />
+  <div class="relative mt-12 -mb-px">
+    <WaveDivider tone="surface-muted" class="absolute right-0 bottom-0 left-0" />
   </div>
 
   <script>

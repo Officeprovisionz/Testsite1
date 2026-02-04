@@ -50,6 +50,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
   lang="en"
   data-theme="teal"
   data-mode="dark"
+  data-analytics-enabled={analyticsEnabled ? 'true' : 'false'}
   style={`--asset-hero-bg: none; --asset-noise: url('${assetNoise}')`}
 >
   <head>
@@ -110,17 +111,8 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
         prerender: [
           {
             source: 'list',
-            urls: ['/pricing', '/services', '/contact', '/about'],
-          },
-          {
-            source: 'document',
-            where: {
-              and: [
-                { href_matches: '/*' },
-                { not: { href_matches: ['/dev/*', '#*', 'mailto:*', 'tel:*'] } },
-              ],
-            },
-            eagerness: 'moderate',
+            // Use the configured base so this works on GitHub Pages project sites.
+            urls: [`${base}pricing/`, `${base}services/`, `${base}contact/`, `${base}about/`],
           },
         ],
       })}
@@ -185,24 +177,56 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     />
 
     <script>
-      import { onCLS, onLCP, onFCP, onTTFB, onINP, type Metric } from 'web-vitals';
+      // Defer Web Vitals to idle time to keep mobile main-thread snappy.
+      // This also avoids loading the `web-vitals` chunk unless analytics is enabled.
+      import { onCLS, onLCP, onFCP, onTTFB, onINP } from 'web-vitals';
+      import type { Metric } from 'web-vitals';
+      const analyticsEnabled = document.documentElement?.dataset?.analyticsEnabled === 'true';
 
-      function sendToAnalytics(metric: Metric) {
-        if (typeof window.damraTrack === 'function') {
-          window.damraTrack('web_vitals', {
-            name: metric.name,
-            value: metric.value,
-            id: metric.id,
-            rating: metric.rating,
-          });
+      const runWebVitals = (): void => {
+        if (!analyticsEnabled) return;
+        try {
+          const sendToAnalytics = (metric: Metric) => {
+            if (typeof window.damraTrack === 'function') {
+              window.damraTrack('web_vitals', {
+                name: metric.name,
+                value: metric.value,
+                id: metric.id,
+                rating: metric.rating,
+              });
+            }
+          };
+
+          onCLS(sendToAnalytics);
+          onLCP(sendToAnalytics);
+          onFCP(sendToAnalytics);
+          onTTFB(sendToAnalytics);
+          onINP(sendToAnalytics);
+        } catch {
+          // ignore
         }
-      }
+      };
 
-      onCLS(sendToAnalytics);
-      onLCP(sendToAnalytics);
-      onFCP(sendToAnalytics);
-      onTTFB(sendToAnalytics);
-      onINP(sendToAnalytics);
+      const scheduleVitals = (): void => {
+        try {
+          const requestIdleCallbackFn = (
+            globalThis as unknown as {
+              requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number;
+            }
+          ).requestIdleCallback;
+
+          if (typeof requestIdleCallbackFn === 'function') {
+            requestIdleCallbackFn(() => runWebVitals(), { timeout: 2500 });
+          } else {
+            globalThis.setTimeout(() => runWebVitals(), 1800);
+          }
+        } catch {
+          // ignore
+        }
+      };
+
+      if (document.readyState === 'complete') scheduleVitals();
+      else window.addEventListener('load', scheduleVitals, { once: true });
     </script>
 
     <script is:inline>
@@ -662,29 +686,10 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
           navigator.serviceWorker
             .register(swUrl, { scope: base })
             .then((reg) => {
-              // Listen for a new SW waiting to activate (common after deploy).
-              const onStateChange = () => {
-                if (reg.installing?.state === 'installed' && navigator.serviceWorker.controller) {
-                  // A newer SW is ready; tell it to activate immediately.
-                  reg.waiting?.postMessage({ type: 'SKIP_WAITING' });
-                }
-              };
-
-              if (reg.installing) {
-                reg.installing.addEventListener('statechange', onStateChange);
-              }
-
-              reg.addEventListener('updatefound', () => {
-                reg.installing?.addEventListener('statechange', onStateChange);
-              });
-
-              // When the new SW takes over, reload to ensure fresh assets.
-              let refreshing = false;
-              navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (refreshing) return;
-                refreshing = true;
-                window.location.reload();
-              });
+              // Do not force activation/reload on update.
+              // On mobile this can feel like “lag” (double-load) right after deploy.
+              // Let the new SW take over naturally on the next navigation.
+              void reg;
             })
             .catch(() => {
               // ignore
@@ -733,11 +738,47 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     <Toaster client:idle transition:persist />
 
     <script>
-      import { initScrollTracking, captureUTMs } from '@/lib/tracking';
-      import { hapticFeedback } from '@/lib/haptics';
-      // Initialize analytics and tracking
-      captureUTMs();
-      initScrollTracking();
+      // Lightweight UTM capture (persist across pages for the contact form).
+      (() => {
+        if (typeof window === 'undefined') return;
+        const keys = [
+          'utm_source',
+          'utm_medium',
+          'utm_campaign',
+          'utm_term',
+          'utm_content',
+          'gclid',
+          'fbclid',
+          'msclkid',
+        ];
+
+        try {
+          const params = new URLSearchParams(window.location.search);
+          keys.forEach((key) => {
+            const val = params.get(key);
+            if (val) window.sessionStorage?.setItem?.(key, val);
+          });
+        } catch {
+          // ignore
+        }
+      })();
+
+      // Lazy haptics: only load the helper when a user actually interacts.
+      type HapticPattern = 'tap' | 'success' | 'warning' | 'error';
+      type HapticIntensity = 'light' | 'medium' | 'heavy';
+      type HapticFeedback = (pattern?: HapticPattern, intensity?: HapticIntensity) => void;
+
+      let haptic: HapticFeedback | null = null;
+      const getHaptic = async (): Promise<HapticFeedback | null> => {
+        if (haptic) return haptic;
+        try {
+          const mod = await import('@/lib/haptics');
+          haptic = mod.hapticFeedback;
+          return haptic;
+        } catch {
+          return null;
+        }
+      };
 
       // Micro-interactions: "haptic" press simulation.
       // We keep CSS `:active` scaling for responsiveness and add a tiny springy release.
@@ -758,12 +799,13 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 
         document.addEventListener(
           'pointerup',
-          (e) => {
+          async (e) => {
             const el = isHapticEl(e.target);
             if (!el) return;
 
             // Physical tactile feedback for 2026 mobile devices.
-            hapticFeedback('tap', 'light');
+            const hf = await getHaptic();
+            hf?.('tap', 'light');
 
             try {
               el.animate(

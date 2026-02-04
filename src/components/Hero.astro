@@ -51,7 +51,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
   {/* Top-down gradient overlay for header readability */}
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-black/40 to-transparent opacity-60"
+    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-linear-to-b from-black/40 to-transparent opacity-60"
   >
   </div>
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
@@ -118,7 +118,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
 
     {/* Mobile-first readability veil with brand-tinted overlay (token-based for consistency). */}
     <div
-      class="absolute inset-0 bg-gradient-to-b from-[rgb(var(--color-text))/0.45] via-[rgb(var(--color-text))/0.22] to-[rgb(var(--color-brand))/0.08] sm:from-[rgb(var(--color-text))/0.38] sm:via-[rgb(var(--color-text))/0.18] dark:from-[rgb(var(--color-text))/0.6] dark:via-[rgb(var(--color-text-subtle))/0.3]"
+      class="absolute inset-0 bg-linear-to-b from-[rgb(var(--color-text))/0.45] via-[rgb(var(--color-text))/0.22] to-[rgb(var(--color-brand))/0.08] sm:from-[rgb(var(--color-text))/0.38] sm:via-[rgb(var(--color-text))/0.18] dark:from-[rgb(var(--color-text))/0.6] dark:via-[rgb(var(--color-text-subtle))/0.3]"
     >
     </div>
 
@@ -204,35 +204,97 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
   const initHeroMotion = () => {
     const hero = document.querySelector<HTMLElement>('[data-hero-section]');
     if (!hero) return;
+    if (hero.dataset.heroMotionInit === 'true') return;
+    hero.dataset.heroMotionInit = 'true';
 
     const isWebDriver = (navigator as Navigator & { webdriver?: boolean }).webdriver === true;
+    const isTouchLike = (() => {
+      try {
+        return (
+          window.matchMedia('(pointer: coarse)').matches ||
+          window.matchMedia('(hover: none)').matches
+        );
+      } catch {
+        return false;
+      }
+    })();
+
+    const isSaveData = (() => {
+      try {
+        const nav = navigator as Navigator & { connection?: { saveData?: boolean } };
+        return nav.connection?.saveData === true;
+      } catch {
+        return false;
+      }
+    })();
+
     const reduceMotion =
-      (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false) || isWebDriver;
+      (window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false) ||
+      isWebDriver ||
+      isTouchLike ||
+      isSaveData;
     const headline = hero.querySelector<HTMLElement>('[data-hero-headline]');
     const subhead = hero.querySelector<HTMLElement>('[data-hero-subhead]');
 
-    // Parallax text overlay (subtle, mobile-first). Disabled for reduced motion.
-    if (!reduceMotion && headline && subhead) {
-      let ticking = false;
-      const onScroll = () => {
-        if (ticking) return;
-        ticking = true;
-        window.requestAnimationFrame(() => {
-          ticking = false;
-          const rect = hero.getBoundingClientRect();
-          const progress = clamp(-rect.top / Math.max(1, rect.height), 0, 1);
-          // Headline moves slightly slower than scroll.
-          const hY = progress * -18;
-          const pY = progress * -12;
-          headline.style.transform = `translate3d(0, ${hY}px, 0)`;
-          subhead.style.transform = `translate3d(0, ${pY}px, 0)`;
-        });
-      };
+    // Parallax text overlay (desktop-only). Kept off on touch/data-saver for smoothness.
+    if (reduceMotion || !headline || !subhead) return;
 
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const rect = hero.getBoundingClientRect();
+      const progress = clamp(-rect.top / Math.max(1, rect.height), 0, 1);
+      // Headline moves slightly slower than scroll.
+      const hY = progress * -18;
+      const pY = progress * -12;
+      headline.style.transform = `translate3d(0, ${hY}px, 0)`;
+      subhead.style.transform = `translate3d(0, ${pY}px, 0)`;
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(update);
+    };
+
+    let listening = false;
+    const start = () => {
+      if (listening) return;
+      listening = true;
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', onScroll);
       onScroll();
-    }
+    };
+    const stop = () => {
+      if (!listening) return;
+      listening = false;
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+
+    // Only do work while hero is near the viewport.
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+        if (entry.isIntersecting) start();
+        else stop();
+      },
+      { root: null, threshold: 0, rootMargin: '150px 0px 150px 0px' }
+    );
+    io.observe(hero);
+
+    const cleanup = () => {
+      stop();
+      try {
+        io.disconnect();
+      } catch {
+        // ignore
+      }
+    };
+
+    // Clean up for Astro view transitions.
+    document.addEventListener('astro:before-swap', cleanup, { once: true });
   };
 
   // Run on load

@@ -161,7 +161,7 @@ const shouldHide = hiddenPaths.some((p) => normalizedPath.startsWith(p));
           const url = new URL(`${base}about/`, window.location.origin);
           window.location.href = url.toString();
         } catch {
-          window.location.href = '/about/';
+          window.location.href = `${base}about/`;
         }
       };
       openBtn.addEventListener('click', openMenu);

@@ -471,84 +471,15 @@ const navItems = [
         }
       };
 
+      // Keep drag-dismiss on the panel itself (doesn't affect overall page scroll responsiveness).
       panel.addEventListener('touchstart', onTouchStart, { passive: true });
       panel.addEventListener('touchmove', onTouchMove, { passive: false });
       panel.addEventListener('touchend', onTouchEnd, { passive: true });
       panel.addEventListener('touchcancel', onTouchEnd, { passive: true });
     }
 
-    // --- Swipe from right edge to open ---
-    // When the menu is closed, a short swipe-left starting near the right screen edge opens it.
-    // This keeps the gesture discoverable (iOS-style "back"/drawer region) without hijacking
-    // in-content horizontal scroll.
-    if (typeof window !== 'undefined') {
-      const EDGE_PX = 22;
-      const TRIGGER_PX = 52;
-
-      let edgeStartX = 0;
-      let edgeStartY = 0;
-      let edgeMaybe = false;
-      let edgeTriggered = false;
-
-      const isEditableTarget = (t: EventTarget | null) => {
-        const el = t as HTMLElement | null;
-        if (!el) return false;
-        const tag = el.tagName;
-        return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || el.isContentEditable;
-      };
-
-      const onDocTouchStart = (e: TouchEvent) => {
-        if (menu.open) return;
-        if (isEditableTarget(e.target)) return;
-
-        const t = e.touches[0];
-        if (!t) return;
-
-        edgeStartX = t.clientX;
-        edgeStartY = t.clientY;
-        edgeTriggered = false;
-
-        const w = window.innerWidth || 0;
-        edgeMaybe = w > 0 && edgeStartX >= w - EDGE_PX;
-      };
-
-      const onDocTouchMove = (e: TouchEvent) => {
-        if (!edgeMaybe) return;
-        if (menu.open) return;
-        if (edgeTriggered) return;
-
-        const t = e.touches[0];
-        if (!t) return;
-
-        const dx = t.clientX - edgeStartX;
-        const dy = t.clientY - edgeStartY;
-
-        // Swipe-left only, strongly horizontal.
-        if (dx >= 0) return;
-        if (Math.abs(dx) < Math.abs(dy) * 1.15) return;
-
-        if (Math.abs(dx) > TRIGGER_PX) {
-          edgeTriggered = true;
-          menu.open = true;
-          // Prevent the page from also scrolling horizontally while we trigger the drawer.
-          e.preventDefault();
-        }
-      };
-
-      const onDocTouchEnd = () => {
-        edgeMaybe = false;
-        edgeTriggered = false;
-      };
-
-      // Use a guard so we don't bind multiple times across client-side navigations.
-      if (document.documentElement.dataset.menuEdgeSwipeInit !== 'true') {
-        document.documentElement.dataset.menuEdgeSwipeInit = 'true';
-        document.addEventListener('touchstart', onDocTouchStart, { passive: true });
-        document.addEventListener('touchmove', onDocTouchMove, { passive: false });
-        document.addEventListener('touchend', onDocTouchEnd, { passive: true });
-        document.addEventListener('touchcancel', onDocTouchEnd, { passive: true });
-      }
-    }
+    // Note: An earlier experimental "edge swipe to open" gesture was removed because
+    // document-level non-passive `touchmove` can make mobile scrolling feel laggy.
   })();
 </script>
 
@@ -564,6 +495,7 @@ const navItems = [
     let raf = 0;
     let lastY = window.scrollY || 0;
     let lastDir: 'up' | 'down' = 'up';
+    let lastCompact: boolean | null = null;
 
     const COMPACT_AFTER_PX = 96;
     const DIR_DEADBAND_PX = 6;
@@ -590,9 +522,15 @@ const navItems = [
       const shouldCompact = allowCompact && y > COMPACT_AFTER_PX && lastDir === 'down';
       header.classList.toggle('is-compact', shouldCompact);
 
-      // Keep anchor offsets in sync with the *actual* rendered header height.
-      const h = Math.ceil(header.getBoundingClientRect().height);
-      document.documentElement.style.setProperty('--header-sticky', `${h}px`);
+      // Avoid layout reads on every scroll tick.
+      // Only re-measure when the compact state changes (or on resize).
+      if (lastCompact !== shouldCompact) {
+        lastCompact = shouldCompact;
+        window.requestAnimationFrame(() => {
+          const h = Math.ceil(header.getBoundingClientRect().height);
+          document.documentElement.style.setProperty('--header-sticky', `${h}px`);
+        });
+      }
     };
 
     const onUpdateRequest = () => {
@@ -708,8 +646,10 @@ const navItems = [
       const header = getHeader();
       if (!header) return;
 
-      // Desktop pointer fallback is always safe.
-      if (header.dataset.glassPointerInit !== 'true') {
+      // Desktop pointer fallback: only on hover-capable / fine-pointer devices.
+      const finePointer =
+        window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches ?? false;
+      if (finePointer && header.dataset.glassPointerInit !== 'true') {
         header.dataset.glassPointerInit = 'true';
         window.addEventListener('pointermove', onPointerMove, { passive: true });
       }

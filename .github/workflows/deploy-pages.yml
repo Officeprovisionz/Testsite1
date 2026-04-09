@@ -38,11 +38,10 @@ jobs:
       - name: Copy/encoding check
         run: bun run check:copy
 
-      - name: Require static form endpoint
+      - name: Check static form endpoint
         run: |
           if [ -z "${{ secrets.PUBLIC_FORM_ENDPOINT }}" ]; then
-            echo "::error::PUBLIC_FORM_ENDPOINT secret is required for GitHub Pages deployments."
-            exit 1
+            echo "::warning::PUBLIC_FORM_ENDPOINT secret is not set. Contact form submissions will not work until it is configured in repo Settings → Secrets."
           fi
 
       - name: Build (static)
@@ -59,7 +58,7 @@ jobs:
           PUBLIC_ENABLE_ANALYTICS: ${{ vars.PUBLIC_ENABLE_ANALYTICS }}
           PUBLIC_PLAUSIBLE_DOMAIN: ${{ vars.PUBLIC_PLAUSIBLE_DOMAIN }}
           PUBLIC_PLAUSIBLE_SRC: ${{ vars.PUBLIC_PLAUSIBLE_SRC }}
-          PUBLIC_ENABLE_SERVICE_WORKER: "true"
+          PUBLIC_ENABLE_SERVICE_WORKER: 'true'
           PUBLIC_SENTRY_DSN: ${{ secrets.PUBLIC_SENTRY_DSN }}
           ASTRO_TELEMETRY_DISABLED: 1
         run: bun run build

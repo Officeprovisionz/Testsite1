@@ -28,6 +28,24 @@ const base = normalizeBase(
     (process.env.GITHUB_ACTIONS === 'true' ? inferGithubPagesBase() : undefined)
 );
 
+const plausibleScriptOrigin = (() => {
+  const src = process.env.PUBLIC_PLAUSIBLE_SRC?.trim();
+  if (!src) return undefined;
+  try {
+    return new URL(src).origin;
+  } catch {
+    return undefined;
+  }
+})();
+
+const scriptSrcOrigins = [`'self'`, `'unsafe-inline'`, ...(plausibleScriptOrigin ? [plausibleScriptOrigin] : [])];
+const connectSrcOrigins = [
+  `'self'`,
+  'https://formspree.io',
+  'https://*.ingest.sentry.io',
+  ...(plausibleScriptOrigin ? [plausibleScriptOrigin] : []),
+];
+
 // Recommendation: set SITE_URL to your full canonical URL *including* the base.
 // Example (GitHub Pages): https://<owner>.github.io/<repo>/
 const site = process.env.SITE_URL;
@@ -95,12 +113,12 @@ export default defineConfig({
       'Content-Security-Policy':
         "default-src 'self'; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; " +
         "form-action 'self' https://formspree.io; " +
-        "script-src 'self' 'unsafe-inline' https://plausible.io; " +
+        `script-src ${scriptSrcOrigins.join(' ')}; ` +
         "style-src 'self' 'unsafe-inline'; " +
         "font-src 'self' data:; " +
         "img-src 'self' data: https:; " +
         "media-src 'self' https:; " +
-        "connect-src 'self' https://formspree.io https://plausible.io https://*.ingest.sentry.io; " +
+        `connect-src ${connectSrcOrigins.join(' ')}; ` +
         'upgrade-insecure-requests',
     },
   },
@@ -123,12 +141,22 @@ export default defineConfig({
       PUBLIC_PLAUSIBLE_DOMAIN: envField.string({
         context: 'client',
         access: 'public',
-        default: 'officeprovisionz.com',
+        optional: true,
       }),
       PUBLIC_PLAUSIBLE_SRC: envField.string({
         context: 'client',
         access: 'public',
-        default: 'https://plausible.io/js/script.js',
+        optional: true,
+      }),
+      PUBLIC_ENABLE_ANALYTICS: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
+      }),
+      PUBLIC_ENABLE_SERVICE_WORKER: envField.string({
+        context: 'client',
+        access: 'public',
+        optional: true,
       }),
       PUBLIC_SENTRY_DSN: envField.string({
         context: 'client',

@@ -167,6 +167,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
         const originHost = new URL(origin).host;
         const reqHost = new URL(req.url).host;
         if (originHost && reqHost && originHost !== reqHost) {
+          console.warn('[contact] blocked invalid origin', {
+            originHost,
+            reqHost,
+          });
           return json({ ok: false, error: 'Invalid origin.' }, { status: 403 });
         }
       }
@@ -229,6 +233,10 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     if (!lead.servicesNeeded.length) missing.push('servicesNeeded');
 
     if (missing.length) {
+      console.warn('[contact] validation failed', {
+        fields: missing,
+        source: lead.source || undefined,
+      });
       return json(
         {
           ok: false,
@@ -246,6 +254,11 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     // Basic spam heuristic: block messages stuffed with links.
     const linkCount = (lead.message.match(/https?:\/\//gi) || []).length;
     if (linkCount >= 5) {
+      console.warn('[contact] skipped suspected spam', {
+        reason: 'link_threshold',
+        linkCount,
+        source: lead.source || undefined,
+      });
       return json({ ok: true, skipped: true }, { status: 200 });
     }
 
@@ -254,6 +267,7 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
     const fromName = context.env.MAIL_FROM_NAME?.trim() || 'Office Provisionz Website';
 
     if (!fromEmail) {
+      console.error('[contact] missing mail sender configuration');
       return json(
         {
           ok: false,
@@ -278,9 +292,17 @@ export const onRequestPost: PagesFunction<Env> = async (context) => {
       textBody,
     });
 
+    console.info('[contact] lead delivered', {
+      ref,
+      source: lead.source || undefined,
+      servicesCount: lead.servicesNeeded.length,
+    });
     return json({ ok: true, ref }, { status: 200 });
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Unknown error.';
+    console.error('[contact] submission failed', {
+      error: msg,
+    });
     return json({ ok: false, error: msg }, { status: 500 });
   }
 };

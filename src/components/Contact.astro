@@ -2,6 +2,7 @@
 import { siteConfig } from '@/data/siteConfig';
 import { makeMailtoHref, makeTelHref } from '@/lib/links';
 import ContactForm from '@/components/ContactForm.astro';
+import { resolveContactEndpoint } from '@/lib/contact';
 
 type Props = {
   id?: string;
@@ -25,12 +26,16 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
+const isCloudflarePages = process.env.CF_PAGES === '1';
 
 // Endpoint precedence:
 // 1) PUBLIC_FORM_ENDPOINT (e.g. Formspree/Basin)
 // 2) Built-in Cloudflare Pages Function (/api/contact)
-const builtInEndpoint = `${base}api/contact`;
-const formEndpoint = import.meta.env.PUBLIC_FORM_ENDPOINT || builtInEndpoint;
+const formEndpoint = resolveContactEndpoint({
+  baseUrl: base,
+  publicFormEndpoint: import.meta.env.PUBLIC_FORM_ENDPOINT,
+  cloudflarePages: isCloudflarePages,
+});
 const isDev = import.meta.env.DEV;
 const telHref = makeTelHref(siteConfig.contact.phoneE164);
 const mailtoTo = siteConfig.contact.email;
@@ -200,6 +205,8 @@ const serviceOptions = [
 </div>
 
 <script>
+  import { parseLeadSubmitResponseMeta } from '@/lib/contact';
+
   const root = document.documentElement;
 
   const init = () => {
@@ -366,6 +373,7 @@ const serviceOptions = [
       // Save a small, non-sensitive summary for the Thanks page.
       // (We intentionally avoid storing the free-form message body.)
       const saveLeadSummary = (data: {
+        ref?: string;
         companyName: string;
         name: string;
         email: string;
@@ -378,9 +386,8 @@ const serviceOptions = [
       }) => {
         try {
           if (!window.sessionStorage) return;
-          const ref = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-          const payload = {
-            ref,
+          const ref = String(data.ref ?? '').trim() || undefined;
+          const payload: Record<string, unknown> = {
             createdAt: Date.now(),
             companyName: data.companyName,
             name: data.name,
@@ -392,6 +399,7 @@ const serviceOptions = [
             servicesNeeded: data.servicesNeeded,
             source: data.source,
           };
+          if (ref) payload.ref = ref;
           window.sessionStorage.setItem('damra_last_lead', JSON.stringify(payload));
         } catch {
           // ignore
@@ -657,6 +665,20 @@ const serviceOptions = [
         const consent = String(fd.get('consent') ?? '').trim();
         const message = String(fd.get('message') ?? '').trim();
         const honeypot = String(fd.get('website') ?? '').trim();
+        const endpointUrl = (() => {
+          const raw = String(endpoint || '').trim();
+          if (!raw) return '';
+          // Allow absolute URLs (Formspree/Basin/etc.) and same-origin relative endpoints.
+          if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
+          if (raw.startsWith('/')) {
+            try {
+              return new URL(raw, window.location.origin).toString();
+            } catch {
+              return '';
+            }
+          }
+          return '';
+        })();
 
         const utmSource = String(fd.get('utm_source') ?? '').trim();
         const utmMedium = String(fd.get('utm_medium') ?? '').trim();
@@ -668,7 +690,7 @@ const serviceOptions = [
           frequency,
           hasPhone: Boolean(phone),
           servicesCount: servicesNeeded.length,
-          via: endpoint ? 'endpoint' : 'mailto',
+          via: endpointUrl ? 'endpoint' : 'mailto',
           utmSource: utmSource || undefined,
           utmMedium: utmMedium || undefined,
           utmCampaign: utmCampaign || undefined,
@@ -747,21 +769,6 @@ const serviceOptions = [
         setStatus('Sending...', 'info');
 
         try {
-          const endpointUrl = (() => {
-            const raw = String(endpoint || '').trim();
-            if (!raw) return '';
-            // Allow absolute URLs (Formspree/Basin/etc.) and same-origin relative endpoints.
-            if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
-            if (raw.startsWith('/')) {
-              try {
-                return new URL(raw, window.location.origin).toString();
-              } catch {
-                return '';
-              }
-            }
-            return '';
-          })();
-
           if (endpointUrl) {
             const payload: Record<string, unknown> = {};
 
@@ -785,24 +792,11 @@ const serviceOptions = [
               body: JSON.stringify(payload),
             });
 
+            const rawResponseText = await res.text().catch(() => '');
+            const responseMeta = parseLeadSubmitResponseMeta(rawResponseText);
+
             if (!res.ok) {
-              const details = await (async () => {
-                try {
-                  const data = (await res.json()) as unknown;
-                  if (data && typeof data === 'object') {
-                    const msg = (data as Record<string, unknown>).error;
-                    if (typeof msg === 'string' && msg.trim()) return msg.trim();
-                  }
-                } catch {
-                  // ignore
-                }
-                try {
-                  const t = await res.text();
-                  return t.trim() || '';
-                } catch {
-                  return '';
-                }
-              })();
+              const details = responseMeta.error || rawResponseText.trim();
 
               if (res.status === 404 && endpointUrl.includes('/api/contact')) {
                 throw new Error(
@@ -817,6 +811,7 @@ const serviceOptions = [
             setStatus("Quote request received - we'll reply within 1 business day.", 'success');
 
             saveLeadSummary({
+              ref: responseMeta.ref,
               companyName,
               name,
               email,
@@ -830,7 +825,11 @@ const serviceOptions = [
 
             form.reset();
             applyAttributionToForm();
-            track('lead_submit_success', { source, via: 'endpoint' });
+            track('lead_submit_success', {
+              source,
+              via: 'endpoint',
+              leadRef: responseMeta.ref || undefined,
+            });
 
             const redirect = form.dataset.successRedirect || '';
             if (redirect) {
@@ -887,7 +886,7 @@ const serviceOptions = [
           setStatus(msg, 'error');
           track('lead_submit_error', {
             source,
-            via: endpoint ? 'endpoint' : 'mailto',
+            via: endpointUrl ? 'endpoint' : 'mailto',
             message: msg,
           });
         }

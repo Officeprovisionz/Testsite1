@@ -38,6 +38,13 @@ jobs:
       - name: Copy/encoding check
         run: bun run check:copy
 
+      - name: Require static form endpoint
+        run: |
+          if [ -z "${{ secrets.PUBLIC_FORM_ENDPOINT }}" ]; then
+            echo "::error::PUBLIC_FORM_ENDPOINT secret is required for GitHub Pages deployments."
+            exit 1
+          fi
+
       - name: Build (static)
         env:
           # Custom domain deployment (root).
@@ -49,6 +56,11 @@ jobs:
           # Name: PUBLIC_FORM_ENDPOINT
           # Value: https://formspree.io/f/xxxxxxxx (example)
           PUBLIC_FORM_ENDPOINT: ${{ secrets.PUBLIC_FORM_ENDPOINT }}
+          PUBLIC_ENABLE_ANALYTICS: ${{ vars.PUBLIC_ENABLE_ANALYTICS }}
+          PUBLIC_PLAUSIBLE_DOMAIN: ${{ vars.PUBLIC_PLAUSIBLE_DOMAIN }}
+          PUBLIC_PLAUSIBLE_SRC: ${{ vars.PUBLIC_PLAUSIBLE_SRC }}
+          PUBLIC_ENABLE_SERVICE_WORKER: "true"
+          PUBLIC_SENTRY_DSN: ${{ secrets.PUBLIC_SENTRY_DSN }}
           ASTRO_TELEMETRY_DISABLED: 1
         run: bun run build
 

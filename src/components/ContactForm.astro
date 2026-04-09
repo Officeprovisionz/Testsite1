@@ -418,47 +418,6 @@ const servicesErrorId = `${servicesHelpId}-error`;
         (e) => {
           if (hasAnyChecked()) {
             hideError();
-
-            // Handle mailto fallback if no endpoint is configured
-            const endpoint = form.dataset.formEndpoint;
-            const mailtoTo = form.dataset.mailtoTo;
-
-            if ((!endpoint || endpoint === '#') && mailtoTo) {
-              e.preventDefault();
-              const data = new FormData(form);
-              const get = (n: string) => data.get(n)?.toString() || '';
-              const getAll = (n: string) =>
-                data
-                  .getAll(n)
-                  .map((v) => v.toString())
-                  .join(', ');
-
-              const company = get('companyName');
-              const name = get('name');
-              const subject = `Quote request from ${company || name}`;
-              const body = `Hi Office Provisionz,
-
-I’d like to request a quote.
-
-Name: ${name}
-Company: ${company}
-Email: ${get('email')}
-Phone: ${get('phone')}
-Location: ${get('location')}
-Industry: ${get('industry')}
-Frequency: ${get('frequency')}
-Timing: ${get('startTiming')}
-
-Services:
-${getAll('servicesNeeded')}
-
-Notes:
-${get('message')}
-`;
-              window.location.href = `mailto:${mailtoTo}?subject=${encodeURIComponent(
-                subject
-              )}&body=${encodeURIComponent(body)}`;
-            }
             return;
           }
           e.preventDefault();
@@ -483,6 +442,8 @@ ${get('message')}
   document.addEventListener('astro:page-load', () => {
     const copyBtns = document.querySelectorAll<HTMLElement>('[data-copy-email]');
     copyBtns.forEach((btn) => {
+      if (btn.dataset.copyEmailInit === 'true') return;
+      btn.dataset.copyEmailInit = 'true';
       btn.addEventListener('click', async () => {
         const email = btn.dataset.email;
         if (!email) return;

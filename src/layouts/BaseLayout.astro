@@ -9,7 +9,13 @@ import { ClientRouter } from 'astro:transitions';
 import { Toaster } from '@/components/Toaster';
 import Schema from '@/components/Schema.astro';
 import BottomTabBar from '@/components/BottomTabBar.astro';
-import { PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_PLAUSIBLE_SRC, PUBLIC_SENTRY_DSN } from 'astro:env/client';
+import {
+  PUBLIC_ENABLE_ANALYTICS,
+  PUBLIC_ENABLE_SERVICE_WORKER,
+  PUBLIC_PLAUSIBLE_DOMAIN,
+  PUBLIC_PLAUSIBLE_SRC,
+  PUBLIC_SENTRY_DSN,
+} from 'astro:env/client';
 
 type Props = {
   title?: string;
@@ -37,8 +43,31 @@ const assetNoise = `${base}noise.svg`;
 const plausibleDomain = PUBLIC_PLAUSIBLE_DOMAIN;
 const plausibleSrc = PUBLIC_PLAUSIBLE_SRC;
 const sentryDsn = PUBLIC_SENTRY_DSN;
+const plausibleOrigin = (() => {
+  if (!plausibleSrc) return undefined;
+  try {
+    return new URL(plausibleSrc).origin;
+  } catch {
+    return undefined;
+  }
+})();
 
-const analyticsEnabled = siteConfig.analytics.enabled;
+const canonicalHost = Astro.site?.host?.toLowerCase();
+const analyticsDomain = plausibleDomain?.trim().toLowerCase();
+const analyticsHostMatches =
+  Boolean(canonicalHost && analyticsDomain) &&
+  (canonicalHost === analyticsDomain ||
+    canonicalHost === `www.${analyticsDomain}` ||
+    analyticsDomain === `www.${canonicalHost}`);
+const analyticsEnabled = Boolean(
+  siteConfig.analytics.enabled &&
+    import.meta.env.PROD &&
+    PUBLIC_ENABLE_ANALYTICS === 'true' &&
+    plausibleDomain &&
+    plausibleSrc &&
+    analyticsHostMatches
+);
+const serviceWorkerEnabled = import.meta.env.PROD && PUBLIC_ENABLE_SERVICE_WORKER === 'true';
 
 const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import.meta.env.PROD })
   // Prevent accidental "</script>" injection via safe escaping.
@@ -55,24 +84,6 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
 >
   <head>
     <meta charset="utf-8" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogUrl} />
-
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={ogUrl} />
-
-    <link rel="icon" type="image/svg+xml" href={faviconHref} />
-    <link rel="manifest" href={manifestHref} />
     <meta name="referrer" content="strict-origin-when-cross-origin" />
     {noIndex && <meta name="robots" content="noindex, nofollow" />}
 
@@ -81,8 +92,10 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
     <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
     <link rel="preconnect" href="https://formspree.io" crossorigin />
 
-    {analyticsEnabled ? <link rel="dns-prefetch" href="https://plausible.io" /> : null}
-    {analyticsEnabled ? <link rel="preconnect" href="https://plausible.io" crossorigin /> : null}
+    {analyticsEnabled && plausibleOrigin ? <link rel="dns-prefetch" href={plausibleOrigin} /> : null}
+    {analyticsEnabled && plausibleOrigin ? (
+      <link rel="preconnect" href={plausibleOrigin} crossorigin />
+    ) : null}
 
     {/* Preload critical fonts to reduce FOUT */}
     <link rel="preload" href={spaceGroteskVariableUrl} as="font" type="font/woff2" crossorigin />
@@ -667,7 +680,10 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
       })();
     </script>
 
-    <script is:inline define:vars={{ base, isDev: import.meta.env.DEV }}>
+    <script
+      is:inline
+      define:vars={{ base, isServiceWorkerEnabled: serviceWorkerEnabled }}
+    >
       (() => {
         // Register a lightweight service worker in production builds.
         // Keeps repeat visits fast and provides a basic offline shell.
@@ -675,7 +691,7 @@ const sentryClientConfig = JSON.stringify({ dsn: sentryDsn || null, prod: import
         const root = document.documentElement;
         if (root.dataset.swInit === 'true') return;
         root.dataset.swInit = 'true';
-        if (isDev) return;
+        if (!isServiceWorkerEnabled) return;
         if (!('serviceWorker' in navigator)) return;
 
         const swUrl = `${base}sw.js`;

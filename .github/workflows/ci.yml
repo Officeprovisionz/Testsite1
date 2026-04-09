@@ -41,9 +41,23 @@ jobs:
       - name: Typecheck
         run: bun run typecheck
 
+      - name: Unit tests
+        run: bun run test:unit
+
       - name: Build
         env:
           PUBLIC_SITE_BASE: /
           SITE_URL: https://example.invalid/
+          PUBLIC_ENABLE_ANALYTICS: "false"
+          PUBLIC_ENABLE_SERVICE_WORKER: "false"
           ASTRO_TELEMETRY_DISABLED: 1
         run: bun run build
+
+      - name: Install Playwright browser
+        run: bunx playwright install --with-deps chromium
+
+      - name: E2E smoke
+        run: bunx playwright test tests/e2e/smoke.spec.ts
+
+      - name: E2E accessibility
+        run: bun run test:a11y

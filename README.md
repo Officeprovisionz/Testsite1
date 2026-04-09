@@ -107,7 +107,9 @@ Copy `.env.example` to `.env` and adjust as needed.
 
 - `PUBLIC_SITE_BASE` (default `/`) — set to `/<repo>/` for GitHub Pages builds
 - `SITE_URL` (recommended) — full canonical URL including base, e.g. `https://<owner>.github.io/<repo>/`
-- `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.)
+- `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.); required on static-only hosts like GitHub Pages
+- `PUBLIC_ENABLE_ANALYTICS=true` plus `PUBLIC_PLAUSIBLE_DOMAIN` / `PUBLIC_PLAUSIBLE_SRC` — only enable on the canonical production host
+- `PUBLIC_ENABLE_SERVICE_WORKER=true` — opt-in service worker registration for production
 
 ### Secrets & API keys (important)
 
@@ -116,6 +118,7 @@ Copy `.env.example` to `.env` and adjust as needed.
 - If an API key ever lands in a repo, issue, screenshot, or pastebin: **rotate it immediately**.
 
 - `PUBLIC_FORM_ENDPOINT` — static form endpoint (Formspree/Basin/etc.)
+- Cloudflare Pages can use the built-in `/api/contact` function instead when `PUBLIC_FORM_ENDPOINT` is unset and the Pages runtime is available.
 
 ### Sitemap notes
 
@@ -148,6 +151,8 @@ This repo includes `.github/workflows/deploy-pages.yml`.
 2. In GitHub: **Settings → Pages**.
 3. Under **Build and deployment**, select **GitHub Actions**.
 4. The workflow will build with the correct base path automatically.
+
+The GitHub Pages workflow now fails fast if `PUBLIC_FORM_ENDPOINT` is missing, so quote requests do not silently ship without a working delivery path.
 
 ### Troubleshooting base path
 

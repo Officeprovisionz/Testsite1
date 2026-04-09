@@ -145,13 +145,107 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           >{siteConfig.brand.city}</span
         >. Same crew, photo updates, and a real person answering when you call.
       </p>
+
+      {/* Trust stat bar */}
+      <div
+        class="animate-slide-up mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5 [animation-delay:380ms] lg:justify-start"
+        aria-label="Quick facts"
+      >
+        <div class="hero-stat">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+            class="shrink-0 opacity-80"
+          >
+            <circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity="0.4"></circle>
+            <path
+              d="M4 7l2 2 4-4"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          <span>Owner-operated · SF locals</span>
+        </div>
+        <span class="hero-stat-sep" aria-hidden="true"></span>
+        <div class="hero-stat">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+            class="shrink-0"
+          >
+            <path
+              d="M7 1l1.545 4.236H13.09l-3.636 2.618 1.382 4.237L7 9.472l-3.836 2.619 1.382-4.237L.91 5.236H5.455L7 1z"
+              fill="currentColor"
+              opacity="0.85"></path>
+          </svg>
+          <span>4.9 avg. rating</span>
+        </div>
+        <span class="hero-stat-sep" aria-hidden="true"></span>
+        <div class="hero-stat">
+          <svg
+            width="14"
+            height="14"
+            viewBox="0 0 14 14"
+            fill="none"
+            aria-hidden="true"
+            class="shrink-0 opacity-80"
+          >
+            <circle
+              cx="7"
+              cy="7"
+              r="6"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-opacity="0.5"></circle>
+            <path
+              d="M7 4v3.25l2 1.25"
+              stroke="currentColor"
+              stroke-width="1.25"
+              stroke-linecap="round"
+              stroke-linejoin="round"></path>
+          </svg>
+          <span>Same-day response</span>
+        </div>
+      </div>
     </div>
 
     <div class="hero-split__spacer" aria-hidden="true"></div>
   </div>
 </section>
 
-<style></style>
+<style>
+  .hero-stat {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: rgba(255, 255, 255, 0.78);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  }
+
+  .hero-stat-sep {
+    display: none;
+    width: 1px;
+    height: 0.875rem;
+    background-color: rgba(255, 255, 255, 0.22);
+    flex-shrink: 0;
+  }
+
+  @media (min-width: 480px) {
+    .hero-stat-sep {
+      display: block;
+    }
+  }
+</style>
 
 <script>
   // Progressive video enhancement

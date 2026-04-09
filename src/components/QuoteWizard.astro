@@ -234,6 +234,43 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     display: grid;
   }
 
+  /* Step entrance animation */
+  [data-quote-wizard][data-js-enabled='true'] [data-step][data-step-enter='forward'] {
+    animation: wizardSlideInForward 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  [data-quote-wizard][data-js-enabled='true'] [data-step][data-step-enter='back'] {
+    animation: wizardSlideInBack 260ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes wizardSlideInForward {
+    from {
+      opacity: 0;
+      transform: translateX(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes wizardSlideInBack {
+    from {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-quote-wizard] [data-step] {
+      animation: none !important;
+    }
+  }
+
   .wizard-stepper {
     display: inline-flex;
     align-items: center;
@@ -293,9 +330,19 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     ).filter((el) => el instanceof HTMLElement);
 
     const setStep = (idx) => {
+      const direction = idx > current ? 'forward' : 'back';
       current = Math.max(0, Math.min(idx, steps.length - 1));
       steps.forEach((step, i) => {
-        step.dataset.active = i === current ? 'true' : 'false';
+        if (i === current) {
+          step.dataset.active = 'true';
+          // Trigger entrance animation by cycling the attribute
+          delete step.dataset.stepEnter;
+          void step.offsetWidth; // force reflow
+          step.dataset.stepEnter = direction;
+        } else {
+          step.dataset.active = 'false';
+          delete step.dataset.stepEnter;
+        }
       });
       progress.forEach((p, i) => {
         p.dataset.active = i === current ? 'true' : 'false';

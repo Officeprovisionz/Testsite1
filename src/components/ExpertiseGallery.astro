@@ -128,14 +128,15 @@ const getImgAttrs = (src: string) => {
     </div>
 
     <!-- Grid: 2x2 on desktop, stacked on mobile -->
-    <div class="grid gap-5 sm:grid-cols-2 lg:gap-8 xl:gap-10">
+    <div class="grid gap-5 sm:grid-cols-2 lg:gap-8 xl:gap-10" data-reveal-stagger="90">
       {
         resolvedItems.map((item, index) => {
           const attrs = getImgAttrs(item.src);
           return (
             <article
               class="expertise-card card card-hover group relative overflow-hidden"
-              style={`--i: ${index}; animation-delay: ${index * 120}ms`}
+              style={`--i: ${index}`}
+              data-reveal="up"
             >
               <div
                 class="relative aspect-16/10 overflow-hidden sm:aspect-video lg:aspect-16/10"
@@ -204,8 +205,6 @@ const getImgAttrs = (src: string) => {
 
 <style>
   .expertise-card {
-    /* Baseline entrance (kept intentionally simple for mobile stability) */
-    animation: fadeSlideUp 0.6s ease-out both;
     position: relative;
     z-index: 1;
   }
@@ -235,17 +234,6 @@ const getImgAttrs = (src: string) => {
     background-position: 0% 0%;
   }
 
-  @keyframes fadeSlideUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   /* Smooth hover lift - only on hover-capable devices */
   @media (hover: hover) and (pointer: fine) {
     .expertise-card:hover {
@@ -263,20 +251,8 @@ const getImgAttrs = (src: string) => {
     }
   }
 
-  /* Visual regression + automation stability: disable scroll-driven motion under WebDriver. */
-  :global(html[data-webdriver='true']) .expertise-card {
-    animation: none !important;
-    transform: none !important;
-    filter: none !important;
-    opacity: 1 !important;
-  }
-
   /* Respect reduced motion */
   @media (prefers-reduced-motion: reduce) {
-    .expertise-card {
-      animation: none;
-      filter: none;
-    }
     .expertise-card,
     .expertise-card img {
       transition: none !important;

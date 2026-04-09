@@ -20,6 +20,8 @@ export type Testimonial = {
   name: string;
   location: string;
   quote: string;
+  role?: string;
+  company?: string;
 };
 
 export type Industry = {
@@ -311,18 +313,24 @@ export const siteConfig = {
     {
       name: 'Jordan R.',
       location: 'SoMa',
+      role: 'Office Manager',
+      company: 'Tech startup',
       quote:
-        'On time, professional, and the office looked client-ready. Communication was excellent.',
+        'On time, professional, and the office looked client-ready. Communication was excellent — issues get resolved the same day.',
     },
     {
       name: 'Samira K.',
       location: 'Financial District',
+      role: 'Operations Lead',
+      company: 'Financial services firm',
       quote:
-        'Consistent results visit-to-visit. The checklist makes it easy to request tweaks and track scope.',
+        'Consistent results visit-to-visit. The checklist makes it easy to request tweaks and track scope without back-and-forth.',
     },
     {
       name: 'Chris M.',
       location: 'Mission Bay',
+      role: 'Facilities Coordinator',
+      company: 'Life sciences office',
       quote:
         'Easy scheduling and a noticeable difference in restrooms and common areas. Fast responses, too.',
     },

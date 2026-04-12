@@ -9,7 +9,7 @@ const steps = [
   {
     number: '2',
     title: 'Checklist cleaning',
-    description: 'We use a consistent checklist so the important details don’t get missed.',
+    description: "We use a consistent checklist so the important details don't get missed.",
   },
   {
     number: '3',
@@ -19,20 +19,36 @@ const steps = [
 ];
 ---
 
-<div class="grid gap-8 md:grid-cols-3">
+<div class="grid gap-5 md:grid-cols-3 lg:gap-6" data-reveal-stagger="70">
   {
-    steps.map((step) => (
-      <div class="card card-hover step-card group relative overflow-hidden p-5 pl-7 sm:p-6 sm:pl-8 lg:p-8 lg:pl-10">
+    steps.map((step, i) => (
+      <div
+        class="card card-hover group relative overflow-hidden p-5 sm:p-6 lg:p-8"
+        style={`--i: ${i}`}
+        data-reveal="up"
+      >
+        {/* Top accent line */}
         <div
           aria-hidden="true"
-          class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.18)] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+          class="pointer-events-none absolute inset-x-0 top-0 h-px"
+          style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.45) 50%, transparent);"
         />
+        {/* Hover glow */}
+        <div
+          aria-hidden="true"
+          class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        />
+
         <div class="relative z-10">
-          <span class="inline-flex h-12 w-12 items-center justify-center rounded-[var(--radius-control)] border border-[rgb(var(--color-accent)/0.35)] bg-[rgb(var(--color-accent)/0.2)] text-xl font-bold text-[rgb(12_14_18)] shadow-sm lg:h-14 lg:w-14 lg:text-2xl">
+          <span
+            class="inline-flex h-11 w-11 items-center justify-center rounded-xl text-sm font-extrabold lg:h-12 lg:w-12"
+            style="background: linear-gradient(135deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-500))); color: rgb(14 10 4); box-shadow: 0 2px 8px -3px rgb(var(--color-accent-500)/0.5);"
+            aria-hidden="true"
+          >
             {step.number}
           </span>
-          <h3 class="text-strong mt-5 text-xl font-bold lg:text-2xl">{step.title}</h3>
-          <p class="text-muted mt-3 lg:text-lg lg:leading-relaxed">{step.description}</p>
+          <h3 class="text-strong mt-4 text-lg font-bold lg:text-xl">{step.title}</h3>
+          <p class="text-muted mt-2 text-sm leading-relaxed lg:text-base">{step.description}</p>
         </div>
       </div>
     ))

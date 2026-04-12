@@ -38,10 +38,10 @@ const safeItems = Array.isArray(items) ? items.filter(Boolean) : [];
 
     <div class="mx-auto mt-10 grid max-w-4xl gap-6 lg:mt-14" data-reveal-stagger="60">
       <div class="card overflow-hidden p-6 sm:p-8 lg:p-10" data-reveal="up">
-        <ul class="check-list text-muted text-sm lg:text-base">
+        <ul class="check-list text-muted text-sm sm:grid-cols-2 lg:text-[0.9375rem]">
           {
             safeItems.map((label) => (
-              <li data-reveal="up">
+              <li>
                 <span class="check-icon" aria-hidden="true">
                   ✓
                 </span>
@@ -52,10 +52,19 @@ const safeItems = Array.isArray(items) ? items.filter(Boolean) : [];
         </ul>
 
         <div
-          class="mt-8 rounded-2xl border border-[rgb(var(--color-border)/0.7)] bg-[rgb(var(--color-surface-muted)/0.55)] p-4 sm:p-5"
+          class="relative mt-8 overflow-hidden rounded-xl border border-[rgb(var(--color-border)/0.55)] bg-[rgb(var(--color-surface-muted)/0.5)] p-4 sm:p-5"
         >
-          <p class="text-strong text-sm font-semibold">Want something handled differently?</p>
-          <p class="text-muted mt-1 text-sm">
+          {/* Accent top line */}
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.4) 40%, rgb(var(--color-brand-400)/0.3) 60%, transparent);"
+          >
+          </div>
+          <p class="text-strong text-[0.875rem] font-semibold">
+            Want something handled differently?
+          </p>
+          <p class="text-muted mt-1 text-sm leading-relaxed">
             Tell us your priorities during the walkthrough—we’ll tailor the checklist and confirm
             add-ons before quoting.
           </p>

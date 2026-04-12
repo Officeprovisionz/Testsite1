@@ -15,13 +15,13 @@ export function Toaster() {
         unstyled: false,
         classNames: {
           toast:
-            'rounded-[var(--radius-card)] shadow-md border bg-surface/95 border-brand/20 dark:border-brand/20',
+            'rounded-(--radius-card) shadow-md border bg-surface/95 border-brand/20 dark:border-brand/20',
           title: 'text-sm font-semibold text-strong',
           description: 'text-sm text-muted',
           actionButton:
-            'bg-brand hover:bg-brand/90 text-white px-3 py-1.5 rounded-[var(--radius-control)] text-sm font-medium transition-colors',
+            'bg-brand hover:bg-brand/90 text-white px-3 py-1.5 rounded-(--radius-control) text-sm font-medium transition-colors',
           cancelButton:
-            'bg-surface/85 hover:bg-surface text-muted hover:text-strong px-3 py-1.5 rounded-[var(--radius-control)] text-sm font-medium transition-colors border border-brand/20 dark:border-brand/20',
+            'bg-surface/85 hover:bg-surface text-muted hover:text-strong px-3 py-1.5 rounded-(--radius-control) text-sm font-medium transition-colors border border-brand/20 dark:border-brand/20',
           closeButton:
             'bg-surface/85 hover:bg-surface border border-brand/20 dark:border-brand/20 text-muted hover:text-strong transition-colors',
           success: 'border-brand/20 bg-brand/5',

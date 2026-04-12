@@ -9,12 +9,13 @@ const contactHref = makeHref(base)('contact/');
 <a
   id="fab-button"
   href={contactHref}
-  class="duration-normal ease-out-expo fixed right-4 bottom-24 z-30 flex h-14 w-14 translate-x-20 items-center justify-center rounded-full border border-[rgb(var(--color-border)/0.5)] bg-[rgb(var(--color-accent))] text-[rgb(12_14_18)] opacity-0 shadow-lg transition-[transform,opacity] active:scale-[0.96] sm:h-16 sm:w-16 md:hidden"
+  class="ease-out-expo fixed right-4 bottom-24 z-30 flex h-14 w-14 translate-x-20 items-center justify-center rounded-full opacity-0 shadow-lg transition-[transform,opacity] duration-300 active:scale-[0.94] md:hidden"
+  style="background: linear-gradient(158deg, rgb(var(--color-accent-200)) 0%, rgb(var(--color-accent-400)) 40%, rgb(var(--color-accent-500)) 100%); color: rgb(14 10 4); box-shadow: 0 4px 16px -4px rgb(var(--color-accent-500)/0.55), 0 0 0 1px rgb(var(--color-accent-300)/0.5) inset;"
   aria-label="Get a quote"
   data-haptic="true"
   data-astro-prefetch="tap"
 >
-  <Icon name="lucide:message-circle" class="h-6 w-6 sm:h-7 sm:w-7" aria-hidden="true" />
+  <Icon name="lucide:message-circle" class="h-6 w-6" aria-hidden="true" />
 </a>
 
 <script>

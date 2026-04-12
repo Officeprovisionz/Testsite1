@@ -1,28 +1,36 @@
 ---
 import { siteConfig } from '@/data/siteConfig';
+import SectionHeader from '@/components/ui/SectionHeader.astro';
 ---
 
 <section id="areas" class="section section-creative scroll-mt-20">
-  <div class="container-page relative lg:max-w-6xl">
-    <h2 class="heading-2 lg:text-4xl">{siteConfig.areasServed.title}</h2>
-    <p class="lede lg:text-lg">
-      Not seeing your neighborhood? Send your address and we will confirm availability.
-    </p>
+  <div class="container-page lg:max-w-6xl">
+    <SectionHeader
+      eyebrow="Coverage"
+      heading={siteConfig.areasServed.title}
+      description="Not seeing your neighborhood? Send your address and we'll confirm availability."
+    />
 
-    <div aria-hidden="true" class="pointer-events-none absolute inset-x-0 -top-10 -z-10">
-      <div
-        class="mx-auto h-64 w-[min(70rem,94vw)] rounded-[2.5rem] bg-[rgb(var(--color-accent)/0.14)] blur-2xl"
-      >
-      </div>
-    </div>
-
-    <div class="card mt-8 p-5 sm:p-6 lg:mt-10 lg:p-8">
-      <ul class="text-muted grid gap-2 text-sm sm:grid-cols-2 lg:grid-cols-3 lg:gap-3 lg:text-base">
+    <div class="card mt-8 overflow-hidden p-5 sm:p-6 lg:mt-10 lg:p-8" data-reveal="up">
+      <ul class="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2 lg:grid-cols-3">
         {
           siteConfig.areasServed.items.map((a) => (
-            <li class="flex items-center gap-2">
-              <span class="h-2 w-2 rounded-full bg-[rgb(var(--color-accent))]" aria-hidden="true" />
-              <span>{a}</span>
+            <li class="flex items-center gap-2.5">
+              <span
+                class="flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[rgb(var(--color-accent)/0.18)] text-[rgb(var(--color-accent-600))]"
+                aria-hidden="true"
+              >
+                <svg
+                  viewBox="0 0 14 14"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  class="h-3 w-3"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M2 7l3.5 3.5L12 3" />
+                </svg>
+              </span>
+              <span class="text-muted">{a}</span>
             </li>
           ))
         }

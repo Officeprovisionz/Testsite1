@@ -30,7 +30,8 @@ const navItems = [
   ]}
   data-site-header
 >
-  <div class="header-inner container-page flex items-center justify-between">
+  <div class="header-inner container-page flex items-center justify-between gap-4">
+    <!-- Logo -->
     <a
       data-track="cta_click"
       data-location="header"
@@ -38,7 +39,7 @@ const navItems = [
       data-label="header_logo"
       href={href('')}
       data-astro-prefetch="tap"
-      class="flex items-center gap-3 text-xl font-bold tracking-tight"
+      class="group flex shrink-0 items-center gap-2.5 focus-visible:outline-none"
       aria-label={`Go to ${siteConfig.brand.name} homepage`}
     >
       <img
@@ -48,46 +49,54 @@ const navItems = [
         height="28"
         loading="eager"
         decoding="async"
-        class="brand-mark h-7 w-7 drop-shadow-sm"
+        class="brand-mark h-7 w-7 transition-transform duration-300 group-hover:scale-105"
       />
       <span
-        class:list={['hidden sm:inline', transparent ? 'text-white drop-shadow-sm' : 'text-strong']}
+        class:list={[
+          'hidden text-[0.9375rem] font-bold tracking-[-0.02em] sm:inline',
+          transparent ? 'text-white drop-shadow-sm' : 'text-strong',
+        ]}
       >
         {siteConfig.brand.name}
       </span>
     </a>
 
-    <nav
-      class="hidden items-center gap-1 text-sm font-medium md:flex lg:gap-2 lg:text-base"
-      aria-label="Primary"
-    >
+    <!-- Desktop nav -->
+    <nav class="hidden flex-1 items-center justify-center gap-0.5 md:flex" aria-label="Primary">
       {
         navItems.map((item) => (
           <a
             href={item.href}
             data-astro-prefetch
             class:list={[
-              'relative rounded-[var(--radius-control)] px-3 py-2 transition-all focus-visible:outline-none lg:px-4 lg:py-2.5',
+              'nav-link relative rounded-lg px-3.5 py-2 text-[0.875rem] font-medium transition-all duration-200 focus-visible:ring-2 focus-visible:ring-[rgb(var(--color-brand))] focus-visible:ring-offset-2 focus-visible:outline-none',
               transparent
-                ? 'text-white/90 hover:bg-white/10 hover:text-white'
-                : 'hover:bg-brand/5 hover:text-brand dark:hover:text-brand text-muted dark:hover:bg-surface-muted/30',
-              isActive(item.href)
-                ? transparent
-                  ? 'bg-white/10 text-white'
-                  : 'bg-brand/5 text-brand dark:text-brand dark:bg-surface-muted/30'
-                : '',
+                ? 'text-white/85 hover:bg-white/10 hover:text-white'
+                : [
+                    'hover:text-brand hover:bg-[rgb(var(--color-brand)/0.06)]',
+                    isActive(item.href)
+                      ? 'text-brand bg-[rgb(var(--color-brand)/0.06)]'
+                      : 'text-muted',
+                  ],
             ]}
             aria-current={isActive(item.href) ? 'page' : undefined}
           >
             {item.label}
+            {!transparent && isActive(item.href) && (
+              <span
+                aria-hidden="true"
+                class="bg-brand absolute inset-x-3 -bottom-px h-px rounded-full opacity-70"
+              />
+            )}
           </a>
         ))
       }
     </nav>
 
-    <div class="flex items-center gap-2 sm:gap-2">
+    <!-- Right actions -->
+    <div class="flex shrink-0 items-center gap-2">
       <a
-        class="btn-primary px-3 sm:px-6"
+        class="btn-primary px-3 text-xs sm:px-5 sm:text-sm"
         href={telHref}
         aria-label={`Call ${siteConfig.contact.phoneDisplay}`}
         data-track="cta_click"
@@ -95,15 +104,29 @@ const navItems = [
         data-action="call"
         data-label="header_call"
       >
-        <span class="sm:hidden">Call now</span>
+        <svg
+          class="h-3.5 w-3.5 shrink-0 opacity-70 sm:hidden"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path
+            d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 8.81 19.79 19.79 0 01.11 2.18 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"
+          ></path>
+        </svg>
+        <span class="sm:hidden">Call</span>
         <span class="hidden sm:inline">Call {siteConfig.contact.phoneDisplay}</span>
       </a>
 
       <a
         class:list={[
-          'btn-secondary hidden sm:inline-flex',
+          'btn-secondary hidden text-sm sm:inline-flex',
           transparent
-            ? 'border-white/25 bg-white/10 text-white hover:border-white/30 hover:bg-white/15 hover:text-white'
+            ? 'border-white/20 bg-white/8 text-white hover:border-white/30 hover:bg-white/14 hover:text-white'
             : '',
         ]}
         href={href('contact/')}
@@ -112,14 +135,15 @@ const navItems = [
         data-action="quote"
         data-label="header_quote"
       >
-        Request a quote
+        Get a quote
       </a>
 
+      <!-- Mobile hamburger -->
       <details class="relative md:hidden" data-mobile-menu>
         <summary
           class:list={[
             'icon-btn cursor-pointer list-none',
-            transparent ? 'text-white hover:bg-white/10' : '',
+            transparent ? 'border-white/20 text-white hover:bg-white/10' : '',
           ]}
           aria-label="Open menu"
           aria-controls="mobile-menu-panel"
@@ -132,28 +156,43 @@ const navItems = [
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
-            stroke-width="2"
+            stroke-width="1.75"
             stroke-linecap="round"
-            class="h-5 w-5"
+            class="h-[1.1rem] w-[1.1rem]"
             aria-hidden="true"
           >
             <path d="M4 7h16"></path>
-            <path d="M4 12h16"></path>
-            <path d="M4 17h16"></path>
+            <path d="M4 12h12"></path>
+            <path d="M4 17h8"></path>
           </svg>
         </summary>
+
         <button type="button" class="mobile-menu-overlay" aria-label="Close menu" data-menu-close
         ></button>
+
         <div
-          class="mobile-menu-panel border-l border-white/20"
+          class="mobile-menu-panel border-l border-white/10"
           id="mobile-menu-panel"
           role="dialog"
           aria-label="Menu"
           aria-modal="true"
         >
-          <div class="border-brand/10 flex items-center justify-between gap-3 border-b p-3">
-            <p class="text-strong text-sm font-semibold">Menu</p>
-            <button type="button" class="icon-btn" aria-label="Close menu" data-menu-close>
+          <!-- Panel header -->
+          <div
+            class="flex items-center justify-between gap-3 border-b border-[rgb(var(--color-border)/0.5)] px-4 py-3.5"
+          >
+            <div class="flex items-center gap-2.5">
+              <img src={logoOrbSrc} alt="" width="22" height="22" class="h-5.5 w-5.5 opacity-85" />
+              <p class="text-strong text-[0.8125rem] font-semibold tracking-tight">
+                {siteConfig.brand.name}
+              </p>
+            </div>
+            <button
+              type="button"
+              class="icon-btn h-8 min-h-0 w-8 min-w-0 rounded-lg"
+              aria-label="Close menu"
+              data-menu-close
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -162,7 +201,7 @@ const navItems = [
                 stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
-                class="h-5 w-5"
+                class="h-4 w-4"
                 aria-hidden="true"
               >
                 <path d="M18 6L6 18"></path>
@@ -170,45 +209,74 @@ const navItems = [
               </svg>
             </button>
           </div>
-          <nav class="grid gap-1 p-3" aria-label="Mobile">
+
+          <!-- Nav links -->
+          <nav class="grid gap-0.5 p-3" aria-label="Mobile">
             {
               navItems.map((item) => (
                 <a
                   href={item.href}
                   data-astro-prefetch="tap"
                   class:list={[
-                    'tap-target hover:bg-brand/5 hover:text-brand dark:hover:text-brand block rounded-[var(--radius-control)] px-3 py-2.5 text-base font-medium transition-colors dark:hover:bg-white/10',
+                    'tap-target flex items-center justify-between rounded-xl px-3.5 py-3 text-[0.9375rem] font-medium transition-colors duration-200',
                     isActive(item.href)
-                      ? 'bg-brand/5 text-brand dark:text-brand dark:bg-white/10'
-                      : 'text-muted',
+                      ? 'bg-brand/8 text-brand'
+                      : 'text-muted hover:text-strong hover:bg-[rgb(var(--color-surface-muted))]',
                   ]}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                   data-haptic="true"
                 >
                   {item.label}
+                  {isActive(item.href) && (
+                    <span aria-hidden="true" class="bg-brand h-1.5 w-1.5 rounded-full opacity-70" />
+                  )}
                 </a>
               ))
             }
           </nav>
-          <div class="border-brand/10 grid grid-cols-2 gap-2 border-t p-3">
+
+          <!-- CTA row -->
+          <div class="border-t border-[rgb(var(--color-border)/0.5)] p-3">
+            <a
+              href={telHref}
+              class="btn-primary w-full"
+              data-track="cta_click"
+              data-location="mobile_menu"
+              data-action="call"
+            >
+              Call {siteConfig.contact.phoneDisplay}
+            </a>
+            <a
+              href={href('contact/')}
+              class="btn-secondary mt-2 w-full"
+              data-track="cta_click"
+              data-location="mobile_menu"
+              data-action="quote"
+            >
+              Request a quote
+            </a>
+          </div>
+
+          <!-- Footer row: theme / mode toggles -->
+          <div
+            class="grid grid-cols-2 gap-2 border-t border-[rgb(var(--color-border)/0.4)] p-3 pb-4"
+          >
             <button
               type="button"
-              class="tap-target text-strong dark:text-strong bg-surface hover:bg-surface-muted dark:bg-surface dark:hover:bg-surface-muted flex items-center justify-center gap-2 rounded-[var(--radius-control)] px-3 py-3 text-sm font-medium transition-colors"
+              class="tap-target text-subtle flex items-center justify-center gap-2 rounded-xl bg-[rgb(var(--color-surface-muted)/0.6)] px-3 py-2.5 text-xs font-medium transition-colors hover:bg-[rgb(var(--color-surface-muted))]"
               data-theme-toggle
               aria-label="Change theme"
               data-haptic="true"
             >
-              <span class="sr-only">Theme</span>
               Theme
             </button>
             <button
               type="button"
-              class="tap-target text-strong dark:text-strong bg-surface hover:bg-surface-muted dark:bg-surface dark:hover:bg-surface-muted flex items-center justify-center gap-2 rounded-[var(--radius-control)] px-3 py-3 text-sm font-medium transition-colors"
+              class="tap-target text-subtle flex items-center justify-center gap-2 rounded-xl bg-[rgb(var(--color-surface-muted)/0.6)] px-3 py-2.5 text-xs font-medium transition-colors hover:bg-[rgb(var(--color-surface-muted))]"
               data-mode-toggle
               aria-label="Change color mode"
               data-haptic="true"
             >
-              <span class="sr-only">Mode</span>
               Mode
             </button>
           </div>
@@ -259,7 +327,6 @@ const navItems = [
         if (enable) {
           const prev = el.dataset.prevTabindex;
           if (prev === undefined) return;
-
           if (prev === sentinel) {
             el.removeAttribute('tabindex');
           } else {
@@ -268,7 +335,6 @@ const navItems = [
           delete el.dataset.prevTabindex;
           return;
         }
-
         if (el.dataset.prevTabindex !== undefined) return;
         el.dataset.prevTabindex = el.getAttribute('tabindex') ?? sentinel;
         el.setAttribute('tabindex', '-1');
@@ -280,20 +346,14 @@ const navItems = [
       if (open) {
         panel.removeAttribute('aria-hidden');
         panel.removeAttribute('inert');
-        // `inert` isn't supported everywhere. Restore tabbables as a fallback.
         togglePanelTabbables(true);
         return;
       }
       panel.setAttribute('aria-hidden', 'true');
-      // Prevent tab focus into a visually-hidden dialog.
-      // Supported in modern Chromium/Safari/Firefox; ignored elsewhere.
       panel.setAttribute('inert', '');
-      // Fallback for browsers without `inert`: remove descendants from tab order.
       togglePanelTabbables(false);
     };
 
-    // Used by the swipe-to-close gesture: we temporarily set inline transform/opacity/transition.
-    // If the menu closes via overlay/ESC/button mid-gesture, clear those inline overrides.
     const resetPanelInlineStyles = () => {
       if (!panel) return;
       panel.style.transition = '';
@@ -351,7 +411,6 @@ const navItems = [
       } else {
         resetPanelInlineStyles();
         unlockScroll();
-        // Restore focus to the control that opened the menu.
         (lastFocused ?? summary)?.focus?.();
         lastFocused = null;
       }
@@ -390,19 +449,15 @@ const navItems = [
     if ('addEventListener' in mq) {
       mq.addEventListener('change', handleMQ);
     } else {
-      // Safari < 14 legacy API
       const legacy = mq as unknown as {
         addListener?: (callback: (this: MediaQueryList, ev: MediaQueryListEvent) => void) => void;
       };
       legacy.addListener?.(handleMQ);
     }
 
-    // Initialize state.
     setExpanded(menu.open);
     setDialogA11y(menu.open);
 
-    // --- Swipe to close (touch devices) ---
-    // Drag the panel to the right to dismiss. Keeps it subtle and doesn't break scrolling.
     if (panel && typeof window !== 'undefined') {
       let startX = 0;
       let startY = 0;
@@ -426,21 +481,18 @@ const navItems = [
         const dx = t.clientX - startX;
         const dy = t.clientY - startY;
 
-        // Only treat as a gesture when it's clearly horizontal and moving right.
         if (dx <= 0) return;
         if (Math.abs(dx) < Math.abs(dy)) return;
 
         dragging = true;
         panel.style.transition = 'none';
 
-        // Clamp drag distance to panel width.
         const w = Math.max(1, panel.getBoundingClientRect().width);
         const clamped = Math.min(dx, w);
         const progress = clamped / w;
         panel.style.transform = `translateX(${clamped}px)`;
         panel.style.opacity = String(Math.max(0.35, 1 - progress * 0.75));
 
-        // Prevent the page from scrolling while we drag-dismiss.
         e.preventDefault();
       };
 
@@ -449,20 +501,17 @@ const navItems = [
         if (!dragging) return;
 
         const w = Math.max(1, panel.getBoundingClientRect().width);
-        // If the panel moved far enough, dismiss.
         const current = panel.style.transform;
         const m = /translateX\(([-\d.]+)px\)/.exec(current);
         const dx = m ? Number(m[1]) : 0;
 
         if (dx > Math.min(140, w * 0.35)) {
-          // Animate out a bit then close.
           panel.style.transition =
             'transform 140ms cubic-bezier(0.4, 0, 0.2, 1), opacity 140ms cubic-bezier(0.4, 0, 0.2, 1)';
           panel.style.transform = `translateX(${w}px)`;
           panel.style.opacity = '0';
           window.setTimeout(() => close(), 120);
         } else {
-          // Snap back.
           panel.style.transition =
             'transform 160ms cubic-bezier(0.4, 0, 0.2, 1), opacity 160ms cubic-bezier(0.4, 0, 0.2, 1)';
           panel.style.transform = 'translateX(0px)';
@@ -471,15 +520,11 @@ const navItems = [
         }
       };
 
-      // Keep drag-dismiss on the panel itself (doesn't affect overall page scroll responsiveness).
       panel.addEventListener('touchstart', onTouchStart, { passive: true });
       panel.addEventListener('touchmove', onTouchMove, { passive: false });
       panel.addEventListener('touchend', onTouchEnd, { passive: true });
       panel.addEventListener('touchcancel', onTouchEnd, { passive: true });
     }
-
-    // Note: An earlier experimental "edge swipe to open" gesture was removed because
-    // document-level non-passive `touchmove` can make mobile scrolling feel laggy.
   })();
 </script>
 
@@ -514,16 +559,10 @@ const navItems = [
         lastY = y;
       }
 
-      // "Scroll-aware header" behavior:
-      // - When scrolling down past a threshold, compact the header to reduce chrome.
-      // - When scrolling up, expand for navigation.
-      // Avoid compacting while the user is interacting with header controls.
       const allowCompact = !header.matches(':focus-within');
       const shouldCompact = allowCompact && y > COMPACT_AFTER_PX && lastDir === 'down';
       header.classList.toggle('is-compact', shouldCompact);
 
-      // Avoid layout reads on every scroll tick.
-      // Only re-measure when the compact state changes (or on resize).
       if (lastCompact !== shouldCompact) {
         lastCompact = shouldCompact;
         window.requestAnimationFrame(() => {
@@ -547,10 +586,6 @@ const navItems = [
 
 <script>
   (() => {
-    // Liquid-glass header refraction (progressive enhancement)
-    // - Updates CSS vars on the header: --glass-tilt-x / --glass-tilt-y (0..1)
-    // - Uses device orientation when available; falls back to pointer movement
-    // - Avoids extra work for reduced-motion users
     const root = document.documentElement;
     if (root.dataset.headerGlassInit === 'true') return;
     root.dataset.headerGlassInit = 'true';
@@ -579,7 +614,6 @@ const navItems = [
       const header = getHeader();
       if (!header) return;
 
-      // Only run when the header uses the glass style (avoid doing work on fully transparent hero headers).
       const isGlass =
         header.classList.contains('app-bar') && !header.classList.contains('header-transparent');
       if (!isGlass) return;
@@ -593,7 +627,6 @@ const navItems = [
       raf = window.requestAnimationFrame(apply);
     };
 
-    // Pointer fallback (desktop / laptops)
     const onPointerMove = (e: PointerEvent) => {
       const w = window.innerWidth || 1;
       const h = window.innerHeight || 1;
@@ -602,7 +635,6 @@ const navItems = [
       schedule();
     };
 
-    // Device orientation (mobile): gamma = left/right tilt, beta = front/back tilt
     let lastOriTs = 0;
     const ORI_THROTTLE_MS = 40;
 
@@ -614,16 +646,12 @@ const navItems = [
       const g = typeof ev.gamma === 'number' ? ev.gamma : 0;
       const b = typeof ev.beta === 'number' ? ev.beta : 0;
 
-      // Clamp to a pleasant range; normalize into 0..1.
-      // These ranges are intentionally conservative to keep the effect premium, not gimmicky.
       targetX = clamp(g, -30, 30) / 60 + 0.5;
       targetY = clamp(b, -30, 30) / 60 + 0.5;
       schedule();
     };
 
     const enableOrientation = async () => {
-      // Some browsers (notably iOS) require explicit permission.
-      // We only request this after a user gesture.
       try {
         const anyDO = DeviceOrientationEvent as unknown as {
           requestPermission?: () => Promise<'granted' | 'denied'>;
@@ -640,13 +668,10 @@ const navItems = [
       }
     };
 
-    // On iOS, orientation permission must be requested in a gesture handler.
-    // We'll hook a one-time gesture on the header itself.
     const bind = () => {
       const header = getHeader();
       if (!header) return;
 
-      // Desktop pointer fallback: only on hover-capable / fine-pointer devices.
       const finePointer =
         window.matchMedia?.('(hover: hover) and (pointer: fine)')?.matches ?? false;
       if (finePointer && header.dataset.glassPointerInit !== 'true') {
@@ -667,7 +692,6 @@ const navItems = [
         header.addEventListener('touchstart', onFirstGesture, { passive: true });
       }
 
-      // Set initial values (centered).
       targetX = 0.5;
       targetY = 0.5;
       schedule();
@@ -698,7 +722,6 @@ const navItems = [
         // ignore
       }
 
-      // Re-sync effective mode (especially important for `auto`).
       try {
         window.dispatchEvent(new Event('damra:mode-change'));
       } catch {
@@ -708,7 +731,6 @@ const navItems = [
       const label = m === 'auto' ? 'Mode: Auto' : `Mode: ${m}`;
       btns.forEach((b) => {
         const isIcon = b.classList.contains('icon-btn');
-        // Keep desktop buttons compact; show full label in the mobile menu.
         if (!isIcon) b.textContent = label;
         b.setAttribute('aria-label', label);
         b.setAttribute('title', label);
@@ -787,5 +809,11 @@ const navItems = [
   header.header-transparent:not(.is-scrolled) {
     background-color: transparent;
     border-color: transparent;
+    box-shadow: none;
+  }
+
+  /* Nav active underline indicator */
+  .nav-link {
+    letter-spacing: 0.005em;
   }
 </style>

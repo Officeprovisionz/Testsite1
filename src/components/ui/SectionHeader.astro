@@ -6,8 +6,8 @@ export type Props = {
   heading: string;
   description?: string;
   /**
-   * `left` matches the default "section-head" layout (title on left, actions on right).
-   * `center` stacks and centers content (useful for section intros).
+   * `left` — title on left, actions on right (default).
+   * `center` — stacks and centers all content.
    */
   align?: 'left' | 'center';
   /** Heading tag to render. */
@@ -26,7 +26,6 @@ const {
 } = Astro.props as Props;
 
 const HeadingTag = as;
-
 const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'heading-2';
 ---
 
@@ -38,15 +37,15 @@ const headingClass = as === 'h1' ? 'heading-1' : as === 'h3' ? 'heading-3' : 'he
   ]}
   data-reveal="up"
 >
-  <div class:list={[align === 'center' ? 'mx-auto max-w-2xl lg:max-w-3xl' : '']}>
+  <div class:list={[align === 'center' ? 'mx-auto max-w-xl lg:max-w-2xl' : '']}>
     {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
     <HeadingTag class={headingClass}>{heading}</HeadingTag>
-    {description ? <p class="lede mt-3 sm:mt-4 lg:mt-5 lg:text-lg">{description}</p> : null}
+    {description ? <p class="lede mt-3 sm:mt-4">{description}</p> : null}
   </div>
 
   <div
     class:list={[
-      'flex flex-col gap-3 sm:flex-row sm:items-center',
+      'flex flex-col gap-2.5 sm:flex-row sm:items-center',
       align === 'center' ? 'mt-6 sm:justify-center' : 'sm:justify-end',
       'empty:hidden',
     ]}

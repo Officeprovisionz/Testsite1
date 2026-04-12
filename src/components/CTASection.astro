@@ -11,24 +11,15 @@ type Props = {
    */
   layout?: 'centered' | 'split' | undefined;
 
-  // Shared-ish
   id?: string | undefined;
   eyebrow?: string | undefined;
   heading?: string | undefined;
   description?: string | undefined;
 
-  // Centered layout (CTAStrip)
   background?: 'default' | 'accent' | undefined;
-  // Kept for backward-compat in props shape, but this component no longer renders CTAs
-  // because primary actions live in the top header.
   ctaText?: string | undefined;
   ctaHref?: string | undefined;
 
-  // Split layout (ConversionStrip)
-  /**
-   * `muted` blends with the dotted section background.
-   * `surface` uses the default page surface.
-   */
   tone?: 'muted' | 'surface' | undefined;
   showEmail?: boolean | undefined;
 };
@@ -38,15 +29,11 @@ const telHref = makeTelHref(siteConfig.contact.phoneE164);
 
 const {
   layout = 'centered',
-
   id,
   eyebrow,
   heading,
   description,
-
   background = 'default',
-  // ctaText/ctaHref intentionally not destructured (no CTAs rendered)
-
   tone = 'muted',
   showEmail = true,
 } = Astro.props;
@@ -67,33 +54,47 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
       <div class="container-page">
         <div
           class:list={[
-            'card relative mx-auto max-w-3xl overflow-hidden px-6 py-10 text-center sm:px-12 sm:py-12 lg:max-w-4xl lg:px-16 lg:py-16',
-            background === 'accent' ? 'bg-brand/80 border-white/10' : 'bg-surface/60',
+            'card relative mx-auto max-w-3xl overflow-hidden px-7 py-12 text-center sm:px-12 sm:py-14 lg:max-w-4xl lg:px-16 lg:py-16',
+            background === 'accent' ? 'bg-brand/80 border-white/10' : '',
           ]}
         >
-          {/* Decorative gradient blob */}
-          <div class="bg-brand/15 dark:bg-brand/10 pointer-events-none absolute -top-24 -left-24 h-60 w-60 rounded-[2.5rem] opacity-70 blur-2xl" />
-          <div class="bg-brand/15 dark:bg-brand/10 pointer-events-none absolute -right-24 -bottom-24 h-60 w-60 rounded-[2.5rem] opacity-70 blur-2xl" />
+          {/* Decorative blobs */}
+          <div
+            aria-hidden="true"
+            class="bg-brand/12 pointer-events-none absolute -top-20 -left-20 h-64 w-64 rounded-full blur-3xl"
+          />
+          <div
+            aria-hidden="true"
+            class="bg-accent/12 pointer-events-none absolute -right-20 -bottom-20 h-64 w-64 rounded-full blur-3xl"
+          />
+          {/* Top accent line */}
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.5) 40%, rgb(var(--color-brand-400)/0.4) 60%, transparent);"
+          />
 
           <div class="relative z-10">
             <h2
               class:list={[
-                'font-serif text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl',
+                'font-serif font-semibold tracking-tight text-balance',
+                'text-2xl sm:text-3xl lg:text-4xl',
                 background === 'accent' ? 'text-white' : 'text-strong',
               ]}
+              style="letter-spacing: -0.025em; line-height: 1.15;"
             >
               {heading ?? 'Ready to get started?'}
             </h2>
             <p
               class:list={[
-                'mx-auto mt-6 max-w-xl text-lg leading-relaxed lg:mt-8 lg:text-xl',
-                background === 'accent' ? 'text-white/80' : 'text-muted',
+                'mx-auto mt-4 max-w-md text-base leading-relaxed sm:mt-5 lg:mt-6',
+                background === 'accent' ? 'text-white/75' : 'text-muted',
               ]}
             >
               {description ?? "Request a quote and we'll confirm scope, then send clear pricing."}
             </p>
 
-            <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div class="mt-8 flex flex-col items-center justify-center gap-2.5 sm:flex-row">
               <a
                 href={telHref}
                 class="btn-primary w-full sm:w-auto"
@@ -118,11 +119,11 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
 
             <p
               class:list={[
-                'mt-5 text-xs',
-                background === 'accent' ? 'text-white/70' : 'text-subtle',
+                'mt-5 text-xs tracking-wide',
+                background === 'accent' ? 'text-white/55' : 'text-subtle',
               ]}
             >
-              Clear scope. Checklist-driven service. Fast follow-up.
+              Clear scope · Checklist-driven · Fast follow-up
             </p>
           </div>
         </div>
@@ -138,17 +139,23 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
       aria-label="Get started"
     >
       <div class="container-page">
-        <div class="card relative overflow-hidden p-6 sm:p-8 lg:p-14">
-          <div class="relative grid gap-8 md:grid-cols-2 md:items-center lg:gap-12">
+        <div class="card relative overflow-hidden p-7 sm:p-10 lg:p-14">
+          {/* Top accent stripe */}
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.45) 35%, rgb(var(--color-brand-400)/0.35) 65%, transparent);"
+          />
+
+          <div class="relative grid gap-8 md:grid-cols-2 md:items-center lg:gap-14">
             <div>
               <Eyebrow>{eyebrow ?? 'Next step'}</Eyebrow>
-              <h2 class="heading-2 mt-2 lg:text-4xl">{heading ?? 'Ready to scope your space?'}</h2>
-              <p class="lede lg:text-lg">
-                {description ??
-                  'When you’re ready, use the phone number above or request a quote from the top menu.'}
+              <h2 class="heading-2 mt-2">{heading ?? 'Ready to scope your space?'}</h2>
+              <p class="lede mt-3">
+                {description ?? 'Use the phone number above or request a quote from the top menu.'}
               </p>
 
-              <ul class="check-list check-list--compact text-subtle text-sm sm:grid-cols-2">
+              <ul class="check-list check-list--compact text-subtle mt-5 text-sm sm:grid-cols-2">
                 <li>
                   <span class="check-icon check-icon--sm" aria-hidden="true">
                     ✓
@@ -176,9 +183,9 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               </ul>
             </div>
 
-            <div class="flex flex-col gap-3 md:justify-self-end">
+            <div class="flex flex-col gap-2.5 md:items-end">
               <a
-                class="btn-primary w-full sm:w-auto md:justify-self-end"
+                class="btn-primary w-full md:w-auto"
                 href={telHref}
                 data-track="cta_click"
                 data-location="cta_section_split"
@@ -188,7 +195,7 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
                 Call now
               </a>
               <a
-                class="btn-secondary w-full sm:w-auto md:justify-self-end"
+                class="btn-secondary w-full md:w-auto"
                 href={href('contact/')}
                 data-track="cta_click"
                 data-location="cta_section_split"
@@ -197,20 +204,20 @@ const mailtoHref = makeMailtoHref(siteConfig.contact.email);
               >
                 Request a quote
               </a>
-              {showEmail ? (
-                <div class="text-subtle mt-1 text-xs">
+              {showEmail && (
+                <div class="text-subtle mt-0.5 text-xs">
+                  Or{' '}
                   <a
                     class="link link-muted"
                     href={mailtoHref}
                     data-track="cta_click"
                     data-location="cta_section_split"
                     data-action="email"
-                    data-label="cta_split_email"
                   >
-                    Email
+                    email us
                   </a>
                 </div>
-              ) : null}
+              )}
             </div>
           </div>
         </div>

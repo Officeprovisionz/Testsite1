@@ -32,7 +32,6 @@ const {
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL;
-// Opt-in only: avoids 404 network requests when the optional hero videos are not present.
 const heroVideoOptIn =
   String(import.meta.env.PUBLIC_ENABLE_HERO_VIDEO ?? '').toLowerCase() === 'true';
 const heroFallback = imageSrc ?? imageSrcMobile ?? '';
@@ -48,14 +47,8 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
   class="hero-splash hero-photo hero-split relative w-full overflow-hidden antialiased"
   data-hero-section
 >
-  {/* Top-down gradient overlay for header readability */}
-  <div
-    aria-hidden="true"
-    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-linear-to-b from-black/40 to-transparent opacity-60"
-  >
-  </div>
+  {/* Background image layer */}
   <div aria-hidden="true" class="pointer-events-none absolute inset-0">
-    {/* Always render a lightweight image base (also acts as the video poster / fallback). */}
     {
       imageSrcMobile || imageSrcSetMobile ? (
         <picture>
@@ -69,10 +62,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
             alt="Office cleaning team sanitizing commercial workspace in San Francisco"
             srcset={imageSrcSet}
             sizes={imageSrcSet ? imageSizes : undefined}
-            class:list={[
-              'h-full w-full object-cover opacity-[0.82] sm:opacity-[0.88]',
-              imagePositionClass,
-            ]}
+            class:list={['h-full w-full object-cover', imagePositionClass]}
             loading="eager"
             fetchpriority="high"
             decoding="async"
@@ -85,10 +75,7 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           alt="Office cleaning team sanitizing commercial workspace in San Francisco"
           srcset={imageSrcSet}
           sizes={imageSrcSet ? imageSizes : undefined}
-          class:list={[
-            'h-full w-full object-cover opacity-[0.82] sm:opacity-[0.88]',
-            imagePositionClass,
-          ]}
+          class:list={['h-full w-full object-cover', imagePositionClass]}
           loading="eager"
           fetchpriority="high"
           decoding="async"
@@ -97,11 +84,11 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       )
     }
 
-    {/* Optional background video (muted + playsInline + loop). */}
+    {/* Optional background video */}
     {
       heroVideoOptIn && (
         <video
-          class="absolute inset-0 hidden h-full w-full object-cover opacity-[0.14]"
+          class="absolute inset-0 hidden h-full w-full object-cover opacity-[0.12]"
           muted
           loop
           playsinline
@@ -116,53 +103,76 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       )
     }
 
-    {/* Mobile-first readability veil with brand-tinted overlay (token-based for consistency). */}
+    {/* Multi-layer cinematic overlay */}
+    {/* 1. Base dark veil for text readability */}
     <div
-      class="absolute inset-0 bg-linear-to-b from-[rgb(var(--color-text))/0.45] via-[rgb(var(--color-text))/0.22] to-[rgb(var(--color-brand))/0.08] sm:from-[rgb(var(--color-text))/0.38] sm:via-[rgb(var(--color-text))/0.18] dark:from-[rgb(var(--color-text))/0.6] dark:via-[rgb(var(--color-text-subtle))/0.3]"
+      class="absolute inset-0"
+      style="background: linear-gradient(168deg, rgba(4,6,10,0.62) 0%, rgba(4,6,10,0.38) 45%, rgba(4,6,10,0.18) 75%, rgba(4,6,10,0.08) 100%);"
     >
     </div>
-
-    {/* Subtle vignette for edge contrast */}
+    {/* 2. Bottom fade to keep section transition smooth */}
     <div
-      class="absolute inset-0 bg-[radial-gradient(80%_70%_at_50%_35%,transparent_0%,rgba(2,6,23,0.22)_65%,rgba(2,6,23,0.5)_100%)]"
+      class="absolute inset-x-0 bottom-0 h-48 sm:h-56"
+      style="background: linear-gradient(to top, rgba(4,6,10,0.55) 0%, transparent 100%);"
+    >
+    </div>
+    {/* 3. Soft vignette for edge depth */}
+    <div
+      class="absolute inset-0"
+      style="background: radial-gradient(ellipse 90% 80% at 50% 40%, transparent 40%, rgba(2,4,8,0.32) 100%);"
+    >
+    </div>
+    {/* 4. Subtle brand-tinted warmth in lower-left */}
+    <div
+      class="absolute inset-0 opacity-40"
+      style="background: radial-gradient(ellipse 55% 50% at 0% 100%, rgba(82,176,200,0.15) 0%, transparent 70%);"
     >
     </div>
   </div>
 
+  {/* Top gradient for header readability */}
   <div
-    class="container-page relative z-10 pt-20 pb-16 sm:pt-26 sm:pb-22 md:pt-30 md:pb-24 lg:pt-44 lg:pb-36 xl:pt-48 xl:pb-40"
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-28"
+    style="background: linear-gradient(to bottom, rgba(2,4,8,0.35) 0%, transparent 100%);"
+  >
+  </div>
+
+  {/* Content */}
+  <div
+    class="container-page relative z-10 pt-24 pb-20 sm:pt-28 sm:pb-24 md:pt-32 md:pb-28 lg:pt-48 lg:pb-40 xl:pt-52 xl:pb-44"
   >
     <div class="hero-split__content mx-auto max-w-4xl text-center lg:max-w-5xl lg:text-left">
       <h1 class="display-hero text-hero-shadow animate-slide-up text-white" data-hero-headline>
-        <span class="block">For spaces shaped by ambition</span>
-        <span class="block">and expectation.</span>
+        <span class="block">For spaces shaped by</span>
+        <span class="block text-white">ambition and expectation.</span>
       </h1>
       <p
-        class="text-hero-shadow animate-slide-up mx-auto mt-4 max-w-xl text-base leading-relaxed font-normal text-balance text-white/85 [animation-delay:200ms] sm:mt-6 sm:max-w-2xl sm:text-lg md:text-xl lg:mt-8 lg:max-w-2xl lg:text-2xl"
+        class="text-hero-shadow animate-slide-up mx-auto mt-5 max-w-xl text-base leading-relaxed font-normal text-white/80 [animation-delay:180ms] sm:mt-6 sm:max-w-2xl sm:text-[1.0625rem] md:text-lg lg:mt-8 lg:max-w-2xl lg:text-xl"
         data-hero-subhead
       >
-        Local, owner-led cleaning in <span class="font-bold text-white"
+        Local, owner-led cleaning in <span class="font-semibold text-white"
           >{siteConfig.brand.city}</span
         >. Same crew, photo updates, and a real person answering when you call.
       </p>
 
-      {/* Trust stat bar */}
+      {/* Trust pill row */}
       <div
-        class="animate-slide-up mt-8 flex flex-wrap items-center justify-center gap-x-5 gap-y-2.5 [animation-delay:380ms] lg:justify-start"
+        class="animate-slide-up mt-7 flex flex-wrap items-center justify-center gap-2 [animation-delay:340ms] sm:gap-2.5 lg:justify-start"
         aria-label="Quick facts"
       >
         <div class="hero-stat">
           <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
             fill="none"
             aria-hidden="true"
-            class="shrink-0 opacity-80"
+            class="shrink-0 opacity-75"
           >
-            <circle cx="7" cy="7" r="6.5" stroke="currentColor" stroke-opacity="0.4"></circle>
+            <circle cx="6" cy="6" r="5.25" stroke="currentColor" stroke-opacity="0.5"></circle>
             <path
-              d="M4 7l2 2 4-4"
+              d="M3.5 6l1.75 1.75L8.5 4"
               stroke="currentColor"
               stroke-width="1.5"
               stroke-linecap="round"
@@ -170,42 +180,42 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
           </svg>
           <span>Owner-operated · SF locals</span>
         </div>
-        <span class="hero-stat-sep" aria-hidden="true"></span>
+
         <div class="hero-stat">
           <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
             fill="none"
             aria-hidden="true"
             class="shrink-0"
           >
             <path
-              d="M7 1l1.545 4.236H13.09l-3.636 2.618 1.382 4.237L7 9.472l-3.836 2.619 1.382-4.237L.91 5.236H5.455L7 1z"
+              d="M6 .75L7.32 4.26H11.1L8.04 6.48l1.15 3.54L6 7.8l-3.19 2.22 1.15-3.54-3.06-2.22h3.78L6 .75z"
               fill="currentColor"
-              opacity="0.85"></path>
+              opacity="0.9"></path>
           </svg>
           <span>4.9 avg. rating</span>
         </div>
-        <span class="hero-stat-sep" aria-hidden="true"></span>
+
         <div class="hero-stat">
           <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
             fill="none"
             aria-hidden="true"
-            class="shrink-0 opacity-80"
+            class="shrink-0 opacity-75"
           >
             <circle
-              cx="7"
-              cy="7"
-              r="6"
+              cx="6"
+              cy="6"
+              r="5"
               stroke="currentColor"
               stroke-width="1.25"
-              stroke-opacity="0.5"></circle>
+              stroke-opacity="0.55"></circle>
             <path
-              d="M7 4v3.25l2 1.25"
+              d="M6 3.5v2.75l1.75 1"
               stroke="currentColor"
               stroke-width="1.25"
               stroke-linecap="round"
@@ -220,45 +230,15 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
   </div>
 </section>
 
-<style>
-  .hero-stat {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.375rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    letter-spacing: 0.01em;
-    color: rgba(255, 255, 255, 0.78);
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-  }
-
-  .hero-stat-sep {
-    display: none;
-    width: 1px;
-    height: 0.875rem;
-    background-color: rgba(255, 255, 255, 0.22);
-    flex-shrink: 0;
-  }
-
-  @media (min-width: 480px) {
-    .hero-stat-sep {
-      display: block;
-    }
-  }
-</style>
-
 <script>
-  // Progressive video enhancement
   const initVideo = () => {
     const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
     if (!video) return;
 
     const shouldEnable = () => {
-      // Respect reduced motion
       const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
       if (motion.matches) return false;
 
-      // Respect data saver
       const nav = navigator as Navigator & {
         connection?: { saveData?: boolean; effectiveType?: string };
       };
@@ -273,11 +253,9 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
     if (shouldEnable()) {
       video.classList.remove('hidden');
       video.play().catch(() => {
-        // Autoplay failed or blocked
         video.classList.add('hidden');
       });
 
-      // Track play once
       const onPlay = () => {
         if (window.damraTrack) {
           window.damraTrack('video_play', { video: 'hero' });
@@ -285,8 +263,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
         video.removeEventListener('play', onPlay);
       };
       video.addEventListener('play', onPlay);
-
-      // If error, hide it
       video.addEventListener('error', () => {
         video.classList.add('hidden');
       });
@@ -330,7 +306,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
     const headline = hero.querySelector<HTMLElement>('[data-hero-headline]');
     const subhead = hero.querySelector<HTMLElement>('[data-hero-subhead]');
 
-    // Parallax text overlay (desktop-only). Kept off on touch/data-saver for smoothness.
     if (reduceMotion || !headline || !subhead) return;
 
     let ticking = false;
@@ -338,9 +313,8 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       ticking = false;
       const rect = hero.getBoundingClientRect();
       const progress = clamp(-rect.top / Math.max(1, rect.height), 0, 1);
-      // Headline moves slightly slower than scroll.
-      const hY = progress * -18;
-      const pY = progress * -12;
+      const hY = progress * -16;
+      const pY = progress * -10;
       headline.style.transform = `translate3d(0, ${hY}px, 0)`;
       subhead.style.transform = `translate3d(0, ${pY}px, 0)`;
     };
@@ -366,7 +340,6 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       window.removeEventListener('resize', onScroll);
     };
 
-    // Only do work while hero is near the viewport.
     const io = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
@@ -387,14 +360,11 @@ const heroVideoMp4 = `${base}media/hero-cleaning.mp4`;
       }
     };
 
-    // Clean up for Astro view transitions.
     document.addEventListener('astro:before-swap', cleanup, { once: true });
   };
 
-  // Run on load
   initVideo();
   initHeroMotion();
-  // Also run on view transitions if enabled later
   document.addEventListener('astro:page-load', initVideo);
   document.addEventListener('astro:page-load', initHeroMotion);
 </script>

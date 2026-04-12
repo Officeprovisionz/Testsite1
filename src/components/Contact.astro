@@ -126,54 +126,124 @@ const serviceOptions = [
                   </a>
                 </div>
 
-                <div class="text-muted mt-6 space-y-3 text-sm">
-                  <p>
-                    <span class="text-strong font-semibold">Call/Text:</span>
-                    <a class="decoration-brand/30 underline underline-offset-4" href={telHref}>
-                      {siteConfig.contact.phoneDisplay}
-                    </a>
-                  </p>
-                  <p>
-                    <span class="text-strong font-semibold">Email:</span>
-                    <a class="decoration-brand/30 underline underline-offset-4" href={mailtoHref}>
-                      {siteConfig.contact.email}
-                    </a>
-                  </p>
-                  <div>
-                    <p class="text-strong font-semibold">Hours</p>
-                    <ul class="mt-1 grid gap-1">
-                      {siteConfig.hours.lines.map((h) => (
-                        <li>{h}</li>
-                      ))}
-                    </ul>
+                <div class="mt-6 space-y-4 text-sm">
+                  <div class="flex items-center gap-3">
+                    <span
+                      class="flex h-8 w-8 flex-none items-center justify-center rounded-lg border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <p class="text-strong text-xs font-semibold">Call / Text</p>
+                      <a class="link link-muted text-sm" href={telHref}>
+                        {siteConfig.contact.phoneDisplay}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <span
+                      class="flex h-8 w-8 flex-none items-center justify-center rounded-lg border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <p class="text-strong text-xs font-semibold">Email</p>
+                      <a class="link link-muted text-sm" href={mailtoHref}>
+                        {siteConfig.contact.email}
+                      </a>
+                    </div>
+                  </div>
+                  <div class="flex items-start gap-3">
+                    <span
+                      class="mt-0.5 flex h-8 w-8 flex-none items-center justify-center rounded-lg border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+                      aria-hidden="true"
+                    >
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.75"
+                        class="h-4 w-4"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                    </span>
+                    <div>
+                      <p class="text-strong text-xs font-semibold">Hours</p>
+                      <ul class="text-muted mt-0.5 grid gap-0.5 text-sm">
+                        {siteConfig.hours.lines.map((h) => (
+                          <li>{h}</li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 </div>
 
-                <div class="card relative mt-8 overflow-hidden p-6">
+                <div class="card relative mt-8 overflow-hidden p-5 sm:p-6">
                   <div
                     aria-hidden="true"
-                    class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
+                    class="pointer-events-none absolute inset-x-0 top-0 h-px"
+                    style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.45) 40%, rgb(var(--color-brand-400)/0.35) 60%, transparent);"
+                  />
+                  <div
+                    aria-hidden="true"
+                    class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.08)] via-transparent to-[rgb(var(--color-brand)/0.07)]"
                   />
                   <div class="relative">
                     <p class="text-strong text-sm font-semibold">What happens next</p>
-                    <ol class="text-muted mt-2 grid gap-2 text-sm">
-                      <li>
-                        <span class="text-strong font-semibold">1.</span> We reply within 1 business
-                        day.
+                    <ol class="text-muted mt-3 grid gap-2.5 text-sm">
+                      <li class="flex items-start gap-2.5">
+                        <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[rgb(var(--color-accent)/0.2)] text-[0.65rem] font-bold text-[rgb(var(--color-accent-600))]">
+                          1
+                        </span>
+                        <span>We reply within 1 business day.</span>
                       </li>
-                      <li>
-                        <span class="text-strong font-semibold">2.</span> We confirm scope, access,
-                        and any special requirements.
+                      <li class="flex items-start gap-2.5">
+                        <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[rgb(var(--color-accent)/0.2)] text-[0.65rem] font-bold text-[rgb(var(--color-accent-600))]">
+                          2
+                        </span>
+                        <span>We confirm scope, access, and any special requirements.</span>
                       </li>
-                      <li>
-                        <span class="text-strong font-semibold">3.</span> You get a clear, written
-                        quote.
+                      <li class="flex items-start gap-2.5">
+                        <span class="mt-0.5 flex h-5 w-5 flex-none items-center justify-center rounded-full bg-[rgb(var(--color-accent)/0.2)] text-[0.65rem] font-bold text-[rgb(var(--color-accent-600))]">
+                          3
+                        </span>
+                        <span>You get a clear, written quote.</span>
                       </li>
                     </ol>
 
                     <p class="text-subtle mt-3 text-xs">
-                      This form includes a hidden anti-spam field. We only use your details to
-                      respond to your request.
+                      We only use your details to respond to your request.
                     </p>
                   </div>
                 </div>
@@ -373,7 +443,7 @@ const serviceOptions = [
       // Save a small, non-sensitive summary for the Thanks page.
       // (We intentionally avoid storing the free-form message body.)
       const saveLeadSummary = (data: {
-        ref?: string;
+        ref?: string | undefined;
         companyName: string;
         name: string;
         email: string;

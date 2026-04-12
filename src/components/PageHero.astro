@@ -60,10 +60,10 @@ const imagePositionClass = getImagePositionClass(imagePosition);
     className
   )}
 >
-  {/* Top-down gradient overlay for header readability */}
+  {/* Top-down gradient for header readability */}
   <div
     aria-hidden="true"
-    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-32 bg-gradient-to-b from-black/40 to-transparent opacity-60"
+    class="pointer-events-none absolute inset-x-0 top-0 z-10 h-28 bg-linear-to-b from-black/35 to-transparent"
   >
   </div>
   {
@@ -101,33 +101,34 @@ const imagePositionClass = getImagePositionClass(imagePosition);
             onerror={`if (this.src !== '${fallbackImageSrc}') this.src = '${fallbackImageSrc}'`}
           />
         )}
+        {/* Multi-layer cinematic overlay — matches Hero.astro treatment */}
         <div
-          class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/50 via-60% to-[rgb(var(--color-accent)/0.35)] dark:from-black/65 dark:via-black/55 dark:to-black/70"
           aria-hidden="true"
+          style="position:absolute;inset:0;background:linear-gradient(168deg,rgba(4,6,10,0.65) 0%,rgba(4,6,10,0.42) 45%,rgba(4,6,10,0.22) 75%,rgba(4,6,10,0.1) 100%);"
         />
         <div
-          class="absolute inset-0 bg-[radial-gradient(80%_70%_at_50%_35%,transparent_0%,rgba(2,6,23,0.28)_70%,rgba(2,6,23,0.55)_100%)]"
           aria-hidden="true"
+          style="position:absolute;inset:0;background:radial-gradient(ellipse 90% 80% at 50% 40%,transparent 40%,rgba(2,4,8,0.28) 100%);"
         />
       </div>
     )
   }
 
   <Spotlight class="-top-40 left-0 md:-top-20 md:left-60" fill="white" />
-  <div class="container-page relative z-10 py-12 text-center sm:py-16 md:py-20 lg:py-24">
+  <div class="container-page relative z-10 py-14 text-center sm:py-18 md:py-22 lg:py-28">
     <div class={cn(resolvedImageSrc ? 'mx-auto max-w-3xl px-2 sm:px-6 lg:max-w-4xl' : undefined)}>
       <h1
         class={cn(
-          'heading-1 text-balance lg:text-5xl xl:text-6xl',
-          resolvedImageSrc ? 'text-white drop-shadow-[0_10px_28px_rgba(0,0,0,0.35)]' : undefined
+          'heading-1 text-balance',
+          resolvedImageSrc ? 'text-white text-hero-shadow' : undefined
         )}
       >
         {title}
       </h1>
       <p
         class={cn(
-          'mx-auto mt-4 max-w-2xl text-balance text-base font-medium leading-relaxed [text-shadow:_0_1px_3px_rgb(0_0_0_/_40%)] sm:mt-5 sm:text-lg lg:mt-8',
-          resolvedImageSrc ? 'text-white/95' : 'text-muted'
+          'mx-auto mt-4 max-w-xl text-balance text-base leading-relaxed sm:mt-5 sm:text-lg lg:mt-6',
+          resolvedImageSrc ? 'text-white/82 text-hero-shadow' : 'text-muted'
         )}
       >
         {description}

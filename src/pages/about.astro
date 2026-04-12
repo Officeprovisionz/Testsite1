@@ -106,7 +106,7 @@ const heroImageMobile = heroSecondary
         <div class="card card-hover relative overflow-hidden p-6 sm:p-8">
           <div
             aria-hidden="true"
-            class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
+            class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.14)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
           >
           </div>
           <div class="relative">
@@ -117,14 +117,50 @@ const heroImageMobile = heroSecondary
               delivery, and fast follow-up.
             </p>
 
-            <div class="mt-6 grid gap-4 sm:grid-cols-2">
-              <div class="panel panel-muted p-4">
-                <p class="text-strong text-sm font-semibold">Clear scope</p>
-                <p class="text-muted mt-1 text-sm">Written checklist + agreed add-ons.</p>
+            <div class="mt-6 grid gap-3 sm:grid-cols-2">
+              <div class="panel panel-muted flex items-start gap-3 p-4">
+                <span
+                  class="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-[rgb(var(--color-accent)/0.18)] text-[rgb(var(--color-accent-600))]"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="h-3 w-3"
+                    ><path stroke-linecap="round" stroke-linejoin="round" d="M2 7l3.5 3.5L12 3"
+                    ></path></svg
+                  >
+                </span>
+                <div>
+                  <p class="text-strong text-sm font-semibold">Clear scope</p>
+                  <p class="text-muted mt-0.5 text-xs leading-relaxed">
+                    Written checklist + agreed add-ons.
+                  </p>
+                </div>
               </div>
-              <div class="panel panel-muted p-4">
-                <p class="text-strong text-sm font-semibold">Follow-through</p>
-                <p class="text-muted mt-1 text-sm">Issues flagged + resolved promptly.</p>
+              <div class="panel panel-muted flex items-start gap-3 p-4">
+                <span
+                  class="mt-0.5 flex h-6 w-6 flex-none items-center justify-center rounded-lg bg-[rgb(var(--color-accent)/0.18)] text-[rgb(var(--color-accent-600))]"
+                  aria-hidden="true"
+                >
+                  <svg
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    class="h-3 w-3"
+                    ><path stroke-linecap="round" stroke-linejoin="round" d="M2 7l3.5 3.5L12 3"
+                    ></path></svg
+                  >
+                </span>
+                <div>
+                  <p class="text-strong text-sm font-semibold">Follow-through</p>
+                  <p class="text-muted mt-0.5 text-xs leading-relaxed">
+                    Issues flagged + resolved promptly.
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -145,24 +181,101 @@ const heroImageMobile = heroSecondary
         description="We keep the experience simple: clear scope, predictable service, and communication that doesn’t disappear after the first visit."
       />
 
-      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
-        <div class="card card-hover p-6 lg:p-8">
-          <p class="text-strong text-sm font-semibold lg:text-lg">Communication-first</p>
-          <p class="text-muted mt-2 text-sm leading-relaxed lg:text-base">
-            You'll know what's happening—arrival, issues, and follow-ups—without chasing anyone
+      <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6" data-reveal-stagger="60">
+        {/* Communication-first */}
+        <div class="card card-hover relative overflow-hidden p-6 lg:p-8" data-reveal="up">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.4) 50%, transparent);"
+          >
+          </div>
+          <span
+            class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              class="h-5 w-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-3 3v-3z"
+              ></path>
+            </svg>
+          </span>
+          <p class="text-strong text-sm font-semibold lg:text-base">Communication-first</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            You’ll know what’s happening—arrival, issues, and follow-ups—without chasing anyone
             down.
           </p>
         </div>
-        <div class="card card-hover p-6 lg:p-8">
-          <p class="text-strong text-sm font-semibold lg:text-lg">Respect for the space</p>
-          <p class="text-muted mt-2 text-sm leading-relaxed lg:text-base">
+
+        {/* Respect for the space */}
+        <div class="card card-hover relative overflow-hidden p-6 lg:p-8" data-reveal="up">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.4) 50%, transparent);"
+          >
+          </div>
+          <span
+            class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              class="h-5 w-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              ></path>
+            </svg>
+          </span>
+          <p class="text-strong text-sm font-semibold lg:text-base">Respect for the space</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
             We work around your operations and treat offices, medical suites, and shared areas with
             care.
           </p>
         </div>
-        <div class="card card-hover p-6 lg:p-8">
-          <p class="text-strong text-sm font-semibold lg:text-lg">Flexible scheduling</p>
-          <p class="text-muted mt-2 text-sm leading-relaxed lg:text-base">
+
+        {/* Flexible scheduling */}
+        <div class="card card-hover relative overflow-hidden p-6 lg:p-8" data-reveal="up">
+          <div
+            aria-hidden="true"
+            class="pointer-events-none absolute inset-x-0 top-0 h-px"
+            style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.4) 50%, transparent);"
+          >
+          </div>
+          <span
+            class="mb-4 flex h-10 w-10 items-center justify-center rounded-xl border border-[rgb(var(--color-accent)/0.3)] bg-[rgb(var(--color-accent)/0.12)] text-[rgb(var(--color-accent-600))]"
+            aria-hidden="true"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.75"
+              class="h-5 w-5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+          </span>
+          <p class="text-strong text-sm font-semibold lg:text-base">Flexible scheduling</p>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
             After-hours and weekend options where available—so cleaning fits your flow, not the
             other way around.
           </p>

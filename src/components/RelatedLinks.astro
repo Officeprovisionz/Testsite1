@@ -15,27 +15,37 @@ type Props = {
 const { heading, items } = Astro.props;
 ---
 
-<section class="section section-creative border-app border-t">
+<section class="section section-creative border-t border-[rgb(var(--color-border)/0.5)]">
   <div class="container-page">
-    <h2 class="heading-2 mb-8">{heading}</h2>
-    <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    <h2 class="heading-2 mb-8 lg:mb-10">{heading}</h2>
+    <div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
       {
         items.map((item) => (
-          <a href={item.href} class="card card-hover group relative flex flex-col p-6">
+          <a
+            href={item.href}
+            class="card card-hover group relative flex flex-col overflow-hidden p-6"
+          >
             <div
               aria-hidden="true"
-              class="pointer-events-none absolute inset-0 rounded-[inherit] bg-gradient-to-br from-[rgb(var(--color-brand)/0.14)] via-transparent to-[rgb(var(--color-accent)/0.16)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              class="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.5) 50%, transparent);"
             />
-            <div class="flex items-center justify-between">
-              <h3 class="text-strong relative z-10 font-serif text-xl font-semibold transition-colors">
+            <div
+              aria-hidden="true"
+              class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-brand)/0.12)] via-transparent to-[rgb(var(--color-accent)/0.14)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+            />
+            <div class="relative z-10 flex items-start justify-between gap-3">
+              <h3 class="text-strong font-serif text-lg leading-snug font-semibold transition-colors group-hover:text-[rgb(var(--color-brand-700))]">
                 {item.title}
               </h3>
               <Icon
                 name="lucide:arrow-right"
-                class="group-hover:text-brand text-muted relative z-10 h-5 w-5 transition-colors"
+                class="text-muted group-hover:text-brand mt-0.5 h-4.5 w-4.5 flex-none transition-colors duration-200"
               />
             </div>
-            <p class="text-muted relative z-10 mt-3 text-sm leading-relaxed">{item.description}</p>
+            <p class="text-muted relative z-10 mt-3 flex-1 text-sm leading-relaxed">
+              {item.description}
+            </p>
           </a>
         ))
       }

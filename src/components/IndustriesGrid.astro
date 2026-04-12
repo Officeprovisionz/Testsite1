@@ -54,21 +54,24 @@ const extraCards = extraItems.map((item) => ({
           items.map((item) => (
             <a
               href={item.link}
-              class="card card-hover group relative block h-full w-full overflow-hidden p-2 sm:p-4"
+              class="card card-hover group relative block h-full w-full overflow-hidden p-5 sm:p-6"
             >
               <div
                 aria-hidden="true"
-                class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-brand)/0.16)] via-transparent to-[rgb(var(--color-accent)/0.18)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                class="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.45) 50%, transparent);"
               />
-              <div class="relative z-10 flex h-full flex-col p-4">
-                <h3 class="text-strong text-xl font-bold tracking-wide">{item.title}</h3>
-                <p class="text-muted mt-4 flex-grow text-sm leading-relaxed tracking-wide">
-                  {item.description}
-                </p>
+              <div
+                aria-hidden="true"
+                class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-brand)/0.14)] via-transparent to-[rgb(var(--color-accent)/0.16)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+              <div class="relative z-10 flex h-full flex-col">
+                <h3 class="text-strong text-base font-bold">{item.title}</h3>
+                <p class="text-muted mt-2 grow text-sm leading-relaxed">{item.description}</p>
 
                 {showCta ? (
-                  <div class="text-strong group-hover:text-brand mt-6 flex items-center text-sm font-medium transition-colors">
-                    Get a quote <ArrowRight className="ml-1 h-4 w-4" />
+                  <div class="text-muted group-hover:text-brand mt-5 flex items-center gap-1 text-sm font-medium transition-colors duration-200">
+                    Get a quote <ArrowRight className="h-3.5 w-3.5" />
                   </div>
                 ) : null}
               </div>
@@ -83,21 +86,24 @@ const extraCards = extraItems.map((item) => ({
             {extraCards.map((item) => (
               <a
                 href={item.link}
-                class="card card-hover group relative block h-full w-full overflow-hidden p-2 sm:p-4"
+                class="card card-hover group relative block h-full w-full overflow-hidden p-5 sm:p-6"
               >
                 <div
                   aria-hidden="true"
-                  class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-brand)/0.16)] via-transparent to-[rgb(var(--color-accent)/0.18)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  class="pointer-events-none absolute inset-x-0 top-0 h-px opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.45) 50%, transparent);"
                 />
-                <div class="relative z-10 flex h-full flex-col p-4">
-                  <h3 class="text-strong text-xl font-bold tracking-wide">{item.title}</h3>
-                  <p class="text-muted mt-4 flex-grow text-sm leading-relaxed tracking-wide">
-                    {item.description}
-                  </p>
+                <div
+                  aria-hidden="true"
+                  class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-brand)/0.14)] via-transparent to-[rgb(var(--color-accent)/0.16)] opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                />
+                <div class="relative z-10 flex h-full flex-col">
+                  <h3 class="text-strong text-base font-bold">{item.title}</h3>
+                  <p class="text-muted mt-2 grow text-sm leading-relaxed">{item.description}</p>
 
                   {showCta ? (
-                    <div class="text-strong group-hover:text-brand mt-6 flex items-center text-sm font-medium transition-colors">
-                      {item.cta} <ArrowRight className="ml-1 h-4 w-4" />
+                    <div class="text-muted group-hover:text-brand mt-5 flex items-center gap-1 text-sm font-medium transition-colors duration-200">
+                      {item.cta} <ArrowRight className="h-3.5 w-3.5" />
                     </div>
                   ) : null}
                 </div>

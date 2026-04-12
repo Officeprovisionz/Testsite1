@@ -24,22 +24,18 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     <div class="card relative overflow-hidden p-6 sm:p-7">
       <div
         aria-hidden="true"
-        class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
+        class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.12)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
       >
       </div>
 
       <div class="relative flex flex-col gap-6">
-        <div class="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p class="text-subtle text-xs font-semibold tracking-[0.08em] uppercase">
-              3-step quote wizard
-            </p>
-            <h2 class="heading-3 mt-1">Get scoped fast</h2>
-            <p class="text-muted text-sm">
-              Capture the essentials in three steps. We'll prefill the full contact form so you can
-              review, edit, and send - no duplicate typing.
-            </p>
-          </div>
+        <div>
+          <p class="eyebrow">Quick scope</p>
+          <h2 class="heading-3 mt-2">Get scoped fast</h2>
+          <p class="text-muted mt-2 text-sm leading-relaxed">
+            Three steps to capture the essentials. We'll prefill the full form so you can review,
+            edit, and send — no duplicate typing.
+          </p>
         </div>
 
         <div class="flex flex-wrap items-center gap-3" role="list" aria-label="Progress">
@@ -282,8 +278,8 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
   }
 
   .wizard-stepper[data-active='true'] {
-    border-color: rgb(var(--color-brand) / 0.35);
-    background-color: rgb(var(--color-brand-50) / 0.72);
+    border-color: rgb(var(--color-accent-400) / 0.45);
+    background-color: rgb(var(--color-accent) / 0.08);
   }
 
   .wizard-stepper__dot {
@@ -292,15 +288,17 @@ const startTimingOptions = ['ASAP', 'Within 2 weeks', 'Within a month', 'Just re
     border-radius: 999px;
     display: grid;
     place-items: center;
+    font-size: 0.75rem;
     font-weight: 700;
-    color: rgb(var(--color-text));
+    color: rgb(var(--color-text-muted));
     background-color: rgb(var(--color-surface));
     border: 1px solid rgb(var(--color-border) / 0.9);
   }
   .wizard-stepper[data-active='true'] .wizard-stepper__dot {
-    border-color: rgb(var(--color-brand) / 0.55);
-    background-color: rgb(var(--color-brand-50) / 0.9);
-    box-shadow: 0 0 0 4px rgb(var(--color-brand) / 0.12);
+    background: linear-gradient(135deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-500)));
+    color: rgb(14 10 4);
+    border-color: transparent;
+    box-shadow: 0 2px 8px -3px rgb(var(--color-accent-500) / 0.5);
   }
   .wizard-stepper[data-active='true'] .wizard-stepper__label {
     color: rgb(var(--color-text));

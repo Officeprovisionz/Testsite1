@@ -45,45 +45,59 @@ const safeWaveTone =
   <div class="container-page relative lg:max-w-6xl">
     <SectionHeader heading={heading} description={description} />
 
-    <ol class="mt-10 grid gap-6 lg:mt-14 lg:grid-cols-4 lg:gap-8" data-reveal-stagger="70">
+    <ol class="mt-10 grid gap-4 lg:mt-12 lg:grid-cols-4 lg:gap-5" data-reveal-stagger="70">
       {
         (Array.isArray(steps) ? steps : []).map((s, idx) => (
-          <li class="card card-hover relative overflow-hidden p-5 sm:p-6 lg:p-8" data-reveal="up">
+          <li class="card card-hover relative overflow-hidden p-5 sm:p-6" data-reveal="up">
+            {/* Subtle background glow */}
             <div
               aria-hidden="true"
-              class="pointer-events-none absolute inset-0 bg-gradient-to-br from-[rgb(var(--color-accent)/0.18)] via-transparent to-[rgb(var(--color-brand)/0.12)]"
+              class="pointer-events-none absolute inset-0 bg-linear-to-br from-[rgb(var(--color-accent)/0.1)] via-transparent to-[rgb(var(--color-brand)/0.07)]"
             />
             <div class="relative">
-              <div class="flex items-center gap-3">
+              {/* Step number */}
+              <div class="mb-3.5 flex items-center gap-3">
                 <span
-                  class="grid h-10 w-10 place-items-center rounded-[var(--radius-control)] border border-[rgb(var(--color-accent)/0.35)] bg-[rgb(var(--color-accent)/0.2)] text-sm font-semibold text-[rgb(12_14_18)] shadow-sm lg:h-12 lg:w-12 lg:text-base"
+                  class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl text-sm font-bold lg:h-10 lg:w-10 lg:text-base"
+                  style="background: linear-gradient(135deg, rgb(var(--color-accent-300)), rgb(var(--color-accent-500))); color: rgb(14 10 4); box-shadow: 0 2px 8px -3px rgb(var(--color-accent-500)/0.4);"
                   aria-hidden="true"
                 >
                   {idx + 1}
                 </span>
-                <p class="text-strong text-sm font-semibold lg:text-base">{s.title}</p>
+                <p class="text-strong text-sm leading-tight font-semibold lg:text-[0.9375rem]">
+                  {s.title}
+                </p>
               </div>
-              <p class="text-muted mt-3 text-sm leading-relaxed lg:text-base lg:leading-relaxed">
-                {s.description}
-              </p>
+              <p class="text-muted text-sm leading-relaxed">{s.description}</p>
             </div>
           </li>
         ))
       }
     </ol>
 
-    <div class="card mt-10 overflow-hidden p-6 sm:p-8 lg:mt-14 lg:p-10" data-reveal="up">
+    <!-- QA panel -->
+    <div class="card mt-8 overflow-hidden p-6 sm:p-8 lg:mt-10 lg:p-10" data-reveal="up">
+      {/* Top accent line */}
+      <div
+        aria-hidden="true"
+        class="pointer-events-none absolute inset-x-0 top-0 h-px"
+        style="background: linear-gradient(90deg, transparent, rgb(var(--color-accent-400)/0.4) 40%, rgb(var(--color-brand-400)/0.3) 60%, transparent);"
+      >
+      </div>
       <div class="grid gap-6 md:grid-cols-2 md:items-center lg:gap-10">
         <div>
           <Eyebrow>{qaEyebrow}</Eyebrow>
-          <p class="text-strong mt-2 text-lg font-bold lg:text-xl">
+          <p
+            class="text-strong mt-1 text-lg leading-snug font-semibold lg:text-xl"
+            style="letter-spacing: -0.015em;"
+          >
             {qaHeading}
           </p>
-          <p class="text-muted mt-2 text-sm leading-relaxed lg:text-base">
+          <p class="text-muted mt-2.5 text-sm leading-relaxed lg:text-[0.9375rem]">
             {qaDescription}
           </p>
         </div>
-        <ul class="check-list check-list--compact text-muted text-sm lg:text-base">
+        <ul class="check-list check-list--compact text-muted text-sm lg:text-[0.9375rem]">
           {
             (Array.isArray(qaBullets) ? qaBullets : []).map((b) => (
               <li>
